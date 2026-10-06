@@ -5,7 +5,6 @@
     <string name="InuSettings">Telegram 设置</string>
     <string name="InuSettingsInfo">through the land and wind I follow you</string>
     <string name="InuGeneral">通用</string>
-    <string name="InuMiscellaneous">杂项</string>
     <string name="InuWideChannelPosts">宽屏帖子</string>
     <string name="InuWideChannelPostsFooter">频道帖子和转发将使用全部可用宽度。</string>
     <string name="InuWideChannelPostsPreviewText">新闻、照片和视频</string>
@@ -67,7 +66,6 @@
     <string name="InuAnnoyancesGifts">礼物与高级会员</string>
     <string name="InuAnnoyancesInterface">聊天与界面</string>
     <string name="InuAnnoyancesChannels">频道与推荐</string>
-    <string name="InuAnnoyancesMedia">媒体</string>
     <string name="InuAnnoyancesAi">人工智能</string>
     <string name="InuAnnoyancesHints">提示与提醒</string>
     <string name="InuMessages">消息</string>
@@ -168,7 +166,6 @@
     <string name="InuPredictiveBackStock">原版</string>
     <string name="InuPredictiveBackMaterial3">Material 3</string>
     <string name="InuHideAiFeatures">隐藏 AI 功能</string>
-    <string name="InuHideAiEditor">AI 编辑器按钮</string>
     <string name="InuHideMessageSummary">消息摘要按钮</string>
     <string name="InuHideIvSummary">Instant View 摘要</string>
     <string name="InuClearHints">清除所有提示</string>
@@ -197,8 +194,6 @@
     <string name="InuHideHashtagSuggestions">隐藏话题标签建议</string>
     <string name="InuHideAllChatsTab">隐藏「所有聊天」标签</string>
     <string name="InuHideAllChatsTabInfo">长按聊天列表中的标题即可显示「所有聊天」。</string>
-    <string name="InuRememberSelectedFolder">记住选中的分组</string>
-    <string name="InuRememberSelectedFolderInfo">返回聊天列表时重新打开上次处于活动状态的分组。</string>
     <string name="InuFoldersAtBottom">将文件夹移到底部</string>
     <string name="InuHideArchive">从聊天列表中移除「已归档聊天」</string>
     <string name="InuHideCallActionButton">隐藏标题中的通话按钮</string>
@@ -446,7 +441,6 @@
     <string name="InuForwardHeaderMode">转发标题</string>
     <string name="InuForwardHeaderModeRegular">常规</string>
     <string name="InuForwardHeaderModeIcon">图标</string>
-    <string name="InuForwardHeaderModeIconNoTimeInfo">“显示转发时间”关闭时与紧凑模式相同</string>
     <string name="InuForwardHeaderModeCompact">紧凑</string>
     <string name="InuShowForwardsCount">显示转发次数</string>
     <string name="InuCompactEdited">紧凑编辑指示器</string>
@@ -594,7 +588,6 @@
     <string name="InuCopyButtonText">复制「%1$s」</string>
     <string name="InuCopyCallbackData">复制回调数据</string>
     <string name="InuCallbackDataCopied">回调数据已复制</string>
-    <string name="InuNetwork">网络</string>
     <string name="InuAutoDisableProxyOnVpn">VPN 激活时禁用代理</string>
     <string name="InuFasterDownloads">加速下载</string>
     <string name="InuFasterUploads">加速上传</string>
@@ -894,7 +887,6 @@
     <string name="InuAiCopy">复制</string>
     <string name="InuAiCustomPrompt">自定义提示词</string>
     <string name="InuAiEmoji">表情符号</string>
-    <string name="InuAiEndpointModel">模型</string>
     <string name="InuAiEndpointUrl">终端 URL</string>
     <string name="InuAiError">请求失败：%1$s</string>
     <string name="InuAiGenerating">生成中…</string>
@@ -925,7 +917,6 @@
     <string name="InuCacheTtlMonth">1 个月前</string>
     <string name="InuCacheTtlNever">从不（永久保留）</string>
     <string name="InuCacheTtlWeek">1 周前</string>
-    <string name="InuCategories">分类</string>
     <string name="InuCenterTitleChats">同时在聊天/频道中居中</string>
     <string name="InuClearCache">清除缓存</string>
     <string name="InuClearDeletedCache">清除已删除消息缓存</string>
@@ -1001,10 +992,8 @@
     <string name="InuAiEditorButtonSetupInfo">请先在 AI 服务中添加 API 密钥；此按钮在撰写消息时生效。</string>
     <string name="InuAiInsertQuote">将回答作为引用插入</string>
     <string name="InuAiOnlyAnswer">仅显示回答</string>
-    <string name="InuAiProviderCustom">自定义</string>
     <string name="InuAiRoles">角色</string>
     <string name="InuAiRolesAssistant">助手</string>
-    <string name="InuAiSectionGeneral">常规</string>
     <string name="InuAiSectionGeneration">回复</string>
     <string name="InuAiSectionTemperature">温度</string>
     <string name="InuAiStream">流式传输回答</string>
@@ -1029,11 +1018,9 @@
     <string name="InuAiSummaryTemperatureInfo">数值越低，摘要越贴近原文。在你修改之前使用编辑器的温度。</string>
     <string name="InuAiTranscribe">语音转文字 (转录)</string>
     <string name="InuAiTranscribeAccountId">Account ID</string>
-    <string name="InuAiTranscribeApiKey">API 密钥</string>
     <string name="InuAiTranscribeApiToken">API 令牌</string>
     <string name="InuAiTranscribeFailed">转录失败：%1$s</string>
     <string name="InuAiTranscribeLanguage">语音语言</string>
-    <string name="InuAiTranscribeLanguageInfo">语音消息所用语言（如 en、uk、ru）。留空则自动检测。</string>
     <string name="InuAiTranscribeErrorDownload">无法下载该语音消息。</string>
     <string name="InuAiTranscribeErrorNoAudio">此消息没有可转写的音频。</string>
     <string name="InuAiTranscribeErrorEmpty">服务商返回了空的转写结果。</string>
@@ -1423,19 +1410,10 @@
     <string name="InuRecentChatsUsers">用户</string>
     <string name="InuRecentChatsEmpty">暂无内容</string>
     <string name="InuAiProvidersTitle">AI 提供商</string>
-    <string name="InuAiProvidersUniversalDesc">名称前的图标显示支持范围（∞ 聊天+语音，键盘仅聊天，麦克风仅语音）——点击配置，再为每个范围选择启用项。</string>
     <string name="InuAiProvidersActiveForChat">用于聊天</string>
     <string name="InuAiProvidersActiveForVoice">用于语音</string>
-    <string name="InuAiProvidersActiveBoth">聊天 + 语音</string>
-    <string name="InuAiProvidersSameModel">两者使用相同模型</string>
-    <string name="InuAiProvidersChatModelHint">聊天模型</string>
-    <string name="InuAiProvidersVoiceModelHint">语音模型</string>
-    <string name="InuAiProvidersOpenRouterInfo">通过一个 API 访问数百个模型。从 OpenRouter 获取密钥：</string>
-    <string name="InuAiProviderCustomNameHint">名称（可选）</string>
-    <string name="InuAiRolesScreenDesc">保存的 AI 角色设想（\"你是 X\"）。点击切换，点击当前激活的角色可重命名。</string>
     <string name="InuAiRoleNew">新建角色</string>
     <string name="InuAiRoleNameHint">名称</string>
-    <string name="InuAiRolePromptHint">自定义提示词（可选）</string>
     <string name="InuAiRolePromptDesc">设置后，此完整提示词将完全替换 \"你是某某\" 那行。</string>
     <string name="InuAiRoleDeleteConfirm">删除此角色？</string>
     <string name="InuAiRolesSubtitle">AI 在编辑器和摘要中扮演的角色。选择一个现成的，或编写你自己的提示词。</string>
@@ -1449,11 +1427,6 @@
     <string name="InuAiSummaryFailed">摘要失败：%1$s</string>
     <string name="InuAiInsertQuoteInfo">在 AI 编辑器中点击“使用”时，结果会以引用块形式替换草稿。关闭时以纯文本替换草稿。</string>
     <string name="InuAiOnlyAnswerInfo">适用于推理模型：隐藏思考过程，只保留最终回答。关闭时，思考内容会显示在回答上方的思考气泡之后。</string>
-    <string name="InuAiTranscribeGroqInfo">使用 Whisper Large v3 快速、免费转录。从 Groq 控制台获取免费密钥：</string>
-    <string name="InuAiTranscribeGeminiInfo">通过 Gemini 进行多模态音频转录。从 Google AI Studio 获取密钥：</string>
-    <string name="InuAiTranscribeOpenAiInfo">官方 OpenAI Whisper 转录。从 OpenAI 仪表板获取密钥：</string>
-    <string name="InuAiTranscribeCfInfo">需要 Cloudflare 账户 ID 和作用域为 Workers AI 的 API 令牌。在此管理令牌：</string>
-    <string name="InuAiTranscribeCustomInfo">输入任何兼容 OpenAI 的 /v1/audio/transcriptions 端点。</string>
     <string name="InuAiChatCustomInfo">任何兼容 OpenAI 的 API，例如 https://host/v1（也可填写完整的 /chat/completions 地址）。本地路由器可不填 API 密钥。</string>
     <string name="InuAiProvidersSubtitle">连接你自己的 AI 服务，用于编辑器、摘要和语音转文字。</string>
     <string name="InuAiProviderAdd">添加提供商</string>
@@ -1474,8 +1447,6 @@
     <string name="InuAiModelPickerTitle">选择模型</string>
     <string name="InuAiModelsLoading">正在加载模型…</string>
     <string name="InuAiModelEnterManually">手动输入模型</string>
-    <string name="InuAiTranscribeFetchModels">获取可用模型</string>
-    <string name="InuAiTranscribeFetchModelsEmpty">未找到模型</string>
     <string name="InuAiTranscribeFetchModelsFailed">无法获取模型：%1$s</string>
     <string name="InuBurnOneTime">销毁</string>
     <string name="InuGhostAutoOffline">自动切换为离线</string>

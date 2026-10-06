@@ -13,7 +13,6 @@
     <string name="InuSettings">Telegram Ayarları</string>
     <string name="InuSettingsInfo">through the land and wind I follow you</string>
     <string name="InuGeneral">Genel</string>
-    <string name="InuMiscellaneous">Çeşitli</string>
     <string name="InuWideChannelPosts">Geniş gönderiler</string>
     <string name="InuWideChannelPostsFooter">Kanal gönderileri ve iletilen mesajlar kullanılabilir tüm genişliği kaplar.</string>
     <string name="InuWideChannelPostsPreviewText">Haberler, fotoğraflar ve videolar</string>
@@ -75,7 +74,6 @@
     <string name="InuAnnoyancesGifts">Hediyeler ve Premium</string>
     <string name="InuAnnoyancesInterface">Sohbetler ve Arayüz</string>
     <string name="InuAnnoyancesChannels">Kanallar ve Öneriler</string>
-    <string name="InuAnnoyancesMedia">Medya</string>
     <string name="InuAnnoyancesAi">Yapay Zeka</string>
     <string name="InuAnnoyancesHints">İpuçları ve Hatırlatıcılar</string>
     <string name="InuMessages">Mesajlar</string>
@@ -267,7 +265,6 @@
     <string name="InuShowHiddenMessages">Mesajları göster</string>
     <string name="InuSpoilers">Sürprizler (Spoilers)</string>
     <string name="InuHideAiFeatures">Yapay zeka özelliklerini gizle</string>
-    <string name="InuHideAiEditor">Yapay zeka düzenleyici düğmesi</string>
     <string name="InuHideMessageSummary">Mesaj özeti düğmesi</string>
     <string name="InuHideIvSummary">Anında Görünüm özeti</string>
     <string name="InuClearHints">Tüm ipuçlarını kapat</string>
@@ -338,8 +335,6 @@
     <string name="InuFoldersUnreadCounterExcludeMutedNonDms">Özel sohbet dışındaki sessize alınanları hariç tut</string>
     <string name="InuHideAllChatsTab">\"Tüm Sohbetler\" sekmesini gizle</string>
     <string name="InuHideAllChatsTabInfo">Sohbet listesindeki başlığa uzun basmak \"Tüm Sohbetler\"i gösterir.</string>
-    <string name="InuRememberSelectedFolder">Seçilen klasörü hatırla</string>
-    <string name="InuRememberSelectedFolderInfo">Sohbet listesine dönerken son etkin klasörü yeniden aç.</string>
     <string name="InuFoldersAtBottom">Klasörleri alta taşı</string>
     <string name="InuHideArchive">\"Arşivlenmiş Sohbetler\"i sohbet listesinden kaldır</string>
     <string name="InuCommunityDisplayMode">Topluluklar</string>
@@ -587,7 +582,6 @@
     <string name="InuForwardHeaderMode">İletim başlığı</string>
     <string name="InuForwardHeaderModeRegular">Normal</string>
     <string name="InuForwardHeaderModeIcon">Simge</string>
-    <string name="InuForwardHeaderModeIconNoTimeInfo">&quot;İletilme zamanını göster&quot; kapalıyken Kompakt ile aynıdır</string>
     <string name="InuForwardHeaderModeCompact">Kompakt</string>
     <string name="InuShowForwardsCount">Yönlendirme sayısını göster</string>
     <string name="InuCompactEdited">Küçük düzenlendi göstergesi</string>
@@ -740,7 +734,6 @@
     <string name="InuCopyButtonText">\"%1$s\" kopyala</string>
     <string name="InuCopyCallbackData">Geri çağırma (callback) verisini kopyala</string>
     <string name="InuCallbackDataCopied">Geri çağırma verisi kopyalandı</string>
-    <string name="InuNetwork">Ağ</string>
     <string name="InuAutoDisableProxyOnVpn">VPN etkin olduğunda proxy\'yi devre dışı bırak</string>
     <string name="InuFasterDownloads">Daha hızlı indirmeler</string>
     <string name="InuFasterUploads">Daha hızlı yüklemeler</string>
@@ -892,7 +885,6 @@
     <string name="InuAiCopy">Kopyala</string>
     <string name="InuAiCustomPrompt">Özel komut</string>
     <string name="InuAiEmoji">Emoji</string>
-    <string name="InuAiEndpointModel">Model</string>
     <string name="InuAiEndpointUrl">Uç nokta URL\'si</string>
     <string name="InuAiError">İstek başarısız: %1$s</string>
     <string name="InuAiGenerating">Oluşturuluyor…</string>
@@ -923,7 +915,6 @@
     <string name="InuCacheTtlMonth">1 aydan eski</string>
     <string name="InuCacheTtlNever">Asla (sürekli tut)</string>
     <string name="InuCacheTtlWeek">1 haftadan eski</string>
-    <string name="InuCategories">Kategoriler</string>
     <string name="InuCenterTitleChats">Sohbetlerde/kanallarda da ortala</string>
     <string name="InuClearCache">Önbelleği temizle</string>
     <string name="InuClearDeletedCache">Silinen mesaj önbelleğini temizle</string>
@@ -999,10 +990,8 @@
     <string name="InuAiEditorButtonSetupInfo">Önce AI Hizmetleri\'nde bir API anahtarı ekleyin; bu düğme mesaj yazarken çalışır.</string>
     <string name="InuAiInsertQuote">Yanıtı alıntı olarak ekle</string>
     <string name="InuAiOnlyAnswer">Yalnızca yanıtı göster</string>
-    <string name="InuAiProviderCustom">Özel</string>
     <string name="InuAiRoles">Roller</string>
     <string name="InuAiRolesAssistant">Asistan</string>
-    <string name="InuAiSectionGeneral">Genel</string>
     <string name="InuAiSectionGeneration">Yanıtlar</string>
     <string name="InuAiSectionTemperature">Sıcaklık (Temperature)</string>
     <string name="InuAiStream">Akışlı yanıt</string>
@@ -1027,11 +1016,9 @@
     <string name="InuAiSummaryTemperatureInfo">Düşük değerler özetleri orijinale daha yakın tutar. Siz değiştirene kadar düzenleyici sıcaklığı kullanılır.</string>
     <string name="InuAiTranscribe">Sesi Metne Dönüştür (Transkripsiyon)</string>
     <string name="InuAiTranscribeAccountId">Account ID</string>
-    <string name="InuAiTranscribeApiKey">API anahtarı</string>
     <string name="InuAiTranscribeApiToken">API belirteci</string>
     <string name="InuAiTranscribeFailed">Metne dönüştürme başarısız: %1$s</string>
     <string name="InuAiTranscribeLanguage">Konuşma dili</string>
-    <string name="InuAiTranscribeLanguageInfo">Sesli mesajlarda konuşulan dil (örn. en, uk, ru). Boş = otomatik algılama.</string>
     <string name="InuAiTranscribeErrorDownload">Sesli mesaj indirilemedi.</string>
     <string name="InuAiTranscribeErrorNoAudio">Bu mesajda deşifre edilecek ses yok.</string>
     <string name="InuAiTranscribeErrorEmpty">Sağlayıcı boş bir deşifre döndürdü.</string>
@@ -1421,19 +1408,10 @@
     <string name="InuRecentChatsUsers">Kullanıcılar</string>
     <string name="InuRecentChatsEmpty">Henüz boş</string>
     <string name="InuAiProvidersTitle">YZ Sağlayıcıları</string>
-    <string name="InuAiProvidersUniversalDesc">Adın önündeki simge desteği gösterir (∞ sohbet+ses, klavye yalnızca sohbet, mikrofon yalnızca ses) — dokunup yapılandırın, ardından her kapsam için birini etkinleştirin.</string>
     <string name="InuAiProvidersActiveForChat">Sohbet için etkin</string>
     <string name="InuAiProvidersActiveForVoice">Ses için etkin</string>
-    <string name="InuAiProvidersActiveBoth">Sohbet + Ses</string>
-    <string name="InuAiProvidersSameModel">Her ikisi için aynı modeli kullan</string>
-    <string name="InuAiProvidersChatModelHint">Sohbet modeli</string>
-    <string name="InuAiProvidersVoiceModelHint">Ses modeli</string>
-    <string name="InuAiProvidersOpenRouterInfo">Tek bir API ile yüzlerce modele erişin. OpenRouter\'dan bir anahtar alın:</string>
-    <string name="InuAiProviderCustomNameHint">Ad (isteğe bağlı)</string>
-    <string name="InuAiRolesScreenDesc">YZ\'nin canlandırması istenen kayıtlı kişilikler (\"Sen X\'sin\"). Değiştirmek için dokunun, yeniden adlandırmak için etkin olana dokunun.</string>
     <string name="InuAiRoleNew">Yeni rol</string>
     <string name="InuAiRoleNameHint">Ad</string>
-    <string name="InuAiRolePromptHint">Özel istem (isteğe bağlı)</string>
     <string name="InuAiRolePromptDesc">Ayarlanırsa bu tam istem, \"Sen X\'sin\" satırının yerini tamamen alır.</string>
     <string name="InuAiRoleDeleteConfirm">Bu rol silinsin mi?</string>
     <string name="InuAiRolesSubtitle">Yapay zekânın düzenleyicide ve özetlerde üstlendiği kişilikler. Birini seçin veya kendi isteminizi yazın.</string>
@@ -1447,11 +1425,6 @@
     <string name="InuAiSummaryFailed">Özet başarısız: %1$s</string>
     <string name="InuAiInsertQuoteInfo">Yapay zeka düzenleyicide Kullan seçeneğine dokunduğunuzda sonuç taslağınızın yerine alıntı bloğu olarak geçer. Kapalıyken düz metin olarak geçer.</string>
     <string name="InuAiOnlyAnswerInfo">Akıl yürüten modeller için: düşünme sürecini gizler, yalnızca son yanıtı bırakır. Kapalıyken düşünme, yanıtın üstünde düşünce balonundan sonra görünür.</string>
-    <string name="InuAiTranscribeGroqInfo">Hızlı, ücretsiz Whisper Large v3 transkripsiyonu. Groq konsolundan ücretsiz bir anahtar alın:</string>
-    <string name="InuAiTranscribeGeminiInfo">Gemini aracılığıyla çok modlu ses transkripsiyonu. Google AI Studio\'dan bir anahtar alın:</string>
-    <string name="InuAiTranscribeOpenAiInfo">Resmi OpenAI Whisper transkripsiyonu. OpenAI kontrol panelinden bir anahtar alın:</string>
-    <string name="InuAiTranscribeCfInfo">Bir Cloudflare Hesap Kimliği ve Workers AI kapsamlı bir API Belirteci gerektirir. Belirteçleri buradan yönetin:</string>
-    <string name="InuAiTranscribeCustomInfo">Herhangi bir OpenAI uyumlu /v1/audio/transcriptions uç noktası girin.</string>
     <string name="InuAiChatCustomInfo">OpenAI uyumlu herhangi bir API, örn. https://host/v1 (tam /chat/completions adresi de olur). Yerel yönlendiriciler için API anahtarı isteğe bağlıdır.</string>
     <string name="InuAiProvidersSubtitle">Düzenleyici, özetler ve ses yazıya çevirme için kendi yapay zekâ hizmetlerinizi bağlayın.</string>
     <string name="InuAiProviderAdd">Sağlayıcı ekle</string>
@@ -1472,8 +1445,6 @@
     <string name="InuAiModelPickerTitle">Model seçin</string>
     <string name="InuAiModelsLoading">Modeller yükleniyor…</string>
     <string name="InuAiModelEnterManually">Modeli elle gir</string>
-    <string name="InuAiTranscribeFetchModels">Kullanılabilir modelleri getir</string>
-    <string name="InuAiTranscribeFetchModelsEmpty">Model bulunamadı</string>
     <string name="InuAiTranscribeFetchModelsFailed">Modeller alınamadı: %1$s</string>
     <string name="InuBurnOneTime">Yok et</string>
     <string name="InuGhostAutoOffline">Otomatik olarak çevrimdışı ol</string>

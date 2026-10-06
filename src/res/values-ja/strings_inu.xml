@@ -5,7 +5,6 @@
     <string name="InuSettings">Telegram 設定</string>
     <string name="InuSettingsInfo">犬は何してるの？</string>
     <string name="InuGeneral">一般</string>
-    <string name="InuMiscellaneous">その他</string>
     <string name="InuWideChannelPosts">ワイド投稿</string>
     <string name="InuWideChannelPostsFooter">チャンネルの投稿と転送メッセージが画面幅いっぱいに表示されます。</string>
     <string name="InuWideChannelPostsPreviewText">ニュース、写真、動画</string>
@@ -67,7 +66,6 @@
     <string name="InuAnnoyancesGifts">ギフトとプレミアム</string>
     <string name="InuAnnoyancesInterface">チャットとインターフェース</string>
     <string name="InuAnnoyancesChannels">チャンネルとおすすめ</string>
-    <string name="InuAnnoyancesMedia">メディア</string>
     <string name="InuAnnoyancesAi">人工知能 (AI)</string>
     <string name="InuAnnoyancesHints">ヒントとリマインダー</string>
     <string name="InuMessages">メッセージ</string>
@@ -168,7 +166,6 @@
     <string name="InuPredictiveBackStock">標準</string>
     <string name="InuPredictiveBackMaterial3">Material 3</string>
     <string name="InuHideAiFeatures">AI 機能を非表示</string>
-    <string name="InuHideAiEditor">AI エディターボタン</string>
     <string name="InuHideMessageSummary">メッセージ要約ボタン</string>
     <string name="InuHideIvSummary">Instant View 要約</string>
     <string name="InuClearHints">すべてのヒントを削除</string>
@@ -197,8 +194,6 @@
     <string name="InuHideHashtagSuggestions">ハッシュタグ候補を非表示</string>
     <string name="InuHideAllChatsTab">「すべてのチャット」タブを非表示</string>
     <string name="InuHideAllChatsTabInfo">チャットリストのタイトルを長押しすると「すべてのチャット」が表示されます。</string>
-    <string name="InuRememberSelectedFolder">選択したフォルダーを記憶</string>
-    <string name="InuRememberSelectedFolderInfo">チャット一覧に戻ったときに最後に開いていたフォルダーを開きます。</string>
     <string name="InuFoldersAtBottom">フォルダーを下部に移動</string>
     <string name="InuHideArchive">チャットリストから「アーカイブ」を削除</string>
     <string name="InuHideCallActionButton">タイトルの通話ボタンを非表示</string>
@@ -447,7 +442,6 @@
     <string name="InuForwardHeaderMode">転送ヘッダー</string>
     <string name="InuForwardHeaderModeRegular">通常</string>
     <string name="InuForwardHeaderModeIcon">アイコン</string>
-    <string name="InuForwardHeaderModeIconNoTimeInfo">「転送時刻を表示」がオフの場合はコンパクトと同じです</string>
     <string name="InuForwardHeaderModeCompact">コンパクト</string>
     <string name="InuShowForwardsCount">転送数を表示</string>
     <string name="InuCompactEdited">コンパクトな編集インジケーター</string>
@@ -595,7 +589,6 @@
     <string name="InuCopyButtonText">「%1$s」をコピー</string>
     <string name="InuCopyCallbackData">コールバックデータをコピー</string>
     <string name="InuCallbackDataCopied">コールバックデータをコピーしました</string>
-    <string name="InuNetwork">ネットワーク</string>
     <string name="InuAutoDisableProxyOnVpn">VPN 使用時はプロキシを無効化</string>
     <string name="InuFasterDownloads">ダウンロード高速化</string>
     <string name="InuFasterUploads">アップロード高速化</string>
@@ -899,7 +892,6 @@
     <string name="InuAiCopy">コピー</string>
     <string name="InuAiCustomPrompt">カスタムプロンプト</string>
     <string name="InuAiEmoji">絵文字</string>
-    <string name="InuAiEndpointModel">モデル</string>
     <string name="InuAiEndpointUrl">エンドポイントURL</string>
     <string name="InuAiError">リクエストに失敗しました: %1$s</string>
     <string name="InuAiGenerating">生成中…</string>
@@ -930,7 +922,6 @@
     <string name="InuCacheTtlMonth">1ヶ月以上前</string>
     <string name="InuCacheTtlNever">無効（永久保持）</string>
     <string name="InuCacheTtlWeek">1週間以上前</string>
-    <string name="InuCategories">カテゴリー</string>
     <string name="InuCenterTitleChats">チャット/チャンネルでも中央揃え</string>
     <string name="InuClearCache">キャッシュを消去</string>
     <string name="InuClearDeletedCache">削除済みメッセージのキャッシュを消去</string>
@@ -1005,10 +996,8 @@
     <string name="InuAiEditorButtonSetupInfo">まずAIサービスでAPIキーを追加してください。このボタンはメッセージ作成時に機能します。</string>
     <string name="InuAiInsertQuote">回答を引用として挿入</string>
     <string name="InuAiOnlyAnswer">回答のみを表示</string>
-    <string name="InuAiProviderCustom">カスタム</string>
     <string name="InuAiRoles">役割</string>
     <string name="InuAiRolesAssistant">アシスタント</string>
-    <string name="InuAiSectionGeneral">一般</string>
     <string name="InuAiSectionGeneration">回答</string>
     <string name="InuAiSectionTemperature">温度 (Temperature)</string>
     <string name="InuAiStream">ストリーミング応答</string>
@@ -1033,11 +1022,9 @@
     <string name="InuAiSummaryTemperatureInfo">値が低いほど要約が原文に近くなります。変更するまではエディターの温度が使われます。</string>
     <string name="InuAiTranscribe">音声文字起こし</string>
     <string name="InuAiTranscribeAccountId">Account ID</string>
-    <string name="InuAiTranscribeApiKey">API キー</string>
     <string name="InuAiTranscribeApiToken">API トークン</string>
     <string name="InuAiTranscribeFailed">文字起こしに失敗しました: %1$s</string>
     <string name="InuAiTranscribeLanguage">話される言語</string>
-    <string name="InuAiTranscribeLanguageInfo">ボイスメッセージで話される言語 (例: en、uk、ru)。空欄は自動判定。</string>
     <string name="InuAiTranscribeErrorDownload">ボイスメッセージをダウンロードできませんでした。</string>
     <string name="InuAiTranscribeErrorNoAudio">このメッセージには文字起こしできる音声がありません。</string>
     <string name="InuAiTranscribeErrorEmpty">プロバイダーが空の文字起こしを返しました。</string>
@@ -1413,19 +1400,10 @@
     <string name="InuRecentChatsUsers">ユーザー</string>
     <string name="InuRecentChatsEmpty">まだ何もありません</string>
     <string name="InuAiProvidersTitle">AIプロバイダー</string>
-    <string name="InuAiProvidersUniversalDesc">名前前のアイコンで対応範囲がわかります（∞はチャット+音声、キーボードはチャットのみ、マイクは音声のみ）— タップして設定し、各スコープでアクティブなものを選んでください。</string>
     <string name="InuAiProvidersActiveForChat">チャットで有効</string>
     <string name="InuAiProvidersActiveForVoice">音声で有効</string>
-    <string name="InuAiProvidersActiveBoth">チャット + 音声</string>
-    <string name="InuAiProvidersSameModel">両方に同じモデルを使用</string>
-    <string name="InuAiProvidersChatModelHint">チャットモデル</string>
-    <string name="InuAiProvidersVoiceModelHint">音声モデル</string>
-    <string name="InuAiProvidersOpenRouterInfo">単一のAPIで数百のモデルにアクセスできます。OpenRouterからキーを取得:</string>
-    <string name="InuAiProviderCustomNameHint">名前（省略可）</string>
-    <string name="InuAiRolesScreenDesc">AIが演じる保存されたペルソナ（「あなたはXです」）。タップして切り替え、アクティブなものをタップして名前を変更できます。</string>
     <string name="InuAiRoleNew">新しいロール</string>
     <string name="InuAiRoleNameHint">名前</string>
-    <string name="InuAiRolePromptHint">カスタムプロンプト（省略可）</string>
     <string name="InuAiRolePromptDesc">設定すると、このプロンプト全体が「あなたは〜」の行を完全に置き換えます。</string>
     <string name="InuAiRoleDeleteConfirm">このロールを削除しますか？</string>
     <string name="InuAiRolesSubtitle">エディターや要約でAIが演じる役割です。用意された役割を選ぶか、自分のプロンプトを書いてください。</string>
@@ -1439,11 +1417,6 @@
     <string name="InuAiSummaryFailed">要約に失敗しました: %1$s</string>
     <string name="InuAiInsertQuoteInfo">AIエディターで「使用」を押すと、結果が引用ブロックとして下書きを置き換えます。オフの場合は通常のテキストで置き換えます。</string>
     <string name="InuAiOnlyAnswerInfo">推論モデル向け: 思考過程を隠し、最終的な回答だけを残します。オフの場合、思考は吹き出しの後に回答の上に表示されます。</string>
-    <string name="InuAiTranscribeGroqInfo">Whisper Large v3 による高速で無料の文字起こし。Groqコンソールから無料キーを取得:</string>
-    <string name="InuAiTranscribeGeminiInfo">Gemini によるマルチモーダル音声文字起こし。Google AI Studio からキーを取得:</string>
-    <string name="InuAiTranscribeOpenAiInfo">公式の OpenAI Whisper 文字起こし。OpenAIダッシュボードからキーを取得:</string>
-    <string name="InuAiTranscribeCfInfo">CloudflareアカウントIDとWorkers AIスコープのAPIトークンが必要です。トークンの管理:</string>
-    <string name="InuAiTranscribeCustomInfo">OpenAI互換の /v1/audio/transcriptions エンドポイントを入力してください。</string>
     <string name="InuAiChatCustomInfo">OpenAI互換のAPIならどれでも使えます（例: https://host/v1。/chat/completions の完全なURLも可）。ローカルルーターではAPIキーは不要です。</string>
     <string name="InuAiProvidersSubtitle">エディター、要約、音声文字起こしに使う独自のAIサービスを接続します。</string>
     <string name="InuAiProviderAdd">プロバイダーを追加</string>
@@ -1464,8 +1437,6 @@
     <string name="InuAiModelPickerTitle">モデルを選択</string>
     <string name="InuAiModelsLoading">モデルを読み込み中…</string>
     <string name="InuAiModelEnterManually">モデルを手動で入力</string>
-    <string name="InuAiTranscribeFetchModels">利用可能なモデルを取得</string>
-    <string name="InuAiTranscribeFetchModelsEmpty">モデルが見つかりません</string>
     <string name="InuAiTranscribeFetchModelsFailed">モデルを取得できませんでした: %1$s</string>
     <string name="InuBurnOneTime">破棄</string>
     <string name="InuGhostAutoOffline">自動的にオフラインにする</string>
