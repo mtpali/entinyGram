@@ -10,7 +10,7 @@
     <string name="InuDrawerBackGestureInfo">Sohbet listesinin sol kenarından sağa kaydırmak, uygulamadan çıkmak yerine yan menüyü açar.</string>
     <string name="InuDrawerM3Sections">Yan menüde modüler bölümler</string>
     <string name="InuDrawerM3SectionsInfo">Yan menü öğelerini yuvarlatılmış Material 3 kartları olarak gruplar.</string>
-    <string name="InuSettings">entinyGram Ayarları</string>
+    <string name="InuSettings">Telegram Ayarları</string>
     <string name="InuSettingsInfo">through the land and wind I follow you</string>
     <string name="InuGeneral">Genel</string>
     <string name="InuMiscellaneous">Çeşitli</string>
@@ -375,7 +375,7 @@
     <string name="InuConfirmReactionText">**%2$s** sohbetine %1$s tepkisi gönderilsin mi?</string>
     <string name="InuNotificationIcon">Bildirim simgesi</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">entinyGram</string>
+    <string name="InuNotificationIconNagramXF">NagramXF</string>
     <string name="InuDisableChatBubbles">Android bildirim balonlarını devre dışı bırak</string>
     <string name="InuInPlaceTranslation">Yerinde çeviri</string>
     <string name="InuTranslateWebPreviews">Web önizlemelerini çevir</string>
@@ -628,7 +628,7 @@
     <string name="InuCodeBlock">Kod bloğu</string>
     <string name="InuCut">Kes</string>
     <string name="InuCodeLanguage">Kod dili</string>
-    <string name="InuVersion">entinyGram v%1$s (derleme %2$s)</string>
+    <string name="InuVersion">Telegram v%1$s (derleme %2$s)</string>
 
     <string name="InuSearchFilter">Medyaya göre filtrele</string>
     <string name="InuSearchFilterPhotos">Fotoğraflar</string>
@@ -650,7 +650,7 @@
     <string name="InuEventLogShowDiff">Farkları göster</string>
     <string name="InuShowPinnedPanel">Sabitlenmiş mesajları göster</string>
     <string name="InuAppIconStock">Varsayılan</string>
-    <string name="InuAppIconLicenseInugram">Yer tutucu simge, daha iyisini katkıda bulunmaktan çekinmeyin</string>
+    <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">Simge **Telegram** tarafından yapılmıştır. Tüm hakları saklıdır.</string>
     <string name="InuJumpToBeginning">En başa git</string>
 
@@ -684,11 +684,11 @@
     <string name="InuBackupImportSheetCancel">Hayır, olduğu gibi bırak</string>
     <string name="InuBackupSettings">Yedekleme ve sıfırlama</string>
     <string name="InuBackupReset">Ayarları sıfırla</string>
-    <string name="InuBackupResetConfirm">Tüm entinyGram ayarları varsayılan değerlerine sıfırlanacaktır. Sohbetleriniz, hesaplarınız ve Telegram\'ın kendi ayarları aynı kalır.\n\nBu işlem geri alınamaz.</string>
+    <string name="InuBackupResetConfirm">Tüm Telegram ayarları varsayılan değerlerine sıfırlanacaktır. Sohbetleriniz, hesaplarınız ve Telegram\'ın kendi ayarları aynı kalır.\n\nBu işlem geri alınamaz.</string>
     <string name="InuBackupResetSuccess">%1$d ayar sıfırlandı</string>
     <string name="InuBackupResetNoChanges">Ayarlar zaten varsayılan durumunda</string>
     <string name="InuCloudSync">Ayarları senkronize et</string>
-    <string name="InuCloudSyncDesc">entinyGram ayarlarınızı [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) üzerinden Telegram bulutuna yedekler — verileriniz sunucularımıza asla ulaşmaz.</string>
+    <string name="InuCloudSyncDesc">Telegram ayarlarınızı [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) üzerinden Telegram bulutuna yedekler — verileriniz sunucularımıza asla ulaşmaz.</string>
     <string name="InuCloudSyncNow">Şimdi senkronize et</string>
     <string name="InuCloudSyncing">Senkronize ediliyor…</string>
     <string name="InuCloudRestore">Buluttan geri yükle</string>
@@ -750,7 +750,7 @@
     <string name="InuMentionInsertTitle">Bahsetme ekle</string>
     <string name="InuPasscode">Parola</string>
     <string name="InuPasscodeNeeded">Önce bir Telegram parolası ayarlayın.</string>
-    <string name="InuPasscodeShowInSettings">entinyGram ayarlarında göster</string>
+    <string name="InuPasscodeShowInSettings">Telegram ayarlarında göster</string>
     <string name="InuPasscodeShowInSettingsInfo">Kapalıyken bu sayfa yalnızca aşağıdaki bağlantıyla açılır — şimdi kaydedin.</string>
     <string name="InuPasscodeAccountsInfo">Hesaba özel parolalar: kilit ekranında parolayı girerek kilidi açıp o hesaba geçin.</string>
     <string name="InuPasscodeStateNone">Yapılandırılmadı</string>
@@ -801,12 +801,12 @@
     <string name="InuGoToMessagePrompt">Mesaj Kimliği (ID)</string>
     <string name="InuPrivacySecurity">Gizlilik &amp; Güvenlik</string>
     <string name="InuPerAccountPasscode">Hesap başına parola</string>
-    <string name="InuHideInugramSettings">entinyGram ayarlarını gizle</string>
+    <string name="InuHideInugramSettings">Telegram ayarlarını gizle</string>
     <string name="InuParanoiaDisableNotifications">Bildirimleri devre dışı bırak</string>
     <string name="InuParanoiaHideOtherAccounts">Diğer hesapları gizle</string>
     <string name="InuParanoiaHideFolders">Klasörleri gizle</string>
     <string name="InuParanoiaDisguise">Telegram olarak gizle</string>
-    <string name="InuParanoiaDisguiseInfo">Yalnızca başlatıcı simgesi ve adı değişir; bildirimler hâlâ \"entinyGram\" yazar.</string>
+    <string name="InuParanoiaDisguiseInfo">Yalnızca başlatıcı simgesi ve adı değişir; bildirimler hâlâ \"Telegram\" yazar.</string>
     <string name="InuParanoiaMode">Paranoia modu</string>
     <string name="InuParanoiaModeInfo">\"Tehlikeli\" sohbetleri gizler ve uygulamayı isteğe bağlı olarak kılığa sokar — karıştıran bir göze hazırlıklı olun.</string>
     <string name="InuParanoiaLauncherShortcut">Başlatıcı kısayolu</string>
@@ -831,17 +831,17 @@
     <string name="InuBotSettings">Bot Ayarları</string>
     <string name="InuBotHelp">Bot Yardımı</string>
 
-    <string name="InuCrashTitle">entinyGram geçen sefer çöktü</string>
-    <string name="InuCrashTitleOom">entinyGram bellek yetersizliği yaşadı</string>
+    <string name="InuCrashTitle">Telegram geçen sefer çöktü</string>
+    <string name="InuCrashTitleOom">Telegram bellek yetersizliği yaşadı</string>
     <string name="InuCrashDesc">Bunun için üzgünüz. Düzeltilmesine yardımcı olmak için çökme günlüğünü geliştiriciyle paylaşabilirsiniz.</string>
     <string name="InuCrashDescOom">Bunun için üzgünüz. Çökme günlükleri bellek yetersizliği sorunları için pek yararlı değildir — bellek dökümü (heap dump) daha çok yardımcı olur.</string>
     <string name="InuCrashDescHeapDump">Bir bellek dökümü de kaydedildi. BUNU PAYLAŞMAYIN! Özel veriler içerir! İsterseniz kendiniz inceleyin ve bulgularınızı paylaşın — bu çok yardımcı olur.</string>
-    <string name="InuCrashOomEnableLogs">Gelecekteki her OOM durumunda bellek dökümü oluşturmak için entinyGram Ayarları > Hakkında bölümünden hata ayıklama modunu etkinleştirin.</string>
+    <string name="InuCrashOomEnableLogs">Gelecekteki her OOM durumunda bellek dökümü oluşturmak için Telegram Ayarları > Hakkında bölümünden hata ayıklama modunu etkinleştirin.</string>
     <string name="InuCrashShare">Çökme günlüğünü paylaş</string>
     <string name="InuCrashShareHeapDump">Bellek dökümünü kaydet</string>
     <string name="InuCrashDiscard">Vazgeç</string>
     <string name="InuCrashChannel">Çökme kurtarma</string>
-    <string name="InuCrashNotifTitle">entinyGram çöktü</string>
+    <string name="InuCrashNotifTitle">Telegram çöktü</string>
     <string name="InuCrashNotifText">Yeniden başlatmak için dokunun</string>
 
     <string name="InuLogs">Hata Ayıklama</string>
@@ -1046,7 +1046,6 @@
     <string name="InuDisableFlagSecure">FLAG_SECURE\'ı devre dışı bırak</string>
     <string name="InuDisableFlagSecureInfo">Ekran görüntüsü engelini kaldırır: gizli sohbetlerde, süreli medyalarda ve korumalı kanallarda ekran görüntüsü ve video kaydına izin verir.</string>
     <string name="InuAntiDeletion">Silinmeyi önleme</string>
-    <string name="InuAppIconOldEntinygram">Eski entinyGram</string>
     <string name="InuCategoryAppearance">Tasarım</string>
     <string name="InuCategoryBackup">Ek ayarlar</string>
     <string name="InuCategoryBehavior">Davranış ve Araçlar</string>
@@ -1303,7 +1302,6 @@
     <string name="InuMsgDetailWaveformLength">Dalga formu örnekleri</string>
     <string name="InuNo">Hayır</string>
     <string name="InuNoProfilePhotos">Profil fotoğrafı bulunamadı</string>
-    <string name="InuNotificationIconOldEntinygram">Eski entinyGram</string>
     <string name="InuNotificationIconInfo">Xiaomi cihazlarda (MIUI/HyperOS) sistem bu simgeyi uygulama simgesiyle değiştirebilir; bu nedenle seçim orada görünmeyebilir</string>
     <string name="InuPoweredByProvider">Çeviriler %1$s tarafından desteklenmektedir.</string>
     <string name="InuProfilePhotosDeleted">Tüm profil fotoğrafları silindi</string>

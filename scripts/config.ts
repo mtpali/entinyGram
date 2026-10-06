@@ -154,6 +154,16 @@ export const forkSyncFiles: ForkSyncFile[] = [
   },
 ]
 
+for (const density of ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']) {
+  for (const type of ['mipmap', 'drawable']) {
+    forkSyncFiles.push({
+      source: `src/res/launcher/generated/${type}-${density}/*`,
+      target: `TMessagesProj/src/main/res/${type}-${density}`,
+      replace: true,
+    })
+  }
+}
+
 export const ICON_SELECTION: { pack: IconifyJSON, icons: string[], options?: SvgToDrawableOptions }[] = [
   {
     pack: tablerIcons,

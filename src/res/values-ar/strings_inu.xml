@@ -17,7 +17,7 @@
     <string name="InuDrawerM3SectionsInfo">تجمّع عناصر القائمة الجانبية في بطاقات مستديرة بنمط Material 3.</string>
     <string name="InuShowDrawerAccounts">إظهار الحسابات في القائمة</string>
     <string name="InuShowDrawerAccountsInfo">إظهار مبدّل الحسابات القابل للتوسيع أسفل ملفك الشخصي.</string>
-    <string name="InuSettings">إعدادات entinyGram</string>
+    <string name="InuSettings">إعدادات Telegram</string>
     <string name="InuSettingsInfo">عبر الأرض والرياح أتبعك</string>
     <string name="InuGeneral">عام</string>
     <string name="InuMiscellaneous">متفرقات</string>
@@ -480,10 +480,8 @@
     <string name="InuConfirmReactionText">إرسال التفاعل %1$s في **%2$s**؟</string>
     <string name="InuNotificationIcon">أيقونة الإشعار</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">entinyGram</string>
-    <string name="InuNotificationIconOldEntinygram">entinyGram القديمة</string>
+    <string name="InuNotificationIconNagramXF">NagramXF</string>
     <string name="InuNotificationIconInfo">على أجهزة Xiaomi (MIUI/HyperOS) قد يستبدل النظام هذه الأيقونة بأيقونة التطبيق، لذا قد لا يظهر الاختيار هناك</string>
-    <string name="InuAppIconOldEntinygram">entinyGram القديمة</string>
     <string name="InuDisableChatBubbles">تعطيل فقاعات إشعارات Android</string>
     <string name="InuInPlaceTranslation">الترجمة في المكان</string>
     <string name="InuTranslateWebPreviews">ترجمة معاينات الويب</string>
@@ -860,7 +858,7 @@
     <string name="InuCodeBlock">كتلة شيفرة</string>
     <string name="InuCut">قص</string>
     <string name="InuCodeLanguage">لغة الشيفرة</string>
-    <string name="InuVersion">entinyGram %1$s (%2$s)</string>
+    <string name="InuVersion">Telegram %1$s (%2$s)</string>
     <string name="InuCategories">الفئات</string>
     <string name="InuDataBackup">النسخ الاحتياطي &amp; المزامنة</string>
 
@@ -887,7 +885,7 @@
     <string name="InuHidePinnedUntilNew">حتى تثبيت رسالة جديدة</string>
     <string name="InuHidePinnedForever">دائماً في هذه المحادثة</string>
     <string name="InuAppIconStock">الأساسية</string>
-    <string name="InuAppIconLicenseInugram">أيقونة مؤقتة، نرحب بمساهمتك بأيقونة أفضل</string>
+    <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">الأيقونة من **Telegram**. جميع الحقوق محفوظة.</string>
     <string name="InuJumpToBeginning">الانتقال إلى البداية</string>
     <string name="InuRecentChats">المحادثات الأخيرة</string>
@@ -943,11 +941,11 @@
     <string name="InuBackupImportSheetCancel">لا، ترك كما هي</string>
     <string name="InuBackupSettings">النسخ الاحتياطي &amp; إعادة التعيين</string>
     <string name="InuBackupReset">إعادة تعيين الإعدادات</string>
-    <string name="InuBackupResetConfirm">ستُعاد جميع إعدادات entinyGram إلى قيمها الافتراضية. تبقى محادثاتك وحساباتك وإعدادات Telegram الخاصة كما هي.\n\nلا يمكن التراجع عن هذا.</string>
+    <string name="InuBackupResetConfirm">ستُعاد جميع إعدادات Telegram إلى قيمها الافتراضية. تبقى محادثاتك وحساباتك وإعدادات Telegram الخاصة كما هي.\n\nلا يمكن التراجع عن هذا.</string>
     <string name="InuBackupResetSuccess">تمت إعادة تعيين %1$d إعداد</string>
     <string name="InuBackupResetNoChanges">الإعدادات على قيمها الافتراضية بالفعل</string>
     <string name="InuCloudSync">مزامنة الإعدادات</string>
-    <string name="InuCloudSyncDesc">ينسخ إعدادات entinyGram احتياطياً إلى سحابة Telegram عبر [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) — لا تمر بياناتك بخوادمنا أبداً.</string>
+    <string name="InuCloudSyncDesc">ينسخ إعدادات Telegram احتياطياً إلى سحابة Telegram عبر [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) — لا تمر بياناتك بخوادمنا أبداً.</string>
     <string name="InuCloudSyncNow">مزامنة الآن</string>
     <string name="InuCloudSyncing">جارٍ المزامنة…</string>
     <string name="InuCloudRestore">استعادة من السحابة</string>
@@ -1019,7 +1017,7 @@
     <string name="InuMentionInsertTitle">إدراج إشارة</string>
     <string name="InuPasscode">رمز المرور</string>
     <string name="InuPasscodeNeeded">اضبط رمز مرور Telegram أولاً.</string>
-    <string name="InuPasscodeShowInSettings">إظهار في إعدادات entinyGram</string>
+    <string name="InuPasscodeShowInSettings">إظهار في إعدادات Telegram</string>
     <string name="InuPasscodeShowInSettingsInfo">عند الإيقاف، تُفتح هذه الصفحة عبر الرابط أدناه فقط — احفظه الآن.</string>
     <string name="InuPasscodeAccountsInfo">رموز مرور لكل حساب: أدخل أحدها في شاشة القفل لفتح القفل والتبديل إلى ذلك الحساب.</string>
     <string name="InuPasscodeStateNone">غير مضبوط</string>
@@ -1079,13 +1077,13 @@
     <string name="InuGoToMessagePrompt">معرّف الرسالة</string>
     <string name="InuPrivacySecurity">الخصوصية &amp; الأمان</string>
     <string name="InuPerAccountPasscode">رمز مرور لكل حساب</string>
-    <string name="InuHideInugramSettings">إخفاء إعدادات entinyGram</string>
+    <string name="InuHideInugramSettings">إخفاء إعدادات Telegram</string>
     <string name="InuParanoiaDisableNotifications">تعطيل الإشعارات</string>
     <string name="InuParanoiaHideOtherAccounts">إخفاء الحسابات الأخرى</string>
     <string name="InuParanoiaHideFolders">إخفاء المجلدات</string>
     <string name="InuParanoiaHideMyStories">إخفاء قصصي</string>
     <string name="InuParanoiaDisguise">التنكر كـ Telegram</string>
-    <string name="InuParanoiaDisguiseInfo">يتغير فقط رمز المشغّل والاسم؛ تبقى الإشعارات تذكر \"entinyGram\".</string>
+    <string name="InuParanoiaDisguiseInfo">يتغير فقط رمز المشغّل والاسم؛ تبقى الإشعارات تذكر \"Telegram\".</string>
     <string name="InuParanoiaMode">وضع الارتياب</string>
     <string name="InuParanoiaModeInfo">يخفي المحادثات \"الخطرة\" ويُنكّر التطبيق اختيارياً — كن مستعداً لمتطفّل.</string>
     <string name="InuParanoiaLauncherShortcut">اختصار المشغّل</string>
@@ -1110,17 +1108,17 @@
     <string name="InuBotSettings">إعدادات البوت</string>
     <string name="InuBotHelp">مساعدة البوت</string>
 
-    <string name="InuCrashTitle">تعطّل entinyGram في المرة السابقة</string>
-    <string name="InuCrashTitleOom">نفدت ذاكرة entinyGram</string>
+    <string name="InuCrashTitle">تعطّل Telegram في المرة السابقة</string>
+    <string name="InuCrashTitleOom">نفدت ذاكرة Telegram</string>
     <string name="InuCrashDesc">نعتذر عن ذلك. يمكنك مشاركة سجل التعطل مع المطوّر للمساعدة في إصلاحه.</string>
     <string name="InuCrashDescOom">نعتذر عن ذلك. سجلات التعطل ليست مفيدة كثيراً في مشاكل نفاد الذاكرة — الذي يساعد هو تفريغ الذاكرة (heap dump).</string>
     <string name="InuCrashDescHeapDump">حُفظ أيضاً تفريغ للذاكرة. لا تشاركه! فهو يحتوي على بيانات خاصة! ألقِ نظرة عليه بنفسك إن أردت وشارك ما تجده — فهذا سيساعد كثيراً.</string>
-    <string name="InuCrashOomEnableLogs">فعّل وضع التصحيح في إعدادات entinyGram > حول لإنشاء تفريغ للذاكرة عند كل نفاد ذاكرة مستقبلاً.</string>
+    <string name="InuCrashOomEnableLogs">فعّل وضع التصحيح في إعدادات Telegram > حول لإنشاء تفريغ للذاكرة عند كل نفاد ذاكرة مستقبلاً.</string>
     <string name="InuCrashShare">مشاركة سجل التعطل</string>
     <string name="InuCrashShareHeapDump">حفظ تفريغ الذاكرة</string>
     <string name="InuCrashDiscard">تجاهل</string>
     <string name="InuCrashChannel">استعادة بعد التعطل</string>
-    <string name="InuCrashNotifTitle">تعطّل entinyGram</string>
+    <string name="InuCrashNotifTitle">تعطّل Telegram</string>
     <string name="InuCrashNotifText">انقر لإعادة التشغيل</string>
 
     <string name="InuLogs">التصحيح</string>

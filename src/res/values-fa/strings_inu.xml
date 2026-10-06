@@ -17,7 +17,7 @@
     <string name="InuDrawerM3SectionsInfo">ردیف‌های منوی کناری را در کارت‌های گرد Material 3 گروه‌بندی می‌کند.</string>
     <string name="InuShowDrawerAccounts">نمایش حساب‌ها در منو</string>
     <string name="InuShowDrawerAccountsInfo">نمایش تعویض‌گر حساب قابل‌گسترش زیر نمایه شما.</string>
-    <string name="InuSettings">تنظیمات entinyGram</string>
+    <string name="InuSettings">تنظیمات Telegram</string>
     <string name="InuSettingsInfo">از میان خاک و باد، دنبال تو می‌آیم</string>
     <string name="InuGeneral">عمومی</string>
     <string name="InuMiscellaneous">متفرقه</string>
@@ -480,10 +480,8 @@
     <string name="InuConfirmReactionText">واکنش %1$s در **%2$s** ارسال شود؟</string>
     <string name="InuNotificationIcon">نماد اعلان</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">entinyGram</string>
-    <string name="InuNotificationIconOldEntinygram">entinyGram قدیمی</string>
+    <string name="InuNotificationIconNagramXF">NagramXF</string>
     <string name="InuNotificationIconInfo">در Xiaomi (MIUI/HyperOS) ممکن است سیستم این آیکون را با آیکون برنامه جایگزین کند، پس انتخاب شما آنجا دیده نشود</string>
-    <string name="InuAppIconOldEntinygram">entinyGram قدیمی</string>
     <string name="InuDisableChatBubbles">غیرفعال کردن حباب‌های اعلان Android</string>
     <string name="InuInPlaceTranslation">ترجمه درجا</string>
     <string name="InuTranslateWebPreviews">ترجمه پیش‌نمایش‌های وب</string>
@@ -860,7 +858,7 @@
     <string name="InuCodeBlock">بلوک کد</string>
     <string name="InuCut">برش</string>
     <string name="InuCodeLanguage">زبان کد</string>
-    <string name="InuVersion">entinyGram %1$s (%2$s)</string>
+    <string name="InuVersion">Telegram %1$s (%2$s)</string>
     <string name="InuCategories">دسته‌ها</string>
     <string name="InuDataBackup">پشتیبان‌گیری و همگام‌سازی</string>
 
@@ -887,7 +885,7 @@
     <string name="InuHidePinnedUntilNew">تا سنجاق شدن پیام جدید</string>
     <string name="InuHidePinnedForever">همیشه در این گفتگو</string>
     <string name="InuAppIconStock">پایه</string>
-    <string name="InuAppIconLicenseInugram">نماد موقت؛ برای ساخت نمادی بهتر آزادانه مشارکت کنید</string>
+    <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">نماد از **Telegram**. همه حقوق محفوظ است.</string>
     <string name="InuJumpToBeginning">پرش به ابتدا</string>
     <string name="InuRecentChats">گفتگوهای اخیر</string>
@@ -933,11 +931,11 @@
     <string name="InuBackupImportSheetCancel">نه، همین‌طور بماند</string>
     <string name="InuBackupSettings">پشتیبان‌گیری و بازنشانی</string>
     <string name="InuBackupReset">بازنشانی تنظیمات</string>
-    <string name="InuBackupResetConfirm">همه تنظیمات entinyGram به مقادیر پیش‌فرض بازنشانی می‌شوند. گفتگوها، حساب‌ها و تنظیمات خود تلگرام دست‌نخورده می‌مانند.\n\nاین کار قابل بازگشت نیست.</string>
+    <string name="InuBackupResetConfirm">همه تنظیمات Telegram به مقادیر پیش‌فرض بازنشانی می‌شوند. گفتگوها، حساب‌ها و تنظیمات خود تلگرام دست‌نخورده می‌مانند.\n\nاین کار قابل بازگشت نیست.</string>
     <string name="InuBackupResetSuccess">%1$d تنظیم بازنشانی شد</string>
     <string name="InuBackupResetNoChanges">تنظیمات از قبل روی پیش‌فرض هستند</string>
     <string name="InuCloudSync">همگام‌سازی تنظیمات</string>
-    <string name="InuCloudSyncDesc">تنظیمات entinyGram شما را از طریق [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) در ابر تلگرام پشتیبان‌گیری می‌کند — داده‌های شما هرگز از سرورهای ما عبور نمی‌کند.</string>
+    <string name="InuCloudSyncDesc">تنظیمات Telegram شما را از طریق [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) در ابر تلگرام پشتیبان‌گیری می‌کند — داده‌های شما هرگز از سرورهای ما عبور نمی‌کند.</string>
     <string name="InuCloudSyncNow">همگام‌سازی همین حالا</string>
     <string name="InuCloudSyncing">در حال همگام‌سازی…</string>
     <string name="InuCloudRestore">بازیابی از ابر</string>
@@ -1009,7 +1007,7 @@
     <string name="InuMentionInsertTitle">درج منشن</string>
     <string name="InuPasscode">رمز قفل</string>
     <string name="InuPasscodeNeeded">ابتدا یک رمز قفل تلگرام تنظیم کنید.</string>
-    <string name="InuPasscodeShowInSettings">نمایش در تنظیمات entinyGram</string>
+    <string name="InuPasscodeShowInSettings">نمایش در تنظیمات Telegram</string>
     <string name="InuPasscodeShowInSettingsInfo">وقتی خاموش است، این صفحه فقط از طریق پیوند زیر باز می‌شود — همین حالا آن را ذخیره کنید.</string>
     <string name="InuPasscodeAccountsInfo">رمز قفل برای هر حساب: یکی را در صفحه قفل وارد کنید تا قفل باز شود و به آن حساب بروید.</string>
     <string name="InuPasscodeStateNone">تنظیم نشده</string>
@@ -1069,13 +1067,13 @@
     <string name="InuGoToMessagePrompt">شناسه پیام</string>
     <string name="InuPrivacySecurity">حریم خصوصی و امنیت</string>
     <string name="InuPerAccountPasscode">رمز قفل برای هر حساب</string>
-    <string name="InuHideInugramSettings">پنهان کردن تنظیمات entinyGram</string>
+    <string name="InuHideInugramSettings">پنهان کردن تنظیمات Telegram</string>
     <string name="InuParanoiaDisableNotifications">غیرفعال کردن اعلان‌ها</string>
     <string name="InuParanoiaHideOtherAccounts">پنهان کردن حساب‌های دیگر</string>
     <string name="InuParanoiaHideFolders">پنهان کردن پوشه‌ها</string>
     <string name="InuParanoiaHideMyStories">پنهان کردن استوری‌های من</string>
     <string name="InuParanoiaDisguise">پنهان شدن در هیأت Telegram</string>
-    <string name="InuParanoiaDisguiseInfo">فقط نماد و نام برنامه در لانچر تغییر می‌کند؛ اعلان‌ها همچنان «entinyGram» می‌گویند.</string>
+    <string name="InuParanoiaDisguiseInfo">فقط نماد و نام برنامه در لانچر تغییر می‌کند؛ اعلان‌ها همچنان «Telegram» می‌گویند.</string>
     <string name="InuParanoiaMode">حالت پارانویا</string>
     <string name="InuParanoiaModeInfo">گفتگوهای «خطرناک» را پنهان می‌کند و در صورت تمایل برنامه را استتار می‌کند — برای یک فضول آماده باشید.</string>
     <string name="InuParanoiaLauncherShortcut">میان‌بر لانچر</string>
@@ -1100,17 +1098,17 @@
     <string name="InuBotSettings">تنظیمات ربات</string>
     <string name="InuBotHelp">راهنمای ربات</string>
 
-    <string name="InuCrashTitle">entinyGram دفعه قبل از کار افتاد</string>
-    <string name="InuCrashTitleOom">حافظه entinyGram تمام شد</string>
+    <string name="InuCrashTitle">Telegram دفعه قبل از کار افتاد</string>
+    <string name="InuCrashTitleOom">حافظه Telegram تمام شد</string>
     <string name="InuCrashDesc">متأسفیم. می‌توانید گزارش خرابی را با توسعه‌دهنده به اشتراک بگذارید تا در رفع آن کمک کنید.</string>
     <string name="InuCrashDescOom">متأسفیم. گزارش خرابی برای مشکلات تمام شدن حافظه چندان مفید نیست — آنچه کمک می‌کند تخلیه حافظه (heap dump) است.</string>
     <string name="InuCrashDescHeapDump">یک تخلیه حافظه هم ذخیره شد. آن را به اشتراک نگذارید! حاوی داده‌های خصوصی است! اگر خواستید خودتان نگاهی بیندازید و یافته‌هایتان را به اشتراک بگذارید — این خیلی کمک می‌کند.</string>
-    <string name="InuCrashOomEnableLogs">حالت اشکال‌زدایی را در تنظیمات entinyGram > درباره فعال کنید تا در هر تمام شدن حافظه در آینده تخلیه حافظه ساخته شود.</string>
+    <string name="InuCrashOomEnableLogs">حالت اشکال‌زدایی را در تنظیمات Telegram > درباره فعال کنید تا در هر تمام شدن حافظه در آینده تخلیه حافظه ساخته شود.</string>
     <string name="InuCrashShare">اشتراک‌گذاری گزارش خرابی</string>
     <string name="InuCrashShareHeapDump">ذخیره تخلیه حافظه</string>
     <string name="InuCrashDiscard">رد کردن</string>
     <string name="InuCrashChannel">بازیابی پس از خرابی</string>
-    <string name="InuCrashNotifTitle">entinyGram از کار افتاد</string>
+    <string name="InuCrashNotifTitle">Telegram از کار افتاد</string>
     <string name="InuCrashNotifText">برای راه‌اندازی مجدد ضربه بزنید</string>
 
     <string name="InuLogs">اشکال‌زدایی</string>

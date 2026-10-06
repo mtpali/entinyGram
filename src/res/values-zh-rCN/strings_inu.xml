@@ -2,7 +2,7 @@
 <resources>
     <string name="InuOpenInDiscussion">在讨论中打开</string>
     <string name="InuBanUserConfirm">将 %1$s 从本群封禁？</string>
-    <string name="InuSettings">entinyGram 设置</string>
+    <string name="InuSettings">Telegram 设置</string>
     <string name="InuSettingsInfo">through the land and wind I follow you</string>
     <string name="InuGeneral">通用</string>
     <string name="InuMiscellaneous">杂项</string>
@@ -485,7 +485,7 @@
     <string name="InuCodeBlock">代码块</string>
     <string name="InuCut">剪切</string>
     <string name="InuCodeLanguage">代码语言</string>
-    <string name="InuVersion">entinyGram v%1$s (构建 %2$s)</string>
+    <string name="InuVersion">Telegram v%1$s (构建 %2$s)</string>
 
     <string name="InuSearchFilter">按媒体过滤</string>
     <string name="InuSearchFilterPhotos">照片</string>
@@ -505,7 +505,7 @@
     <string name="InuEventLogShowDiff">以 diff 显示</string>
     <string name="InuShowPinnedPanel">显示置顶消息</string>
     <string name="InuAppIconStock">原版</string>
-    <string name="InuAppIconLicenseInugram">占位图标，欢迎提供更好的</string>
+    <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">图标版权归 **Telegram** 所有。保留所有权利。</string>
     <string name="InuJumpToBeginning">跳到开头</string>
 
@@ -538,11 +538,11 @@
     <string name="InuBackupImportSheetCancel">否，保持不变</string>
     <string name="InuBackupSettings">备份与重置</string>
     <string name="InuBackupReset">重置设置</string>
-    <string name="InuBackupResetConfirm">所有 entinyGram 设置将被重置为默认值。您的聊天、账号和 Telegram 自身设置将保持不变。\n\n此操作无法撤销。</string>
+    <string name="InuBackupResetConfirm">所有 Telegram 设置将被重置为默认值。您的聊天、账号和 Telegram 自身设置将保持不变。\n\n此操作无法撤销。</string>
     <string name="InuBackupResetSuccess">已重置 %1$d 项设置</string>
     <string name="InuBackupResetNoChanges">设置已是默认值</string>
     <string name="InuCloudSync">同步设置</string>
-    <string name="InuCloudSyncDesc">通过 [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) 将 entinyGram 设置备份到 Telegram 云端——数据不会发送到我们的服务器。</string>
+    <string name="InuCloudSyncDesc">通过 [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) 将 Telegram 设置备份到 Telegram 云端——数据不会发送到我们的服务器。</string>
     <string name="InuCloudSyncNow">立即同步</string>
     <string name="InuCloudSyncing">同步中…</string>
     <string name="InuCloudRestore">从云端恢复</string>
@@ -604,7 +604,7 @@
     <string name="InuMentionInsertTitle">插入提及</string>
     <string name="InuPasscode">密码锁</string>
     <string name="InuPasscodeNeeded">请先设置 Telegram 密码锁。</string>
-    <string name="InuPasscodeShowInSettings">在 entinyGram 设置中显示</string>
+    <string name="InuPasscodeShowInSettings">在 Telegram 设置中显示</string>
     <string name="InuPasscodeShowInSettingsInfo">关闭时，本页只能通过下方链接打开——请立即保存。</string>
     <string name="InuPasscodeAccountsInfo">每个账号独立密码：在锁屏输入即可解锁并切换到该账号。</string>
     <string name="InuPasscodeStateNone">未设置</string>
@@ -643,11 +643,11 @@
     <string name="InuMenuBottomRowFull">快捷操作栏已满 (最多 4 个)</string>
     <string name="InuPrivacySecurity">隐私与安全</string>
     <string name="InuPerAccountPasscode">每个账号独立密码</string>
-    <string name="InuHideInugramSettings">隐藏 entinyGram 设置</string>
+    <string name="InuHideInugramSettings">隐藏 Telegram 设置</string>
     <string name="InuParanoiaDisableNotifications">禁用通知</string>
     <string name="InuParanoiaHideOtherAccounts">隐藏其他账号</string>
     <string name="InuParanoiaDisguise">伪装成 Telegram</string>
-    <string name="InuParanoiaDisguiseInfo">仅更改启动器图标和名称；通知仍显示「entinyGram」。</string>
+    <string name="InuParanoiaDisguiseInfo">仅更改启动器图标和名称；通知仍显示「Telegram」。</string>
     <string name="InuParanoiaMode">偏执模式</string>
     <string name="InuParanoiaModeInfo">隐藏「危险」聊天，可选择伪装应用——为他人查看手机做好准备。</string>
     <string name="InuParanoiaLauncherShortcut">启动器快捷方式</string>
@@ -734,7 +734,7 @@
     <string name="InuConfirmReactionText">在 **%2$s** 发送 %1$s 回应？</string>
     <string name="InuNotificationIcon">通知图标</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">entinyGram</string>
+    <string name="InuNotificationIconNagramXF">NagramXF</string>
     <string name="InuNothingToTranslate">没有可翻译的消息。</string>
     <string name="InuAlreadyInTargetLanguage">此消息已是 %1$s。</string>
     <string name="InuVoiceRecorder">语音 / 圆形录制</string>
@@ -761,12 +761,12 @@
     <string name="InuBotSettings">机器人设置</string>
     <string name="InuBotHelp">机器人帮助</string>
 
-    <string name="InuCrashTitle">entinyGram 上次崩溃了</string>
+    <string name="InuCrashTitle">Telegram 上次崩溃了</string>
     <string name="InuCrashDesc">抱歉。你可以与开发者分享崩溃日志以帮助修复。</string>
     <string name="InuCrashShare">分享崩溃日志</string>
     <string name="InuCrashDiscard">丢弃</string>
     <string name="InuCrashChannel">崩溃恢复</string>
-    <string name="InuCrashNotifTitle">entinyGram 崩溃了</string>
+    <string name="InuCrashNotifTitle">Telegram 崩溃了</string>
     <string name="InuCrashNotifText">点击重启</string>
 
     <string name="InuLogs">调试</string>
@@ -856,10 +856,10 @@
     <string name="InuStripTrackingParamsOnPaste">粘贴时</string>
     <string name="InuStripTrackingParamsSourceRow">过滤器源</string>
 
-    <string name="InuCrashTitleOom">entinyGram 内存不足</string>
+    <string name="InuCrashTitleOom">Telegram 内存不足</string>
     <string name="InuCrashDescOom">抱歉。崩溃日志对内存不足问题帮助不大 —— 堆转储才有用。</string>
     <string name="InuCrashDescHeapDump">同时保存了堆转储。请勿分享！里面包含隐私数据！如果愿意，可以自己查看一下，并把你的发现告诉开发者——会非常有帮助。</string>
-    <string name="InuCrashOomEnableLogs">在 entinyGram 设置 > 关于 中启用调试模式，以便在今后每次内存不足时生成堆转储。</string>
+    <string name="InuCrashOomEnableLogs">在 Telegram 设置 > 关于 中启用调试模式，以便在今后每次内存不足时生成堆转储。</string>
     <string name="InuCrashShareHeapDump">保存堆转储</string>
 
     <string name="InuDeleteOwnMessages">删除我的消息</string>
@@ -1048,7 +1048,6 @@
     <string name="InuDisableFlagSecure">禁用 FLAG_SECURE</string>
     <string name="InuDisableFlagSecureInfo">解除截图限制：允许在私密聊天、阅后即焚媒体和受保护频道中截图和录屏。</string>
     <string name="InuAntiDeletion">防撤回</string>
-    <string name="InuAppIconOldEntinygram">旧版 entinyGram</string>
     <string name="InuCategoryAppearance">设计</string>
     <string name="InuCategoryBackup">其他设置</string>
     <string name="InuCategoryBehavior">行为与工具</string>
@@ -1305,7 +1304,6 @@
     <string name="InuMsgDetailWaveformLength">声波样本</string>
     <string name="InuNo">否</string>
     <string name="InuNoProfilePhotos">未找到个人头像</string>
-    <string name="InuNotificationIconOldEntinygram">旧版 entinyGram</string>
     <string name="InuNotificationIconInfo">在小米（MIUI/HyperOS）上，系统可能会把此图标替换为应用图标，因此所选图标可能不会显示</string>
     <string name="InuPoweredByProvider">翻译由 %1$s 提供支持。</string>
     <string name="InuProfilePhotosDeleted">已删除所有个人头像</string>
