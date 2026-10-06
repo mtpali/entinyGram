@@ -8,6 +8,7 @@ from pathlib import Path
 
 PACKAGE = "ua.entaytion.entinygram"
 worktree = Path(sys.argv[1])
+validate_only = "--validate-only" in sys.argv[2:]
 raw = os.environ.get("GOOGLE_SERVICES_JSON", "")
 if not raw:
     raise SystemExit("GOOGLE_SERVICES_JSON is required: this workflow does not publish APKs without Firebase configuration.")
@@ -39,6 +40,11 @@ if bool(api_id) != bool(api_hash):
 if api_id:
     if not api_id.isdecimal() or not 0 < int(api_id) < 2**31 or not re.fullmatch(r"[0-9a-fA-F]{32}", api_hash):
         raise SystemExit("Telegram API credentials have an invalid format.")
+if validate_only:
+    print("Required Firebase client configuration is available and valid.")
+    sys.exit(0)
+
+if api_id:
     build_vars = worktree / "TMessagesProj/src/main/java/org/telegram/messenger/BuildVars.java"
     source = build_vars.read_text()
     source, count_id = re.subn(r"public static int APP_ID = \d+;", f"public static int APP_ID = {int(api_id)};", source)

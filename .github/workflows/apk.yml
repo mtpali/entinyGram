@@ -17,8 +17,24 @@ env:
   BASE_BUILD_CODE: 2026100600
 
 jobs:
+  configuration:
+    name: Validate Firebase setup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Check Firebase before downloading native sources
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          TELEGRAM_APP_ID: ${{ secrets.TELEGRAM_APP_ID }}
+          TELEGRAM_APP_HASH: ${{ secrets.TELEGRAM_APP_HASH }}
+        run: python3 scripts/ci/configure-firebase.py worktree --validate-only
+
   build:
     name: Build ${{ matrix.arch }}
+    needs: configuration
     runs-on: ubuntu-24.04
     timeout-minutes: 180
     strategy:
