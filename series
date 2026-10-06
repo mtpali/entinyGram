@@ -473,3 +473,4 @@ entiny/logs-respect-toggle.patch
 entiny/hide-chat-avatar.patch
 entiny/telegram-branding.patch
 entiny/force-ltr.patch
+entiny/optional-firebase.patch

@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 06:17:57 +0900
+Subject: [*] Allow personal builds without a matching Firebase client
+
+---
+ TMessagesProj_App/build.gradle | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/TMessagesProj_App/build.gradle b/TMessagesProj_App/build.gradle
+index 0000000..0000000 100644
+--- a/TMessagesProj_App/build.gradle
++++ b/TMessagesProj_App/build.gradle
+@@ -161,4 +161,14 @@ android {
+     }
+ }
+ 
+-apply plugin: 'com.google.gms.google-services'
++// entiny: personal forks can build without a Firebase project registered for their package.
++def googleServicesFile = file('google-services.json')
++def hasFirebaseClient = googleServicesFile.exists() &&
++        new groovy.json.JsonSlurper().parse(googleServicesFile).client?.any {
++            it.client_info?.android_client_info?.package_name == android.defaultConfig.applicationId
++        }
++if (hasFirebaseClient) {
++    apply plugin: 'com.google.gms.google-services'
++} else {
++    logger.lifecycle('Firebase push disabled: no google-services.json client matches this application ID.')
++}
