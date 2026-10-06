@@ -1,0 +1,38 @@
+name: Import pinned entinyGram source
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/import-source.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: github.repository == 'mtpali/entinyGram'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Import the requested release
+        env:
+          SOURCE_COMMIT: 77b9c206998cc4bdaf8d24cc55ae312daf426c24
+        run: |
+          set -euo pipefail
+          if [ -f upstream-commit ]; then
+            echo "Source has already been imported."
+            exit 0
+          fi
+          cp .github/workflows/import-source.yml "$RUNNER_TEMP/import-source.yml"
+          git fetch --depth=1 https://github.com/entaytion/entinyGram.git refs/tags/v12.10.6-202610040
+          test "$(git rev-parse FETCH_HEAD)" = "$SOURCE_COMMIT"
+          git read-tree --reset -u FETCH_HEAD
+          mkdir -p .github/workflows
+          cp "$RUNNER_TEMP/import-source.yml" .github/workflows/import-source.yml
+          git config user.name "mtpali"
+          git config user.email "316823762+mtpali@users.noreply.github.com"
+          git add .github/workflows/import-source.yml
+          git commit -m "[=] import entinyGram v12.10.6-202610040" -m "Source: entaytion/entinyGram at $SOURCE_COMMIT"
+          git push origin HEAD:main
