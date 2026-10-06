@@ -19,10 +19,14 @@ Both require Android 8.0 or newer. Pushes to `main` and the development branch r
 
 The package ID remains `ua.entaytion.entinygram`, so account/data identity is retained. APKs are signed with the development keystore already provided in the Telegram source. For long-term public distribution, configure a private signing key and keep it consistent across builds. Android will accept an update only when its signing certificate matches the installed app.
 
-A valid Firebase export can be supplied as the repository secret `GOOGLE_SERVICES_JSON`, registered for this package ID. Without it, Google services processing is skipped and Firebase push is unavailable; the app’s background connection option remains available. This workflow does not post to Telegram channels. Automatic upstream update checks default to off to keep personal branding; configure your own update source before enabling them.
+Firebase configuration is required before CI publishes either APK. Set the repository secret `GOOGLE_SERVICES_JSON` to a real Firebase Android export for `ua.entaytion.entinygram`. The build rejects missing configuration, a different package, incomplete project fields, or a service-account key. Google SDK configuration strings are explicitly retained during resource shrinking and checked in the compiled APK.
+
+For personal Firebase credentials, also configure your own Telegram API app at [my.telegram.org/apps](https://my.telegram.org/apps), register that Firebase project's FCM credentials there, and supply the matching `TELEGRAM_APP_ID` and `TELEGRAM_APP_HASH` repository secrets together. Those values override the inherited Telegram API configuration only during CI. A new Firebase project alone does not configure Telegram's push sender. A Firebase service-account key belongs in the Telegram API app's FCM configuration, never in this repository or APK. If using the original maintainer's configuration, it must correspond to the inherited API app.
+
+The workflow does not post to Telegram channels. Automatic upstream update checks default to off to keep personal branding; configure your own update source before enabling them.
 
 ## Validation
 
-The workflow checks search-registry slugs, string usage, translations, patch consistency and reproducible generated icons. Each built APK is checked for its localized app label, single ABI, preserved stock icon, removed old alias, compiled Force LTR preference and valid signature.
+The workflow checks search-registry slugs, string usage, translations, patch consistency and reproducible generated icons. Each built APK is checked for its localized app label, single ABI, preserved stock icon, removed old alias, compiled Force LTR preference, Firebase configuration resources and valid signature. Actual push delivery must also be tested on a device with Google Play services and a Telegram account.
 
 Device acceptance checks: select Persian, enable Force LTR and restart; check chat list, drawer, settings, chats and dialogs; rotate the screen and change font size; switch languages; disable Force LTR and restart. Persian text must remain readable and the selected language must remain unchanged.

@@ -29,6 +29,10 @@ with zipfile.ZipFile(apk) as archive:
     dex = [name for name in names if name.endswith(".dex")]
     if not any(b"force_ltr" in archive.read(name) for name in dex):
         raise SystemExit("Force LTR preference is missing from the compiled APK")
+resources = subprocess.check_output([aapt, "dump", "--values", "resources", str(apk)], text=True)
+for name in ["google_app_id", "gcm_defaultSenderId", "google_api_key", "project_id"]:
+    if f"string/{name}" not in resources:
+        raise SystemExit(f"Firebase configuration resource missing from the compiled APK: {name}")
 package = re.search(r"^package: name='([^']+)' versionCode='([^']+)' versionName='([^']+)'", badging, re.M)
 if not package:
     raise SystemExit("Could not read package metadata")
@@ -42,5 +46,6 @@ print(json.dumps({
     "blueTelegramIcon": True,
     "oldEntinyGramIcon": False,
     "forceLtrPreference": True,
+    "firebaseConfigured": True,
     "sha256": hashlib.sha256(apk.read_bytes()).hexdigest(),
 }, indent=2))

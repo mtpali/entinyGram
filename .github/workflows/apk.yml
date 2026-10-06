@@ -64,16 +64,12 @@ jobs:
           bun run lint-patches
           bun run generate-icons
           git diff --exit-code -- src/res/launcher/generated
-      - name: Configure optional Firebase
+      - name: Configure required Firebase client
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: |
-          if [ -n "$GOOGLE_SERVICES_JSON" ]; then
-            printf '%s' "$GOOGLE_SERVICES_JSON" > worktree/TMessagesProj/google-services.json
-            printf '%s' "$GOOGLE_SERVICES_JSON" > worktree/TMessagesProj_App/google-services.json
-          else
-            echo 'No Firebase configuration supplied; Firebase push will be unavailable.'
-          fi
+          TELEGRAM_APP_ID: ${{ secrets.TELEGRAM_APP_ID }}
+          TELEGRAM_APP_HASH: ${{ secrets.TELEGRAM_APP_HASH }}
+        run: python3 scripts/ci/configure-firebase.py worktree
       - uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c
       - uses: hendrikmuhs/ccache-action@v1.2
         with:
@@ -146,6 +142,6 @@ jobs:
           - Force LTR in Settings → Telegram Settings → Appearance; restart to apply.
           - Signed armv7 (armeabi-v7a) and armv8 (arm64-v8a) APKs.
 
-          These preview APKs use the source project's development signing key. Firebase push requires an optional valid GOOGLE_SERVICES_JSON configuration; the background connection remains available.
+          These preview APKs use the source project's development signing key. Firebase client configuration and compiled FCM resources are required for these builds. Telegram push delivery also requires the corresponding Firebase credentials registered for the Telegram API app.
           NOTES
           gh release create "$tag" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title "Telegram — armv7 and armv8 (build $GITHUB_RUN_NUMBER)" --notes-file release-notes.md out/*
