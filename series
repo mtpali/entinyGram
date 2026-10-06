@@ -472,3 +472,4 @@ entiny/rtl-checkbox-text.patch
 entiny/logs-respect-toggle.patch
 entiny/hide-chat-avatar.patch
 entiny/telegram-branding.patch
+entiny/force-ltr.patch

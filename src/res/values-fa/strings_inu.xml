@@ -1695,4 +1695,6 @@
     <string name="InuSetReminder">تنظیم یادآور</string>
     <string name="InuSideMenu">منوی کناری</string>
     <string name="InuSideMenuInfo">منوی کشویی، بخش‌ها، حساب‌ها و موارد منو.</string>
+    <string name="InuForceLtr">اجبار چیدمان چپ‌به‌راست (Force LTR)</string>
+    <string name="InuForceLtrInfo">چیدمان رابط را بدون تغییر زبان انتخاب‌شده یا متن فارسی، چپ‌به‌راست نگه می‌دارد. برای اعمال تغییر، برنامه را دوباره راه‌اندازی کنید.</string>
 </resources>

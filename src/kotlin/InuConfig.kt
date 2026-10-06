@@ -1550,6 +1550,9 @@ object InuConfig {
     }
 
     @JvmField
+    val FORCE_LTR = BoolItem("force_ltr", false)
+
+    @JvmField
     val NOTIFICATION_ICON = NotificationIconItem()
 
     class MapProviderItem : IntItem("map_provider", OSM_LITE) {

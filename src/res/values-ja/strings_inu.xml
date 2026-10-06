@@ -1693,4 +1693,6 @@
     <string name="InuSetReminder">リマインダーを設定</string>
     <string name="InuSideMenu">サイドメニュー</string>
     <string name="InuSideMenuInfo">ドロワー、そのセクション、アカウント、メニュー項目。</string>
+    <string name="InuForceLtr">左から右のレイアウトを強制</string>
+    <string name="InuForceLtrInfo">選択した言語や文字を変更せず、画面のレイアウトを左から右に保ちます。適用するにはアプリを再起動してください。</string>
 </resources>

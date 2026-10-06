@@ -1692,4 +1692,6 @@
     <string name="InuSetReminder">Hatırlatıcı ayarla</string>
     <string name="InuSideMenu">Yan menü</string>
     <string name="InuSideMenuInfo">Hamburger çekmece, bölümleri, hesaplar ve menü öğeleri.</string>
+    <string name="InuForceLtr">Soldan sağa düzeni zorla</string>
+    <string name="InuForceLtrInfo">Seçilen dili veya metni değiştirmeden arayüzü soldan sağa tutar. Uygulamak için uygulamayı yeniden başlatın.</string>
 </resources>

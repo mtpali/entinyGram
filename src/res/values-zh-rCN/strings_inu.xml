@@ -1694,4 +1694,6 @@
     <string name="InuSetReminder">设置提醒</string>
     <string name="InuSideMenu">侧边菜单</string>
     <string name="InuSideMenuInfo">汉堡抽屉、其分区、账号和菜单项。</string>
+    <string name="InuForceLtr">强制从左到右布局</string>
+    <string name="InuForceLtrInfo">保持界面从左到右排列，不更改所选语言或文字。重启应用以应用更改。</string>
 </resources>

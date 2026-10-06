@@ -1707,4 +1707,6 @@
     <string name="InuDonateWebsite">Усі способи на сайті</string>
     <string name="InuDonateCopied">Скопійовано</string>
     <string name="InuShowMediaSize">Показувати розмір медіа</string>
+    <string name="InuForceLtr">Інтерфейс зліва направо</string>
+    <string name="InuForceLtrInfo">Зберігати розташування інтерфейсу зліва направо без зміни вибраної мови та тексту. Перезапустіть застосунок для застосування.</string>
 </resources>

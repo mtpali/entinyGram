@@ -1715,4 +1715,6 @@
     <string name="InuDonateWebsite">Все способы на сайте</string>
     <string name="InuDonateCopied">Скопировано</string>
     <string name="InuShowMediaSize">Показывать размер медиа</string>
+    <string name="InuForceLtr">Интерфейс слева направо</string>
+    <string name="InuForceLtrInfo">Сохранять расположение интерфейса слева направо без изменения выбранного языка и текста. Перезапустите приложение для применения.</string>
 </resources>

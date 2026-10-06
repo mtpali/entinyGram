@@ -1715,4 +1715,6 @@
     <string name="InuSetReminder">ضبط تذكير</string>
     <string name="InuSideMenu">القائمة الجانبية</string>
     <string name="InuSideMenuInfo">القائمة المنسدلة وأقسامها والحسابات وعناصر القائمة.</string>
+    <string name="InuForceLtr">فرض التخطيط من اليسار إلى اليمين</string>
+    <string name="InuForceLtrInfo">إبقاء تخطيط الواجهة من اليسار إلى اليمين دون تغيير اللغة المحددة أو النص. أعد تشغيل التطبيق لتطبيق التغيير.</string>
 </resources>

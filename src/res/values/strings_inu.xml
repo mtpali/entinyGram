@@ -1709,4 +1709,6 @@
     <string name="InuDonateWebsite">All methods on the website</string>
     <string name="InuDonateCopied">Copied</string>
     <string name="InuShowMediaSize">Show media size</string>
+    <string name="InuForceLtr">Force LTR</string>
+    <string name="InuForceLtrInfo">Keep the interface left-to-right without changing the selected language or Persian text. Restart the app to apply.</string>
 </resources>
