@@ -94,17 +94,17 @@ class ProxyPill(context: Context, resourcesProvider: Theme.ResourcesProvider?) :
 
         val text: String
         if (!enabled || SharedConfig.currentProxy == null) {
-            iconView.setImageResource(R.drawable.proxy_off_solar)
+            iconView.setImageResource(R.drawable.outline_shield_plain_24)
             text = LocaleController.getString(R.string.Proxy)
             stopLoading()
         } else if (connected) {
             val ping = Utilities.clamp(SharedConfig.currentProxy.ping, 9999L, 0L)
-            iconView.setImageResource(R.drawable.proxy_on_solar)
+            iconView.setImageResource(R.drawable.outline_shield_check)
             text = if (ping > 0) LocaleController.formatString(R.string.InuPillStackProxyPing, ping)
             else LocaleController.getString(R.string.MenuProxyConnected)
             stopLoading()
         } else {
-            iconView.setImageResource(R.drawable.proxy_off_solar)
+            iconView.setImageResource(R.drawable.outline_shield_plain_24)
             text = LocaleController.getString(R.string.MenuProxyConnecting)
             startLoading()
         }

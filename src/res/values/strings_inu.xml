@@ -630,7 +630,6 @@
     <string name="InuDeletedMessage">Deleted message</string>
     <string name="InuDeletedMessageIdFormat">ID %1$d</string>
     <string name="InuClosestToDeletedReply">Original message was deleted, showing the closest one</string>
-    <string name="InuSummarize">Summarize</string>
     <string name="InuMessageDetails">Details</string>
     <string name="InuMsgDetailDate">Date</string>
     <string name="InuMsgDetailDeleteDate">Delete date</string>

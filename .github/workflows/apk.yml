@@ -110,6 +110,7 @@ jobs:
           INU_BUILD_TYPE: release
         run: |
           export INU_BUILD=$((BASE_BUILD_CODE + GITHUB_RUN_NUMBER))
+          ./gradlew --no-daemon --max-workers=4 :TMessagesProj:compileReleaseKotlin :TMessagesProj:compileReleaseJavaWithJavac :TMessagesProj_App:compileReleaseJavaWithJavac
           ./gradlew --no-daemon --max-workers=4 :TMessagesProj_App:assembleRelease
       - name: Check APK and stage output
         env:

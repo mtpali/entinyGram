@@ -13,7 +13,7 @@ enum class PillType(
     CLOCK(1, "clock", R.string.InuPillStackClock, R.drawable.msg_contacts_time),
     WEATHER(2, "weather", R.string.InuPillStackWeather, R.drawable.menu_day_mode_24),
     CACHE(3, "cache", R.string.StorageUsage, R.drawable.msg_filled_storageusage),
-    PROXY(4, "proxy", R.string.InuPillStackProxy, R.drawable.proxy_on_solar),
+    PROXY(4, "proxy", R.string.InuPillStackProxy, R.drawable.outline_shield_check),
     GHOST(5, "ghost", R.string.InuGhostMode, R.drawable.inu_ghost),
     RAM(6, "ram", R.string.InuPillStackRam, R.drawable.pillstack_ram),
     NET_SPEED(8, "net_speed", R.string.InuPillStackNetSpeed, R.drawable.pillstack_netspeed),

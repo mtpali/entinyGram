@@ -115,7 +115,7 @@ class ChatMenuConfig(key: String) : MenuOrderConfig<ChatMenuConfig.Item>(key, It
         CALL("call", listOf(ChatActivity.call), R.string.Call, R.drawable.msg_callback),
         VIDEO_CALL("video_call", listOf(ChatActivity.video_call), R.string.VideoCall, R.drawable.msg_videocall),
         SEARCH("search", listOf(ChatActivity.search), R.string.Search, R.drawable.msg_search),
-        BOOST_GROUP("boost_group", listOf(ChatActivity.boost_group), R.string.BoostGroup, R.drawable.boost_channel_solar),
+        BOOST_GROUP("boost_group", listOf(ChatActivity.boost_group), R.string.BoostGroup, R.drawable.filled_limit_boost),
         TRANSLATE("translate", listOf(ChatActivity.translate), R.string.TranslateMessage, R.drawable.msg_translate),
         REPORT("report", listOf(ChatActivity.report), R.string.ReportChat, R.drawable.msg_report),
         ADD_CONTACT("add_contact", listOf(ChatActivity.share_contact), R.string.AddToContacts, R.drawable.msg_addcontact),
@@ -349,7 +349,6 @@ class MessageMenuConfig(key: String) : MenuOrderConfig<MessageMenuConfig.Item>(k
             R.string.TranslateMessage,
             R.drawable.msg_translate
         ),
-        SUMMARIZE("summarize", listOf(ChatHelper.OPTION_SUMMARIZE), R.string.InuSummarize, R.drawable.inu_tabler_sparkles),
         EDIT("edit", listOf(ChatActivity.OPTION_EDIT), R.string.Edit, R.drawable.msg_edit),
         REPORT("report", listOf(ChatActivity.OPTION_REPORT_CHAT), R.string.ReportChat, R.drawable.msg_report),
         SHARE("share", listOf(ChatActivity.OPTION_SHARE), R.string.ShareFile, R.drawable.msg_share),
@@ -385,7 +384,7 @@ class MessageMenuConfig(key: String) : MenuOrderConfig<MessageMenuConfig.Item>(k
     override fun itemByKey(key: String): Item? = Item.forKey(key)
 
     companion object {
-        private val OFF_BY_DEFAULT = setOf(Item.REPLY_IN, Item.DETAILS, Item.FORWARD_NO_QUOTE, Item.SUMMARIZE, Item.REMOVE_FROM_CACHE, Item.REPEAT, Item.ADD_FILTER, Item.SET_REMINDER)
+        private val OFF_BY_DEFAULT = setOf(Item.REPLY_IN, Item.DETAILS, Item.FORWARD_NO_QUOTE, Item.REMOVE_FROM_CACHE, Item.REPEAT, Item.ADD_FILTER, Item.SET_REMINDER)
     }
 }
 

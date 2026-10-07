@@ -588,7 +588,6 @@
     <string name="InuDeletedMessage">پیام حذف‌شده</string>
     <string name="InuDeletedMessageIdFormat">شناسه %1$d</string>
     <string name="InuClosestToDeletedReply">پیام اصلی حذف شده است؛ نزدیک‌ترین پیام نمایش داده می‌شود</string>
-    <string name="InuSummarize">خلاصه‌سازی</string>
     <string name="InuMessageDetails">جزئیات</string>
     <string name="InuMsgDetailDate">تاریخ</string>
     <string name="InuMsgDetailDeleteDate">تاریخ حذف</string>
