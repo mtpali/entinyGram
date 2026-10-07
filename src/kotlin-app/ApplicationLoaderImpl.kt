@@ -1,5 +1,6 @@
 package desu.inugram
 
+import org.telegram.messenger.ApplicationLoaderImpl as BaseApplicationLoaderImpl
 import org.telegram.messenger.GoogleMapsProvider
 import org.telegram.messenger.IMapsProvider
 import desu.inugram.helpers.maps.MapsHelper
