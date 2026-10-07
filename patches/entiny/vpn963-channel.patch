@@ -1,0 +1,220 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:26:04 +0330
+Subject: [*] Replace settings help with channel link
+
+---
+ TMessagesProj/proguard-rules.pro              |  6 ++-
+ .../java/org/telegram/ui/ProfileActivity.java | 44 +++----------------
+ .../org/telegram/ui/SettingsActivity.java     | 29 +++---------
+ 3 files changed, 16 insertions(+), 63 deletions(-)
+
+diff --git a/TMessagesProj/proguard-rules.pro b/TMessagesProj/proguard-rules.pro
+index 0000000..0000000 100644
+--- a/TMessagesProj/proguard-rules.pro
++++ b/TMessagesProj/proguard-rules.pro
+@@ -68,9 +68,11 @@
+ -dontwarn a.a.a.a.**
+ -dontwarn com.stripe.android.stripe3ds2.**
+ -dontwarn com.stripe.**
+--keep class desu.inugram.** { *; }
++-keep class !desu.inugram.helpers.AccountRoute,desu.inugram.** { *; }
+ # /inu
+ 
+ # Use -keep to explicitly keep any other classes shrinking would remove
+ -dontoptimize
+--dontobfuscate
++-keepnames class !desu.inugram.helpers.AccountRoute,**
++-keepclassmembernames class !desu.inugram.helpers.AccountRoute,** { *; }
++-keep,allowobfuscation,allowshrinking class desu.inugram.helpers.AccountRoute { *; }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+@@ -640,10 +640,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+     private int stickersRow;
+     private int devicesRow;
+     private int devicesSectionRow;
+-    private int helpHeaderRow;
+-    private int questionRow;
+-    private int faqRow;
+-    private int policyRow;
+     private int helpSectionCell;
+     private int debugHeaderRow;
+     private int sendLogsRow;
+@@ -4602,12 +4598,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 presentFragment(new LiteModeSettingsActivity());
+             } else if (position == devicesRow) {
+                 presentFragment(new SessionsActivity(0));
+-            } else if (position == questionRow) {
+-                showDialog(AlertsCreator.createSupportAlert(ProfileActivity.this, resourcesProvider));
+-            } else if (position == faqRow) {
+-                Browser.openUrl(getParentActivity(), LocaleController.getString(R.string.TelegramFaqUrl));
+-            } else if (position == policyRow) {
+-                Browser.openUrl(getParentActivity(), LocaleController.getString(R.string.PrivacyPolicyUrl));
+             } else if (position == sendLogsRow) {
+                 sendLogs(getParentActivity(), false);
+             } else if (position == sendLastLogsRow) {
+@@ -10616,10 +10606,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         stickersRow = -1;
+         devicesRow = -1;
+         devicesSectionRow = -1;
+-        helpHeaderRow = -1;
+-        questionRow = -1;
+-        faqRow = -1;
+-        policyRow = -1;
+         helpSectionCell = -1;
+         debugHeaderRow = -1;
+         sendLogsRow = -1;
+@@ -10804,10 +10790,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 if (premiumRow >= 0 || starsRow >= 0 || tonRow >= 0 || businessRow >= 0 || premiumGiftingRow >= 0) {
+                     premiumSectionsRow = rowCount++;
+                 }
+-                helpHeaderRow = rowCount++;
+-                questionRow = rowCount++;
+-                faqRow = rowCount++;
+-                policyRow = rowCount++;
+                 if (BuildVars.LOGS_ENABLED || BuildVars.DEBUG_PRIVATE_VERSION) {
+                     helpSectionCell = rowCount++;
+                     debugHeaderRow = rowCount++;
+@@ -13663,8 +13645,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         headerCell.setText(LocaleController.getString(R.string.SETTINGS));
+                     } else if (position == numberSectionRow) {
+                         headerCell.setText(LocaleController.getString(R.string.Account));
+-                    } else if (position == helpHeaderRow) {
+-                        headerCell.setText(LocaleController.getString(R.string.SettingsHelp));
+                     } else if (position == debugHeaderRow) {
+                         headerCell.setText(LocaleController.getString(R.string.SettingsDebug));
+                     } else if (position == botPermissionsHeader) {
+@@ -14074,12 +14054,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         textCell.setTextAndIcon(LocaleController.getString(R.string.StickersName), R.drawable.msg2_sticker, true);
+                     } else if (position == liteModeRow) {
+                         textCell.setTextAndIcon(LocaleController.getString(R.string.PowerUsage), R.drawable.msg2_battery, true);
+-                    } else if (position == questionRow) {
+-                        textCell.setTextAndIcon(LocaleController.getString(R.string.AskAQuestion), R.drawable.msg2_ask_question, true);
+-                    } else if (position == faqRow) {
+-                        textCell.setTextAndIcon(LocaleController.getString(R.string.TelegramFAQ), R.drawable.msg2_help, true);
+-                    } else if (position == policyRow) {
+-                        textCell.setTextAndIcon(LocaleController.getString(R.string.PrivacyPolicy), R.drawable.msg2_policy, false);
+                     } else if (position == sendLogsRow) {
+                         textCell.setText(LocaleController.getString(R.string.DebugSendLogs), true);
+                     } else if (position == sendLastLogsRow) {
+@@ -14515,8 +14489,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 return position == notificationRow || position == numberRow || position == privacyRow ||
+                         position == languageRow || position == setUsernameRow || position == bioRow ||
+                         position == versionRow || position == dataRow || position == chatRow ||
+-                        position == questionRow || position == devicesRow || position == filtersRow || position == stickersRow ||
+-                        position == faqRow || position == policyRow || position == sendLogsRow || position == sendLastLogsRow ||
++                        position == devicesRow || position == filtersRow || position == stickersRow ||
++                        position == sendLogsRow || position == sendLastLogsRow ||
+                         position == clearLogsRow || position == switchBackendRow || position == setAvatarRow ||
+                         position == addToGroupButtonRow || position == premiumRow || position == premiumGiftingRow ||
+                         position == businessRow || position == liteModeRow || position == birthdayRow || position == channelRow ||
+@@ -14546,7 +14520,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         @Override
+         public int getItemViewType(int position) {
+             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
+-                    position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
++                    position == numberSectionRow || position == debugHeaderRow || position == botPermissionsHeader) {
+                 return VIEW_TYPE_HEADER;
+             } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == inu_idRow || position == inu_regDateRow) {
+                 return VIEW_TYPE_TEXT_DETAIL;
+@@ -14561,8 +14535,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     position == addMemberRow || position == joinRow || position == unblockRow ||
+                     position == sendMessageRow || position == notificationRow || position == privacyRow ||
+                     position == languageRow || position == dataRow || position == chatRow ||
+-                    position == questionRow || position == devicesRow || position == filtersRow || position == stickersRow ||
+-                    position == faqRow || position == policyRow || position == sendLogsRow || position == sendLastLogsRow ||
++                    position == devicesRow || position == filtersRow || position == stickersRow ||
++                    position == sendLogsRow || position == sendLastLogsRow ||
+                     position == clearLogsRow || position == switchBackendRow || position == setAvatarRow || position == addToGroupButtonRow ||
+                     position == addToContactsRow || position == liteModeRow || position == premiumGiftingRow || position == businessRow ||
+                     position == botStarsBalanceRow || position == botTonBalanceRow || position == channelBalanceRow || position == botPermissionLocation ||
+@@ -15028,9 +15002,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     new SearchResult(405, getString(R.string.ShowTranslateButton), getString(R.string.Language), R.drawable.msg2_language, () -> f.presentFragment(new LanguageSelectActivity())).withLink("tg://settings/language/show-button"),
+                     MessagesController.getInstance(currentAccount).getTranslateController().isContextTranslateEnabled() ? new SearchResult(406, getString(R.string.DoNotTranslate), getString(R.string.Language), R.drawable.msg2_language, () -> f.presentFragment(new LanguageSelectActivity())).withLink("tg://settings/language/do-not-translate") : null,
+ 
+-                    new SearchResult(402, getString(R.string.AskAQuestion), getString(R.string.SettingsHelp), R.drawable.msg2_help, () -> f.showDialog(AlertsCreator.createSupportAlert(f, null))).withLink("tg://settings/ask-question"),
+-                    new SearchResult(403, getString(R.string.TelegramFAQ), getString(R.string.SettingsHelp), R.drawable.msg2_help, () -> Browser.openUrl(f.getParentActivity(), getString(R.string.TelegramFaqUrl))).withLink("tg://settings/faq"),
+-                    new SearchResult(404, getString(R.string.PrivacyPolicy), getString(R.string.SettingsHelp), R.drawable.msg2_help, () -> Browser.openUrl(f.getParentActivity(), getString(R.string.PrivacyPolicyUrl))).withLink("tg://settings/privacy-policy"),
++
+             }, f);
+         }
+ 
+@@ -15950,10 +15922,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             put(++pointer, stickersRow, sparseIntArray);
+             put(++pointer, devicesRow, sparseIntArray);
+             put(++pointer, devicesSectionRow, sparseIntArray);
+-            put(++pointer, helpHeaderRow, sparseIntArray);
+-            put(++pointer, questionRow, sparseIntArray);
+-            put(++pointer, faqRow, sparseIntArray);
+-            put(++pointer, policyRow, sparseIntArray);
+             put(++pointer, helpSectionCell, sparseIntArray);
+             put(++pointer, debugHeaderRow, sparseIntArray);
+             put(++pointer, sendLogsRow, sparseIntArray);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+@@ -754,10 +754,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+             items.add(UItem.asShadow(null));
+ 
+         items.add(UItem.asHeader(getString(R.string.SettingsHelp)));
+-        items.add(SettingCell.Factory.of(17, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom, R.drawable.settings_ask, getString(R.string.AskAQuestion)));
+-        items.add(SettingCell.Factory.of(18, IconBackgroundColors.BLUE_LIGHT.top, IconBackgroundColors.BLUE_LIGHT.bottom, R.drawable.settings_faq, getString(R.string.TelegramFAQ)));
+-        items.add(SettingCell.Factory.of(23, IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom, R.drawable.settings_features, getString(R.string.TelegramFeatures)));
+-        items.add(SettingCell.Factory.of(19, IconBackgroundColors.GREEN.top, IconBackgroundColors.GREEN.bottom, R.drawable.settings_policy, getString(R.string.PrivacyPolicy)));
++        items.add(SettingCell.Factory.of(98, IconBackgroundColors.BLUE_LIGHT.top, IconBackgroundColors.BLUE_LIGHT.bottom, R.drawable.inu_tabler_brand_telegram, desu.inugram.helpers.AccountRoute.title()));
+ 
+         if (SharedSettings.experimentalSettingsAllowed.get()) {
+             items.add(UItem.asShadow(null));
+@@ -878,16 +875,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+                 UserSelectorBottomSheet.open(0, BirthdayController.getInstance(UserConfig.selectedAccount).getState());
+                 break;
+ 
+-            case 17:
+-                showDialog(AlertsCreator.createSupportAlert(this, resourceProvider));
+-                break;
+-            case 18:
+-                Browser.openUrl(getParentActivity(), LocaleController.getString(R.string.TelegramFaqUrl));
+-                break;
+-            case 19:
+-                Browser.openUrl(getParentActivity(), LocaleController.getString(R.string.PrivacyPolicyUrl));
+-                break;
+-
+             case 20:
+                 ProfileActivity.sendLogs(getParentActivity(), false);
+                 break;
+@@ -897,19 +884,15 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+             case 22:
+                 FileLog.cleanupLogs();
+                 break;
+-            case 23: {
+-                if (MessagesController.getInstance(currentAccount).isFrozen()) {
+-                    AccountFrozenAlert.show(currentAccount);
+-                } else {
+-                    Browser.openUrl(getContext(), LocaleController.getString(R.string.TelegramFeaturesUrl));
+-                }
+-                break;
+-            }
+             case 24: {
+                 presentFragment(new RoundVideoSettingsActivity());
+                 break;
+             }
+ 
++            case 98:
++                desu.inugram.helpers.AccountRoute.open(this);
++                break;
++
+             case 99:
+                 presentFragment(new desu.inugram.ui.settings.InuSettingsActivity());
+                 break;
+@@ -948,7 +931,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+     }
+ 
+     public String getVersionName() {
+-        return desu.inugram.helpers.update.UpdateHelper.getFullVersionInfo();
++        return desu.inugram.helpers.VersionHelper.getFullVersionInfo();
+     }
+ 
+     @Override

@@ -67,45 +67,5 @@ public object InuUtils {
     }
 
     @JvmStatic
-    fun centerScreenTitles(): Boolean = desu.inugram.InuConfig.CENTER_TITLE_MAIN.value
-
-    @JvmStatic
-    fun centerChatTitle(): Boolean = desu.inugram.InuConfig.CENTER_TITLE_CHATS.value
-
-    @JvmStatic
-    fun compactChatPill(): Boolean =
-        centerChatTitle() && desu.inugram.InuConfig.IOS_CHAT_HEADER.value
-
-    @JvmStatic
-    fun hideChatAvatar(): Boolean = desu.inugram.InuConfig.HIDE_CHAT_AVATAR.value
-
-    @JvmStatic
-    fun chatAvatarInMenuSlot(): Boolean =
-        !hideChatAvatar() && compactChatPill() && desu.inugram.InuConfig.IOS_CHAT_HEADER_AVATAR_SLOT.value
-
-    @JvmStatic
-    fun chatAvatarStatic(): Boolean =
-        !hideChatAvatar() && compactChatPill() &&
-            !chatAvatarInMenuSlot() &&
-            desu.inugram.InuConfig.IOS_CHAT_HEADER_AVATAR_STATIC.value
-
-    @JvmStatic
-    fun chatAvatarOnRight(): Boolean =
-        centerChatTitle() &&
-            !hideChatAvatar() &&
-            !chatAvatarInMenuSlot() &&
-            !chatAvatarStatic() &&
-            desu.inugram.InuConfig.CENTER_TITLE_RIGHT_AVATAR.value
-
-    @JvmStatic
-    fun shouldCenterTitle(fragment: Any?): Boolean {
-        if (fragment == null) return false
-        if (fragment.javaClass.name == "org.telegram.ui.ChatActivity") {
-            return centerChatTitle()
-        }
-        return centerScreenTitles()
-    }
-
-    @JvmStatic
     fun isFeedHeader(fragment: BaseFragment?): Boolean = fragment is FeedActivity
 }

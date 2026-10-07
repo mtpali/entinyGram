@@ -99,16 +99,13 @@ class TranslateProviderSettingsActivity : SettingsPageActivity() {
     private var microsoftKeyField: FieldSlot? = null
     private var microsoftRegionField: FieldSlot? = null
 
-    private class FieldSlot(val id: Int, val cell: AiServiceFieldCell)
+    private class FieldSlot(val id: Int, val cell: ServiceFieldCell)
 
-    // entiny: keep one AiServiceFieldCell instance per field across fillItems() rebuilds - it used
-    // to allocate a fresh id + cell every time (e.g. on every provider radio tap), which meant the
-    // key/URL/model/prompt fields lost cursor position and IME focus on every rebuild. The sliders
-    // right above already got this treatment; the text fields never did.
+    // entiny: keep field IDs and views stable so provider changes preserve cursor and focus
     private fun keyField(items: ArrayList<UItem>, slot: KMutableProperty0<FieldSlot?>, title: String, value: String, type: Int = InputType.TYPE_CLASS_TEXT, onChanged: (String) -> Unit) {
         var s = slot.get()
         if (s == null) {
-            s = FieldSlot(InuUtils.generateId(), AiServiceFieldCell(context!!, title, value, type, onChanged = onChanged))
+            s = FieldSlot(InuUtils.generateId(), ServiceFieldCell(context!!, title, value, type, onChanged = onChanged))
             slot.set(s)
         }
         items.add(UItem.asCustom(s.id, s.cell))

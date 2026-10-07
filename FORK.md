@@ -25,10 +25,22 @@ CI uses this client by default. A `GOOGLE_SERVICES_JSON` repository secret overr
 
 For personal Firebase credentials, also configure your own Telegram API app at [my.telegram.org/apps](https://my.telegram.org/apps), register that Firebase project's FCM credentials there, and supply the matching `TELEGRAM_APP_ID` and `TELEGRAM_APP_HASH` repository secrets together. Those values override the inherited Telegram API configuration only during CI. A new Firebase project alone does not configure Telegram's push sender. A Firebase service-account key belongs in the Telegram API app's FCM configuration, never in this repository or APK. If using the original maintainer's configuration, it must correspond to the inherited API app.
 
-The workflow does not post to Telegram channels. Automatic upstream update checks default to off to keep personal branding; configure your own update source before enabling them.
+The workflow does not post to Telegram channels. The in-app updater and its channel integration have been removed.
 
 ## Validation
 
 The workflow checks search-registry slugs, string usage, translations, patch consistency and reproducible generated icons. Each built APK is checked for its localized app label, single ABI, preserved stock icon, removed old alias, compiled Force LTR preference, matching Firebase configuration resources and valid signature. Actual push delivery must also be tested on a device with Google Play services and a Telegram account: allow notifications, sign in, close the app normally, lock the screen and send a message from another account. Android Force stop is a separate state that blocks delivery until the app is reopened.
 
 Device acceptance checks: select Persian, enable Force LTR and restart; check chat list, drawer, settings, chats and dialogs; rotate the screen and change font size; switch languages; disable Force LTR and restart. Persian text must remain readable and the selected language must remain unchanged.
+
+## VPN963 customization
+
+Only English and Persian UI languages are shipped or offered by the language picker. Other source translations and non-default icon packs are removed during source materialization. Existing unsupported interface languages fall back to English or the supported device language. Persian uses Telegram's official language pack for stock UI strings; fork strings are bundled.
+
+The fork header reads VPN963. Settings Help contains only `Telegram : VPN963`, opening `vpn963` in the selected account. Its title and route are encoded against the registered package identifier; R8 renames only that helper, retaining the existing naming behavior elsewhere. Open source remains editable. Attribution and Firebase package/project identifiers remain unchanged.
+
+Custom AI providers, transcription, editor and summaries, iOS layout controls and previews, local Premium/custom emoji/local names, archive locking and the internal updater are removed. Stock protocol types required for Telegram interoperability remain. Aqua and Vintage launcher aliases and assets are removed; Default, the blue Telegram icon and the remaining stock choices are preserved. Package replacement restores Default if a removed launcher choice had been selected.
+
+Solar Hijri is the only calendar choice. ICU formats Persian dates, including old timestamps, and uses the actual date pattern; date arithmetic and protocol timestamps are retained. Calendar display was compared with NagramXF at `3c9bd86df5200008b00b998b51d262f7c6b8a64d`; no additional calendar dependency is needed.
+
+Numbers default to unrounded. Downloads use the Telegram folder. Power-saving flags and battery threshold, pinned-message notifications, raise-to-listen and pause-music-on-recording default to off. Automatic media downloads are initialized off once per account, including upgrades from the previous build, and later user changes are retained. Other saved choices are retained.

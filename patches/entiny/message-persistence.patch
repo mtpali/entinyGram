@@ -328,7 +328,7 @@ index 0000000..0000000 100644
              currentMessagesGroup = groupedMessages;
              wasAllChats = isAllChats;
              lastTime = -2;
-@@ -28151,6 +28154,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+@@ -28149,6 +28152,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
  
      @Override
      public void setAlpha(float alpha) {

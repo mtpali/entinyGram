@@ -1,11 +1,7 @@
 package desu.inugram.ui.settings
 
 import android.os.Build
-import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import desu.inugram.InuConfig
 import desu.inugram.InuHooks
@@ -14,11 +10,7 @@ import desu.inugram.helpers.InuUtils
 import desu.inugram.helpers.theme.MonetHelper
 import desu.inugram.ui.settings.fonts.FontsSettingsActivity
 import org.telegram.messenger.LocaleController
-import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
-import org.telegram.messenger.AndroidUtilities
-import org.telegram.ui.ActionBar.Theme
-import org.telegram.ui.Components.LayoutHelper
 import org.telegram.ui.Cells.NotificationsCheckCell
 import org.telegram.ui.Cells.TextCheckCell
 import org.telegram.ui.Components.UItem
@@ -56,8 +48,7 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
         val ctx = context ?: return
         items.add(UItem.asHeader(LocaleController.getString(R.string.InuTypographyAndIcons)))
         items.add(mkSubPageButton(BUTTON_FONTS, LocaleController.getString(R.string.InuFonts)))
-        items.add(mkTwoLineEntry(BUTTON_ICON_REPLACEMENT, R.drawable.phosphor_palette, LocaleController.getString(R.string.InuIconReplacement), IconPacksSettingsActivity.currentPackLabel()))
-        items.add(mkTwoLineEntry(BUTTON_IOS_STYLE, R.drawable.msg_newphone, LocaleController.getString(R.string.InuIosSettings), LocaleController.getString(R.string.InuIosSettingsInfo)))
+        items.add(mkTwoLineEntry(BUTTON_ICON_REPLACEMENT, R.drawable.msg_theme, LocaleController.getString(R.string.InuIconReplacement), IconPacksSettingsActivity.currentPackLabel()))
         items.add(UItem.asShadow(null))
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.InuInterfaceElements)))
@@ -68,10 +59,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
         items.add(UItem.asShadow(null))
 
         m3Group.addTo(items) { changed ->
-            if (changed.any { it.id == TOGGLE_M3_BOTTOM_TABS } && InuConfig.M3_BOTTOM_TABS.value && InuConfig.IOS_BOTTOM_NAVIGATION_BAR.value) {
-                InuConfig.IOS_BOTTOM_NAVIGATION_BAR.value = false
-                showRestartBulletin()
-            }
             // entiny: the master switch flips the sections style too, so rebuild this page like the single toggle does
             if (changed.any { it.id == TOGGLE_M3_SECTIONS_STYLE }) inu_rebuildSelf()
             invalidateVisibleRows()
@@ -214,11 +201,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
                 TOGGLE_MATERIAL3_SWITCHES -> invalidateVisibleRows()
                 TOGGLE_M3_SECTIONS_STYLE -> inu_rebuildSelf()
                 TOGGLE_M3_BOTTOM_TABS -> {
-                    if (InuConfig.M3_BOTTOM_TABS.value && InuConfig.IOS_BOTTOM_NAVIGATION_BAR.value) {
-                        InuConfig.IOS_BOTTOM_NAVIGATION_BAR.value = false
-                        invalidateVisibleRows()
-                        showRestartBulletin()
-                    }
                 }
             }
             if (changed?.id in setOf(TOGGLE_MATERIAL3_SWITCHES, TOGGLE_MATERIAL3_FABS, TOGGLE_M3_SECTIONS_STYLE, TOGGLE_M3_BOTTOM_TABS)) {
@@ -329,7 +311,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
                 showRestartBulletin()
             }
 
-            BUTTON_IOS_STYLE -> presentFragment(IosStyleSettingsActivity())
             BUTTON_MESSAGE_DESIGN -> presentFragment(MessageDesignSettingsActivity())
             BUTTON_SIDE_MENU -> presentFragment(DrawerSettingsActivity())
             BUTTON_MENUS -> presentFragment(MenusSettingsActivity())
@@ -360,7 +341,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
         private val BUTTON_ICON_REPLACEMENT = InuUtils.generateId()
         private val BUTTON_PREDICTIVE_BACK_MODE = InuUtils.generateId()
         private val BUTTON_MONET_THEME = InuUtils.generateId()
-        private val BUTTON_IOS_STYLE = InuUtils.generateId()
         private val TOGGLE_SIMPLE_ATTACH_POPUP_ANIMATION = InuUtils.generateId()
         private val TOGGLE_DISABLE_CHAT_BACKGROUNDS = InuUtils.generateId()
         private val TOGGLE_DISABLE_CHAT_THEMES = InuUtils.generateId()

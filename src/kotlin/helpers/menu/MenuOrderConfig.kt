@@ -223,11 +223,7 @@ class ProfileMenuConfig(key: String) : MenuOrderConfig<ProfileMenuConfig.Item>(k
         TON("ton", 13, R.string.MyTON, R.drawable.settings_gram_24),
         WALLET("wallet", 0, R.string.InuSettingsRowWallet, R.drawable.settings_wallet),
         BUSINESS("business", 15, R.string.TelegramBusiness, R.drawable.settings_business),
-        PREMIUM_GIFTING("premium_gifting", 16, R.string.SendAGift, R.drawable.settings_gift),
-        QUESTION("question", 17, R.string.AskAQuestion, R.drawable.settings_ask),
-        FAQ("faq", 18, R.string.TelegramFAQ, R.drawable.settings_faq),
-        FEATURES("features", 23, R.string.TelegramFeatures, R.drawable.settings_features),
-        POLICY("policy", 19, R.string.PrivacyPolicy, R.drawable.settings_policy);
+        PREMIUM_GIFTING("premium_gifting", 16, R.string.SendAGift, R.drawable.settings_gift);
 
         companion object {
             private val byKey: Map<String, Item> by lazy { entries.associateBy { it.key } }
@@ -254,7 +250,7 @@ class DialogsMenuConfig(key: String) : MenuOrderConfig<DialogsMenuConfig.Item>(k
         THEME_TOGGLE("theme_toggle", R.string.InuMenuThemeToggle, R.drawable.menu_night_mode_24),
         COMPOSE("compose", R.string.InuMenuCompose, R.drawable.menu_topic_add),
         SAVED_MESSAGES("saved_messages", R.string.SavedMessages, R.drawable.outline_saved_24),
-        RECENT_CHATS("recent_chats", R.string.InuRecentChats, R.drawable.msg_recent_solar),
+        RECENT_CHATS("recent_chats", R.string.InuRecentChats, R.drawable.msg_recent),
         CLEAR_CACHE("clear_cache", R.string.InuClearCache, R.drawable.inu_tabler_trash_x),
         FEED("feed", R.string.InuFeed, R.drawable.msg_channel),
         MY_PROFILE("my_profile", R.string.MyProfile, R.drawable.left_status_profile),

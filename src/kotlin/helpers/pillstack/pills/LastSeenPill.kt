@@ -41,7 +41,7 @@ class LastSeenPill(context: Context, resourcesProvider: Theme.ResourcesProvider?
         )
 
         iconView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-        iconView.setImageResource(R.drawable.phosphor_eye)
+        iconView.setImageResource(R.drawable.msg_views)
         layout.addView(iconView, LayoutHelper.createLinear(16, 16, Gravity.CENTER_VERTICAL, 0f, 0f, 4f, 0f))
 
         textView.setTextSize(AndroidUtilities.dp(13f).toFloat())

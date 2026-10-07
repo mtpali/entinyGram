@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:31:09 +0330
+Subject: [*] Apply Persian dates to older timestamps
+
+---
+ .../main/java/org/telegram/messenger/LocaleController.java    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+@@ -2628,10 +2628,10 @@ public class LocaleController {
+         }
+         FastDateFormat formatter;
+         try {
+-            formatter = FastDateFormat.getInstance(format, locale);
++            formatter = desu.inugram.helpers.CalendarHelper.formatter(format, locale);
+         } catch (Exception e) {
+             format = defaultFormat;
+-            formatter = FastDateFormat.getInstance(format, locale);
++            formatter = desu.inugram.helpers.CalendarHelper.formatter(format, locale);
+         }
+         return formatter;
+     }

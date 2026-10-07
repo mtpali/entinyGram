@@ -1,0 +1,164 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:26:04 +0330
+Subject: [-] Keep only English and Persian
+
+---
+ .../telegram/messenger/LocaleController.java  | 88 ++-----------------
+ TMessagesProj_App/build.gradle                |  2 +-
+ 2 files changed, 8 insertions(+), 82 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+@@ -626,87 +626,7 @@ public class LocaleController {
+         languages.add(localeInfo);
+         languagesDict.put(localeInfo.shortName, localeInfo);
+ 
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Italiano";
+-        localeInfo.nameEnglish = "Italian";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "it";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Español";
+-        localeInfo.nameEnglish = "Spanish";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "es";
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Deutsch";
+-        localeInfo.nameEnglish = "German";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "de";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Nederlands";
+-        localeInfo.nameEnglish = "Dutch";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "nl";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "العربية";
+-        localeInfo.nameEnglish = "Arabic";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "ar";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        localeInfo.isRtl = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Português (Brasil)";
+-        localeInfo.nameEnglish = "Portuguese (Brazil)";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "pt_br";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "한국어";
+-        localeInfo.nameEnglish = "Korean";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "ko";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Українська";
+-        localeInfo.nameEnglish = "Ukrainian";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "uk";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Русский";
+-        localeInfo.nameEnglish = "Russian";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "ru";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
++        desu.inugram.helpers.LanguageHelper.addPersian(this);
+         loadOtherLanguages();
+         if (remoteLanguages.isEmpty()) {
+             AndroidUtilities.runOnUIThread(() -> loadRemoteLanguages(UserConfig.selectedAccount));
+@@ -1069,6 +989,7 @@ public class LocaleController {
+             String languageName = stringMap.get("LanguageName");
+             String languageNameInEnglish = stringMap.get("LanguageNameInEnglish");
+             String languageCode = stringMap.get("LanguageCode");
++            if (!desu.inugram.helpers.LanguageHelper.isSupported(languageCode)) return false;
+ 
+             if (languageName != null && languageName.length() > 0 &&
+                     languageNameInEnglish != null && languageNameInEnglish.length() > 0 &&
+@@ -1199,6 +1120,7 @@ public class LocaleController {
+             String[] localesArr = locales.split("&");
+             for (String locale : localesArr) {
+                 LocaleInfo localeInfo = LocaleInfo.createWithString(locale);
++                if (localeInfo == null || !desu.inugram.helpers.LanguageHelper.isSupported(localeInfo.shortName)) continue;
+                 if (localeInfo != null) {
+                     otherLanguages.add(localeInfo);
+                 }
+@@ -1209,6 +1131,7 @@ public class LocaleController {
+             String[] localesArr = locales.split("&");
+             for (String locale : localesArr) {
+                 LocaleInfo localeInfo = LocaleInfo.createWithString(locale);
++                if (localeInfo == null || !desu.inugram.helpers.LanguageHelper.isSupported(localeInfo.shortName)) continue;
+                 localeInfo.shortName = localeInfo.shortName.replace("-", "_");
+                 if (remoteLanguagesDict.containsKey(localeInfo.getKey())) {
+                     continue;
+@@ -1222,6 +1145,7 @@ public class LocaleController {
+             String[] localesArr = locales.split("&");
+             for (String locale : localesArr) {
+                 LocaleInfo localeInfo = LocaleInfo.createWithString(locale);
++                if (localeInfo == null || !desu.inugram.helpers.LanguageHelper.isSupported(localeInfo.shortName)) continue;
+                 if (localeInfo == null) {
+                     continue;
+                 }
+@@ -1328,6 +1252,7 @@ public class LocaleController {
+     }
+ 
+     public int applyLanguage(final LocaleInfo localeInfo, boolean override, boolean init, boolean fromFile, boolean force, final int currentAccount, Runnable onDone) {
++        if (localeInfo == null || !desu.inugram.helpers.LanguageHelper.isSupported(localeInfo.shortName)) return 0;
+         if (localeInfo == null) {
+             return 0;
+         }
+@@ -3216,6 +3141,7 @@ public class LocaleController {
+                     }
+                     for (int a = 0, size = res.objects.size(); a < size; a++) {
+                         TLRPC.TL_langPackLanguage language = (TLRPC.TL_langPackLanguage) res.objects.get(a);
++                        if (!desu.inugram.helpers.LanguageHelper.isSupported(language.lang_code)) continue;
+                         if (BuildVars.LOGS_ENABLED) {
+                             FileLog.d("loaded lang " + language.name);
+                         }
+diff --git a/TMessagesProj_App/build.gradle b/TMessagesProj_App/build.gradle
+index 0000000..0000000 100644
+--- a/TMessagesProj_App/build.gradle
++++ b/TMessagesProj_App/build.gradle
+@@ -65,7 +65,7 @@ android {
+ 
+     androidResources {
+         noCompress += "pack"
+-        localeFilters += ["zz", "uk", "ru", "ja", "tr", "zh-rCN", "ar", "fa"] // inu: keep strings_inu translations
++        localeFilters += ["en", "fa"]
+     }
+ 
+     signingConfigs {

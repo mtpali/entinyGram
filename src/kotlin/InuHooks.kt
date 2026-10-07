@@ -15,8 +15,6 @@ import desu.inugram.helpers.maps.MapsHelper
 import desu.inugram.helpers.security.PasscodeHelper
 import desu.inugram.helpers.theme.MonetHelper
 import desu.inugram.helpers.theme.NonIslandHelper
-import desu.inugram.helpers.update.ApkInstaller
-import desu.inugram.helpers.update.UpdateHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.MessageObject
@@ -53,10 +51,6 @@ object InuHooks {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             MonetHelper.registerOverlayChangeReceiver(context)
             MonetHelper.registerThemeReloadReceiver(context)
-        }
-        Utilities.globalQueue.postRunnable {
-            UpdateHelper.clearPendingIfInstalled()
-            ApkInstaller.dismissInstalledNotification()
         }
         Utilities.globalQueue.postRunnable {
             CloudSettingsHelper.attachAutoSyncListener()
@@ -113,7 +107,6 @@ object InuHooks {
     }
 
     fun onNewMessage(message: MessageObject, account: Int) {
-        if (message.messageOwner != null) UpdateHelper.onNewMessage(message.messageOwner)
     }
 
     @JvmStatic
@@ -139,21 +132,10 @@ object InuHooks {
     fun handleIntent(activity: LaunchActivity, intent: Intent?): Boolean {
         return PasscodeHelper.tryHandleDeepLink(activity, intent)
             || SearchRegistry.tryHandleDeepLink(activity, intent)
-            || tryHandleUpdateDeepLink(activity, intent)
             || tryHandleFunDeepLink(activity, intent)
             || ShortcutHelper.handleAction(activity, intent)
     }
 
-    private fun tryHandleUpdateDeepLink(activity: LaunchActivity, intent: Intent?): Boolean {
-        val uri = intent?.data ?: return false
-        if (uri.scheme != "tg") return false
-        val host = uri.host ?: uri.schemeSpecificPart?.removePrefix("//")?.substringBefore('/')
-        if (host != "update") return false
-        UpdateHelper.checkForCustomUpdate(true) {
-            if (UpdateHelper.pendingBetaUpdate != null) UpdateHelper.revealPendingUpdate()
-        }
-        return true
-    }
 
     private fun tryHandleFunDeepLink(activity: LaunchActivity, intent: Intent?): Boolean {
         val uri = intent?.data ?: return false

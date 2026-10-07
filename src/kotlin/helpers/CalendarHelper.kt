@@ -1,46 +1,56 @@
 package desu.inugram.helpers
 
-import android.icu.text.DateFormat
+import android.icu.text.SimpleDateFormat
 import android.icu.util.ULocale
-import desu.inugram.InuConfig
 import org.telegram.messenger.time.FastDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import java.util.Calendar
+import java.text.FieldPosition
 
 object CalendarHelper {
     private val cache = HashMap<String, FastDateFormat>()
 
     @JvmStatic
-    fun isEnabled(): Boolean = keyword() != null
+    fun isEnabled(): Boolean = true
 
-    // entiny: ICU "ca" locale keyword picks the calendar system: islamic = lunar Hijri, persian = solar Hijri/Jalali
-    private fun keyword(): String? = when (InuConfig.CALENDAR_SYSTEM.value) {
-        InuConfig.CalendarSystemItem.HIJRI -> "islamic"
-        InuConfig.CalendarSystemItem.PERSIAN -> "persian"
-        else -> null
-    }
+    @JvmStatic
+    fun formatter(pattern: String, locale: Locale): FastDateFormat =
+        if (pattern.replace(Regex("'[^']*'"), "").any { it == 'd' || it == 'D' }) altFormatter(pattern, locale)
+        else FastDateFormat.getInstance(pattern, locale)
 
-    // entiny: reuses stock SimpleDateFormat-style patterns (dd MMM, d MMMM yyyy, ...) but renders them
-    // against ICU's islamic/persian calendar via the "ca" locale keyword, so month/day names stay locale-aware.
     @JvmStatic
     @Synchronized
     fun altFormatter(pattern: String, locale: Locale): FastDateFormat {
-        val ca = keyword() ?: "islamic"
-        val key = "$ca|$pattern|$locale"
+        val ca = "persian"
+        val key = "$ca|$pattern|$locale|${TimeZone.getDefault().id}"
         return cache.getOrPut(key) {
             val altLocale = Locale.Builder().setLocale(locale).setUnicodeLocaleKeyword("ca", ca).build()
-            val icuFormat = DateFormat.getPatternInstance(pattern, ULocale.forLocale(altLocale))
+            val icuFormat = SimpleDateFormat(pattern, ULocale.forLocale(altLocale))
             object : FastDateFormat(pattern, TimeZone.getDefault(), locale) {
+                @Synchronized
                 override fun format(date: Date): String = icuFormat.format(date)
+                @Synchronized
                 override fun format(millis: Long): String = icuFormat.format(Date(millis))
+                override fun format(calendar: Calendar): String = format(calendar.timeInMillis)
+                override fun format(date: Date, buffer: StringBuffer): StringBuffer = buffer.append(format(date))
+                override fun format(millis: Long, buffer: StringBuffer): StringBuffer = buffer.append(format(millis))
+                override fun format(calendar: Calendar, buffer: StringBuffer): StringBuffer = buffer.append(format(calendar))
+                override fun format(value: Any, buffer: StringBuffer, position: FieldPosition): StringBuffer =
+                    when (value) {
+                        is Date -> format(value, buffer)
+                        is Calendar -> format(value, buffer)
+                        is Long -> format(value, buffer)
+                        else -> throw IllegalArgumentException("Unsupported date")
+                    }
             }
         }
     }
 
     @JvmStatic
     fun altCalendar(locale: Locale): android.icu.util.Calendar {
-        val ca = keyword() ?: "islamic"
+        val ca = "persian"
         val altLocale = Locale.Builder().setLocale(locale).setUnicodeLocaleKeyword("ca", ca).build()
         return android.icu.util.Calendar.getInstance(ULocale.forLocale(altLocale))
     }

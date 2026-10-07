@@ -1,0 +1,74 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:26:04 +0330
+Subject: [-] Remove Aqua and Vintage launcher icons
+
+---
+ TMessagesProj/src/main/AndroidManifest.xml    | 32 +------------------
+ .../telegram/ui/LauncherIconController.java   |  2 --
+ 2 files changed, 1 insertion(+), 33 deletions(-)
+
+diff --git a/TMessagesProj/src/main/AndroidManifest.xml b/TMessagesProj/src/main/AndroidManifest.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/AndroidManifest.xml
++++ b/TMessagesProj/src/main/AndroidManifest.xml
+@@ -165,37 +165,7 @@
+             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+         </activity-alias>
+ 
+-        <activity-alias
+-            android:enabled="false"
+-            android:name="org.telegram.messenger.VintageIcon"
+-            android:targetActivity="org.telegram.ui.LaunchActivity"
+-            android:icon="@mipmap/icon_6_launcher"
+-            android:roundIcon="@mipmap/icon_6_launcher_round"
+-            android:exported="true">
+-
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+-                <category android:name="android.intent.category.LAUNCHER" />
+-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+-            </intent-filter>
+-            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+-        </activity-alias>
+ 
+-        <activity-alias
+-            android:enabled="false"
+-            android:name="org.telegram.messenger.AquaIcon"
+-            android:targetActivity="org.telegram.ui.LaunchActivity"
+-            android:icon="@mipmap/icon_4_launcher"
+-            android:roundIcon="@mipmap/icon_4_launcher_round"
+-            android:exported="true">
+-
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+-                <category android:name="android.intent.category.LAUNCHER" />
+-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+-            </intent-filter>
+-            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+-        </activity-alias>
+ 
+         <activity-alias
+             android:enabled="false"
+@@ -635,7 +605,7 @@
+ 
+         <receiver android:name=".NotificationDismissReceiver" android:exported="false"/>
+ 
+-        <receiver android:name="desu.inugram.helpers.update.ApkInstaller$UpdateReceiver" android:exported="false">
++        <receiver android:name="desu.inugram.helpers.LauncherRecoveryReceiver" android:exported="false">
+             <intent-filter>
+                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+             </intent-filter>
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LauncherIconController.java b/TMessagesProj/src/main/java/org/telegram/ui/LauncherIconController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/LauncherIconController.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/LauncherIconController.java
+@@ -36,8 +36,6 @@ public class LauncherIconController {
+     public enum LauncherIcon {
+         DEFAULT("DefaultIcon", R.drawable.icon_background_inu, R.drawable.icon_foreground_inu, R.string.AppIconDefault),
+         STOCK("StockIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.InuAppIconStock),
+-        VINTAGE("VintageIcon", R.drawable.icon_6_background_sa, R.mipmap.icon_6_foreground_sa, R.string.AppIconVintage),
+-        AQUA("AquaIcon", R.drawable.icon_4_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconAqua),
+         PREMIUM("PremiumIcon", R.drawable.icon_3_background_sa, R.mipmap.icon_3_foreground_sa, R.string.AppIconPremium, true),
+         TURBO("TurboIcon", R.drawable.icon_5_background_sa, R.mipmap.icon_5_foreground_sa, R.string.AppIconTurbo, true),
+         NOX("NoxIcon", R.mipmap.icon_2_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconNox, true),

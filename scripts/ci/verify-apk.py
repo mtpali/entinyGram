@@ -32,15 +32,47 @@ if "org.telegram.messenger.StockIcon" not in manifest:
     raise SystemExit("Blue stock Telegram launcher alias is missing")
 if "org.telegram.messenger.OldIcon" in manifest:
     raise SystemExit("Old entinyGram launcher alias is still present")
+for alias in ("AquaIcon", "VintageIcon"):
+    if f"org.telegram.messenger.{alias}" in manifest:
+        raise SystemExit(f"Removed launcher alias is still present: {alias}")
+if "desu.inugram.helpers.update." in manifest:
+    raise SystemExit("Removed updater component is still registered")
+locales_line = re.search(r"^locales: (.*)$", badging, re.M)
+if not locales_line:
+    raise SystemExit("Could not inspect APK locales")
+locales = re.findall(r"'([^']+)'", locales_line.group(1))
+languages = {re.split(r"[-_]", value)[0] for value in locales if re.match(r"[a-z]", value)}
+if languages - {"en", "fa"} or "fa" not in languages:
+    raise SystemExit(f"Unexpected UI languages: {sorted(languages)}")
 with zipfile.ZipFile(apk) as archive:
     names = archive.namelist()
     abis = sorted({name.split("/")[1] for name in names if name.startswith("lib/") and name.endswith(".so")})
     if abis != [abi]:
         raise SystemExit(f"Unexpected native ABIs: {abis}; expected {[abi]}")
     dex = [name for name in names if name.endswith(".dex")]
-    if not any(b"force_ltr" in archive.read(name) for name in dex):
+    dex_data = b"".join(archive.read(name) for name in dex)
+    if b"force_ltr" not in dex_data:
         raise SystemExit("Force LTR preference is missing from the compiled APK")
+    removed = [
+        b"Ldesu/inugram/helpers/ai/", b"Ldesu/inugram/helpers/update/",
+        b"Ldesu/inugram/helpers/LocalPremiumHelper;",
+        b"Ldesu/inugram/helpers/security/ArchiveLockHelper;",
+        b"Ldesu/inugram/helpers/icons/SolarIconPack;",
+        b"Ldesu/inugram/helpers/icons/VkIconPack;",
+        b"Ldesu/inugram/helpers/icons/PhosphorIconPack;",
+        b"Ldesu/inugram/ui/settings/IosStyleSettingsActivity;",
+        b"Ldesu/inugram/ui/settings/AiSettingsActivity;",
+    ]
+    for descriptor in removed:
+        if descriptor in dex_data:
+            raise SystemExit(f"Removed feature is still compiled: {descriptor.decode()}")
+    if b"Ldesu/inugram/helpers/AccountRoute;" in dex_data:
+        raise SystemExit("Channel route helper was not obfuscated")
+    if any(re.search(r"(?:^|/)icon_[46]_", name) for name in names):
+        raise SystemExit("Removed launcher artwork is still packaged")
 resources = subprocess.check_output([aapt, "dump", "--values", "resources", str(apk)], text=True, errors="replace")
+if re.search(r":drawable/(?:phosphor_|vkui_)", resources):
+    raise SystemExit("Removed icon-pack artwork is still packaged")
 resource_sections = re.split(r"(?m)^\s*resource ", resources)
 for name, expected in firebase_expected.items():
     section = next((s for s in resource_sections if s.strip() and
@@ -61,6 +93,10 @@ print(json.dumps({
     "abi": abi,
     "blueTelegramIcon": True,
     "oldEntinyGramIcon": False,
+    "aquaVintageIcons": False,
+    "uiLanguages": sorted(languages),
+    "removedFeaturesAbsent": True,
+    "channelRouteObfuscated": True,
     "forceLtrPreference": True,
     "firebaseConfigured": True,
     "sha256": hashlib.sha256(apk.read_bytes()).hexdigest(),

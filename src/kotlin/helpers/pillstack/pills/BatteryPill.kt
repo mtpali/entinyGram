@@ -9,7 +9,7 @@ import org.telegram.ui.ActionBar.Theme
 
 @SuppressLint("ViewConstructor")
 class BatteryPill(context: Context, resourcesProvider: Theme.ResourcesProvider?) :
-    TelemetryPill(context, resourcesProvider, R.drawable.phosphor_battery_charging) {
+    TelemetryPill(context, resourcesProvider, R.drawable.msg2_battery) {
 
     override fun getPillId(): Int = PillType.BATTERY.id
 

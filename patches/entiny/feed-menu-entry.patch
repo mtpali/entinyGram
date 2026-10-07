@@ -25,7 +25,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
-@@ -14050,6 +14050,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -14033,6 +14033,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
              args.putLong("user_id", UserConfig.getInstance(currentAccount).getClientUserId());
              presentFragment(new ChatActivity(args));
          });
@@ -46,9 +46,9 @@ index 0000000..0000000 100644
  
      private static int indexToPosition(int index) {
          return MainTabsHelper.indexToPosition(index);
-@@ -327,12 +328,13 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -326,12 +327,13 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+         tabsView.setMaxWidth(dp(tabsViewWidth));
          M3MainTabsHelper.applyTabsLayout(tabsView);
-         MainTabsHelper.applyIosTabsLayout(tabsView);
  
 -        tabs = new GlassTabView[5];
 +        tabs = new GlassTabView[6];
@@ -61,7 +61,7 @@ index 0000000..0000000 100644
          tabs[INDEX_CONTACTS].setOnLongClickListener(this::openContactsSelector);
          tabs[INDEX_CALLS].setOnLongClickListener(this::openCallsSelector);
          desu.inugram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_PROFILE], this::openAccountSelector);
-@@ -829,6 +831,8 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -828,6 +830,8 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
              dialogsActivity = new DialogsActivity(args);
              dialogsActivity.setMainTabsActivityController(new MainTabsActivityControllerImpl());
              return dialogsActivity;

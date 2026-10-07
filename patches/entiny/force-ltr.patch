@@ -40,7 +40,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java b/T
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
-@@ -454,6 +454,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
+@@ -440,6 +440,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
          flagSecureReason.attach();
  
          super.onCreate(savedInstanceState);
@@ -48,7 +48,7 @@ index 0000000..0000000 100644
          if (Build.VERSION.SDK_INT >= 24) {
              AndroidUtilities.isInMultiwindow = isInMultiWindowMode();
          }
-@@ -7165,6 +7166,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
+@@ -7151,6 +7152,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
          AndroidUtilities.checkDisplaySize(this, newConfig);
          AndroidUtilities.setPreferredMaxRefreshRate(getWindow());
          super.onConfigurationChanged(newConfig);

@@ -33,14 +33,11 @@ import desu.inugram.helpers.theme.M3MainTabsHelper
 object MainTabsHelper {
     const val MAIN_TABS_MARGIN_COMPACT: Int = 4
     const val MAIN_TABS_HEIGHT_COMPACT: Int = 48
-    const val MAIN_TABS_HEIGHT_IOS: Int = 60
     const val TAB_WIDTH: Int = 76
     const val TAB_WIDTH_COMPACT: Int = 64
     const val TAB_PADDING: Int = 4
     private const val TAB_SCRIM_RADIUS = 28
     private const val TABS_INNER_PADDING: Int = 4
-    private const val TABS_INNER_PADDING_IOS: Int = 6
-    private const val TABS_SIDE_PADDING_EXTRA_IOS: Int = 8
 
     @JvmStatic
     val isCompact: Boolean
@@ -49,10 +46,6 @@ object MainTabsHelper {
     @JvmStatic
     val isMaterial: Boolean
         get() = InuConfig.M3_BOTTOM_TABS.value
-
-    @JvmStatic
-    val isIos: Boolean
-        get() = InuConfig.IOS_BOTTOM_NAVIGATION_BAR.value && !isMaterial
 
     @JvmStatic
     fun createTabScrimBackground(anchor: View, color: Int): Drawable {
@@ -134,7 +127,6 @@ object MainTabsHelper {
     val mainTabsHeight: Int
         get() = when {
             isMaterial -> M3MainTabsHelper.barHeight
-            isIos -> MAIN_TABS_HEIGHT_IOS
             isCompact -> MAIN_TABS_HEIGHT_COMPACT
             else -> DialogsActivity.MAIN_TABS_HEIGHT
         }
@@ -150,21 +142,6 @@ object MainTabsHelper {
     @JvmStatic
     val mainTabsHeightWithMargins: Int
         get() = mainTabsHeight + mainTabsMargin * 2
-
-    @JvmStatic
-    val tabsInnerPaddingVertical: Int
-        get() = mainTabsMargin + if (isIos) TABS_INNER_PADDING_IOS else TABS_INNER_PADDING
-
-    @JvmStatic
-    val iosSidePaddingExtra: Int
-        get() = if (isIos) dp(TABS_SIDE_PADDING_EXTRA_IOS.toFloat()) else 0
-
-    @JvmStatic
-    fun applyIosTabsLayout(tabsView: org.telegram.ui.MainTabsLayout) {
-        if (!isIos) return
-        tabsView.inu_materialTabs = true
-        tabsView.setMaxWidth(0)
-    }
 
     @JvmStatic
     val fragmentsCount: Int

@@ -617,7 +617,7 @@ object ChatExportHelper {
     }
 
     private fun exportRoot(): File =
-        File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "${InuConfig.DOWNLOAD_DIRECTORY.value}/Chat Export")
+        File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "${InuConfig.DOWNLOAD_DIRECTORY}/Chat Export")
 
     private fun safeTitle(title: String): String =
         title.replace(Regex("[^\\p{L}\\p{N} _-]"), "").trim().take(60).ifEmpty { "chat" }

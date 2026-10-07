@@ -57,9 +57,9 @@ index 0000000..0000000 100644
          final int mainTabsMargin = MainTabsHelper.getMainTabsMargin();
          final int tabsViewWidth = MainTabsHelper.getTabsViewWidth();
  
-@@ -328,13 +338,28 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -327,13 +337,28 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+         tabsView.setMaxWidth(dp(tabsViewWidth));
          M3MainTabsHelper.applyTabsLayout(tabsView);
-         MainTabsHelper.applyIosTabsLayout(tabsView);
  
 -        tabs = new GlassTabView[6];
 +        tabs = new GlassTabView[7];
@@ -87,7 +87,7 @@ index 0000000..0000000 100644
          tabs[INDEX_CONTACTS].setOnLongClickListener(this::openContactsSelector);
          tabs[INDEX_CALLS].setOnLongClickListener(this::openCallsSelector);
          desu.inugram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_PROFILE], this::openAccountSelector);
-@@ -364,6 +389,21 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -363,6 +388,21 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
                      return;
                  }
  
@@ -109,7 +109,7 @@ index 0000000..0000000 100644
                  if (viewPager.getCurrentPosition() == position) {
                      final BaseFragment fragment = getCurrentVisibleFragment();
                      if (fragment instanceof MainTabsActivity.TabFragmentDelegate) {
-@@ -376,8 +416,10 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -375,8 +415,10 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
                  viewPager.scrollToPosition(position);
              });
  
@@ -122,7 +122,7 @@ index 0000000..0000000 100644
          }
  
          selectTab(viewPager.getCurrentPosition(), false);
-@@ -396,6 +438,29 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -395,6 +437,29 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          M3MainTabsHelper.applyTabsBackground(tabsViewBackground);
          tabsView.setBackground(tabsViewBackground);
  
@@ -152,7 +152,7 @@ index 0000000..0000000 100644
          BlurredBackgroundDrawableViewFactory iBlur3FactoryFade = new BlurredBackgroundDrawableViewFactory(iBlur3SourceColor);
          iBlur3FactoryFade.setSourceRootView(viewPositionWatcher, contentView);
  
-@@ -414,7 +479,23 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -413,7 +478,23 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
              }
          };
          tabsViewWrapper.setOnClickListener(v -> {});
@@ -177,10 +177,10 @@ index 0000000..0000000 100644
          tabsViewWrapper.setClipToPadding(false);
          M3MainTabsHelper.applyTabsWrapper(tabsViewWrapper);
          contentView.addView(tabsViewWrapper, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
-@@ -964,7 +1045,23 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -962,7 +1043,23 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+ 
          if (!M3MainTabsHelper.applyTabsInsets(tabsViewWrapper, tabsView, systemInsets.left, systemInsets.right, navigationBarHeight)) {
-             final int iosSidePadding = MainTabsHelper.getIosSidePaddingExtra();
-             tabsViewWrapper.setPadding(systemInsets.left + iosSidePadding, 0, systemInsets.right + iosSidePadding, navigationBarHeight);
+             tabsViewWrapper.setPadding(systemInsets.left, 0, systemInsets.right, navigationBarHeight);
 +        } else {
 +            ViewGroup.LayoutParams barLp = tabsBarContainer.getLayoutParams();
 +            final int barHeight = dp(MainTabsHelper.getMainTabsHeight()) + navigationBarHeight;
@@ -201,7 +201,7 @@ index 0000000..0000000 100644
  
          final WindowInsetsCompat consumed = isUpdateLayoutVisible ?
              insets.inset(0, 0, 0, navigationBarHeight) : insets;
-@@ -1086,6 +1183,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -1084,6 +1181,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          if (tabsView == null) return;
          if (MainTabsHelper.isHidden()) {
              tabsView.setVisibility(View.GONE);
@@ -209,7 +209,7 @@ index 0000000..0000000 100644
              return;
          }
          final boolean isUpdateLayoutVisible = updateLayoutWrapper.isUpdateLayoutVisible();
-@@ -1097,10 +1195,45 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -1095,10 +1193,45 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          final float scale = lerp(0.85f, 1f, factor);
  
          tabsViewWrapper.setTranslationY(lerp(hiddenY, normalY, factor));
@@ -257,7 +257,7 @@ index 0000000..0000000 100644
      }
  
      @Override
-@@ -1227,6 +1360,12 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -1225,6 +1358,12 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          if (tabsViewBackground != null) {
              tabsViewBackground.updateColors();
          }

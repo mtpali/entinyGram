@@ -5,7 +5,6 @@ import androidx.core.content.edit
 import desu.inugram.InuConfig
 import desu.inugram.SearchRegistry
 import desu.inugram.helpers.InuUtils
-import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.MessagesController
 import org.telegram.messenger.NotificationCenter
@@ -19,15 +18,6 @@ import org.telegram.ui.Components.UItem
 import org.telegram.ui.Components.UniversalAdapter
 
 class AnnoyancesSettingsActivity : SettingsPageActivity() {
-
-    private val aiFeaturesGroup = ExpandableBoolGroup(
-        LocaleController.getString(R.string.InuHideAiFeatures),
-        listOf(
-            ExpandableBoolGroup.Option(R.string.InuHideMessageSummary, InuConfig.HIDE_MESSAGE_SUMMARY),
-            ExpandableBoolGroup.Option(R.string.InuHideIvSummary, InuConfig.HIDE_IV_SUMMARY),
-        ),
-        sectionId = SECTION_HIDE_AI_FEATURES,
-    )
 
     private val hideSuggestionsGroup = ExpandableBoolGroup(
         LocaleController.getString(R.string.InuHideSuggestions),
@@ -335,10 +325,6 @@ class AnnoyancesSettingsActivity : SettingsPageActivity() {
         )
         items.add(UItem.asShadow(null))
 
-        items.add(UItem.asHeader(LocaleController.getString(R.string.InuAnnoyancesAi)))
-        aiFeaturesGroup.addTo(items) { listView.adapter.update(true) }
-        items.add(UItem.asShadow(null))
-
         items.add(UItem.asHeader(LocaleController.getString(R.string.InuAnnoyancesHints)))
         hideSuggestionsGroup.addTo(items) { listView.adapter.update(true) }
         items.add(
@@ -381,7 +367,6 @@ class AnnoyancesSettingsActivity : SettingsPageActivity() {
     }
 
     override fun onClick(item: UItem, view: View, position: Int, x: Float, y: Float) {
-        if (aiFeaturesGroup.handleClick(item, view) { listView.adapter.update(true) }) return
         if (hideSuggestionsGroup.handleClick(item, view) { listView.adapter.update(true) }) return
         if (hideBottomBarGroup.handleClick(item, view) { listView.adapter.update(true) }) return
         if (hideBotSlashGroup.handleClick(item, view) { listView.adapter.update(true) }) return
@@ -687,7 +672,6 @@ class AnnoyancesSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_HIDE_GIFT_CARDS_IN_CHAT = InuUtils.generateId()
         private val TOGGLE_HIDE_GIVEAWAYS = InuUtils.generateId()
         private val TOGGLE_HIDE_GROUP_STICKER_PACK = InuUtils.generateId()
-        private val SECTION_HIDE_AI_FEATURES = InuUtils.generateId()
         private val SECTION_HIDE_BOT_SLASH = InuUtils.generateId()
         private val SECTION_HIDE_BOTTOM_BAR = InuUtils.generateId()
         private val TOGGLE_BOT_WEBVIEW_BUTTON = InuUtils.generateId()
@@ -748,7 +732,6 @@ class AnnoyancesSettingsActivity : SettingsPageActivity() {
                 SearchRegistry.Entry("hide-gift-cards-in-chat", R.string.InuHideGiftCardsInChat, TOGGLE_HIDE_GIFT_CARDS_IN_CHAT),
                 SearchRegistry.Entry("hide-giveaways", R.string.InuHideGiveaways, TOGGLE_HIDE_GIVEAWAYS),
                 SearchRegistry.Entry("hide-group-sticker-pack", R.string.InuHideGroupStickerPack, TOGGLE_HIDE_GROUP_STICKER_PACK),
-                SearchRegistry.Entry("hide-ai-features", R.string.InuHideAiFeatures, SECTION_HIDE_AI_FEATURES),
                 SearchRegistry.Entry("hide-suggestions", R.string.InuHideSuggestions, SECTION_HIDE_SUGGESTIONS),
             ),
         )

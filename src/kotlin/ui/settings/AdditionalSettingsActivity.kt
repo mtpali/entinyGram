@@ -6,7 +6,6 @@ import android.graphics.PorterDuff
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -22,13 +21,9 @@ import desu.inugram.ui.DonateBottomSheet
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.ApplicationLoader
-import org.telegram.messenger.FileLoader
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.LocaleController
-import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
-import org.telegram.messenger.SharedConfig
-import org.telegram.messenger.UserConfig
 import org.telegram.messenger.Utilities
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.Theme
@@ -36,21 +31,15 @@ import org.telegram.ui.Cells.NotificationsCheckCell
 import org.telegram.ui.Cells.TextCheckCell
 import org.telegram.ui.Components.BulletinFactory
 import org.telegram.ui.Components.ItemOptions
-import org.telegram.ui.Components.LayoutHelper
 import org.telegram.ui.Components.UItem
 import org.telegram.ui.Components.UniversalAdapter
 import android.text.InputType
 import org.telegram.ui.Components.EditTextBoldCursor
-import org.telegram.ui.IUpdateLayout
 import org.telegram.ui.LaunchActivity
-import org.telegram.ui.UpdateLayoutWrapper
 
-class AdditionalSettingsActivity : SettingsPageActivity(), NotificationCenter.NotificationCenterDelegate {
+class AdditionalSettingsActivity : SettingsPageActivity() {
     override fun getTitle(): CharSequence = LocaleController.getString(R.string.InuCategoryBackup)
 
-    private var updateLayout: IUpdateLayout? = null
-    private var updateWrapper: UpdateLayoutWrapper? = null
-    private var bottomInset: Int = 0
 
     private var donateCard: View? = null
 
@@ -86,27 +75,6 @@ class AdditionalSettingsActivity : SettingsPageActivity(), NotificationCenter.No
                 InuConfig.HIDE_DEV_BADGES.value,
             )
         )
-        items.add(UItem.asShadow(null))
-
-        items.add(UItem.asHeader(LocaleController.getString(R.string.InuUpdates)))
-        items.add(
-            mkTwoLineCheckItem(
-                TOGGLE_AUTO_UPDATE_CHECK,
-                R.string.InuAutoUpdateCheck,
-                R.string.InuAutoUpdateCheckInfo,
-                InuConfig.UPDATES_ENABLED.value,
-            )
-        )
-        if (InuConfig.UPDATES_ENABLED.value) {
-            items.add(
-                mkTwoLineCheckItem(
-                    TOGGLE_UPDATES_INCLUDE_BETA,
-                    R.string.InuUpdatesIncludeBeta,
-                    R.string.InuUpdatesIncludeBetaInfo,
-                    InuConfig.UPDATES_INCLUDE_BETA.value,
-                )
-            )
-        }
         items.add(UItem.asShadow(null))
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.InuLogs)))
@@ -179,33 +147,6 @@ class AdditionalSettingsActivity : SettingsPageActivity(), NotificationCenter.No
 
         items.add(UItem.asButton(BUTTON_COPY_SYSINFO, R.drawable.inu_tabler_terminal_2, LocaleController.getString(R.string.InuLogsCopySystemInfo)))
         items.add(UItem.asShadow(null))
-    }
-
-    override fun createView(context: Context): View {
-        val root = super.createView(context) as FrameLayout
-
-        val wrapper = UpdateLayoutWrapper(context)
-        root.addView(
-            wrapper,
-            LayoutHelper.createFrame(
-                LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.BOTTOM,
-            ),
-        )
-        updateWrapper = wrapper
-
-        val ul = ApplicationLoader.applicationLoaderInstance?.takeUpdateLayout(parentActivity, wrapper)
-        updateLayout = ul
-        ul?.updateAppUpdateViews(UserConfig.selectedAccount, false)
-        applyListPadding()
-
-        return root
-    }
-
-    override fun onInsets(left: Int, top: Int, right: Int, bottom: Int) {
-        bottomInset = bottom
-        updateWrapper?.setPadding(0, 0, 0, bottom)
-        applyListPadding()
     }
 
     private fun toggleBackgroundService(view: View) {
@@ -328,11 +269,6 @@ class AdditionalSettingsActivity : SettingsPageActivity(), NotificationCenter.No
         packageName
     }
 
-    private fun applyListPadding() {
-        val lv = listView ?: return
-        val barHeight = if (SharedConfig.isAppUpdateAvailable()) dp(44f) else 0
-        lv.setPadding(lv.paddingLeft, lv.paddingTop, lv.paddingRight, bottomInset + barHeight)
-    }
 
     override fun onClick(item: UItem, view: View, position: Int, x: Float, y: Float) {
         when (item.id) {
@@ -345,17 +281,6 @@ class AdditionalSettingsActivity : SettingsPageActivity(), NotificationCenter.No
             BUTTON_UNIFIED_PUSH_DISTRIBUTOR -> pickDistributor(view)
 
             BUTTON_UNIFIED_PUSH_GATEWAY -> editGateway()
-
-            TOGGLE_AUTO_UPDATE_CHECK -> {
-                val new = InuConfig.UPDATES_ENABLED.toggle()
-                (view as? NotificationsCheckCell)?.isChecked = new
-                listView?.adapter?.update(true)
-            }
-
-            TOGGLE_UPDATES_INCLUDE_BETA -> {
-                val new = InuConfig.UPDATES_INCLUDE_BETA.toggle()
-                (view as? NotificationsCheckCell)?.isChecked = new
-            }
 
             TOGGLE_HIDE_DEV_BADGES -> {
                 (view as? NotificationsCheckCell)?.isChecked = InuConfig.HIDE_DEV_BADGES.toggle()
@@ -388,58 +313,6 @@ class AdditionalSettingsActivity : SettingsPageActivity(), NotificationCenter.No
             BUTTON_CLOUD_SYNC -> presentFragment(BackupSettingsActivity())
             BUTTON_CACHE_MANAGEMENT -> presentFragment(CacheManagementSettingsActivity())
             BUTTON_DATACENTER_STATUS -> presentFragment(DatacenterStatusActivity())
-        }
-    }
-
-    override fun onFragmentCreate(): Boolean {
-        val ok = super.onFragmentCreate()
-        val global = NotificationCenter.getGlobalInstance()
-        global.addObserver(this, NotificationCenter.appUpdateAvailable)
-        global.addObserver(this, NotificationCenter.appUpdateLoading)
-        val acct = NotificationCenter.getInstance(UserConfig.selectedAccount)
-        acct.addObserver(this, NotificationCenter.fileLoadProgressChanged)
-        acct.addObserver(this, NotificationCenter.fileLoaded)
-        acct.addObserver(this, NotificationCenter.fileLoadFailed)
-        return ok
-    }
-
-    override fun onFragmentDestroy() {
-        val global = NotificationCenter.getGlobalInstance()
-        global.removeObserver(this, NotificationCenter.appUpdateAvailable)
-        global.removeObserver(this, NotificationCenter.appUpdateLoading)
-        val acct = NotificationCenter.getInstance(UserConfig.selectedAccount)
-        acct.removeObserver(this, NotificationCenter.fileLoadProgressChanged)
-        acct.removeObserver(this, NotificationCenter.fileLoaded)
-        acct.removeObserver(this, NotificationCenter.fileLoadFailed)
-        super.onFragmentDestroy()
-    }
-
-    override fun didReceivedNotification(id: Int, account: Int, vararg args: Any?) {
-        val ul = updateLayout ?: return
-        val acct = UserConfig.selectedAccount
-        when (id) {
-            NotificationCenter.appUpdateAvailable -> {
-                val animated = args.getOrNull(0) as? Boolean ?: true
-                ul.updateAppUpdateViews(acct, animated)
-                applyListPadding()
-            }
-
-            NotificationCenter.appUpdateLoading -> {
-                ul.updateFileProgress(null)
-                ul.updateAppUpdateViews(acct, true)
-            }
-
-            NotificationCenter.fileLoadProgressChanged -> {
-                ul.updateFileProgress(args)
-            }
-
-            NotificationCenter.fileLoaded, NotificationCenter.fileLoadFailed -> {
-                val name = args.getOrNull(0) as? String ?: return
-                val doc = SharedConfig.pendingAppUpdate?.document ?: return
-                if (name == FileLoader.getAttachFileName(doc)) {
-                    ul.updateAppUpdateViews(acct, true)
-                }
-            }
         }
     }
 
@@ -637,8 +510,6 @@ class AdditionalSettingsActivity : SettingsPageActivity(), NotificationCenter.No
     }
 
     companion object {
-        private val TOGGLE_AUTO_UPDATE_CHECK = InuUtils.generateId()
-        private val TOGGLE_UPDATES_INCLUDE_BETA = InuUtils.generateId()
         private val TOGGLE_HIDE_DEV_BADGES = InuUtils.generateId()
         private val TOGGLE_LOGS_ENABLED = InuUtils.generateId()
         private val BUTTON_DONATE = InuUtils.generateId()
@@ -662,8 +533,6 @@ class AdditionalSettingsActivity : SettingsPageActivity(), NotificationCenter.No
                 SearchRegistry.Entry("logs-enabled", R.string.InuLogsEnabled, TOGGLE_LOGS_ENABLED),
                 SearchRegistry.Entry("additional-donate", R.string.InuDonateRow, BUTTON_DONATE),
                 SearchRegistry.Entry("hide-dev-badges", R.string.InuHideDevBadges, TOGGLE_HIDE_DEV_BADGES),
-                SearchRegistry.Entry("auto-update-check", R.string.InuAutoUpdateCheck, TOGGLE_AUTO_UPDATE_CHECK),
-                SearchRegistry.Entry("updates-include-beta", R.string.InuUpdatesIncludeBeta, TOGGLE_UPDATES_INCLUDE_BETA),
                 SearchRegistry.Entry("additional-cloud-sync", R.string.InuCloudSync, BUTTON_CLOUD_SYNC),
                 SearchRegistry.Entry("additional-cache-management", R.string.InuCacheManagement, BUTTON_CACHE_MANAGEMENT),
                 SearchRegistry.Entry("additional-datacenter-status", R.string.InuDatacenterStatus, BUTTON_DATACENTER_STATUS),

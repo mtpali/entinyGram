@@ -149,7 +149,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
             UItem.asButton(
                 BUTTON_CALENDAR_SYSTEM,
                 LocaleController.getString(R.string.InuCalendarSystem),
-                calendarSystemLabel(InuConfig.CALENDAR_SYSTEM.value),
+                LocaleController.getString(R.string.InuCalendarSystemPersian),
             )
         )
         items.add(
@@ -282,7 +282,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
             UItem.asButton(
                 BUTTON_DOWNLOAD_DIRECTORY,
                 LocaleController.getString(R.string.InuDownloadDirectory),
-                InuConfig.DOWNLOAD_DIRECTORY.value,
+                InuConfig.DOWNLOAD_DIRECTORY,
             )
         )
         items.add(UItem.asShadow(LocaleController.getString(R.string.InuFasterTransfersInfo)))
@@ -393,9 +393,8 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
             BUTTON_DOWNLOAD_DIRECTORY -> RadioItemOptions.show(
                 this, view,
                 DOWNLOAD_DIRECTORIES,
-                DOWNLOAD_DIRECTORIES.indexOf(InuConfig.DOWNLOAD_DIRECTORY.value),
-            ) { which ->
-                InuConfig.DOWNLOAD_DIRECTORY.value = DOWNLOAD_DIRECTORIES[which]
+                0,
+            ) { _ ->
                 BulletinFactory.of(this)
                     .createSimpleBulletin(
                         R.raw.chats_infotip,
@@ -470,18 +469,9 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
 
             BUTTON_CALENDAR_SYSTEM -> RadioItemOptions.show(
                 this, view,
-                listOf(
-                    LocaleController.getString(R.string.InuCalendarSystemGregorian),
-                    LocaleController.getString(R.string.InuCalendarSystemHijri),
-                    LocaleController.getString(R.string.InuCalendarSystemPersian),
-                ),
-                InuConfig.CALENDAR_SYSTEM.value,
-            ) { which ->
-                if (InuConfig.CALENDAR_SYSTEM.value == which) return@show
-                InuConfig.CALENDAR_SYSTEM.value = which
-                invalidateVisibleRows()
-                listView.adapter.update(true)
-            }
+                listOf(LocaleController.getString(R.string.InuCalendarSystemPersian)),
+                0,
+            ) { _ -> }
 
             BUTTON_CLOCK_FORMAT -> RadioItemOptions.show(
                 this, view,
@@ -619,7 +609,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
         private val BUTTON_PERFORMANCE_CLASS = InuUtils.generateId()
         private val BUTTON_DOWNLOAD_DIRECTORY = InuUtils.generateId()
 
-        private val DOWNLOAD_DIRECTORIES = listOf("entinyGram", "Telegram")
+        private val DOWNLOAD_DIRECTORIES = listOf("Telegram")
         private val BUTTON_TEXT_CLASSIFIER_MODE = InuUtils.generateId()
         private val TOGGLE_CALL_CONFIRMATION = InuUtils.generateId()
         private val TOGGLE_HD_BLUETOOTH_CALL_AUDIO = InuUtils.generateId()
@@ -652,12 +642,6 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
         private val mapProviderOptions: List<Pair<Int, Int>> = buildList {
             add(InuConfig.MapProviderItem.GOOGLE to R.string.InuMapProviderGoogle)
             if (MapsHelper.hasOsmdroid) add(InuConfig.MapProviderItem.OSM_LITE to R.string.InuMapProviderOsmLite)
-        }
-
-        private fun calendarSystemLabel(value: Int): String = when (value) {
-            InuConfig.CalendarSystemItem.HIJRI -> LocaleController.getString(R.string.InuCalendarSystemHijri)
-            InuConfig.CalendarSystemItem.PERSIAN -> LocaleController.getString(R.string.InuCalendarSystemPersian)
-            else -> LocaleController.getString(R.string.InuCalendarSystemGregorian)
         }
 
         private fun clockFormatLabel(value: Int): String = when (value) {
