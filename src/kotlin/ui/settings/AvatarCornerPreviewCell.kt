@@ -46,9 +46,7 @@ class AvatarCornerPreviewCell(
 
     init {
         setWillNotDraw(false)
-        if (!InuConfig.M3_SECTIONS_STYLE.value) {
-            setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
-        }
+        setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
 
         seekBar = AltSeekbar(
             context = context,
@@ -97,11 +95,7 @@ class AvatarCornerPreviewCell(
     fun updatePreview() {
         committedAvatarCorners = InuConfig.AVATAR_CORNERS.value
         previewAvatarCorners = committedAvatarCorners
-        if (!InuConfig.M3_SECTIONS_STYLE.value) {
-            setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
-        } else {
-            background = null
-        }
+        setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
         seekBar.setProgress(previewAvatarCorners / 28.0f)
         seekBar.updateColors()
         invalidate()
@@ -239,15 +233,13 @@ class AvatarCornerPreviewCell(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (!InuConfig.M3_SECTIONS_STYLE.value) {
-            canvas.drawLine(
-                if (LocaleController.isRTL) 0.0f else AndroidUtilities.dp(21.0f).toFloat(),
-                (measuredHeight - 1).toFloat(),
-                measuredWidth - (if (LocaleController.isRTL) AndroidUtilities.dp(21.0f).toFloat() else 0f),
-                (measuredHeight - 1).toFloat(),
-                Theme.dividerPaint
-            )
-        }
+        canvas.drawLine(
+            if (LocaleController.isRTL) 0.0f else AndroidUtilities.dp(21.0f).toFloat(),
+            (measuredHeight - 1).toFloat(),
+            measuredWidth - (if (LocaleController.isRTL) AndroidUtilities.dp(21.0f).toFloat() else 0f),
+            (measuredHeight - 1).toFloat(),
+            Theme.dividerPaint
+        )
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

@@ -151,13 +151,6 @@
     <string name="InuShowSeconds">Show seconds</string>
     <string name="InuDisableRounding">Disable number rounding</string>
     <string name="InuDisableRoundingInfo">1.2K -> 1,234</string>
-    <string name="InuMaterial3">Material Design 3</string>
-    <string name="InuMaterial3Switches">Switches</string>
-    <string name="InuMaterial3Fabs">Floating buttons</string>
-    <string name="InuMaterial3Sections">List items</string>
-    <string name="InuMaterial3Avatars">Avatars</string>
-    <string name="InuMaterial3NavigationAnimation">Navigation animation</string>
-    <string name="InuMaterialProfileActions">Profile action buttons</string>
     <string name="InuAvatarCorners">Avatar corners</string>
     <string name="InuAvatarCornersLeft">Sharp</string>
     <string name="InuAvatarCornersRight">Round</string>
@@ -280,7 +273,6 @@
     <string name="InuCompactModeInfo">Hides titles and make the tabs smaller</string>
     <string name="InuShowTabTitles">Show tab titles</string>
     <string name="InuMainTabsCustomizeReset">Reset to default</string>
-    <string name="InuMaterial3BottomTabs">Bottom tabs</string>
     <string name="InuDialogsFab">FAB</string>
     <string name="InuDialogsFabMainAction">Primary action</string>
     <string name="InuDialogsFabSecondaryAction">Secondary action</string>

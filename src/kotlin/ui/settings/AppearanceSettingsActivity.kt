@@ -23,22 +23,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
 
     override fun getTitle(): CharSequence = LocaleController.getString(R.string.InuCategoryAppearance)
 
-    private val m3Group by lazy {
-        ExpandableBoolGroup(
-            LocaleController.getString(R.string.InuMaterial3),
-            listOf(
-                ExpandableBoolGroup.Option(R.string.InuMaterial3Switches, InuConfig.MATERIAL3_SWITCHES, TOGGLE_MATERIAL3_SWITCHES),
-                ExpandableBoolGroup.Option(R.string.InuMaterial3Fabs, InuConfig.MATERIAL3_FABS, TOGGLE_MATERIAL3_FABS),
-                ExpandableBoolGroup.Option(R.string.InuMaterial3Sections, InuConfig.M3_SECTIONS_STYLE, TOGGLE_M3_SECTIONS_STYLE),
-                ExpandableBoolGroup.Option(R.string.InuMaterial3Avatars, InuConfig.MATERIAL3_AVATARS, TOGGLE_MATERIAL3_AVATARS),
-                ExpandableBoolGroup.Option(R.string.InuMaterial3BottomTabs, InuConfig.M3_BOTTOM_TABS, TOGGLE_M3_BOTTOM_TABS),
-                ExpandableBoolGroup.Option(R.string.InuMaterialProfileActions, InuConfig.MATERIAL_PROFILE_ACTIONS, TOGGLE_MATERIAL_PROFILE_ACTIONS),
-                ExpandableBoolGroup.Option(R.string.InuMaterial3NavigationAnimation, InuConfig.M3_NAVIGATION_ANIMATION, TOGGLE_M3_NAVIGATION_ANIMATION),
-            ),
-            sectionId = SECTION_MATERIAL3,
-        )
-    }
-
     override fun onResume() {
         super.onResume()
         listView?.adapter?.update(false)
@@ -58,13 +42,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
         items.add(mkTwoLineEntry(BUTTON_MENUS, R.drawable.inu_tabler_list, LocaleController.getString(R.string.InuMenus), LocaleController.getString(R.string.InuMenusInfo)))
         items.add(UItem.asShadow(null))
 
-        m3Group.addTo(items) { changed ->
-            // entiny: the master switch flips the sections style too, so rebuild this page like the single toggle does
-            if (changed.any { it.id == TOGGLE_M3_SECTIONS_STYLE }) inu_rebuildSelf()
-            invalidateVisibleRows()
-            softRebuild()
-            listView.adapter.update(true)
-        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             items.add(
                 UItem.asButton(
@@ -196,19 +173,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
     }
 
     override fun onClick(item: UItem, view: View, position: Int, x: Float, y: Float) {
-        if (m3Group.handleClick(item, view) { changed ->
-            when (changed?.id) {
-                TOGGLE_MATERIAL3_SWITCHES -> invalidateVisibleRows()
-                TOGGLE_M3_SECTIONS_STYLE -> inu_rebuildSelf()
-                TOGGLE_M3_BOTTOM_TABS -> {
-                }
-            }
-            if (changed?.id in setOf(TOGGLE_MATERIAL3_SWITCHES, TOGGLE_MATERIAL3_FABS, TOGGLE_M3_SECTIONS_STYLE, TOGGLE_M3_BOTTOM_TABS)) {
-                softRebuild()
-            }
-            listView.adapter.update(true)
-        }) return
-
         when (item.id) {
 
             TOGGLE_FORCE_LTR -> {
@@ -319,7 +283,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
     }
 
     companion object {
-        private val SECTION_MATERIAL3 = InuUtils.generateId()
         private val TOGGLE_FORCE_LTR = InuUtils.generateId()
         private val TOGGLE_HIDE_FADE_VIEW = InuUtils.generateId()
         private val TOGGLE_NON_ISLAND_FOLDERS_BAR = InuUtils.generateId()
@@ -330,13 +293,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_DISABLE_SCRIM_BLUR = InuUtils.generateId()
         private val TOGGLE_DISABLE_PROFILE_AVATAR_BLUR = InuUtils.generateId()
         private val TOGGLE_REDUCE_MENU_MOTION = InuUtils.generateId()
-        private val TOGGLE_MATERIAL3_SWITCHES = InuUtils.generateId()
-        private val TOGGLE_MATERIAL3_FABS = InuUtils.generateId()
-        private val TOGGLE_M3_SECTIONS_STYLE = InuUtils.generateId()
-        private val TOGGLE_MATERIAL3_AVATARS = InuUtils.generateId()
-        private val TOGGLE_M3_BOTTOM_TABS = InuUtils.generateId()
-        private val TOGGLE_MATERIAL_PROFILE_ACTIONS = InuUtils.generateId()
-        private val TOGGLE_M3_NAVIGATION_ANIMATION = InuUtils.generateId()
         private val TOGGLE_UNIFIED_CORNER_RADIUS = InuUtils.generateId()
         private val BUTTON_ICON_REPLACEMENT = InuUtils.generateId()
         private val BUTTON_PREDICTIVE_BACK_MODE = InuUtils.generateId()
@@ -376,13 +332,6 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
                 SearchRegistry.Entry("disable-scrim-blur", R.string.InuDisableScrimBlur, TOGGLE_DISABLE_SCRIM_BLUR),
                 SearchRegistry.Entry("disable-profile-avatar-blur", R.string.InuDisableProfileAvatarBlur, TOGGLE_DISABLE_PROFILE_AVATAR_BLUR),
                 SearchRegistry.Entry("reduce-menu-motion", R.string.InuReduceMenuMotion, TOGGLE_REDUCE_MENU_MOTION),
-                SearchRegistry.Entry("material3-switches", R.string.InuMaterial3Switches, TOGGLE_MATERIAL3_SWITCHES),
-                SearchRegistry.Entry("material3-fabs", R.string.InuMaterial3Fabs, TOGGLE_MATERIAL3_FABS),
-                SearchRegistry.Entry("material3-sections", R.string.InuMaterial3Sections, TOGGLE_M3_SECTIONS_STYLE),
-                SearchRegistry.Entry("material3-avatars", R.string.InuMaterial3Avatars, TOGGLE_MATERIAL3_AVATARS),
-                SearchRegistry.Entry("m3-bottom-tabs", R.string.InuMaterial3BottomTabs, TOGGLE_M3_BOTTOM_TABS),
-                SearchRegistry.Entry("material-profile-actions", R.string.InuMaterialProfileActions, TOGGLE_MATERIAL_PROFILE_ACTIONS),
-                SearchRegistry.Entry("material3-navigation-animation", R.string.InuMaterial3NavigationAnimation, TOGGLE_M3_NAVIGATION_ANIMATION),
                 SearchRegistry.Entry("unified-corner-radius", R.string.InuUnifiedCornerRadius, TOGGLE_UNIFIED_CORNER_RADIUS),
                 SearchRegistry.Entry("monet-theme", R.string.InuMonetTheme, BUTTON_MONET_THEME),
                 SearchRegistry.Entry("icon-replacement", R.string.InuIconReplacement, BUTTON_ICON_REPLACEMENT),

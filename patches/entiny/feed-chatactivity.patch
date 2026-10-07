@@ -1497,7 +1497,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/MainTabsActivity.java b
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/MainTabsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/MainTabsActivity.java
-@@ -913,7 +913,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -911,7 +911,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
              dialogsActivity.setMainTabsActivityController(new MainTabsActivityControllerImpl());
              return dialogsActivity;
          } else if (index == inu_INDEX_FEED) {
@@ -1506,7 +1506,7 @@ index 0000000..0000000 100644
          } else if (index == INDEX_PROFILE) {
              Bundle args = new Bundle();
              args.putLong("user_id", UserConfig.getInstance(currentAccount).getClientUserId());
-@@ -974,6 +974,30 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -972,6 +972,30 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          default BlurredBackgroundSourceRenderNode getGlassSource() {
              return null;
          }
@@ -1537,7 +1537,7 @@ index 0000000..0000000 100644
      }
  
      @Override
-@@ -1340,6 +1364,21 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -1317,6 +1341,21 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
      private final @Nullable BlurredBackgroundSourceRenderNode iBlur3SourceTabGlass;
  
      private final RectF fragmentPosition = new RectF();

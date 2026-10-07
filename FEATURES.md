@@ -14,6 +14,7 @@ most things are toggleable in `Settings → Telegram Settings`, with sensible op
 - **Media defaults**: automatic downloads, pinned-message alerts, raise-to-listen and recording interruptions start off; power-saving options start off.
 - **Download folder**: Telegram; full numbers display without rounding by default.
 - **Slim source**: removed custom AI, iOS controls, local Premium unlocks, archive locking, internal updates, Aqua and Vintage icons.
+- **Standard interface**: removed all seven Material Design switches, components and effects from Design settings.
 
 - **Firebase client**: restored entinyGram push configuration, retained in release APKs.
 
@@ -190,14 +191,7 @@ the sections below contain the broader feature set: inugram functionality, featu
 - 🐶 toggleable scrim blur
 - toggle to disable glass glare
 - 🐶 reduce menu motion: skip context menu stagger and reaction bar slide-in/scale animations
-- material 3:
-  - switches
-  - fabs
-  - predictive back
-  - navigation animation
-  - lists & sections
-  - avatars (tonal on-container initials instead of white)
-  - profile action buttons
+- predictive back with stock or Material 3 motion
 - 🐶 toggle to replace profile photo bottom blur with a plain gradient fade
 - disable number rounding
 - export/import settings to/from json file

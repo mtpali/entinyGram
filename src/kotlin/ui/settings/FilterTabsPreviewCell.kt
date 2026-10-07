@@ -245,14 +245,12 @@ class FilterTabsPreviewCell(context: Context) : FrameLayout(context), Notificati
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (!InuConfig.M3_SECTIONS_STYLE.value) {
-            canvas.drawLine(
-                0f,
-                (measuredHeight - 1).toFloat(),
-                measuredWidth.toFloat(),
-                (measuredHeight - 1).toFloat(),
-                Theme.dividerPaint
-            )
-        }
+        canvas.drawLine(
+            0f,
+            (measuredHeight - 1).toFloat(),
+            measuredWidth.toFloat(),
+            (measuredHeight - 1).toFloat(),
+            Theme.dividerPaint
+        )
     }
 }

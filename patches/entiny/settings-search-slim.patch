@@ -101,7 +101,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
-@@ -5123,16 +5123,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -5121,16 +5121,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                  if (position < 0) {
                      return;
                  }
@@ -119,7 +119,7 @@ index 0000000..0000000 100644
                      }
                  } else {
                      if (!searchAdapter.recentSearches.isEmpty()) {
-@@ -5140,23 +5134,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -5138,23 +5132,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                      }
                      if (position >= 0 && position < searchAdapter.recentSearches.size()) {
                          object = searchAdapter.recentSearches.get(position);
@@ -144,7 +144,7 @@ index 0000000..0000000 100644
                  }
              });
              searchListView.setOnItemLongClickListener((view, position) -> {
-@@ -5192,7 +5175,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -5190,7 +5173,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
              emptyView.setVisibility(View.GONE);
              frameLayout.addView(emptyView);
  
@@ -152,7 +152,7 @@ index 0000000..0000000 100644
          }
  
          if (banFromGroup != 0) {
-@@ -14668,7 +14650,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -14664,7 +14646,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
          }
  
          private SearchResult[] searchArray;
@@ -160,7 +160,7 @@ index 0000000..0000000 100644
  
          private final BaseFragment fragment;
          private final int currentAccount;
-@@ -14676,13 +14657,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -14672,13 +14653,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
  
          private ArrayList<CharSequence> resultNames = new ArrayList<>();
          private ArrayList<SearchResult> searchResults = new ArrayList<>();
@@ -174,7 +174,7 @@ index 0000000..0000000 100644
  
          public SearchAdapter(BaseFragment fragment, Context context) {
              this.fragment = fragment;
-@@ -14707,21 +14685,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -14703,21 +14681,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                          SerializedData data = new SerializedData(Utilities.hexToBytes(value));
                          int num = data.readInt32(false);
                          int type = data.readInt32(false);
@@ -197,7 +197,7 @@ index 0000000..0000000 100644
                              SearchResult result = resultHashMap.get(data.readInt32(false));
                              if (result != null) {
                                  result.num = num;
-@@ -15014,84 +14978,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15010,84 +14974,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
              return MessagesController.getInstance(currentAccount).premiumFeaturesTypesToPosition.get(feature, -1) != -1;
          }
  
@@ -284,7 +284,7 @@ index 0000000..0000000 100644
          }
  
          @Override
-@@ -15101,87 +14993,33 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15097,87 +14989,33 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
  
          @Override
          public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -393,7 +393,7 @@ index 0000000..0000000 100644
                  }
              }
          }
-@@ -15193,9 +15031,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15189,9 +15027,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                  case 0:
                      view = new SettingsSearchCell(mContext);
                      break;
@@ -403,7 +403,7 @@ index 0000000..0000000 100644
                  case 2:
                  default:
                      view = new HeaderCell(mContext, 16);
-@@ -15207,27 +15042,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15203,27 +15038,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
  
          @Override
          public int getItemViewType(int position) {
@@ -433,7 +433,7 @@ index 0000000..0000000 100644
              int index = recentSearches.indexOf(object);
              if (index >= 0) {
                  recentSearches.remove(index);
-@@ -15244,8 +15063,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15240,8 +15059,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                  Object o = recentSearches.get(a);
                  if (o instanceof SearchResult) {
                      ((SearchResult) o).num = a;
@@ -442,7 +442,7 @@ index 0000000..0000000 100644
                  }
                  toSave.add(o.toString());
              }
-@@ -15261,8 +15078,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15257,8 +15074,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
          private int getNum(Object o) {
              if (o instanceof SearchResult) {
                  return ((SearchResult) o).num;
@@ -451,7 +451,7 @@ index 0000000..0000000 100644
              }
              return 0;
          }
-@@ -15276,7 +15091,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15272,7 +15087,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
              if (TextUtils.isEmpty(text)) {
                  searchWas = false;
                  searchResults.clear();
@@ -459,7 +459,7 @@ index 0000000..0000000 100644
                  resultNames.clear();
                  if (fragment instanceof ProfileActivity) {
                      try {
-@@ -15289,7 +15103,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15285,7 +15099,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
              }
              Utilities.searchQueue.postRunnable(searchRunnable = () -> {
                  ArrayList<SearchResult> results = new ArrayList<>();
@@ -467,7 +467,7 @@ index 0000000..0000000 100644
                  ArrayList<CharSequence> names = new ArrayList<>();
                  String[] searchArgs = text.split(" ");
                  String[] translitArgs = new String[searchArgs.length];
-@@ -15342,36 +15155,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15338,36 +15151,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                          }
                      }
                  }
@@ -504,7 +504,7 @@ index 0000000..0000000 100644
                  AndroidUtilities.runOnUIThread(() -> {
                      if (!text.equals(lastSearchString)) {
                          return;
-@@ -15386,7 +15169,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -15382,7 +15165,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                      }
                      searchWas = true;
                      searchResults = results;

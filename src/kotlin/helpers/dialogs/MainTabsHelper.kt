@@ -27,7 +27,6 @@ import desu.inugram.helpers.icons.ScaledIconDrawable
 import desu.inugram.helpers.feed.FeedHelper
 import desu.inugram.helpers.menu.MainTabsMenuConfig
 import desu.inugram.helpers.security.PasscodeHelper
-import desu.inugram.helpers.theme.M3MainTabsHelper
 
 
 object MainTabsHelper {
@@ -44,25 +43,19 @@ object MainTabsHelper {
         get() = InuConfig.BOTTOM_TABS_COMPACT_MODE.value
 
     @JvmStatic
-    val isMaterial: Boolean
-        get() = InuConfig.M3_BOTTOM_TABS.value
-
-    @JvmStatic
     fun createTabScrimBackground(anchor: View, color: Int): Drawable {
-        val radius = if (isMaterial) M3MainTabsHelper.SCRIM_RADIUS else TAB_SCRIM_RADIUS
-        val bg = Theme.createRoundRectDrawable(dp(radius.toFloat()), color)
+        val bg = Theme.createRoundRectDrawable(dp(TAB_SCRIM_RADIUS.toFloat()), color)
         bg.paint.setShadowLayer(dp(6f).toFloat(), 0f, dp(1f).toFloat(), Theme.multAlpha(0xFF000000.toInt(), 0.15f))
-        M3MainTabsHelper.sizeScrimBackground(bg, anchor)
         return bg
     }
 
     @JvmStatic
     fun getMainTabsBottomOffset(navigationBarHeight: Int): Int =
-        if (isMaterial) 0 else navigationBarHeight + dp(mainTabsMargin.toFloat())
+        navigationBarHeight + dp(mainTabsMargin.toFloat())
 
     @JvmStatic
     fun getMainTabsBlurHeight(navigationBarHeight: Int): Int =
-        dp(mainTabsHeight.toFloat()) + if (isMaterial) navigationBarHeight else 0
+        dp(mainTabsHeight.toFloat())
 
     @JvmStatic
     val isHidden: Boolean
@@ -84,7 +77,7 @@ object MainTabsHelper {
     fun hasSearchTab(): Boolean = MainTabsMenuConfig.Item.SEARCH in cachedEnabledOrder
 
     @JvmStatic
-    fun isSearchTabSeparate(): Boolean = hasSearchTab() && InuConfig.BOTTOM_TABS_SEARCH_SEPARATE.value && !isMaterial
+    fun isSearchTabSeparate(): Boolean = hasSearchTab() && InuConfig.BOTTOM_TABS_SEARCH_SEPARATE.value
 
     @JvmStatic
     fun setEnabled(index: Int, enabled: Boolean) {
@@ -126,7 +119,6 @@ object MainTabsHelper {
     @JvmStatic
     val mainTabsHeight: Int
         get() = when {
-            isMaterial -> M3MainTabsHelper.barHeight
             isCompact -> MAIN_TABS_HEIGHT_COMPACT
             else -> DialogsActivity.MAIN_TABS_HEIGHT
         }
@@ -134,7 +126,6 @@ object MainTabsHelper {
     @JvmStatic
     val mainTabsMargin: Int
         get() = when {
-            isMaterial -> 0
             isCompact -> MAIN_TABS_MARGIN_COMPACT
             else -> DialogsActivity.MAIN_TABS_MARGIN
         }

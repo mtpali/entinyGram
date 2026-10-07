@@ -31,7 +31,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/UniversalAda
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/UniversalAdapter.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/UniversalAdapter.java
-@@ -1050,7 +1050,7 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
+@@ -1038,7 +1038,7 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
              case VIEW_TYPE_SWITCH:
              case VIEW_TYPE_EXPANDABLE_SWITCH:
                  TextCheckCell2 switchCell = (TextCheckCell2) holder.itemView;

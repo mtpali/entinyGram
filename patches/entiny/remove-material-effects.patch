@@ -1,0 +1,90 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 11:54:04 -0600
+Subject: Remove Material Design navigation and avatar effects
+
+---
+ .../org/telegram/ui/ActionBar/ActionBarLayout.java | 14 +++-----------
+ .../org/telegram/ui/Components/AvatarDrawable.java |  2 +-
+ 2 files changed, 4 insertions(+), 12 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
+@@ -983,9 +983,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+                 progress = value / containerView.getMeasuredWidth();
+             }
+             final BaseFragment prevFragment = fragmentsStack.get(fragmentsStack.size() - 2);
+-            if (!((startedTracking || animationInProgress) && desu.inugram.helpers.theme.Material3NavigationAnimation.applySlideProgress(this, progress))) {
+-                prevFragment.onSlideProgress(false, progress);
+-            }
++            prevFragment.onSlideProgress(false, progress);
+             final BaseFragment currFragment = fragmentsStack.get(fragmentsStack.size() - 1);
+             float ratio = MathUtils.clamp(2f * progress, 0f, 1f);
+             if (currFragment.isBeginToShow()) {
+@@ -1310,7 +1308,6 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+     }
+ 
+     public void onSlideAnimationEnd(final boolean backAnimation) {
+-        desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
+         if (!backAnimation) {
+             if (fragmentsStack.size() < 2) {
+                 // racing closeLastFragment drained the stack mid-animation;
+@@ -1861,9 +1858,6 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+                 }
+                 lastFrameTime = newTime;
+                 float duration = (preview && open ? 190.0f : 150.0f) / desu.inugram.InuConfig.ANIMATION_SPEED.getValue();
+-                if (!preview && desu.inugram.helpers.theme.Material3NavigationAnimation.isEnabled()) {
+-                    duration = desu.inugram.helpers.theme.Material3NavigationAnimation.DURATION / desu.inugram.InuConfig.ANIMATION_SPEED.getValue();
+-                }
+                 animationProgress += dt / duration;
+                 if (animationProgress > 1.0f) {
+                     animationProgress = 1.0f;
+@@ -1908,7 +1902,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+                 } else {
+                     interpolated = decelerateInterpolator.getInterpolation(animationProgress);
+                 }
+-                if (open && !desu.inugram.helpers.theme.Material3NavigationAnimation.applyOpenFrame(ActionBarLayout.this, animationProgress, preview)) {
++                if (open) {
+                     float clampedInterpolated = MathUtils.clamp(interpolated, 0, 1);
+                     containerView.setAlpha(clampedInterpolated);
+                     if (preview) {
+@@ -1927,7 +1921,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+                     } else {
+                         containerView.setTranslationX(dp(48) * (1.0f - interpolated));
+                     }
+-                } else if (!open && !desu.inugram.helpers.theme.Material3NavigationAnimation.applyCloseFrame(ActionBarLayout.this, animationProgress, preview)) {
++                } else {
+                     float clampedReverseInterpolated = MathUtils.clamp(1f - interpolated, 0, 1);
+                     containerViewBack.setAlpha(clampedReverseInterpolated);
+                     if (preview) {
+@@ -3230,7 +3224,6 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+             oldFragment = null;
+             Runnable endRunnable = onCloseAnimationEndRunnable;
+             onCloseAnimationEndRunnable = null;
+-            desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
+             if (endRunnable != null) {
+                 endRunnable.run();
+             }
+@@ -3264,7 +3257,6 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+             oldFragment = null;
+             Runnable endRunnable = onOpenAnimationEndRunnable;
+             onOpenAnimationEndRunnable = null;
+-            desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
+             endRunnable.run();
+             checkNeedRebuild();
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/AvatarDrawable.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/AvatarDrawable.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/AvatarDrawable.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/AvatarDrawable.java
+@@ -563,7 +563,7 @@ public class AvatarDrawable extends Drawable {
+             return;
+         }
+         int size = bounds.width();
+-        namePaint.setColor(ColorUtils.setAlphaComponent(desu.inugram.helpers.theme.MonetHelper.getAvatarTextColor(getThemedColor(Theme.key_avatar_text), getColor(), getColor2()), alpha));
++        namePaint.setColor(ColorUtils.setAlphaComponent(getThemedColor(Theme.key_avatar_text), alpha));
+         Paint backgroundPaint = Theme.avatar_backgroundPaint;
+         if (hasAdvancedGradient && advancedGradient != null) {
+             advancedGradient.setBounds(bounds.left, bounds.top, bounds.left + size, bounds.top + size);

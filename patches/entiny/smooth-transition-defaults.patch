@@ -158,7 +158,7 @@ index 0000000..0000000 100644
                      SharedPreferences.Editor editor = preferences.edit();
                      editor.putBoolean("view_animations", !animations);
                      SharedConfig.setAnimationsEnabled(!animations);
-@@ -416,7 +416,7 @@ public class LiteModeSettingsActivity extends BaseFragment {
+@@ -409,7 +409,7 @@ public class LiteModeSettingsActivity extends BaseFragment {
                  TextCell textCell = (TextCell) holder.itemView;
                  if (item.type == SWITCH_TYPE_SMOOTH_TRANSITIONS) {
                      SharedPreferences preferences = MessagesController.getGlobalMainSettings();
@@ -171,7 +171,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
-@@ -9763,7 +9763,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -9761,7 +9761,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
              needTimerImage = type != 0;
              needStarImage = type != 0;
              updateStar();

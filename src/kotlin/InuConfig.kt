@@ -239,31 +239,10 @@ object InuConfig {
     val DISABLE_ROUNDING = BoolItem("disable_rounding", true)
 
     @JvmField
-    val MATERIAL3_SWITCHES = BoolItem("material3_switches", false)
-
-    @JvmField
-    val MATERIAL3_FABS = BoolItem("material3_fabs", true)
-
-    @JvmField
-    val M3_SECTIONS_STYLE = BoolItem("m3_sections_style", false)
-
-    @JvmField
-    val MATERIAL3_AVATARS = BoolItem("material3_avatars", false)
-
-    @JvmField
     val AVATAR_CORNERS = FloatItem("avatar_corners", 28.0f)
 
     @JvmField
     val UNIFIED_AVATAR_RADIUS = BoolItem("unified_avatar_radius", false)
-
-    @JvmField
-    val MATERIAL_PROFILE_ACTIONS = BoolItem("material_profile_actions", false)
-
-    @JvmField
-    val M3_NAVIGATION_ANIMATION = BoolItem("m3_navigation_animation", false)
-
-    @JvmField
-    val M3_BOTTOM_TABS = BoolItem("m3_bottom_tabs", false)
 
     // entiny: monet_prev stores theme state snapshot before monet enabled ("day"|"night"|"autoNightType")
     @JvmField

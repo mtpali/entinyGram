@@ -109,13 +109,6 @@
     <string name="InuShowSeconds">نمایش ثانیه</string>
     <string name="InuDisableRounding">غیرفعال کردن رند کردن اعداد</string>
     <string name="InuDisableRoundingInfo">1.2K -> 1,234</string>
-    <string name="InuMaterial3">Material Design 3</string>
-    <string name="InuMaterial3Switches">کلیدها</string>
-    <string name="InuMaterial3Fabs">دکمه‌های شناور</string>
-    <string name="InuMaterial3Sections">موارد فهرست</string>
-    <string name="InuMaterial3Avatars">آواتارها</string>
-    <string name="InuMaterial3NavigationAnimation">انیمیشن ناوبری</string>
-    <string name="InuMaterialProfileActions">دکمه‌های کنش نمایه</string>
     <string name="InuAvatarCorners">گوشه‌های آواتار</string>
     <string name="InuAvatarCornersLeft">تیز</string>
     <string name="InuAvatarCornersRight">گرد</string>
@@ -238,7 +231,6 @@
     <string name="InuCompactModeInfo">عنوان‌ها را پنهان و زبانه‌ها را کوچک‌تر می‌کند</string>
     <string name="InuShowTabTitles">نمایش عنوان زبانه‌ها</string>
     <string name="InuMainTabsCustomizeReset">بازنشانی به پیش‌فرض</string>
-    <string name="InuMaterial3BottomTabs">زبانه‌های پایین</string>
     <string name="InuDialogsFab">دکمه کنش شناور</string>
     <string name="InuDialogsFabMainAction">کنش اصلی</string>
     <string name="InuDialogsFabSecondaryAction">کنش ثانویه</string>
