@@ -56,6 +56,9 @@ object CalendarHelper {
     }
 
     @JvmStatic
+    fun calendar(): android.icu.util.Calendar = altCalendar(Locale.getDefault())
+
+    @JvmStatic
     fun formatYearMonthDay(dateMillis: Long, alwaysShowYear: Boolean, locale: Locale): String {
         val cal = altCalendar(locale)
         val nowYear = cal.get(android.icu.util.Calendar.YEAR)

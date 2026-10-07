@@ -128,7 +128,7 @@ our own layer on top of the inugram patchset: restricted Telegram features, priv
 - 📡 **smaller APK**
 - 📡 **Forward Pro**: edit text or captions before forwarding, keep albums grouped - *inspired by Turbotel / NagramX*
 - 📡 **instant mark reactions as read** - *inspired by [exteraless](https://github.com/exteraless/exteraless)*
-- 📡 **Persian calendar**: Solar Hijri dates — *behavior inspired by [NagramXF](https://github.com/mtpali/NagramXF)*
+- 📡 **Persian calendar**: Solar Hijri dates and history calendar — *behavior inspired by [NagramXF](https://github.com/mtpali/NagramXF)*
 - 📡 **local folders** once the server limit is reached
 - 📡 **folder icon picker**
 - 📡 **separator after mention** - *inspired by [exteraGram](https://github.com/exteraSquad/exteraGram)*

@@ -1,0 +1,74 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 13:12:00 +0330
+Subject: [*] align history calendar with Persian dates
+
+---
+ .../org/telegram/ui/CalendarActivity.java     | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/CalendarActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/CalendarActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/CalendarActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/CalendarActivity.java
+@@ -67,7 +67,7 @@ import org.telegram.ui.Stories.StoryViewer;
+ 
+ import java.time.YearMonth;
+ import java.util.ArrayList;
+-import java.util.Calendar;
++import android.icu.util.Calendar;
+ 
+ public class CalendarActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
+ 
+@@ -143,7 +143,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+         this.photosVideosTypeFilter = photosVideosTypeFilter;
+ 
+         if (selectedDate != 0) {
+-            Calendar calendar = Calendar.getInstance();
++            Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
+             calendar.setTimeInMillis(selectedDate * 1000L);
+             selectedYear = calendar.get(Calendar.YEAR);
+             selectedMonth = calendar.get(Calendar.MONTH);
+@@ -359,7 +359,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+ 
+         fragmentView = contentView;
+ 
+-        Calendar calendar = Calendar.getInstance();
++        Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
+         startFromYear = calendar.get(Calendar.YEAR);
+         startFromMonth = calendar.get(Calendar.MONTH);
+ 
+@@ -487,7 +487,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+         }
+         req.offset_id = lastId;
+ 
+-        Calendar calendar = Calendar.getInstance();
++        Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
+         listView.setItemAnimator(null);
+         getConnectionsManager().sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
+             if (error == null) {
+@@ -594,7 +594,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+     private void updateFromStoriesList() {
+         loading = storiesList.isLoading();
+ 
+-        Calendar calendar = Calendar.getInstance();
++        Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
+         messagesByYearMounth.clear();
+         minDate = Integer.MAX_VALUE;
+         for (int i = 0; i < storiesList.messageObjects.size(); ++i) {
+@@ -1177,11 +1177,10 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+                 }
+             }
+ 
+-            YearMonth yearMonthObject = YearMonth.of(year, monthInYear + 1);
+-            daysInMonth = yearMonthObject.lengthOfMonth();
+-
+-            Calendar calendar = Calendar.getInstance();
+-            calendar.set(year, monthInYear, 0);
++            Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
++            calendar.set(year, monthInYear, 1);
++            daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
++            calendar.set(Calendar.DAY_OF_MONTH, 0);
+             startDayOfWeek = (calendar.get(Calendar.DAY_OF_WEEK) + 6) % 7;
+             startMonthTime = (int) (calendar.getTimeInMillis() / 1000L);
+ 
