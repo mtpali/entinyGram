@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="InuSavedTextsTab">متن</string>
+    <string name="InuSavedTextsAdd">افزودن متن آماده</string>
+    <string name="InuSavedTextsEdit">ویرایش متن آماده</string>
+    <string name="InuSavedTextsEmpty">هنوز متن آماده‌ای ندارید. از دکمهٔ بالا متن اضافه کنید، سپس برای درج در پیام روی آن بزنید.</string>
+    <string name="InuSavedTextsHint">متن آمادهٔ خود را بنویسید</string>
+    <string name="InuSavedTextsOptions">گزینه‌های متن آماده</string>
+    <string name="InuSavedTextsDeleteConfirm">این متن آماده حذف شود؟</string>
     <string name="InuOpenInDiscussion">باز کردن در گفتگو</string>
     <string name="InuBanUserConfirm">%1$s از این گروه مسدود شود؟</string>
     <string name="InuSendToDiscussWithoutJoin">نوشتن در گروه‌های گفتگو بدون عضویت</string>

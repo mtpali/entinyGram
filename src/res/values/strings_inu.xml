@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="InuSavedTextsTab">Text</string>
+    <string name="InuSavedTextsAdd">Add prepared text</string>
+    <string name="InuSavedTextsEdit">Edit prepared text</string>
+    <string name="InuSavedTextsEmpty">No prepared texts yet. Add one above, then tap it to insert it into your message.</string>
+    <string name="InuSavedTextsHint">Write your prepared text</string>
+    <string name="InuSavedTextsOptions">Prepared text options</string>
+    <string name="InuSavedTextsDeleteConfirm">Delete this prepared text?</string>
     <string name="InuOpenInDiscussion">Open in discussion</string>
     <string name="InuLinkedGroup">Linked group</string>
     <string name="InuLinkedChannel">Linked channel</string>
