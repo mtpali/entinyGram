@@ -370,7 +370,6 @@ entiny/hide-channel-share-button.patch
 entiny/non-island-shared-media-scroll.patch
 entiny/redundant-lang-code-native-calls.patch
 entiny/wide-channel-posts.patch
-entiny/simple-text-view-left-slot.patch
 entiny/settings-search-uppercase.patch
 entiny/contact-emoji-picker.patch
 entiny/badge-tap-bulletin.patch
@@ -459,3 +458,4 @@ entiny/launcher-selection.patch
 entiny/settings-search-slim.patch
 entiny/smooth-transition-defaults.patch
 entiny/persian-history-calendar.patch
+entiny/simple-text-view-left-slot.patch
