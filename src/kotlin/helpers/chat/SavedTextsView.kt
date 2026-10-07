@@ -187,7 +187,7 @@ class SavedTextsView(
             addView(preview, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT.toFloat(), Gravity.TOP,
                 if (LocaleController.isRTL) 52f else 16f, 12f, if (LocaleController.isRTL) 16f else 52f, 12f))
             more.apply {
-                setImageResource(R.drawable.msg_more)
+                setImageResource(R.drawable.ic_ab_other)
                 scaleType = ImageView.ScaleType.CENTER
                 contentDescription = LocaleController.getString(R.string.InuSavedTextsOptions)
             }

@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
-import me.vkryl.android.ViewOutlineProviderImpl
 import desu.inugram.helpers.theme.NonIslandHelper
 import org.telegram.messenger.AndroidUtilities
+import org.telegram.messenger.utils.ViewOutlineProviderImpl
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.PhotoViewer
 import org.telegram.ui.Components.ChatAttachAlert
