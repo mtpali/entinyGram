@@ -104,6 +104,10 @@ class SavedTextsView(
         textAdapter.notifyDataSetChanged()
     }
 
+    fun scrollToTop() {
+        listView.smoothScrollToPosition(0)
+    }
+
     private fun showDialog(dialog: AlertDialog) {
         if (fragment != null) fragment.showDialog(dialog) else dialog.show()
     }
