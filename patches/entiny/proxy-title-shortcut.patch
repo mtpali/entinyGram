@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:29:09 -0600
+Subject: Open proxy settings from the main chat-list title
+
+---
+ .../src/main/java/org/telegram/ui/DialogsActivity.java     | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
+@@ -3250,6 +3250,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+ 
+     @Override
+     public void setTitleOverlayText(String title, int titleId, Runnable action) {
++        if (!onlySelect && initialDialogsType == DIALOGS_TYPE_DEFAULT && folderId == 0 && communityId == 0) {
++            action = () -> presentFragment(new ProxyListActivity());
++        }
+         super.setTitleOverlayText(title, titleId, action);
+         if (actionBar != null && selectAnimatedEmojiDialog != null && selectAnimatedEmojiDialog.getContentView() instanceof SelectAnimatedEmojiDialog) {
+             SimpleTextView textView = actionBar.getTitleTextView();
+@@ -3602,6 +3605,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+             actionBar.setClipContent(true);
+         //}
+         actionBar.setTitleActionRunnable(() -> {
++            if (!onlySelect && initialDialogsType == DIALOGS_TYPE_DEFAULT && folderId == 0 && communityId == 0) {
++                presentFragment(new ProxyListActivity());
++                return;
++            }
+             if (initialDialogsType != DIALOGS_TYPE_WIDGET) {
+                 hideFloatingButton(false);
+             }
