@@ -143,6 +143,16 @@ export const forkSyncFiles: ForkSyncFile[] = [
     replace: true,
   },
   {
+    source: 'src/firebase/google-services.json',
+    target: 'TMessagesProj',
+    replace: true,
+  },
+  {
+    source: 'src/firebase/google-services.json',
+    target: 'TMessagesProj_App',
+    replace: true,
+  },
+  {
     source: 'src/google-services.json',
     target: 'TMessagesProj',
     replace: true,

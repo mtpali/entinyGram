@@ -9,8 +9,19 @@ from pathlib import Path
 apk = Path(sys.argv[1])
 abi = sys.argv[2]
 aapt = sys.argv[3]
-badging = subprocess.check_output([aapt, "dump", "badging", str(apk)], text=True)
-manifest = subprocess.check_output([aapt, "dump", "xmltree", str(apk), "AndroidManifest.xml"], text=True)
+firebase_config = json.loads(Path(sys.argv[4]).read_text())
+firebase_client = next(c for c in firebase_config["client"]
+                       if c["client_info"]["android_client_info"]["package_name"] == "ua.entaytion.entinygram")
+firebase_expected = {
+    "google_app_id": firebase_client["client_info"]["mobilesdk_app_id"],
+    "gcm_defaultSenderId": str(firebase_config["project_info"]["project_number"]),
+    "google_api_key": next(k["current_key"] for k in firebase_client["api_key"] if k.get("current_key")),
+    "project_id": firebase_config["project_info"]["project_id"],
+}
+if firebase_config["project_info"].get("storage_bucket"):
+    firebase_expected["google_storage_bucket"] = firebase_config["project_info"]["storage_bucket"]
+badging = subprocess.check_output([aapt, "dump", "badging", str(apk)], text=True, errors="replace")
+manifest = subprocess.check_output([aapt, "dump", "xmltree", str(apk), "AndroidManifest.xml"], text=True, errors="replace")
 label = re.search(r"^application-label:'([^']*)'", badging, re.M)
 if not label or label.group(1) != "Telegram":
     raise SystemExit("APK application label must be Telegram")
@@ -29,13 +40,18 @@ with zipfile.ZipFile(apk) as archive:
     dex = [name for name in names if name.endswith(".dex")]
     if not any(b"force_ltr" in archive.read(name) for name in dex):
         raise SystemExit("Force LTR preference is missing from the compiled APK")
-resources = subprocess.check_output([aapt, "dump", "--values", "resources", str(apk)], text=True)
-for name in ["google_app_id", "gcm_defaultSenderId", "google_api_key", "project_id"]:
-    if f"string/{name}" not in resources:
-        raise SystemExit(f"Firebase configuration resource missing from the compiled APK: {name}")
+resources = subprocess.check_output([aapt, "dump", "--values", "resources", str(apk)], text=True, errors="replace")
+resource_sections = re.split(r"(?m)^\s*resource ", resources)
+for name, expected in firebase_expected.items():
+    section = next((s for s in resource_sections if s.strip() and
+                    re.search(rf":string/{name}(?=\s|:|$)", s.splitlines()[0])), "")
+    if not section or json.dumps(expected, ensure_ascii=False) not in section:
+        raise SystemExit(f"Firebase configuration resource missing or mismatched in the compiled APK: {name}")
 package = re.search(r"^package: name='([^']+)' versionCode='([^']+)' versionName='([^']+)'", badging, re.M)
 if not package:
     raise SystemExit("Could not read package metadata")
+if package.group(1) != "ua.entaytion.entinygram":
+    raise SystemExit("APK package does not match the Firebase Android client")
 print(json.dumps({
     "file": apk.name,
     "label": label.group(1),

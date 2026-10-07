@@ -121,7 +121,7 @@ jobs:
           apk="out/Telegram-$version-$ARCH.apk"
           cp worktree/TMessagesProj_App/build/outputs/apk/release/app.apk "$apk"
           "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs "$apk"
-          python3 scripts/ci/verify-apk.py "$apk" "$ABI" "$ANDROID_HOME/build-tools/36.0.0/aapt" > "out/build-info-$ARCH.json"
+          python3 scripts/ci/verify-apk.py "$apk" "$ABI" "$ANDROID_HOME/build-tools/36.0.0/aapt" worktree/TMessagesProj/google-services.json > "out/build-info-$ARCH.json"
           (cd out && sha256sum "Telegram-$version-$ARCH.apk" > "SHA256SUMS-$ARCH.txt")
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -157,7 +157,8 @@ jobs:
           - Blue stock Telegram icon retained; old entinyGram icon removed.
           - Force LTR in Settings → Telegram Settings → Appearance; restart to apply.
           - Signed armv7 (armeabi-v7a) and armv8 (arm64-v8a) APKs.
+          - Recovered entinyGram Firebase client; matching FCM resources retained and verified in both APKs.
 
-          These preview APKs use the source project's development signing key. Firebase client configuration and compiled FCM resources are required for these builds. Telegram push delivery also requires the corresponding Firebase credentials registered for the Telegram API app.
+          These preview APKs use the source project's development signing key and inherited Telegram API configuration. The default Firebase client was reconstructed from earlier entinyGram APKs. Its project remains under the original maintainer's control. Background push delivery still needs a device test with Google Play services and notification permission.
           NOTES
           gh release create "$tag" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title "Telegram — armv7 and armv8 (build $GITHUB_RUN_NUMBER)" --notes-file release-notes.md out/*

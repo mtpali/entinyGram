@@ -11,28 +11,41 @@ worktree = Path(sys.argv[1])
 validate_only = "--validate-only" in sys.argv[2:]
 raw = os.environ.get("GOOGLE_SERVICES_JSON", "")
 if not raw:
-    raise SystemExit("GOOGLE_SERVICES_JSON is required: this workflow does not publish APKs without Firebase configuration.")
+    root = Path(__file__).resolve().parents[2]
+    local_config = root / "src/google-services.json"
+    config_path = local_config if local_config.is_file() else root / "src/firebase/google-services.json"
+    if not config_path.is_file():
+        raise SystemExit("Firebase configuration is required: supply GOOGLE_SERVICES_JSON or a registered Android client file.")
+    raw = config_path.read_text()
 try:
     config = json.loads(raw)
 except (ValueError, TypeError):
-    raise SystemExit("GOOGLE_SERVICES_JSON must contain a valid Firebase Android configuration export.") from None
+    raise SystemExit("Firebase configuration must contain a valid Android client JSON object.") from None
+if not isinstance(config, dict):
+    raise SystemExit("Firebase configuration must be a JSON object.")
 if config.get("type") == "service_account" or "private_key" in config:
     raise SystemExit("Use the Android google-services.json export, not a Firebase service-account key.")
-client = next((c for c in config.get("client", [])
+clients = config.get("client", [])
+if not isinstance(clients, list) or any(not isinstance(c, dict) or
+        not isinstance(c.get("client_info", {}), dict) or
+        not isinstance(c.get("client_info", {}).get("android_client_info", {}), dict) for c in clients):
+    raise SystemExit("Firebase Android client entries are invalid.")
+client = next((c for c in clients
                if c.get("client_info", {}).get("android_client_info", {}).get("package_name") == PACKAGE), None)
 if not client:
     raise SystemExit(f"Firebase must contain a registered Android client for {PACKAGE}.")
 project = config.get("project_info", {})
 app_id = client.get("client_info", {}).get("mobilesdk_app_id", "")
 keys = client.get("api_key", [])
-if not (project.get("project_number") and project.get("project_id") and
+if not (isinstance(project, dict) and isinstance(app_id, str) and
+        isinstance(keys, list) and all(isinstance(k, dict) for k in keys) and
+        project.get("project_number") and project.get("project_id") and
         re.fullmatch(r"1:\d+:android:[0-9a-f]+", app_id) and
         any(k.get("current_key") for k in keys)):
     raise SystemExit("Firebase configuration is incomplete: project, Android app ID and API key are required.")
 if app_id.split(":")[1] != str(project["project_number"]):
     raise SystemExit("Firebase app ID and project number do not match.")
 
-# Optional personal Telegram credentials must belong to the API app with this FCM project registered.
 api_id = os.environ.get("TELEGRAM_APP_ID", "")
 api_hash = os.environ.get("TELEGRAM_APP_HASH", "")
 if bool(api_id) != bool(api_hash):
@@ -54,5 +67,8 @@ if api_id:
     build_vars.write_text(source)
 
 for module in ["TMessagesProj", "TMessagesProj_App"]:
-    (worktree / module / "google-services.json").write_text(raw)
+    target = worktree / module / "google-services.json"
+    if target.is_symlink():
+        target.unlink()
+    target.write_text(raw)
 print("Firebase Android client configuration validated; FCM resources will be checked in each APK.")
