@@ -3,12 +3,18 @@
 > non-exhaustive list of what this fork adds, tweaks or fixes vs stock telegram android.
 > keep this updated as patches are added/removed.
 
-most things are toggleable in `Settings → entinyGram`, with sensible opinionated defaults.
+most things are toggleable in `Settings → Telegram Settings`, with sensible opinionated defaults.
 
 🐶 - Inugram-exclusive (as far as i know, as of writing)
 📡 - entinyGram-exclusive
 
 ## entinyGram additions
+
+- **Firebase client**: restored entinyGram push configuration, retained in release APKs.
+
+- **Force LTR**: keep left-to-right layout with Persian, Arabic or other interface languages; restart to apply.
+
+- **Telegram branding**: Telegram app name and NagramXF default icon; the blue Telegram icon remains available — *icon from [mtpali/NagramXF](https://github.com/mtpali/NagramXF)*.
 
 our own layer on top of the inugram patchset: restricted Telegram features, privacy tools, and power-user controls.
 

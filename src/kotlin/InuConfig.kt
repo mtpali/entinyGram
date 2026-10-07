@@ -1540,12 +1540,17 @@ object InuConfig {
     val REGEX_FILTER_MODE = RegexFilterModeItem()
 
     class NotificationIconItem : IntItem("notification_icon", TELEGRAM) {
+        override fun read(prefs: SharedPreferences): Int =
+            if (prefs.getInt(key, default) == TELEGRAM) TELEGRAM else NAGRAMXF
+
         companion object {
             const val TELEGRAM = 0
-            const val INUGRAM = 1
-            const val OLD_ENTINYGRAM = 2
+            const val NAGRAMXF = 1
         }
     }
+
+    @JvmField
+    val FORCE_LTR = BoolItem("force_ltr", false)
 
     @JvmField
     val NOTIFICATION_ICON = NotificationIconItem()
@@ -1573,7 +1578,7 @@ object InuConfig {
     @JvmField
     val MAP_PREVIEW_PROVIDER = MapPreviewProviderItem()
 
-    class UpdatesEnabledItem : BoolItem("updates_enabled", true, exportable = false) {
+    class UpdatesEnabledItem : BoolItem("updates_enabled", false, exportable = false) {
         override fun read(prefs: SharedPreferences): Boolean {
             if (!prefs.contains(key) && prefs.contains("update_channel")) {
                 val value = prefs.getInt("update_channel", 1) != 0

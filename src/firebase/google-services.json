@@ -1,0 +1,23 @@
+{
+  "project_info": {
+    "project_number": "1071667108079",
+    "project_id": "entinygram",
+    "storage_bucket": "entinygram.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071667108079:android:6ef75c958c1471b5a6a31a",
+        "android_client_info": {
+          "package_name": "ua.entaytion.entinygram"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmC3-T533nhFCM5ZJL-wEDJD6yZqIActs"
+        }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}

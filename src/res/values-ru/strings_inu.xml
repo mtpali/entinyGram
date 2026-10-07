@@ -14,10 +14,9 @@
     <string name="InuClearDeletedHereAlert">Удалить локально сохранённые удалённые сообщения этого чата и их медиа? Это нельзя отменить.</string>
     <string name="InuSetReminder">Задать напоминание</string>
     <string name="InuBanUserConfirm">Заблокировать %1$s в этой группе?</string>
-    <string name="InuSettings">Настройки entinyGram</string>
+    <string name="InuSettings">Настройки Telegram</string>
     <string name="InuSettingsInfo">сквозь землю и ветер я иду за тобой</string>
     <string name="InuGeneral">Основные</string>
-    <string name="InuMiscellaneous">Прочее</string>
     <string name="InuWideChannelPosts">Широкие посты</string>
     <string name="InuWideChannelPostsFooter">Посты каналов и пересланные сообщения используют всю доступную ширину.</string>
     <string name="InuWideChannelPostsPreviewText">Новости, фото и видео</string>
@@ -80,7 +79,6 @@
     <string name="InuAnnoyancesGifts">Подарки и Premium</string>
     <string name="InuAnnoyancesInterface">Чаты и интерфейс</string>
     <string name="InuAnnoyancesChannels">Каналы и рекомендации</string>
-    <string name="InuAnnoyancesMedia">Медиа</string>
     <string name="InuAnnoyancesAi">Искусственный интеллект</string>
     <string name="InuAnnoyancesHints">Подсказки и напоминания</string>
     <string name="InuMessages">Сообщения</string>
@@ -190,7 +188,6 @@
     <string name="InuClockFormat12Hour">12-часовой</string>
     <string name="InuClockFormat24Hour">24-часовой</string>
     <string name="InuHideAiFeatures">Скрыть ИИ функции</string>
-    <string name="InuHideAiEditor">Кнопка ИИ-редактора</string>
     <string name="InuHideMessageSummary">Кнопка пересказа сообщения</string>
     <string name="InuHideIvSummary">Краткий пересказ Instant View</string>
     <string name="InuClearHints">Сбросить все подсказки</string>
@@ -219,8 +216,6 @@
     <string name="InuHideHashtagSuggestions">Скрыть подсказки хэштегов</string>
     <string name="InuHideAllChatsTab">Скрыть вкладку «Все чаты»</string>
     <string name="InuHideAllChatsTabInfo">Долгое нажатие на заголовок в списке чатов покажет «Все чаты».</string>
-    <string name="InuRememberSelectedFolder">Запоминать выбранную папку</string>
-    <string name="InuRememberSelectedFolderInfo">Открывать последнюю активную папку при возврате к списку чатов.</string>
     <string name="InuFoldersAtBottom">Перенести папки вниз</string>
     <string name="InuHideArchive">Убрать «Архив» из списка чатов</string>
     <string name="InuHideCallActionButton">Скрыть кнопку звонка в заголовке</string>
@@ -508,7 +503,6 @@
     <string name="InuForwardHeaderMode">Заголовок пересылки</string>
     <string name="InuForwardHeaderModeRegular">Обычный</string>
     <string name="InuForwardHeaderModeIcon">Значок</string>
-    <string name="InuForwardHeaderModeIconNoTimeInfo">Совпадает с компактным режимом, когда «Показывать время пересылки» выключено</string>
     <string name="InuForwardHeaderModeCompact">Компактный</string>
     <string name="InuShowForwardsCount">Показывать число пересылок</string>
     <string name="InuCompactEdited">Компактный индикатор изменения</string>
@@ -549,8 +543,7 @@
     <string name="InuCodeBlock">Блок кода</string>
     <string name="InuCut">Вырезать</string>
     <string name="InuCodeLanguage">Язык кода</string>
-    <string name="InuVersion">entinyGram %1$s (%2$s)</string>
-    <string name="InuCategories">Категории</string>
+    <string name="InuVersion">Telegram %1$s (%2$s)</string>
     <string name="InuDataBackup">Резервное копирование</string>
 
     <string name="InuSearchFilter">Фильтр по медиа</string>
@@ -574,7 +567,7 @@
     <string name="InuHidePinnedUntilNew">До нового закреплённого сообщения</string>
     <string name="InuHidePinnedForever">Всегда в этом чате</string>
     <string name="InuAppIconStock">Стандартная</string>
-    <string name="InuAppIconLicenseInugram">Временная иконка, не стесняйтесь предложить лучше</string>
+    <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">Иконка от **Telegram**. Все права защищены.</string>
     <string name="InuJumpToBeginning">Перейти в начало</string>
 
@@ -612,11 +605,11 @@
     <string name="InuBackupImportSheetCancel">Нет, оставить как есть</string>
     <string name="InuBackupSettings">Резервное копирование и сброс</string>
     <string name="InuBackupReset">Сбросить настройки</string>
-    <string name="InuBackupResetConfirm">Все настройки entinyGram будут сброшены до значений по умолчанию. Ваши чаты, аккаунты и собственные настройки Telegram останутся неизменными.\n\nЭто действие нельзя отменить.</string>
+    <string name="InuBackupResetConfirm">Все настройки Telegram будут сброшены до значений по умолчанию. Ваши чаты, аккаунты и собственные настройки Telegram останутся неизменными.\n\nЭто действие нельзя отменить.</string>
     <string name="InuBackupResetSuccess">Сброшено %1$d настроек</string>
     <string name="InuBackupResetNoChanges">Настройки уже имеют значения по умолчанию</string>
     <string name="InuCloudSync">Синхронизация настроек</string>
-    <string name="InuCloudSyncDesc">Сохраняет настройки entinyGram в облако Telegram через [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) — ваши данные не попадают на наши серверы.</string>
+    <string name="InuCloudSyncDesc">Сохраняет настройки Telegram в облако Telegram через [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) — ваши данные не попадают на наши серверы.</string>
     <string name="InuCloudSyncNow">Синхронизировать</string>
     <string name="InuCloudSyncing">Синхронизация…</string>
     <string name="InuCloudRestore">Восстановить из облака</string>
@@ -668,7 +661,6 @@
     <string name="InuCopyButtonText">Копировать «%1$s»</string>
     <string name="InuCopyCallbackData">Копировать Callback-данные</string>
     <string name="InuCallbackDataCopied">Callback-данные скопированы</string>
-    <string name="InuNetwork">Сеть</string>
     <string name="InuAutoDisableProxyOnVpn">Отключать прокси при активном VPN</string>
     <string name="InuFasterDownloads">Ускорение скачивания</string>
     <string name="InuFasterUploads">Ускорение выгрузки</string>
@@ -680,7 +672,7 @@
 
     <string name="InuPasscode">Код-пароль</string>
     <string name="InuPasscodeNeeded">Сначала настройте код-пароль Telegram.</string>
-    <string name="InuPasscodeShowInSettings">Показывать в настройках entinyGram</string>
+    <string name="InuPasscodeShowInSettings">Показывать в настройках Telegram</string>
     <string name="InuPasscodeShowInSettingsInfo">Когда выключено, эта страница открывается только по ссылке ниже — сохраните её сейчас.</string>
     <string name="InuPasscodeAccountsInfo">Код-пароль для каждого аккаунта: введите его на экране блокировки, чтобы разблокировать приложение и переключиться на этот аккаунт.</string>
     <string name="InuPasscodeStateNone">Не настроен</string>
@@ -719,11 +711,11 @@
     <string name="InuMessageMenuReset">Сбросить по умолчанию</string>
     <string name="InuPrivacySecurity">Конфиденциальность и безопасность</string>
     <string name="InuPerAccountPasscode">Код-пароль для каждого аккаунта</string>
-    <string name="InuHideInugramSettings">Скрыть настройки entinyGram</string>
+    <string name="InuHideInugramSettings">Скрыть настройки Telegram</string>
     <string name="InuParanoiaDisableNotifications">Отключить уведомления</string>
     <string name="InuParanoiaHideOtherAccounts">Скрыть другие аккаунты</string>
     <string name="InuParanoiaDisguise">Маскировка под Telegram</string>
-    <string name="InuParanoiaDisguiseInfo">Меняются только иконка и имя в лаунчере; уведомления по-прежнему показывают «entinyGram».</string>
+    <string name="InuParanoiaDisguiseInfo">Меняются только иконка и имя в лаунчере; уведомления по-прежнему показывают «Telegram».</string>
     <string name="InuParanoiaMode">Режим паранойи</string>
     <string name="InuParanoiaModeInfo">Скрывает «опасные» чаты и при желании маскирует приложение — будьте готовы к тому, кто заглянет в телефон.</string>
     <string name="InuParanoiaLauncherShortcut">Ярлык на иконке лаунчера</string>
@@ -818,7 +810,7 @@
     <string name="InuConfirmReactionText">Отправить реакцию %1$s в **%2$s**?</string>
     <string name="InuNotificationIcon">Иконка уведомления</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">entinyGram</string>
+    <string name="InuNotificationIconNagramXF">NagramXF</string>
     <string name="InuNothingToTranslate">Нет сообщений для перевода.</string>
     <string name="InuAlreadyInTargetLanguage">Это сообщение уже на %1$s.</string>
     <string name="InuVoiceRecorder">Запись голоса / кружочков</string>
@@ -854,12 +846,12 @@
     <string name="InuBotSettings">Настройки бота</string>
     <string name="InuBotHelp">Помощь бота</string>
 
-    <string name="InuCrashTitle">entinyGram упал в прошлый раз</string>
+    <string name="InuCrashTitle">Telegram упал в прошлый раз</string>
     <string name="InuCrashDesc">Извиняемся. Вы можете поделиться логом краша с разработчиком, чтобы помочь его исправить.</string>
     <string name="InuCrashShare">Поделиться логом</string>
     <string name="InuCrashDiscard">Отбросить</string>
     <string name="InuCrashChannel">Восстановление после краша</string>
-    <string name="InuCrashNotifTitle">entinyGram упал</string>
+    <string name="InuCrashNotifTitle">Telegram упал</string>
     <string name="InuCrashNotifText">Нажмите для перезапуска</string>
 
     <string name="InuLogs">Отладка</string>
@@ -986,9 +978,9 @@
     <string name="InuStripTrackingParamsOnPaste">При вставке</string>
     <string name="InuStripTrackingParamsSourceRow">Источник фильтра</string>
 
-    <string name="InuCrashTitleOom">entinyGram исчерпал память</string>
+    <string name="InuCrashTitleOom">Telegram исчерпал память</string>
     <string name="InuCrashDescOom">Извиняемся. Логи краша не очень полезны при нехватке памяти — тут помогает хипдамп.</string>
-    <string name="InuCrashOomEnableLogs">Включи режим отладки в Настройках entinyGram > О приложении, чтобы создавать хипдамп при каждом будущем OOM.</string>
+    <string name="InuCrashOomEnableLogs">Включи режим отладки в Настройках Telegram > О приложении, чтобы создавать хипдамп при каждом будущем OOM.</string>
     <string name="InuCrashDescHeapDump">Также сохранён дамп кучи. НЕ ОТПРАВЛЯЙТЕ ЕГО! Он содержит личные данные! Можете посмотреть его сами и поделиться находками — это сильно поможет.</string>
     <string name="InuCrashShareHeapDump">Сохранить дамп кучи</string>
 
@@ -1021,7 +1013,6 @@
     <string name="InuBiometricLockArchiveEveryTimeInfo">Выключено — запрашивает один раз за сессию; включено — каждый раз при открытии архива.</string>
     <string name="InuAiCompose">Искусственный интеллект (AI)</string>
     <string name="InuAiEndpointUrl">URL эндпоинта</string>
-    <string name="InuAiEndpointModel">Модель</string>
     <string name="InuAiOpenSettings">Открыть настройки</string>
     <string name="InuAiNoEndpoint">Не настроено ни одного активного API-эндпоинта. Добавьте его в Настройках &gt; AI Compose.</string>
     <string name="InuAiBadEndpoint">У активного эндпоинта нет URL. Измените его в Настройках &gt; AI Compose.</string>
@@ -1259,13 +1250,11 @@
     <string name="InuAiTranscribe">Распознавание речи (Voice-to-Text)</string>
     <string name="InuAiTranscribeInfo">Расшифровывать голосовые и видеосообщения через своего AI-провайдера вместо телеграмовского — с Premium или без него.</string>
     <string name="InuAiTranscribeModel">Модель</string>
-    <string name="InuAiTranscribeApiKey">API ключ</string>
     <string name="InuAiTranscribeAccountId">Account ID</string>
     <string name="InuAiTranscribeApiToken">API токен</string>
     <string name="InuAiTranscribeNoKey">Голосовой AI-провайдер ещё не настроен. Добавьте его в Настройках &gt; AI &gt; Провайдеры.</string>
     <string name="InuAiTranscribeFailed">Ошибка распознавания: %1$s</string>
     <string name="InuAiTranscribeLanguage">Язык речи</string>
-    <string name="InuAiTranscribeLanguageInfo">Язык, на котором говорят в голосовых сообщениях (например, en, uk, ru). Пусто = автоопределение.</string>
     <string name="InuAiTranscribeErrorDownload">Не удалось загрузить голосовое сообщение.</string>
     <string name="InuAiTranscribeErrorNoAudio">В этом сообщении нет аудио для расшифровки.</string>
     <string name="InuAiTranscribeErrorEmpty">Провайдер вернул пустую расшифровку.</string>
@@ -1397,10 +1386,8 @@
     <string name="InuAiEditorButtonSetupInfo">Сначала добавьте API-ключ в AI-сервисах; эта кнопка работает при наборе сообщения.</string>
     <string name="InuAiInsertQuote">Вставить ответ как цитату</string>
     <string name="InuAiOnlyAnswer">Показывать только ответ</string>
-    <string name="InuAiProviderCustom">Пользовательский</string>
     <string name="InuAiRoles">Роли</string>
     <string name="InuAiRolesAssistant">Ассистент</string>
-    <string name="InuAiSectionGeneral">Основные</string>
     <string name="InuAiSectionGeneration">Ответы</string>
     <string name="InuAiSectionTemperature">Температура</string>
     <string name="InuAiStream">Потоковый ответ</string>
@@ -1425,8 +1412,6 @@
     <string name="InuAiSummaryTemperatureInfo">Меньшие значения держат пересказ ближе к оригиналу. Пока вы не меняли, используется температура редактора.</string>
 
     <!-- General & Icons -->
-    <string name="InuAppIconOldEntinygram">Старый entinyGram</string>
-    <string name="InuNotificationIconOldEntinygram">Старый entinyGram</string>
     <string name="InuNotificationIconInfo">На Xiaomi (MIUI/HyperOS) система может подменять эту иконку иконкой приложения, поэтому выбор там может быть незаметен</string>
     <string name="InuShowDrawerAccounts">Аккаунты в боковом меню</string>
     <string name="InuShowDrawerAccountsInfo">Показывать переключатель аккаунтов под профилем в боковой панели.</string>
@@ -1541,16 +1526,9 @@
     <string name="InuRecentChatsEmpty">Пока пусто</string>
     <string name="InuAiInsertQuoteInfo">Когда вы нажимаете «Использовать» в AI-редакторе, результат заменяет черновик как цитата. Если выключено, он заменяет черновик обычным текстом.</string>
     <string name="InuAiOnlyAnswerInfo">Для моделей с рассуждением: скрывает ход мыслей и оставляет только итоговый ответ. Если выключено, рассуждение показывается над ответом после облачка мыслей.</string>
-    <string name="InuAiProviderCustomNameHint">Название (необязательно)</string>
-    <string name="InuAiProvidersActiveBoth">Чат + Голос</string>
     <string name="InuAiProvidersActiveForChat">Активно для чата</string>
     <string name="InuAiProvidersActiveForVoice">Активно для голоса</string>
-    <string name="InuAiProvidersChatModelHint">Модель для чата</string>
-    <string name="InuAiProvidersOpenRouterInfo">Доступ к сотням моделей через один API. Получите ключ в OpenRouter:</string>
-    <string name="InuAiProvidersSameModel">Использовать одну модель для обоих</string>
     <string name="InuAiProvidersTitle">Провайдеры ИИ</string>
-    <string name="InuAiProvidersUniversalDesc">Значок перед названием показывает поддержку (∞ — чат и голос, клавиатура — только чат, микрофон — только голос) — нажмите для настройки и выберите активного для каждого сценария.</string>
-    <string name="InuAiProvidersVoiceModelHint">Модель для голоса</string>
     <string name="InuAiRoleDeleteConfirm">Удалить эту роль?</string>
     <string name="InuAiRolesSubtitle">Персоны, которыми ИИ действует в редакторе и пересказах. Выберите готовую или напишите свой промпт.</string>
     <string name="InuAiRoleAdd">Добавить роль</string>
@@ -1564,10 +1542,6 @@
     <string name="InuAiRoleNameHint">Название</string>
     <string name="InuAiRoleNew">Новая роль</string>
     <string name="InuAiRolePromptDesc">Если указано, этот промпт полностью заменяет строку «Ты — Имя».</string>
-    <string name="InuAiRolePromptHint">Собственный промпт (необязательно)</string>
-    <string name="InuAiRolesScreenDesc">Сохранённые роли ИИ («Ты — X»). Нажмите для переключения, нажмите на активную для переименования.</string>
-    <string name="InuAiTranscribeCfInfo">Требуется Cloudflare Account ID и API Token с правами доступа к Workers AI. Управление токенами:</string>
-    <string name="InuAiTranscribeCustomInfo">Укажите любой совместимый с OpenAI эндпоинт /v1/audio/transcriptions.</string>
     <string name="InuAiChatCustomInfo">Любое OpenAI-совместимое API, напр. https://host/v1 (полный URL /chat/completions тоже подойдёт). Ключ API необязателен для локальных роутеров.</string>
     <string name="InuAiProvidersSubtitle">Подключите свои ИИ-сервисы для редактора, пересказов и распознавания голоса.</string>
     <string name="InuAiProviderAdd">Добавить провайдера</string>
@@ -1588,12 +1562,7 @@
     <string name="InuAiModelPickerTitle">Выберите модель</string>
     <string name="InuAiModelsLoading">Загрузка моделей…</string>
     <string name="InuAiModelEnterManually">Ввести модель вручную</string>
-    <string name="InuAiTranscribeFetchModels">Загрузить список моделей</string>
-    <string name="InuAiTranscribeFetchModelsEmpty">Модели не найдены</string>
     <string name="InuAiTranscribeFetchModelsFailed">Не удалось загрузить модели: %1$s</string>
-    <string name="InuAiTranscribeGeminiInfo">Мультимодальная транскрипция через Gemini. Получите ключ в Google AI Studio:</string>
-    <string name="InuAiTranscribeGroqInfo">Быстрая бесплатная транскрипция через Whisper Large v3. Получите бесплатный ключ в консоли Groq:</string>
-    <string name="InuAiTranscribeOpenAiInfo">Официальная транскрипция через OpenAI Whisper. Получите ключ в панели управления OpenAI:</string>
     <string name="InuBurnOneTime">Сжечь</string>
     <string name="InuDevBadge">Команда entinyGram</string>
     <string name="InuDevBadgeInfo">Этот аккаунт подтверждён командой entinyGram.</string>
@@ -1717,4 +1686,6 @@
     <string name="InuDonateWebsite">Все способы на сайте</string>
     <string name="InuDonateCopied">Скопировано</string>
     <string name="InuShowMediaSize">Показывать размер медиа</string>
+    <string name="InuForceLtr">Интерфейс слева направо</string>
+    <string name="InuForceLtrInfo">Сохранять расположение интерфейса слева направо без изменения выбранного языка и текста. Перезапустите приложение для применения.</string>
 </resources>

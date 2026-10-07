@@ -60,10 +60,9 @@
     <string name="InuDrawerM3SectionsInfo">Groups the navigation drawer menu rows into rounded Material 3 cards.</string>
     <string name="InuShowDrawerAccounts">Show accounts in drawer</string>
     <string name="InuShowDrawerAccountsInfo">Show the expandable account switcher below your profile.</string>
-    <string name="InuSettings">entinyGram Settings</string>
+    <string name="InuSettings">Telegram Settings</string>
     <string name="InuSettingsInfo">through the land and wind I follow you</string>
     <string name="InuGeneral">General</string>
-    <string name="InuMiscellaneous">Miscellaneous</string>
     <string name="InuWideChannelPosts">Wide posts</string>
     <string name="InuWideChannelPostsFooter">Channel posts and forwards use the available width.</string>
     <string name="InuWideChannelPostsPreviewText">News, photos and videos</string>
@@ -126,7 +125,6 @@
     <string name="InuAnnoyancesGifts">Gifts &amp; Premium</string>
     <string name="InuAnnoyancesInterface">Chats &amp; Interface</string>
     <string name="InuAnnoyancesChannels">Channels &amp; Recommendations</string>
-    <string name="InuAnnoyancesMedia">Media</string>
     <string name="InuAnnoyancesAi">Artificial Intelligence</string>
     <string name="InuAnnoyancesHints">Hints &amp; Prompts</string>
     <string name="InuMessages">Messages</string>
@@ -407,7 +405,6 @@
     <string name="InuShowHiddenMessages">Show messages</string>
     <string name="InuSpoilers">Spoilers</string>
     <string name="InuHideAiFeatures">Hide AI features</string>
-    <string name="InuHideAiEditor">AI editor button</string>
     <string name="InuAiEditorButtonInfo">Shows AI actions next to the message field for rewriting, continuing, summarizing, and fixing text.</string>
     <string name="InuAiEditorButtonSetupInfo">Add an API key in AI Services first; this button works while composing.</string>
     <string name="InuAiSummary">AI summaries</string>
@@ -487,8 +484,6 @@
     <string name="InuFoldersUnreadCounterExcludeMutedNonDms">Exclude muted non-DMs</string>
     <string name="InuHideAllChatsTab">Hide \"All Chats\" Tab</string>
     <string name="InuHideAllChatsTabInfo">Long press the title in the chat list to show All Chats.</string>
-    <string name="InuRememberSelectedFolder">Remember Selected Folder</string>
-    <string name="InuRememberSelectedFolderInfo">Reopen the last active folder when returning to the chat list.</string>
     <string name="InuFoldersAtBottom">Move Folders to Bottom</string>
     <string name="InuHideArchive">Remove \"Archived Chats\" from Chat List</string>
     <string name="InuCommunityDisplayMode">Communities</string>
@@ -524,10 +519,8 @@
     <string name="InuConfirmReactionText">Send %1$s reaction in **%2$s**?</string>
     <string name="InuNotificationIcon">Notification icon</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">entinyGram</string>
-    <string name="InuNotificationIconOldEntinygram">Old entinyGram</string>
+    <string name="InuNotificationIconNagramXF">NagramXF</string>
     <string name="InuNotificationIconInfo">On Xiaomi (MIUI/HyperOS) the system may replace this icon with the app icon, so the choice might not be visible there</string>
-    <string name="InuAppIconOldEntinygram">Old entinyGram</string>
     <string name="InuDisableChatBubbles">Disable Android notification bubbles</string>
     <string name="InuInPlaceTranslation">In-place translation</string>
     <string name="InuTranslateWebPreviews">Translate web previews</string>
@@ -857,7 +850,6 @@
     <string name="InuForwardHeaderMode">Forward header</string>
     <string name="InuForwardHeaderModeRegular">Regular</string>
     <string name="InuForwardHeaderModeIcon">Icon</string>
-    <string name="InuForwardHeaderModeIconNoTimeInfo">Same as Compact with &quot;Show forward time&quot; off</string>
     <string name="InuForwardHeaderModeCompact">Compact</string>
     <string name="InuShowForwardsCount">Show forward count</string>
     <string name="InuCompactEdited">Compact edit indicator</string>
@@ -904,8 +896,7 @@
     <string name="InuCodeBlock">Code block</string>
     <string name="InuCut">Cut</string>
     <string name="InuCodeLanguage">Code language</string>
-    <string name="InuVersion">entinyGram %1$s (%2$s)</string>
-    <string name="InuCategories">Categories</string>
+    <string name="InuVersion">Telegram %1$s (%2$s)</string>
     <string name="InuDataBackup">Backup &amp; Sync</string>
 
     <string name="InuSearchFilter">Filter by media</string>
@@ -931,7 +922,7 @@
     <string name="InuHidePinnedUntilNew">Until a new message is pinned</string>
     <string name="InuHidePinnedForever">Always in this chat</string>
     <string name="InuAppIconStock">Stock</string>
-    <string name="InuAppIconLicenseInugram">Placeholder icon, feel free to contribute a better one</string>
+    <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">Icon by **Telegram**. All rights reserved.</string>
     <string name="InuJumpToBeginning">Jump to the beginning</string>
     <string name="InuRecentChats">Recent chats</string>
@@ -983,11 +974,11 @@
     <string name="InuBackupImportSheetCancel">No, leave as is</string>
     <string name="InuBackupSettings">Backup &amp; reset</string>
     <string name="InuBackupReset">Reset settings</string>
-    <string name="InuBackupResetConfirm">All entinyGram settings will be reset to their default values. Your chats, accounts, and Telegram\'s own settings stay the same.\n\nThis cannot be undone.</string>
+    <string name="InuBackupResetConfirm">All Telegram settings will be reset to their default values. Your chats, accounts, and Telegram\'s own settings stay the same.\n\nThis cannot be undone.</string>
     <string name="InuBackupResetSuccess">Reset %1$d settings</string>
     <string name="InuBackupResetNoChanges">Settings are already at their defaults</string>
     <string name="InuCloudSync">Sync settings</string>
-    <string name="InuCloudSyncDesc">Backs up your entinyGram settings to Telegram cloud via [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) — your data never touches our servers.</string>
+    <string name="InuCloudSyncDesc">Backs up your Telegram settings to Telegram cloud via [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) — your data never touches our servers.</string>
     <string name="InuCloudSyncNow">Sync now</string>
     <string name="InuCloudSyncing">Syncing…</string>
     <string name="InuCloudRestore">Restore from cloud</string>
@@ -1039,7 +1030,6 @@
     <string name="InuCopyButtonText">Copy \"%1$s\"</string>
     <string name="InuCopyCallbackData">Copy callback data</string>
     <string name="InuCallbackDataCopied">Callback data copied</string>
-    <string name="InuNetwork">Network</string>
     <string name="InuAutoDisableProxyOnVpn">Disable proxy when VPN is active</string>
     <string name="InuFasterDownloads">Faster downloads</string>
     <string name="InuFasterUploads">Faster uploads</string>
@@ -1059,7 +1049,7 @@
     <string name="InuMentionInsertTitle">Insert mention</string>
     <string name="InuPasscode">Passcode</string>
     <string name="InuPasscodeNeeded">Set up a Telegram passcode first.</string>
-    <string name="InuPasscodeShowInSettings">Show in entinyGram settings</string>
+    <string name="InuPasscodeShowInSettings">Show in Telegram settings</string>
     <string name="InuPasscodeShowInSettingsInfo">When off, this page opens only via the link below — save it now.</string>
     <string name="InuPasscodeAccountsInfo">Per-account passcodes: enter one at the lock screen to unlock and switch to that account.</string>
     <string name="InuPasscodeStateNone">Not configured</string>
@@ -1119,13 +1109,13 @@
     <string name="InuGoToMessagePrompt">Message ID</string>
     <string name="InuPrivacySecurity">Privacy &amp; Security</string>
     <string name="InuPerAccountPasscode">Per-account passcode</string>
-    <string name="InuHideInugramSettings">Hide entinyGram settings</string>
+    <string name="InuHideInugramSettings">Hide Telegram settings</string>
     <string name="InuParanoiaDisableNotifications">Disable notifications</string>
     <string name="InuParanoiaHideOtherAccounts">Hide other accounts</string>
     <string name="InuParanoiaHideFolders">Hide folders</string>
     <string name="InuParanoiaHideMyStories">Hide my stories</string>
     <string name="InuParanoiaDisguise">Disguise as Telegram</string>
-    <string name="InuParanoiaDisguiseInfo">Only the launcher icon and name change; notifications still say \"entinyGram\".</string>
+    <string name="InuParanoiaDisguiseInfo">Only the launcher icon and name change; notifications still say \"Telegram\".</string>
     <string name="InuDisguiseName" translatable="false">Telegram</string>
     <string name="InuParanoiaMode">Paranoia mode</string>
     <string name="InuParanoiaModeInfo">Hides \"dangerous\" chats and optionally disguises the app — be ready for a snooper.</string>
@@ -1151,17 +1141,17 @@
     <string name="InuBotSettings">Bot Settings</string>
     <string name="InuBotHelp">Bot Help</string>
 
-    <string name="InuCrashTitle">entinyGram crashed last time</string>
-    <string name="InuCrashTitleOom">entinyGram ran out of memory</string>
+    <string name="InuCrashTitle">Telegram crashed last time</string>
+    <string name="InuCrashTitleOom">Telegram ran out of memory</string>
     <string name="InuCrashDesc">Sorry about that. You can share the crash log with the developer to help fix it.</string>
     <string name="InuCrashDescOom">Sorry about that. Crash logs aren\'t very useful for out-of-memory issues — a heap dump is what helps.</string>
     <string name="InuCrashDescHeapDump">A heap dump was also saved. DO NOT SHARE IT! It contains private data! Take a look at it yourself, if you want, and share your findings — that would help a lot.</string>
-    <string name="InuCrashOomEnableLogs">Enable debug mode in entinyGram Settings > About to create a heap dump on every future OOM.</string>
+    <string name="InuCrashOomEnableLogs">Enable debug mode in Telegram Settings > About to create a heap dump on every future OOM.</string>
     <string name="InuCrashShare">Share crash log</string>
     <string name="InuCrashShareHeapDump">Save heap dump</string>
     <string name="InuCrashDiscard">Discard</string>
     <string name="InuCrashChannel">Crash recovery</string>
-    <string name="InuCrashNotifTitle">entinyGram crashed</string>
+    <string name="InuCrashNotifTitle">Telegram crashed</string>
     <string name="InuCrashNotifText">Tap to restart</string>
 
     <string name="InuLogs">Debug</string>
@@ -1321,7 +1311,6 @@
     <string name="InuStickerSetRefreshFailed">Couldn\'t refresh the pack</string>
     <string name="InuAiCompose">Artificial intelligence (AI)</string>
     <string name="InuAiEndpointUrl">Endpoint URL</string>
-    <string name="InuAiEndpointModel">Model</string>
     <string name="InuAiOpenSettings">Open settings</string>
     <string name="InuAiNoEndpoint">No active API endpoint configured. Add one in Settings &gt; AI Compose.</string>
     <string name="InuAiBadEndpoint">The active endpoint has no URL. Edit it in Settings &gt; AI Compose.</string>
@@ -1352,7 +1341,6 @@
     <string name="InuAiTranslateTo">To</string>
     <string name="InuAiTranslateRun">Translate</string>
     <string name="InuAiChatTitle">AI Chat</string>
-    <string name="InuAiSectionGeneral">General</string>
     <string name="InuAiRoles">Roles</string>
     <string name="InuAiRolesAssistant">Assistant</string>
     <string name="InuAiSectionGeneration">Answers</string>
@@ -1362,10 +1350,8 @@
     <string name="InuAiOnlyAnswerInfo">For reasoning models: hide the thinking and keep just the final answer. When off, the thinking is shown above the answer after the thought bubble.</string>
     <string name="InuAiInsertQuote">Insert response as quote</string>
     <string name="InuAiInsertQuoteInfo">When you tap Use in the AI editor, the result replaces your draft as a quote block. When off, it replaces the draft as plain text.</string>
-    <string name="InuAiRolesScreenDesc">Saved personas the AI is told to act as (\"You are X\"). Tap to switch, tap the active one to rename it.</string>
     <string name="InuAiRoleNew">New role</string>
     <string name="InuAiRoleNameHint">Name</string>
-    <string name="InuAiRolePromptHint">Custom prompt (optional)</string>
     <string name="InuAiRolePromptDesc">If set, this full prompt replaces the \"You are Name\" line entirely.</string>
     <string name="InuAiRoleDeleteConfirm">Delete this role?</string>
     <string name="InuAiRolesSubtitle">Personas the AI acts as in the editor and summaries. Pick one or write your own prompt.</string>
@@ -1395,18 +1381,10 @@
     <string name="InuAiReasoningMedium">Medium</string>
     <string name="InuAiReasoningHigh">High</string>
     <string name="InuAiSummaryTemperatureInfo">Lower values keep summaries closer to the original. Until you change it, the editor temperature is used.</string>
-    <string name="InuAiProviderCustom">Custom</string>
-    <string name="InuAiProviderCustomNameHint">Name (optional)</string>
     <string name="InuAiApiKeyHint">API Key</string>
     <string name="InuAiProvidersTitle">AI Providers</string>
-    <string name="InuAiProvidersUniversalDesc">The icon before each name shows what it supports (∞ chat+voice, keyboard chat-only, mic voice-only) — tap to configure, then pick an active one per scope.</string>
     <string name="InuAiProvidersActiveForChat">Active for Chat</string>
     <string name="InuAiProvidersActiveForVoice">Active for Voice</string>
-    <string name="InuAiProvidersActiveBoth">Chat + Voice</string>
-    <string name="InuAiProvidersSameModel">Use the same model for both</string>
-    <string name="InuAiProvidersChatModelHint">Chat model</string>
-    <string name="InuAiProvidersVoiceModelHint">Voice model</string>
-    <string name="InuAiProvidersOpenRouterInfo">Access to hundreds of models through one API. Get a key from OpenRouter:</string>
     <string name="InuEditHistoryDiff">Highlight Text Changes (Diff)</string>
     <string name="InuEditHistoryDiffInfo">Show red strikethrough for deleted text and green for added text in edit history</string>
     <string name="InuNoEditHistory">No edit history recorded for this message</string>
@@ -1513,13 +1491,11 @@
     <string name="InuAiTranscribe">Voice-to-Text (Transcription)</string>
     <string name="InuAiTranscribeInfo">Transcribe voice and video messages through your own AI provider instead of Telegram\'s, with or without Premium.</string>
     <string name="InuAiTranscribeModel">Model</string>
-    <string name="InuAiTranscribeApiKey">API key</string>
     <string name="InuAiTranscribeAccountId">Account ID</string>
     <string name="InuAiTranscribeApiToken">API token</string>
     <string name="InuAiTranscribeNoKey">No AI provider is set up for voice yet. Add one in Settings &gt; AI &gt; Providers.</string>
     <string name="InuAiTranscribeFailed">Transcription failed: %1$s</string>
     <string name="InuAiTranscribeLanguage">Spoken language</string>
-    <string name="InuAiTranscribeLanguageInfo">Language spoken in voice messages (e.g. en, uk, ru). Empty = auto-detect.</string>
     <string name="InuAiTranscribeErrorDownload">Could not download the voice message.</string>
     <string name="InuAiTranscribeErrorNoAudio">This message has no audio to transcribe.</string>
     <string name="InuAiTranscribeErrorEmpty">The provider returned an empty transcription.</string>
@@ -1528,11 +1504,6 @@
     <string name="InuAiTranscribeErrorRateLimited">The provider is rate-limiting requests right now. Wait a moment and tap again.</string>
     <string name="InuAiTranscribeErrorDailyQuota">This API key has used up its free quota for today. Try again tomorrow, enable billing, or switch the voice provider.</string>
     <string name="InuAiTranscribeErrorNoFreeQuota">This model has no free quota on your API key. Pick a Flash model, enable billing on the Google project, or switch the voice provider.</string>
-    <string name="InuAiTranscribeGroqInfo">Fast, free Whisper Large v3 transcription. Get a free key from the Groq console:</string>
-    <string name="InuAiTranscribeGeminiInfo">Multimodal audio transcription via Gemini. Get a key from Google AI Studio:</string>
-    <string name="InuAiTranscribeOpenAiInfo">Official OpenAI Whisper transcription. Get a key from the OpenAI dashboard:</string>
-    <string name="InuAiTranscribeCfInfo">Requires a Cloudflare Account ID and an API Token scoped to Workers AI. Manage tokens here:</string>
-    <string name="InuAiTranscribeCustomInfo">Enter any OpenAI-compatible /v1/audio/transcriptions endpoint.</string>
     <string name="InuAiChatCustomInfo">Any OpenAI-compatible API, e.g. https://host/v1 (a full /chat/completions URL works too). The API key is optional for local routers.</string>
     <string name="InuAiProvidersSubtitle">Connect your own AI services for the editor, summaries and voice transcription.</string>
     <string name="InuAiProviderAdd">Add provider</string>
@@ -1553,8 +1524,6 @@
     <string name="InuAiModelPickerTitle">Select model</string>
     <string name="InuAiModelsLoading">Loading models…</string>
     <string name="InuAiModelEnterManually">Enter model manually</string>
-    <string name="InuAiTranscribeFetchModels">Fetch available models</string>
-    <string name="InuAiTranscribeFetchModelsEmpty">No models found</string>
     <string name="InuAiTranscribeFetchModelsFailed">Couldn\'t fetch models: %1$s</string>
     <string name="InuLocalPremium">Local Telegram Premium</string>
     <string name="InuLocalPremiumInfo">Unlocks client-side Premium perks, but server-side ones (uploads, cloud limits) still need an official subscription.</string>
@@ -1711,4 +1680,6 @@
     <string name="InuDonateWebsite">All methods on the website</string>
     <string name="InuDonateCopied">Copied</string>
     <string name="InuShowMediaSize">Show media size</string>
+    <string name="InuForceLtr">Force LTR</string>
+    <string name="InuForceLtrInfo">Keep the interface left-to-right without changing the selected language or Persian text. Restart the app to apply.</string>
 </resources>

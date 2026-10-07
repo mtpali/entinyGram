@@ -1,3 +1,9 @@
+# mtpali/entinyGram fork scope
+
+All repository writes, PRs and releases for this personal fork target **mtpali/entinyGram**. `entaytion/entinyGram`, `teidesu/inugram` and `DrKLO/Telegram` are read-only dependencies. The user authorized this task's edits, validation, commits, pushes, PR preparation and APK builds through develoop/pr-completion. Work on a feature branch; follow the invoked PR workflow for landing. Build APKs using GitHub Actions. Do not send Telegram channel messages without an explicit request.
+
+The upstream guide below describes the inherited patch architecture. Its original remote names and direct-to-main workflow do not apply to this personal fork.
+
 # entinyGram Agent Guide
 
 **entinyGram** is our independent fork of **inugram** (`teidesu/inugram`), which is built as

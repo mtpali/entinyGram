@@ -143,6 +143,16 @@ export const forkSyncFiles: ForkSyncFile[] = [
     replace: true,
   },
   {
+    source: 'src/firebase/google-services.json',
+    target: 'TMessagesProj',
+    replace: true,
+  },
+  {
+    source: 'src/firebase/google-services.json',
+    target: 'TMessagesProj_App',
+    replace: true,
+  },
+  {
     source: 'src/google-services.json',
     target: 'TMessagesProj',
     replace: true,
@@ -153,6 +163,16 @@ export const forkSyncFiles: ForkSyncFile[] = [
     replace: true,
   },
 ]
+
+for (const density of ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']) {
+  for (const type of ['mipmap', 'drawable']) {
+    forkSyncFiles.push({
+      source: `src/res/launcher/generated/${type}-${density}/*`,
+      target: `TMessagesProj/src/main/res/${type}-${density}`,
+      replace: true,
+    })
+  }
+}
 
 export const ICON_SELECTION: { pack: IconifyJSON, icons: string[], options?: SvgToDrawableOptions }[] = [
   {

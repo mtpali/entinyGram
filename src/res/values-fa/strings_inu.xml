@@ -17,10 +17,9 @@
     <string name="InuDrawerM3SectionsInfo">ردیف‌های منوی کناری را در کارت‌های گرد Material 3 گروه‌بندی می‌کند.</string>
     <string name="InuShowDrawerAccounts">نمایش حساب‌ها در منو</string>
     <string name="InuShowDrawerAccountsInfo">نمایش تعویض‌گر حساب قابل‌گسترش زیر نمایه شما.</string>
-    <string name="InuSettings">تنظیمات entinyGram</string>
+    <string name="InuSettings">تنظیمات Telegram</string>
     <string name="InuSettingsInfo">از میان خاک و باد، دنبال تو می‌آیم</string>
     <string name="InuGeneral">عمومی</string>
-    <string name="InuMiscellaneous">متفرقه</string>
     <string name="InuWideChannelPosts">پست‌های عریض</string>
     <string name="InuWideChannelPostsFooter">پست‌ها و بازارسال‌های کانال از تمام عرض موجود استفاده می‌کنند.</string>
     <string name="InuWideChannelPostsPreviewText">اخبار، عکس‌ها و ویدیوها</string>
@@ -82,7 +81,6 @@
     <string name="InuAnnoyancesGifts">هدیه‌ها و پریمیوم</string>
     <string name="InuAnnoyancesInterface">گفتگوها و رابط کاربری</string>
     <string name="InuAnnoyancesChannels">کانال‌ها و پیشنهادها</string>
-    <string name="InuAnnoyancesMedia">رسانه</string>
     <string name="InuAnnoyancesAi">هوش مصنوعی</string>
     <string name="InuAnnoyancesHints">راهنماها و پیشنهادها</string>
     <string name="InuMessages">پیام‌ها</string>
@@ -363,7 +361,6 @@
     <string name="InuShowHiddenMessages">نمایش پیام‌ها</string>
     <string name="InuSpoilers">اسپویلرها</string>
     <string name="InuHideAiFeatures">پنهان کردن قابلیت‌های هوش مصنوعی</string>
-    <string name="InuHideAiEditor">دکمه ویرایشگر هوش مصنوعی</string>
     <string name="InuAiEditorButtonInfo">کنش‌های هوش مصنوعی را کنار کادر پیام برای بازنویسی، ادامه دادن، خلاصه‌سازی و اصلاح متن نشان می‌دهد.</string>
     <string name="InuAiEditorButtonSetupInfo">ابتدا در سرویس‌های هوش مصنوعی یک کلید API اضافه کنید؛ این دکمه هنگام نوشتن کار می‌کند.</string>
     <string name="InuAiSummary">خلاصه‌های هوش مصنوعی</string>
@@ -443,8 +440,6 @@
     <string name="InuFoldersUnreadCounterExcludeMutedNonDms">بدون بی‌صداشده‌های غیرخصوصی</string>
     <string name="InuHideAllChatsTab">پنهان کردن زبانه «همه گفتگوها»</string>
     <string name="InuHideAllChatsTabInfo">برای نمایش همه گفتگوها، عنوان را در فهرست گفتگوها نگه دارید.</string>
-    <string name="InuRememberSelectedFolder">به‌خاطر سپردن پوشه انتخاب‌شده</string>
-    <string name="InuRememberSelectedFolderInfo">باز کردن مجدد آخرین پوشه فعال هنگام بازگشت به فهرست گفتگوها.</string>
     <string name="InuFoldersAtBottom">انتقال پوشه‌ها به پایین</string>
     <string name="InuHideArchive">حذف «گفتگوهای بایگانی‌شده» از فهرست گفتگوها</string>
     <string name="InuCommunityDisplayMode">انجمن‌ها</string>
@@ -480,10 +475,8 @@
     <string name="InuConfirmReactionText">واکنش %1$s در **%2$s** ارسال شود؟</string>
     <string name="InuNotificationIcon">نماد اعلان</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconInugram">entinyGram</string>
-    <string name="InuNotificationIconOldEntinygram">entinyGram قدیمی</string>
+    <string name="InuNotificationIconNagramXF">NagramXF</string>
     <string name="InuNotificationIconInfo">در Xiaomi (MIUI/HyperOS) ممکن است سیستم این آیکون را با آیکون برنامه جایگزین کند، پس انتخاب شما آنجا دیده نشود</string>
-    <string name="InuAppIconOldEntinygram">entinyGram قدیمی</string>
     <string name="InuDisableChatBubbles">غیرفعال کردن حباب‌های اعلان Android</string>
     <string name="InuInPlaceTranslation">ترجمه درجا</string>
     <string name="InuTranslateWebPreviews">ترجمه پیش‌نمایش‌های وب</string>
@@ -813,7 +806,6 @@
     <string name="InuForwardHeaderMode">سرصفحه بازارسال</string>
     <string name="InuForwardHeaderModeRegular">عادی</string>
     <string name="InuForwardHeaderModeIcon">نماد</string>
-    <string name="InuForwardHeaderModeIconNoTimeInfo">مانند فشرده با خاموش بودن «نمایش زمان بازارسال»</string>
     <string name="InuForwardHeaderModeCompact">فشرده</string>
     <string name="InuShowForwardsCount">نمایش تعداد بازارسال</string>
     <string name="InuCompactEdited">نشانگر ویرایش فشرده</string>
@@ -860,8 +852,7 @@
     <string name="InuCodeBlock">بلوک کد</string>
     <string name="InuCut">برش</string>
     <string name="InuCodeLanguage">زبان کد</string>
-    <string name="InuVersion">entinyGram %1$s (%2$s)</string>
-    <string name="InuCategories">دسته‌ها</string>
+    <string name="InuVersion">Telegram %1$s (%2$s)</string>
     <string name="InuDataBackup">پشتیبان‌گیری و همگام‌سازی</string>
 
     <string name="InuSearchFilter">فیلتر بر اساس رسانه</string>
@@ -887,7 +878,7 @@
     <string name="InuHidePinnedUntilNew">تا سنجاق شدن پیام جدید</string>
     <string name="InuHidePinnedForever">همیشه در این گفتگو</string>
     <string name="InuAppIconStock">پایه</string>
-    <string name="InuAppIconLicenseInugram">نماد موقت؛ برای ساخت نمادی بهتر آزادانه مشارکت کنید</string>
+    <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">نماد از **Telegram**. همه حقوق محفوظ است.</string>
     <string name="InuJumpToBeginning">پرش به ابتدا</string>
     <string name="InuRecentChats">گفتگوهای اخیر</string>
@@ -933,11 +924,11 @@
     <string name="InuBackupImportSheetCancel">نه، همین‌طور بماند</string>
     <string name="InuBackupSettings">پشتیبان‌گیری و بازنشانی</string>
     <string name="InuBackupReset">بازنشانی تنظیمات</string>
-    <string name="InuBackupResetConfirm">همه تنظیمات entinyGram به مقادیر پیش‌فرض بازنشانی می‌شوند. گفتگوها، حساب‌ها و تنظیمات خود تلگرام دست‌نخورده می‌مانند.\n\nاین کار قابل بازگشت نیست.</string>
+    <string name="InuBackupResetConfirm">همه تنظیمات Telegram به مقادیر پیش‌فرض بازنشانی می‌شوند. گفتگوها، حساب‌ها و تنظیمات خود تلگرام دست‌نخورده می‌مانند.\n\nاین کار قابل بازگشت نیست.</string>
     <string name="InuBackupResetSuccess">%1$d تنظیم بازنشانی شد</string>
     <string name="InuBackupResetNoChanges">تنظیمات از قبل روی پیش‌فرض هستند</string>
     <string name="InuCloudSync">همگام‌سازی تنظیمات</string>
-    <string name="InuCloudSyncDesc">تنظیمات entinyGram شما را از طریق [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) در ابر تلگرام پشتیبان‌گیری می‌کند — داده‌های شما هرگز از سرورهای ما عبور نمی‌کند.</string>
+    <string name="InuCloudSyncDesc">تنظیمات Telegram شما را از طریق [CloudStorage API](https://core.telegram.org/bots/webapps#cloudstorage) در ابر تلگرام پشتیبان‌گیری می‌کند — داده‌های شما هرگز از سرورهای ما عبور نمی‌کند.</string>
     <string name="InuCloudSyncNow">همگام‌سازی همین حالا</string>
     <string name="InuCloudSyncing">در حال همگام‌سازی…</string>
     <string name="InuCloudRestore">بازیابی از ابر</string>
@@ -989,7 +980,6 @@
     <string name="InuCopyButtonText">کپی «%1$s»</string>
     <string name="InuCopyCallbackData">کپی داده callback</string>
     <string name="InuCallbackDataCopied">داده callback کپی شد</string>
-    <string name="InuNetwork">شبکه</string>
     <string name="InuAutoDisableProxyOnVpn">غیرفعال کردن پروکسی هنگام فعال بودن VPN</string>
     <string name="InuFasterDownloads">دانلود سریع‌تر</string>
     <string name="InuFasterUploads">بارگذاری سریع‌تر</string>
@@ -1009,7 +999,7 @@
     <string name="InuMentionInsertTitle">درج منشن</string>
     <string name="InuPasscode">رمز قفل</string>
     <string name="InuPasscodeNeeded">ابتدا یک رمز قفل تلگرام تنظیم کنید.</string>
-    <string name="InuPasscodeShowInSettings">نمایش در تنظیمات entinyGram</string>
+    <string name="InuPasscodeShowInSettings">نمایش در تنظیمات Telegram</string>
     <string name="InuPasscodeShowInSettingsInfo">وقتی خاموش است، این صفحه فقط از طریق پیوند زیر باز می‌شود — همین حالا آن را ذخیره کنید.</string>
     <string name="InuPasscodeAccountsInfo">رمز قفل برای هر حساب: یکی را در صفحه قفل وارد کنید تا قفل باز شود و به آن حساب بروید.</string>
     <string name="InuPasscodeStateNone">تنظیم نشده</string>
@@ -1069,13 +1059,13 @@
     <string name="InuGoToMessagePrompt">شناسه پیام</string>
     <string name="InuPrivacySecurity">حریم خصوصی و امنیت</string>
     <string name="InuPerAccountPasscode">رمز قفل برای هر حساب</string>
-    <string name="InuHideInugramSettings">پنهان کردن تنظیمات entinyGram</string>
+    <string name="InuHideInugramSettings">پنهان کردن تنظیمات Telegram</string>
     <string name="InuParanoiaDisableNotifications">غیرفعال کردن اعلان‌ها</string>
     <string name="InuParanoiaHideOtherAccounts">پنهان کردن حساب‌های دیگر</string>
     <string name="InuParanoiaHideFolders">پنهان کردن پوشه‌ها</string>
     <string name="InuParanoiaHideMyStories">پنهان کردن استوری‌های من</string>
     <string name="InuParanoiaDisguise">پنهان شدن در هیأت Telegram</string>
-    <string name="InuParanoiaDisguiseInfo">فقط نماد و نام برنامه در لانچر تغییر می‌کند؛ اعلان‌ها همچنان «entinyGram» می‌گویند.</string>
+    <string name="InuParanoiaDisguiseInfo">فقط نماد و نام برنامه در لانچر تغییر می‌کند؛ اعلان‌ها همچنان «Telegram» می‌گویند.</string>
     <string name="InuParanoiaMode">حالت پارانویا</string>
     <string name="InuParanoiaModeInfo">گفتگوهای «خطرناک» را پنهان می‌کند و در صورت تمایل برنامه را استتار می‌کند — برای یک فضول آماده باشید.</string>
     <string name="InuParanoiaLauncherShortcut">میان‌بر لانچر</string>
@@ -1100,17 +1090,17 @@
     <string name="InuBotSettings">تنظیمات ربات</string>
     <string name="InuBotHelp">راهنمای ربات</string>
 
-    <string name="InuCrashTitle">entinyGram دفعه قبل از کار افتاد</string>
-    <string name="InuCrashTitleOom">حافظه entinyGram تمام شد</string>
+    <string name="InuCrashTitle">Telegram دفعه قبل از کار افتاد</string>
+    <string name="InuCrashTitleOom">حافظه Telegram تمام شد</string>
     <string name="InuCrashDesc">متأسفیم. می‌توانید گزارش خرابی را با توسعه‌دهنده به اشتراک بگذارید تا در رفع آن کمک کنید.</string>
     <string name="InuCrashDescOom">متأسفیم. گزارش خرابی برای مشکلات تمام شدن حافظه چندان مفید نیست — آنچه کمک می‌کند تخلیه حافظه (heap dump) است.</string>
     <string name="InuCrashDescHeapDump">یک تخلیه حافظه هم ذخیره شد. آن را به اشتراک نگذارید! حاوی داده‌های خصوصی است! اگر خواستید خودتان نگاهی بیندازید و یافته‌هایتان را به اشتراک بگذارید — این خیلی کمک می‌کند.</string>
-    <string name="InuCrashOomEnableLogs">حالت اشکال‌زدایی را در تنظیمات entinyGram > درباره فعال کنید تا در هر تمام شدن حافظه در آینده تخلیه حافظه ساخته شود.</string>
+    <string name="InuCrashOomEnableLogs">حالت اشکال‌زدایی را در تنظیمات Telegram > درباره فعال کنید تا در هر تمام شدن حافظه در آینده تخلیه حافظه ساخته شود.</string>
     <string name="InuCrashShare">اشتراک‌گذاری گزارش خرابی</string>
     <string name="InuCrashShareHeapDump">ذخیره تخلیه حافظه</string>
     <string name="InuCrashDiscard">رد کردن</string>
     <string name="InuCrashChannel">بازیابی پس از خرابی</string>
-    <string name="InuCrashNotifTitle">entinyGram از کار افتاد</string>
+    <string name="InuCrashNotifTitle">Telegram از کار افتاد</string>
     <string name="InuCrashNotifText">برای راه‌اندازی مجدد ضربه بزنید</string>
 
     <string name="InuLogs">اشکال‌زدایی</string>
@@ -1261,7 +1251,6 @@
     <string name="InuStickerSetRefreshFailed">تازه‌سازی بسته ممکن نشد</string>
     <string name="InuAiCompose">هوش مصنوعی (AI)</string>
     <string name="InuAiEndpointUrl">نشانی نقطه پایانی</string>
-    <string name="InuAiEndpointModel">مدل</string>
     <string name="InuAiOpenSettings">باز کردن تنظیمات</string>
     <string name="InuAiNoEndpoint">هیچ نقطه پایانی API فعالی تنظیم نشده است. یکی در تنظیمات &gt; نوشتن با هوش مصنوعی اضافه کنید.</string>
     <string name="InuAiBadEndpoint">نقطه پایانی فعال نشانی ندارد. آن را در تنظیمات &gt; نوشتن با هوش مصنوعی ویرایش کنید.</string>
@@ -1292,7 +1281,6 @@
     <string name="InuAiTranslateTo">به</string>
     <string name="InuAiTranslateRun">ترجمه</string>
     <string name="InuAiChatTitle">گفتگوی هوش مصنوعی</string>
-    <string name="InuAiSectionGeneral">عمومی</string>
     <string name="InuAiRoles">نقش‌ها</string>
     <string name="InuAiRolesAssistant">دستیار</string>
     <string name="InuAiSectionGeneration">پاسخ‌ها</string>
@@ -1302,10 +1290,8 @@
     <string name="InuAiOnlyAnswerInfo">برای مدل‌های استدلالی: تفکر را پنهان می‌کند و فقط پاسخ نهایی را نگه می‌دارد. اگر خاموش باشد، تفکر بالای پاسخ بعد از حباب فکر نمایش داده می‌شود.</string>
     <string name="InuAiInsertQuote">درج پاسخ به‌صورت نقل‌قول</string>
     <string name="InuAiInsertQuoteInfo">وقتی در ویرایشگر هوش مصنوعی «استفاده» را می‌زنید، نتیجه به‌صورت نقل‌قول جای پیش‌نویس شما را می‌گیرد. اگر خاموش باشد، به‌صورت متن ساده جایگزین می‌شود.</string>
-    <string name="InuAiRolesScreenDesc">شخصیت‌های ذخیره‌شده‌ای که به هوش مصنوعی گفته می‌شود نقششان را بازی کند («تو X هستی»). برای تعویض ضربه بزنید، برای تغییر نام نقش فعال دوباره ضربه بزنید.</string>
     <string name="InuAiRoleNew">نقش جدید</string>
     <string name="InuAiRoleNameHint">نام</string>
-    <string name="InuAiRolePromptHint">پرامپت سفارشی (اختیاری)</string>
     <string name="InuAiRolePromptDesc">اگر تنظیم شود، این پرامپت کامل خط «تو نام هستی» را به‌کلی جایگزین می‌کند.</string>
     <string name="InuAiRoleDeleteConfirm">این نقش حذف شود؟</string>
     <string name="InuAiRolesSubtitle">شخصیت‌هایی که هوش مصنوعی در ویرایشگر و خلاصه‌ها بازی می‌کند. یکی را انتخاب کنید یا پرامپت خودتان را بنویسید.</string>
@@ -1335,18 +1321,10 @@
     <string name="InuAiReasoningMedium">متوسط</string>
     <string name="InuAiReasoningHigh">زیاد</string>
     <string name="InuAiSummaryTemperatureInfo">مقادیر کمتر خلاصه‌ها را به متن اصلی نزدیک‌تر نگه می‌دارد. تا زمانی که تغییر ندهید دمای ویرایشگر استفاده می‌شود.</string>
-    <string name="InuAiProviderCustom">سفارشی</string>
-    <string name="InuAiProviderCustomNameHint">نام (اختیاری)</string>
     <string name="InuAiApiKeyHint">کلید API</string>
     <string name="InuAiProvidersTitle">ارائه‌دهندگان هوش مصنوعی</string>
-    <string name="InuAiProvidersUniversalDesc">نماد پیش از هر نام نشان می‌دهد چه چیزی را پشتیبانی می‌کند (∞ گفتگو+صدا، صفحه‌کلید فقط گفتگو، میکروفون فقط صدا) — برای پیکربندی ضربه بزنید، سپس برای هر حوزه یک مورد فعال انتخاب کنید.</string>
     <string name="InuAiProvidersActiveForChat">فعال برای گفتگو</string>
     <string name="InuAiProvidersActiveForVoice">فعال برای صدا</string>
-    <string name="InuAiProvidersActiveBoth">گفتگو + صدا</string>
-    <string name="InuAiProvidersSameModel">استفاده از یک مدل برای هر دو</string>
-    <string name="InuAiProvidersChatModelHint">مدل گفتگو</string>
-    <string name="InuAiProvidersVoiceModelHint">مدل صدا</string>
-    <string name="InuAiProvidersOpenRouterInfo">دسترسی به صدها مدل از طریق یک API. کلید را از OpenRouter بگیرید:</string>
     <string name="InuEditHistoryDiff">برجسته کردن تغییرات متن (تفاوت)</string>
     <string name="InuEditHistoryDiffInfo">در تاریخچه ویرایش، متن حذف‌شده با خط قرمز و متن افزوده‌شده با سبز نشان داده شود</string>
     <string name="InuNoEditHistory">تاریخچه ویرایشی برای این پیام ثبت نشده است</string>
@@ -1452,13 +1430,11 @@
     <string name="InuAiTranscribe">تبدیل گفتار به متن (رونویسی)</string>
     <string name="InuAiTranscribeInfo">پیام‌های صوتی و تصویری را از طریق ارائه‌دهنده هوش مصنوعی خودتان و نه تلگرام رونویسی کنید، با پریمیوم یا بدون آن.</string>
     <string name="InuAiTranscribeModel">مدل</string>
-    <string name="InuAiTranscribeApiKey">کلید API</string>
     <string name="InuAiTranscribeAccountId">شناسه حساب</string>
     <string name="InuAiTranscribeApiToken">توکن API</string>
     <string name="InuAiTranscribeNoKey">هنوز هیچ ارائه‌دهنده هوش مصنوعی برای صدا تنظیم نشده است. یکی در تنظیمات &gt; هوش مصنوعی &gt; ارائه‌دهندگان اضافه کنید.</string>
     <string name="InuAiTranscribeFailed">رونویسی ناموفق بود: %1$s</string>
     <string name="InuAiTranscribeLanguage">زبان گفتار</string>
-    <string name="InuAiTranscribeLanguageInfo">زبانی که در پیام‌های صوتی گفته می‌شود (مثلاً en، uk، ru، fa). خالی = تشخیص خودکار.</string>
     <string name="InuAiTranscribeErrorDownload">دانلود پیام صوتی ممکن نشد.</string>
     <string name="InuAiTranscribeErrorNoAudio">این پیام صدایی برای رونویسی ندارد.</string>
     <string name="InuAiTranscribeErrorEmpty">ارائه‌دهنده رونویسی خالی برگرداند.</string>
@@ -1467,11 +1443,6 @@
     <string name="InuAiTranscribeErrorRateLimited">ارائه‌دهنده همین حالا درخواست‌ها را محدود می‌کند. کمی صبر کنید و دوباره ضربه بزنید.</string>
     <string name="InuAiTranscribeErrorDailyQuota">این کلید API سهمیه رایگان امروز خود را مصرف کرده است. فردا دوباره امتحان کنید، صورت‌حساب را فعال کنید یا ارائه‌دهنده صدا را عوض کنید.</string>
     <string name="InuAiTranscribeErrorNoFreeQuota">این مدل روی کلید API شما سهمیه رایگان ندارد. یک مدل Flash انتخاب کنید، صورت‌حساب پروژه گوگل را فعال کنید یا ارائه‌دهنده صدا را عوض کنید.</string>
-    <string name="InuAiTranscribeGroqInfo">رونویسی سریع و رایگان Whisper Large v3. یک کلید رایگان از کنسول Groq بگیرید:</string>
-    <string name="InuAiTranscribeGeminiInfo">رونویسی صوتی چندوجهی از طریق Gemini. کلید را از Google AI Studio بگیرید:</string>
-    <string name="InuAiTranscribeOpenAiInfo">رونویسی رسمی OpenAI Whisper. کلید را از داشبورد OpenAI بگیرید:</string>
-    <string name="InuAiTranscribeCfInfo">به شناسه حساب Cloudflare و یک توکن API با دامنه Workers AI نیاز دارد. توکن‌ها را اینجا مدیریت کنید:</string>
-    <string name="InuAiTranscribeCustomInfo">هر نقطه پایانی /v1/audio/transcriptions سازگار با OpenAI را وارد کنید.</string>
     <string name="InuAiChatCustomInfo">هر API سازگار با OpenAI، مثلاً https://host/v1 (نشانی کامل /chat/completions هم کار می‌کند). کلید API برای روترهای محلی اختیاری است.</string>
     <string name="InuAiProvidersSubtitle">سرویس‌های هوش مصنوعی خودتان را برای ویرایشگر، خلاصه‌ها و رونویسی صدا وصل کنید.</string>
     <string name="InuAiProviderAdd">افزودن ارائه‌دهنده</string>
@@ -1492,8 +1463,6 @@
     <string name="InuAiModelPickerTitle">انتخاب مدل</string>
     <string name="InuAiModelsLoading">در حال بارگیری مدل‌ها…</string>
     <string name="InuAiModelEnterManually">وارد کردن دستی مدل</string>
-    <string name="InuAiTranscribeFetchModels">دریافت مدل‌های موجود</string>
-    <string name="InuAiTranscribeFetchModelsEmpty">مدلی پیدا نشد</string>
     <string name="InuAiTranscribeFetchModelsFailed">دریافت مدل‌ها ممکن نشد: %1$s</string>
     <string name="InuLocalPremium">پریمیوم تلگرام محلی</string>
     <string name="InuLocalPremiumInfo">مزایای پریمیوم سمت کلاینت را باز می‌کند، اما مزایای سمت سرور (بارگذاری‌ها، سقف‌های ابری) همچنان به اشتراک رسمی نیاز دارند.</string>
@@ -1697,4 +1666,6 @@
     <string name="InuSetReminder">تنظیم یادآور</string>
     <string name="InuSideMenu">منوی کناری</string>
     <string name="InuSideMenuInfo">منوی کشویی، بخش‌ها، حساب‌ها و موارد منو.</string>
+    <string name="InuForceLtr">اجبار چیدمان چپ‌به‌راست (Force LTR)</string>
+    <string name="InuForceLtrInfo">چیدمان رابط را بدون تغییر زبان انتخاب‌شده یا متن فارسی، چپ‌به‌راست نگه می‌دارد. برای اعمال تغییر، برنامه را دوباره راه‌اندازی کنید.</string>
 </resources>

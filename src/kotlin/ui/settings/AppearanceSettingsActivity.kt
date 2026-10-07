@@ -61,6 +61,7 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
         items.add(UItem.asShadow(null))
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.InuInterfaceElements)))
+        items.add(mkTwoLineCheckItem(TOGGLE_FORCE_LTR, R.string.InuForceLtr, R.string.InuForceLtrInfo, InuConfig.FORCE_LTR.value))
         items.add(mkTwoLineEntry(BUTTON_MESSAGE_DESIGN, R.drawable.msg_discussion, LocaleController.getString(R.string.InuMessageDesign), LocaleController.getString(R.string.InuMessageDesignInfo)))
         items.add(mkTwoLineEntry(BUTTON_SIDE_MENU, R.drawable.inu_tabler_menu_2, LocaleController.getString(R.string.InuSideMenu), LocaleController.getString(R.string.InuSideMenuInfo)))
         items.add(mkTwoLineEntry(BUTTON_MENUS, R.drawable.inu_tabler_list, LocaleController.getString(R.string.InuMenus), LocaleController.getString(R.string.InuMenusInfo)))
@@ -228,6 +229,11 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
 
         when (item.id) {
 
+            TOGGLE_FORCE_LTR -> {
+                (view as? NotificationsCheckCell)?.isChecked = InuConfig.FORCE_LTR.toggle()
+                showRestartBulletin()
+            }
+
             TOGGLE_HIDE_FADE_VIEW -> {
                 val new = InuConfig.HIDE_FADE_VIEW.toggle()
                 (view as? TextCheckCell)?.isChecked = new
@@ -333,6 +339,7 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
 
     companion object {
         private val SECTION_MATERIAL3 = InuUtils.generateId()
+        private val TOGGLE_FORCE_LTR = InuUtils.generateId()
         private val TOGGLE_HIDE_FADE_VIEW = InuUtils.generateId()
         private val TOGGLE_NON_ISLAND_FOLDERS_BAR = InuUtils.generateId()
         private val TOGGLE_NON_ISLAND_SHARED_MEDIA_TABS = InuUtils.generateId()
@@ -385,6 +392,7 @@ class AppearanceSettingsActivity : SettingsPageActivity() {
             iconRes = R.drawable.msg_settings_old,
             factory = ::AppearanceSettingsActivity,
             entries = listOf(
+                SearchRegistry.Entry("force-ltr", R.string.InuForceLtr, TOGGLE_FORCE_LTR),
                 SearchRegistry.Entry("disable-scrim-blur", R.string.InuDisableScrimBlur, TOGGLE_DISABLE_SCRIM_BLUR),
                 SearchRegistry.Entry("disable-profile-avatar-blur", R.string.InuDisableProfileAvatarBlur, TOGGLE_DISABLE_PROFILE_AVATAR_BLUR),
                 SearchRegistry.Entry("reduce-menu-motion", R.string.InuReduceMenuMotion, TOGGLE_REDUCE_MENU_MOTION),
