@@ -24,7 +24,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
-@@ -5782,6 +5782,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -5775,6 +5775,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
          checkUi_searchFieldStyle();
  
          ViewCompat.setOnApplyWindowInsetsListener(fragmentView, this::onApplyWindowInsets);

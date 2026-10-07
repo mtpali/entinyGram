@@ -382,7 +382,6 @@ entiny/round-recorder-60fps-and-exposure-lock.patch
 bugfix/expired-media-refresh.patch
 entiny/instant-mark-reactions-read.patch
 entiny/recent-chats.patch
-entiny/pill-stack.patch
 entiny/proxy-management.patch
 entiny/dialog-avatar-tap-profile.patch
 entiny/confirm-before-sending.patch

@@ -22,7 +22,6 @@ import desu.inugram.ui.settings.DrawerSettingsActivity
 import desu.inugram.ui.settings.DrawerMenuOrderActivity
 import desu.inugram.ui.settings.MenusSettingsActivity
 import desu.inugram.ui.settings.MessagesSettingsActivity
-import desu.inugram.ui.settings.PillStackSettingsActivity
 import desu.inugram.ui.settings.RecentChatsSettingsActivity
 import desu.inugram.ui.settings.ParanoiaActivity
 import desu.inugram.ui.settings.PrivacySecurityActivity
@@ -31,7 +30,6 @@ import desu.inugram.ui.settings.SettingsPageActivity
 import desu.inugram.ui.settings.StalkerPackSettingsActivity
 import desu.inugram.ui.settings.TosSettingsActivity
 import desu.inugram.ui.settings.TranslatorSettingsActivity
-import desu.inugram.ui.settings.WeatherLocationActivity
 import desu.inugram.ui.settings.fonts.FontStackActivity
 import desu.inugram.ui.settings.fonts.FontsSettingsActivity
 import org.telegram.messenger.LocaleController
@@ -73,9 +71,7 @@ object SearchRegistry {
             BehaviorSettingsActivity.PAGE,
             TosSettingsActivity.PAGE,
             GhostModeSettingsActivity.PAGE,
-            PillStackSettingsActivity.PAGE,
             RecentChatsSettingsActivity.PAGE,
-            WeatherLocationActivity.PAGE,
             AntiDeletionSettingsActivity.PAGE,
             StalkerPackSettingsActivity.PAGE,
             RegexFilterSettingsActivity.PAGE,

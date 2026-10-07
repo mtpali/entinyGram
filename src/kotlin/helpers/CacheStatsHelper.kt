@@ -1,10 +1,7 @@
 package desu.inugram.helpers
 
-import desu.inugram.InuConfig
 import desu.inugram.helpers.chat.SavedMessagesHelper
 import desu.inugram.helpers.dialogs.RecentChatsHelper
-import desu.inugram.helpers.pillstack.ExchangeRates
-import desu.inugram.helpers.pillstack.GoldPrice
 import desu.inugram.helpers.security.PresenceHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
@@ -14,7 +11,7 @@ import org.telegram.messenger.MessagesStorage
 import java.io.File
 
 object CacheStatsHelper {
-    enum class Kind { DELETED, EDITS, REACTIONS, MEDIA, PRESENCE, RECENT, PILLS, TEMP, LOGS }
+    enum class Kind { DELETED, EDITS, REACTIONS, MEDIA, PRESENCE, RECENT, TEMP, LOGS }
 
     data class Stat(val kind: Kind, val count: Int, val size: Long)
 
@@ -30,7 +27,6 @@ object CacheStatsHelper {
             val media = SavedMessagesHelper.getSavedMediaDir().let(::filesIn)
             val temp = tempDirs().flatMap(::filesIn)
             val logs = logFiles()
-            val pills = listOf(InuConfig.PILL_STACK_RATE_CACHE.value, InuConfig.PILL_STACK_GOLD_CACHE.value).filter { it.isNotEmpty() }
             val stats = listOf(
                 Stat(Kind.DELETED, deleted.count, deleted.estimatedSize),
                 Stat(Kind.EDITS, edits.count, edits.estimatedSize),
@@ -38,7 +34,6 @@ object CacheStatsHelper {
                 Stat(Kind.MEDIA, media.size, media.sumOf { it.length() }),
                 Stat(Kind.PRESENCE, presence.count, presence.estimatedSize),
                 Stat(Kind.RECENT, recent.count, recent.estimatedSize),
-                Stat(Kind.PILLS, pills.size, pills.sumOf { it.length.toLong() }),
                 Stat(Kind.TEMP, temp.size, temp.sumOf { it.length() }),
                 Stat(Kind.LOGS, logs.size, logs.sumOf { it.length() }),
             )
@@ -58,15 +53,6 @@ object CacheStatsHelper {
             Kind.PRESENCE -> PresenceHelper.clearLogs(account, null, onDone)
             Kind.RECENT -> {
                 RecentChatsHelper.clearRecentDialogs(account)
-                onDone.run()
-            }
-            Kind.PILLS -> {
-                InuConfig.PILL_STACK_RATE_CACHE.value = ""
-                InuConfig.PILL_STACK_RATE_CACHE_TIME.value = 0L
-                InuConfig.PILL_STACK_GOLD_CACHE.value = ""
-                InuConfig.PILL_STACK_GOLD_CACHE_TIME.value = 0L
-                ExchangeRates.clearCache()
-                GoldPrice.clearCache()
                 onDone.run()
             }
             Kind.TEMP -> onFiles(onDone) { tempDirs().flatMap(::filesIn).forEach { runCatching { it.delete() } } }

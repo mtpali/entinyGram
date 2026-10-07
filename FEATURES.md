@@ -13,7 +13,7 @@ most things are toggleable in `Settings → Telegram Settings`, with sensible op
 - **VPN963 settings**: English and Persian, Default icon pack, and a Telegram channel shortcut.
 - **Media defaults**: automatic downloads, pinned-message alerts, raise-to-listen and recording interruptions start off; power-saving options start off.
 - **Download folder**: Telegram; full numbers display without rounding by default.
-- **Slim source**: removed custom AI, iOS controls, local Premium unlocks, archive locking, internal updates, Aqua and Vintage icons.
+- **Slim source**: removed custom AI, iOS controls, local Premium unlocks, archive locking, internal updates, Aqua and Vintage icons; Pill Stack and its telemetry, weather and rate pages.
 - **Standard interface**: removed all seven Material Design switches, components and effects from Design settings.
 
 - **Firebase client**: restored entinyGram push configuration, retained in release APKs.
@@ -99,7 +99,6 @@ our own layer on top of the inugram patchset: restricted Telegram features, priv
 - 📡 **color-coded online dot** - *inspired by [NagramX](https://github.com/NextAlone/NagramX)*
 - 📡 **clock format**: system, 12-hour or 24-hour
 - 📡 **branded first-run intro**
-- 📡 **pill stack**: interactive pills in chats search bar - *ported from [exteraGram](https://github.com/exteraless/exteraless)*
 - 📡 **support card**: optional way to support the developer, can be hidden
 
 ### profile & identity tools
