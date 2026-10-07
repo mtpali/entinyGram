@@ -447,7 +447,7 @@ object InuConfig {
     @JvmField val BOTTOM_TABS_SEARCH_SEPARATE = BoolItem("bottom_tabs_search_separate", false)
 
     @JvmField
-    val DIALOGS_FAB_MAIN_ACTION = IntItem("dialogs_fab_main_action", 1)
+    val DIALOGS_FAB_MAIN_ACTION = IntItem("dialogs_fab_main_action", 0)
 
     @JvmField
     val DIALOGS_FAB_SECONDARY_ACTION = IntItem("dialogs_fab_secondary_action", 2)
@@ -764,7 +764,7 @@ object InuConfig {
     val FOLDERS_UNREAD_COUNTER_MODE = FoldersUnreadCounterModeItem()
 
     @JvmField
-    val HIDE_ALL_CHATS_TAB = BoolItem("hide_all_chats_tab", false)
+    val HIDE_ALL_CHATS_TAB = BoolItem("hide_all_chats_tab", true)
 
     @JvmField
     val REMEMBER_SELECTED_FOLDER = BoolItem("remember_selected_folder", false)

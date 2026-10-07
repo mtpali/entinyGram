@@ -16,6 +16,7 @@ most things are toggleable in `Settings → Telegram Settings`, with sensible op
 - **Download folder**: Telegram; full numbers display without rounding by default.
 - **Slim source**: removed custom AI, iOS controls, local Premium unlocks, archive locking, internal updates, Aqua and Vintage icons; Pill Stack and its telemetry, weather and rate pages.
 - **Standard interface**: removed all seven Material Design switches, components and effects from Design settings.
+- **Chat defaults**: hide the All Chats folder tab when other folders exist, and set the primary floating action to None; saved user choices remain respected.
 
 - **Firebase client**: restored entinyGram push configuration, retained in release APKs.
 
