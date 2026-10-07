@@ -53,6 +53,14 @@ with zipfile.ZipFile(apk) as archive:
     dex_data = b"".join(archive.read(name) for name in dex)
     if b"force_ltr" not in dex_data:
         raise SystemExit("Force LTR preference is missing from the compiled APK")
+    if b"inu_saved_texts" not in dex_data:
+        raise SystemExit("Prepared-text storage is missing from the compiled APK")
+    for preference in (
+        b"material3_switches", b"material3_fabs", b"m3_sections_style", b"material3_avatars",
+        b"material_profile_actions", b"m3_navigation_animation", b"m3_bottom_tabs", b"pill_stack_enabled",
+    ):
+        if preference in dex_data:
+            raise SystemExit(f"Removed preference is still compiled: {preference.decode()}")
     removed = [
         b"Ldesu/inugram/helpers/ai/", b"Ldesu/inugram/helpers/update/",
         b"Ldesu/inugram/helpers/LocalPremiumHelper;",
@@ -62,6 +70,16 @@ with zipfile.ZipFile(apk) as archive:
         b"Ldesu/inugram/helpers/icons/PhosphorIconPack;",
         b"Ldesu/inugram/ui/settings/IosStyleSettingsActivity;",
         b"Ldesu/inugram/ui/settings/AiSettingsActivity;",
+        b"Ldesu/inugram/helpers/pillstack/",
+        b"Ldesu/inugram/ui/settings/PillStackSettingsActivity;",
+        b"Ldesu/inugram/ui/settings/WeatherLocationActivity;",
+        b"Ldesu/inugram/ui/settings/RatePairEditActivity;",
+        b"Ldesu/inugram/ui/settings/CurrencyPickerActivity;",
+        b"Ldesu/inugram/helpers/theme/M3SwitchHelper;",
+        b"Ldesu/inugram/helpers/theme/M3FabHelper;",
+        b"Ldesu/inugram/helpers/theme/M3SectionsHelper;",
+        b"Ldesu/inugram/helpers/theme/M3MainTabsHelper;",
+        b"Ldesu/inugram/helpers/theme/Material3NavigationAnimation;",
     ]
     for descriptor in removed:
         if descriptor in dex_data:
@@ -71,8 +89,8 @@ with zipfile.ZipFile(apk) as archive:
     if any(re.search(r"(?:^|/)icon_[46]_", name) for name in names):
         raise SystemExit("Removed launcher artwork is still packaged")
 resources = subprocess.check_output([aapt, "dump", "--values", "resources", str(apk)], text=True, errors="replace")
-if re.search(r":drawable/(?:phosphor_|vkui_)", resources):
-    raise SystemExit("Removed icon-pack artwork is still packaged")
+if re.search(r":drawable/(?:phosphor_|vkui_|pillstack_)", resources):
+    raise SystemExit("Removed icon-pack or Pill Stack artwork is still packaged")
 resource_sections = re.split(r"(?m)^\s*resource ", resources)
 for name, expected in firebase_expected.items():
     section = next((s for s in resource_sections if s.strip() and
@@ -98,6 +116,9 @@ print(json.dumps({
     "removedFeaturesAbsent": True,
     "channelRouteObfuscated": True,
     "forceLtrPreference": True,
+    "preparedTextsPreference": True,
+    "materialDesignOptionsRemoved": True,
+    "pillStackRemoved": True,
     "firebaseConfigured": True,
     "sha256": hashlib.sha256(apk.read_bytes()).hexdigest(),
 }, indent=2))

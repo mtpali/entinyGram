@@ -157,6 +157,10 @@ jobs:
           - Telegram app name and NagramXF default icon.
           - Blue stock Telegram icon retained; old entinyGram icon removed.
           - Force LTR in Settings → Telegram Settings → Appearance; restart to apply.
+          - Offline Text tab beside Emoji, GIFs and Stickers: add, edit and delete prepared texts per account; tap to insert into the draft before sending.
+          - Removed all seven Material Design options and Pill Stack, including their helpers and settings pages.
+          - Hide All Chats defaults on when other folders exist; the primary floating action defaults to None.
+          - Tap the main chat-list title to open proxy settings, including while connecting.
           - Signed armv7 (armeabi-v7a) and armv8 (arm64-v8a) APKs.
           - Recovered entinyGram Firebase client; matching FCM resources retained and verified in both APKs.
 
