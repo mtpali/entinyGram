@@ -17,7 +17,7 @@ most things are toggleable in `Settings → Telegram Settings`, with sensible op
 - **Media defaults**: automatic downloads, pinned-message alerts, raise-to-listen and recording interruptions start off; power-saving options start off.
 - **Download folder**: Telegram; full numbers display without rounding by default.
 - **Slim source**: removed custom AI, iOS controls, local Premium unlocks, archive locking, internal updates, Aqua and Vintage icons; Pill Stack and its telemetry, weather and rate pages.
-- **Privacy settings**: removed Paranoia Mode, its hidden-chat filters, disguise and launcher shortcut.
+- **Privacy settings**: removed Paranoia Mode, its hidden-chat filters, disguise and launcher shortcut; retired shortcuts are cleared after updates.
 - **Standard interface**: removed all seven Material Design switches, components and effects from Design settings.
 - **Chat defaults**: hide the All Chats folder tab when other folders exist, and set the primary floating action to None; saved user choices remain respected.
 - **Proxy title shortcut**: tap Telegram above the main chat list to open proxy settings, including while a connection-status title is shown.

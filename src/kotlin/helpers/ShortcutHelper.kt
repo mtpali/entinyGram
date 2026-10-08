@@ -61,7 +61,8 @@ object ShortcutHelper {
 
     @JvmStatic
     fun sync(context: Context) {
-        val retired = (ShortcutManagerCompat.getDynamicShortcuts(context) + ShortcutManagerCompat.getPinnedShortcuts(context))
+        val retired = ShortcutManagerCompat.getShortcuts(context,
+            ShortcutManagerCompat.FLAG_MATCH_DYNAMIC or ShortcutManagerCompat.FLAG_MATCH_PINNED)
             .map { it.id }.filter { id -> id.startsWith("inu_") && entries.none { it.id == id } }.distinct()
         if (retired.isNotEmpty()) {
             ShortcutManagerCompat.removeDynamicShortcuts(context, retired)
