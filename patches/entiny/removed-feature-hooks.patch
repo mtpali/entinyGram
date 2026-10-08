@@ -5,13 +5,11 @@ Subject: [-] Remove obsolete editor and style hooks
 
 ---
  .../src/main/java/org/telegram/ui/Cells/ChatMessageCell.java | 2 +-
- .../src/main/java/org/telegram/ui/Cells/SessionCell.java     | 2 +-
  .../java/org/telegram/ui/Components/CaptionPhotoViewer.java  | 2 +-
  .../org/telegram/ui/Components/ChatActivityEnterView.java    | 2 +-
  .../java/org/telegram/ui/Components/ChatAttachAlert.java     | 2 +-
  .../Components/blur3/drawable/BlurredBackgroundDrawable.java | 5 +----
- .../src/main/java/org/telegram/ui/SessionBottomSheet.java    | 2 +-
- 7 files changed, 7 insertions(+), 10 deletions(-)
+ 5 files changed, 5 insertions(+), 8 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
 index 0000000..0000000 100644
@@ -26,19 +24,6 @@ index 0000000..0000000 100644
              if (messageObject.isWideChannelPost()) {
                  drawSideButton = 0;
                  drawSideButton2 = 0;
-diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/SessionCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/SessionCell.java
-index 0000000..0000000 100644
---- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/SessionCell.java
-+++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/SessionCell.java
-@@ -252,7 +252,7 @@ public class SessionCell extends FrameLayout {
-             stringBuilder.append(" ").append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppVersion(session.app_version));
- 
-             if (session.current && desu.inugram.helpers.security.ParanoiaHelper.isDisguised()) {
--                stringBuilder = new StringBuilder("Telegram Android " + desu.inugram.helpers.update.UpdateHelper.getStockVersionName());
-+                stringBuilder = new StringBuilder("Telegram Android " + desu.inugram.helpers.VersionHelper.getStockVersionName());
-             }
- 
-             detailTextView.setText(stringBuilder);
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java
@@ -115,16 +100,3 @@ index 0000000..0000000 100644
          final int strokeColorTop = Theme.multAlpha(this.strokeColorTop, alpha / 255f);
          final int strokeColorBottom = Theme.multAlpha(this.strokeColorBottom, alpha / 255f);
  
-diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SessionBottomSheet.java b/TMessagesProj/src/main/java/org/telegram/ui/SessionBottomSheet.java
-index 0000000..0000000 100644
---- a/TMessagesProj/src/main/java/org/telegram/ui/SessionBottomSheet.java
-+++ b/TMessagesProj/src/main/java/org/telegram/ui/SessionBottomSheet.java
-@@ -113,7 +113,7 @@ public class SessionBottomSheet extends BottomSheet {
-         stringBuilder.append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppName(session.app_name));
-         stringBuilder.append(" ").append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppVersion(session.app_version));
-         if (session.current && desu.inugram.helpers.security.ParanoiaHelper.isDisguised()) {
--            stringBuilder = new StringBuilder("Telegram Android " + desu.inugram.helpers.update.UpdateHelper.getStockVersionName());
-+            stringBuilder = new StringBuilder("Telegram Android " + desu.inugram.helpers.VersionHelper.getStockVersionName());
-         }
-         applicationItemView.valueText.setText(stringBuilder);
-         Drawable drawable = ContextCompat.getDrawable(context, R.drawable.menu_devices).mutate();

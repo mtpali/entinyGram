@@ -5,23 +5,12 @@ import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
 import org.telegram.messenger.browser.Browser
 import org.telegram.ui.ActionBar.BaseFragment
-import desu.inugram.helpers.security.ParanoiaHelper
 
 
 sealed class SearchTopAction {
     abstract val label: CharSequence
     open val iconRes: Int = R.drawable.msg_link2
     abstract fun execute(fragment: BaseFragment)
-
-    class ExitParanoia : SearchTopAction() {
-        override val label: CharSequence
-            get() = LocaleController.getString(R.string.InuParanoiaExit)
-        override val iconRes: Int = R.drawable.msg_permissions
-
-        override fun execute(fragment: BaseFragment) {
-            ParanoiaHelper.disableParanoia(fragment)
-        }
-    }
 
     class Username(val name: String) : SearchTopAction() {
         override val label: CharSequence
@@ -63,7 +52,6 @@ sealed class SearchTopAction {
         @JvmStatic
         fun parse(query: String?): SearchTopAction? {
             if (query.isNullOrEmpty()) return null
-            if (ParanoiaHelper.matchesExitCode(query)) return ExitParanoia()
             if (desu.inugram.InuConfig.OPEN_BY_USER_ID.value) {
                 UserIdOpenHelper.parseUserId(query)?.let { return UserId(it) }
             }

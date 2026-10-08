@@ -32,7 +32,7 @@ if "org.telegram.messenger.StockIcon" not in manifest:
     raise SystemExit("Blue stock Telegram launcher alias is missing")
 if "org.telegram.messenger.OldIcon" in manifest:
     raise SystemExit("Old entinyGram launcher alias is still present")
-for alias in ("AquaIcon", "VintageIcon"):
+for alias in ("AquaIcon", "VintageIcon", "DisguiseIcon"):
     if f"org.telegram.messenger.{alias}" in manifest:
         raise SystemExit(f"Removed launcher alias is still present: {alias}")
 if "desu.inugram.helpers.update." in manifest:
@@ -65,6 +65,8 @@ with zipfile.ZipFile(apk) as archive:
         b"Ldesu/inugram/helpers/ai/", b"Ldesu/inugram/helpers/update/",
         b"Ldesu/inugram/helpers/LocalPremiumHelper;",
         b"Ldesu/inugram/helpers/security/ArchiveLockHelper;",
+        b"Ldesu/inugram/helpers/security/ParanoiaHelper;",
+        b"Ldesu/inugram/ui/settings/ParanoiaActivity;",
         b"Ldesu/inugram/helpers/icons/SolarIconPack;",
         b"Ldesu/inugram/helpers/icons/VkIconPack;",
         b"Ldesu/inugram/helpers/icons/PhosphorIconPack;",
@@ -91,6 +93,8 @@ with zipfile.ZipFile(apk) as archive:
 resources = subprocess.check_output([aapt, "dump", "--values", "resources", str(apk)], text=True, errors="replace")
 if re.search(r":drawable/(?:phosphor_|vkui_|pillstack_)", resources):
     raise SystemExit("Removed icon-pack or Pill Stack artwork is still packaged")
+if re.search(r":(?:string/Inu(?:Paranoia|DisguiseName)|drawable/inu_shortcut_paranoia)", resources):
+    raise SystemExit("Removed Paranoia Mode resources are still packaged")
 resource_sections = re.split(r"(?m)^\s*resource ", resources)
 for name, expected in firebase_expected.items():
     section = next((s for s in resource_sections if s.strip() and
@@ -119,6 +123,7 @@ print(json.dumps({
     "preparedTextsPreference": True,
     "materialDesignOptionsRemoved": True,
     "pillStackRemoved": True,
+    "paranoiaModeRemoved": True,
     "firebaseConfigured": True,
     "sha256": hashlib.sha256(apk.read_bytes()).hexdigest(),
 }, indent=2))

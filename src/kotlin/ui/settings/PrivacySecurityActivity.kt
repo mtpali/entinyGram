@@ -5,7 +5,6 @@ import desu.inugram.InuConfig
 import desu.inugram.SearchRegistry
 import desu.inugram.helpers.InuUtils
 import desu.inugram.helpers.security.BiometricHelper
-import desu.inugram.helpers.security.ParanoiaHelper
 import desu.inugram.helpers.security.PasscodeHelper
 import desu.inugram.helpers.UrlCleanerHelper
 import org.telegram.messenger.AndroidUtilities
@@ -38,15 +37,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
                     BUTTON_PASSCODE,
                     R.drawable.inu_tabler_key,
                     LocaleController.getString(R.string.InuPerAccountPasscode)
-                )
-            )
-        }
-        if (!ParanoiaHelper.isParanoia()) {
-            items.add(
-                mkSubPageButton(
-                    BUTTON_PARANOIA,
-                    R.drawable.inu_tabler_spy,
-                    LocaleController.getString(R.string.InuParanoiaMode)
                 )
             )
         }
@@ -131,7 +121,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
     override fun onClick(item: UItem, view: View, position: Int, x: Float, y: Float) {
         when (item.id) {
             BUTTON_PASSCODE -> presentFragment(PasscodeSettingsActivity())
-            BUTTON_PARANOIA -> presentFragment(ParanoiaActivity())
             BUTTON_ANTI_CENSORSHIP -> presentFragment(AntiCensorshipSettingsActivity())
             TOGGLE_HIDE_MY_PHONE_NUMBER -> {
                 val new = InuConfig.HIDE_MY_PHONE_NUMBER.toggle()
@@ -243,7 +232,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
 
     companion object {
         private val BUTTON_PASSCODE = InuUtils.generateId()
-        private val BUTTON_PARANOIA = InuUtils.generateId()
         private val BUTTON_ANTI_CENSORSHIP = InuUtils.generateId()
         private val TOGGLE_HIDE_MY_PHONE_NUMBER = InuUtils.generateId()
         private val TOGGLE_DISABLE_SENSITIVE = InuUtils.generateId()

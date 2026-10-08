@@ -21,7 +21,7 @@ index 0000000..0000000 100644
          super.setTitleOverlayText(title, titleId, action);
          if (actionBar != null && selectAnimatedEmojiDialog != null && selectAnimatedEmojiDialog.getContentView() instanceof SelectAnimatedEmojiDialog) {
              SimpleTextView textView = actionBar.getTitleTextView();
-@@ -3602,6 +3605,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -3593,6 +3596,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
              actionBar.setClipContent(true);
          //}
          actionBar.setTitleActionRunnable(() -> {

@@ -1,13 +1,13 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: alina sireneva <alina@tei.su>
+From: Oleksii Kulinich <entaytion@gmail.com>
 Date: Thu, 9 Apr 2026 03:23:55 +0300
 Subject: settings ui
 
 ---
- .../org/telegram/messenger/ApplicationLoader.java     |  1 +
- .../main/java/org/telegram/ui/ProfileActivity.java    |  4 ++--
- .../main/java/org/telegram/ui/SettingsActivity.java   | 11 ++++++++++-
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ .../java/org/telegram/messenger/ApplicationLoader.java   | 1 +
+ .../src/main/java/org/telegram/ui/ProfileActivity.java   | 4 ++--
+ .../src/main/java/org/telegram/ui/SettingsActivity.java  | 9 ++++++++-
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/ApplicationLoader.java b/TMessagesProj/src/main/java/org/telegram/messenger/ApplicationLoader.java
 index 0000000..0000000 100644
@@ -47,19 +47,17 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
-@@ -685,6 +685,11 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -685,6 +685,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
              items.add(UItem.asShadow(null));
          }
  
-+        if (!desu.inugram.helpers.security.ParanoiaHelper.shouldHideSettings()) {
-+            items.add(SettingCell.Factory.of(99, IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom, R.drawable.icon_settings_inu, getString(R.string.InuSettings), getString(R.string.InuSettingsInfo)));
-+            items.add(UItem.asShadow(null));
-+        }
-+
++        items.add(SettingCell.Factory.of(99, IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom, R.drawable.icon_settings_inu, getString(R.string.InuSettings), getString(R.string.InuSettingsInfo)));
++        items.add(UItem.asShadow(null));
++        
          items.add(SettingCell.Factory.of(1, IconBackgroundColors.BLUE.top, IconBackgroundColors.BLUE.bottom, R.drawable.settings_account, getString(R.string.SettingsAccount), getString(R.string.SettingsAccountInfo)));
          items.add(SettingCell.Factory.of(2, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom, R.drawable.settings_chat, getString(R.string.SettingsChat), getString(R.string.SettingsChatInfo)));
          items.add(SettingCell.Factory.of(3, IconBackgroundColors.GREEN.top, IconBackgroundColors.GREEN.bottom, R.drawable.settings_privacy, getString(R.string.SettingsPrivacySecurity), getString(R.string.SettingsPrivacySecurityInfo)));
-@@ -745,7 +750,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -745,7 +748,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
              items.add(SettingCell.Factory.of(24, 0xFFF45255, 0xFFDF3955, 0, getString(R.string.RoundVideoSettings)));
          }
  
@@ -68,7 +66,7 @@ index 0000000..0000000 100644
              items.add(UItem.asShadow(null));
              items.add(UItem.asHeader(getString(R.string.SettingsDebug)));
              items.add(SettingCell.Factory.of(20, 0xFF55CA47, 0xFF27B434, 0, getString(R.string.DebugSendLogs)));
-@@ -887,6 +892,10 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -887,6 +890,10 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                  presentFragment(new RoundVideoSettingsActivity());
                  break;
              }

@@ -1,0 +1,89 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Thu, 8 Oct 2026 11:01:50 +0330
+Subject: [*] preserve account shortcuts and channel picker
+
+---
+ .../main/java/org/telegram/messenger/MediaDataController.java | 1 +
+ .../src/main/java/org/telegram/ui/DialogsActivity.java        | 2 +-
+ .../src/main/java/org/telegram/ui/GroupCreateActivity.java    | 4 +++-
+ .../main/java/org/telegram/ui/Stories/DialogStoriesCell.java  | 4 +---
+ 4 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MediaDataController.java b/TMessagesProj/src/main/java/org/telegram/messenger/MediaDataController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/MediaDataController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/MediaDataController.java
+@@ -5181,6 +5181,7 @@ public class MediaDataController extends BaseController {
+                         arrayList.clear();
+                     }
+                 }
++                desu.inugram.helpers.ShortcutHelper.sync(ApplicationLoader.applicationContext);
+             } catch (Throwable ignore) {
+ 
+             }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
+@@ -3584,7 +3584,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+                 statusDrawable = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(null, dp(26));
+                 statusDrawable.center = true;
+                 actionBar.setTitle(desu.inugram.helpers.chat.ChatHelper.getDialogsTitle(currentAccount), statusDrawable);
+-                                updateStatus(UserConfig.getInstance(currentAccount).getCurrentUser(), false);
++                updateStatus(UserConfig.getInstance(currentAccount).getCurrentUser(), false);
+             }
+             if (folderId == 0) {
+                 actionBar.setSupportsHolidayImage(true);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/GroupCreateActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/GroupCreateActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/GroupCreateActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/GroupCreateActivity.java
+@@ -144,6 +144,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
+     private final int chatAddType;
+     private final boolean allowPremium;
+     private final boolean allowMiniApps;
++    private final boolean inu_allowChannels;
+     private GroupCreateSpan selectedPremium;
+     private GroupCreateSpan selectedMiniApps;
+     private LongSparseArray<GroupCreateSpan> selectedContacts = new LongSparseArray<>();
+@@ -236,6 +237,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
+         chatAddType = args.getInt("chatAddType", 0);
+         allowPremium = args.getBoolean("allowPremium", false);
+         allowMiniApps = args.getBoolean("allowMiniapps", false);
++        inu_allowChannels = args.getBoolean("inu_allowChannels", false);
+         chatId = args.getLong("chatId");
+         channelId = args.getLong("channelId");
+         if (isAlwaysShare || isNeverShare || addToGroup) {
+@@ -1223,7 +1225,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
+                             continue;
+                         }
+                         TLRPC.Chat chat = getMessagesController().getChat(-dialog.id);
+-                        if (chat == null || chat.migrated_to != null || ChatObject.isChannel(chat) && !chat.megagroup) {
++                        if (chat == null || chat.migrated_to != null || ChatObject.isChannel(chat) && !chat.megagroup && !inu_allowChannels) {
+                             continue;
+                         }
+                         contacts.add(chat);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Stories/DialogStoriesCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Stories/DialogStoriesCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Stories/DialogStoriesCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Stories/DialogStoriesCell.java
+@@ -947,7 +947,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
+             telegramLogoView.setTranslationY(bottomY + dp(14 + FAKE_TOP_PADDING + 4.333f) + translationOffset /*titleView.getTranslationY() + dpf2(37.33f)*/);
+ 
+             emojiStatusView.setTranslationX(titleView.getTranslationX() + titleView.getDrawable().getCurrentWidth() + dpf2(2.66f));
+-                        emojiStatusView.setTranslationY(bottomY + dp(14 - 11 + FAKE_TOP_PADDING + 4.333f) + translationOffset);
++            emojiStatusView.setTranslationY(bottomY + dp(14 - 11 + FAKE_TOP_PADDING + 4.333f) + translationOffset);
+ 
+             subtitleOverlayContainer.setTranslationX(titleView.getTranslationX());
+             subtitleOverlayContainer.setTranslationY(bottomY + dp(15 + FAKE_TOP_PADDING + 4.333f + 8));
+@@ -2210,9 +2210,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
+     private void checkUi_titleVisibility() {
+         final float progress = MathUtils.clamp(Math.min(collapsedProgress, collapsedProgress2), 0, 1);
+         final float titleVisibility = animatorHasTitleText.getFloatValue();
+-        final float logoVisibility = 1f - titleVisibility;
+         final float titleAlpha = titleVisibility * progress;
+-        final float logoAlpha = logoVisibility * progress;
+ 
+         if (titleView != null) {
+             titleView.setAlpha(titleAlpha);

@@ -17,6 +17,7 @@ most things are toggleable in `Settings → Telegram Settings`, with sensible op
 - **Media defaults**: automatic downloads, pinned-message alerts, raise-to-listen and recording interruptions start off; power-saving options start off.
 - **Download folder**: Telegram; full numbers display without rounding by default.
 - **Slim source**: removed custom AI, iOS controls, local Premium unlocks, archive locking, internal updates, Aqua and Vintage icons; Pill Stack and its telemetry, weather and rate pages.
+- **Privacy settings**: removed Paranoia Mode, its hidden-chat filters, disguise and launcher shortcut.
 - **Standard interface**: removed all seven Material Design switches, components and effects from Design settings.
 - **Chat defaults**: hide the All Chats folder tab when other folders exist, and set the primary floating action to None; saved user choices remain respected.
 - **Proxy title shortcut**: tap Telegram above the main chat list to open proxy settings, including while a connection-status title is shown.
@@ -344,15 +345,6 @@ the sections below contain the broader feature set: inugram functionality, featu
 - 🐶 launcher shortcut that asks which account to open
 - 📡 option to hide recent/frequent chats from the app icon's long-press menu
 - per-account passcodes, hidden accounts, panic code, hidden settings deeplink - *ported from [Nekogram](https://github.com/Nekogram/Nekogram)*
-- 🐶 paranoia mode: pick chats/channels to hide everywhere; all secret chats hidden too; exit by typing a custom code in chat search
-  - optional whitelist mode: hide everything *except* the picked chats (service notifications stay visible)
-  - optionally hide the Inugram settings entirely when enabled
-  - optionally disguise as stock Telegram when enabled
-  - optionally silence all notifications while enabled
-  - optionally hide all other accounts while enabled
-  - optionally collapse folder tabs (show only All Chats) while enabled
-  - optionally hide your own stories (ring, profile tabs, archive) while enabled
-  - optional launcher long-press shortcut to enter it quickly (hidden while active)
 - biometric confirmation before deleting/clearing a chat or logging out - *inspired by [Cherrygram](https://github.com/arsLan4k1390/Cherrygram)*
 - session list in Settings > Devices shows the real app name (entinyGram) instead of the registered api_id title ("Inugram")
 

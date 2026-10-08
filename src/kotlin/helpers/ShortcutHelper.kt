@@ -8,7 +8,6 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import desu.inugram.InuConfig
 import desu.inugram.helpers.security.GhostHelper
-import desu.inugram.helpers.security.ParanoiaHelper
 import desu.inugram.helpers.security.PasscodeHelper
 import desu.inugram.ui.AccountPickerActivity
 import org.telegram.messenger.AndroidUtilities
@@ -37,19 +36,6 @@ object ShortcutHelper {
 
     private val entries = listOf(
         Entry(
-            id = "inu_enter_paranoia",
-            action = "desu.inugram.action.ENTER_PARANOIA",
-            labelRes = R.string.InuParanoiaMode,
-            iconRes = R.drawable.inu_shortcut_paranoia,
-            rank = 0,
-            shouldShow = ParanoiaHelper::shouldShowLauncherShortcut,
-            onClick = { activity ->
-                if (!ParanoiaHelper.isParanoia() && ParanoiaHelper.canUseLauncherShortcut()) {
-                    ParanoiaHelper.enableParanoia(activity)
-                }
-            },
-        ),
-        Entry(
             id = "inu_switch_account",
             action = SWITCH_ACCOUNT_ACTION,
             labelRes = R.string.InuAccountSwitchShortcut,
@@ -75,6 +61,12 @@ object ShortcutHelper {
 
     @JvmStatic
     fun sync(context: Context) {
+        val retired = (ShortcutManagerCompat.getDynamicShortcuts(context) + ShortcutManagerCompat.getPinnedShortcuts(context))
+            .map { it.id }.filter { id -> id.startsWith("inu_") && entries.none { it.id == id } }.distinct()
+        if (retired.isNotEmpty()) {
+            ShortcutManagerCompat.removeDynamicShortcuts(context, retired)
+            ShortcutManagerCompat.disableShortcuts(context, retired, null)
+        }
         for (entry in entries) {
             if (entry.shouldShow()) {
                 val intent = Intent(context, entry.target).setAction(entry.action)

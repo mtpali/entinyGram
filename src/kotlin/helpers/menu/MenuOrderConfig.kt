@@ -257,7 +257,6 @@ class DialogsMenuConfig(key: String) : MenuOrderConfig<DialogsMenuConfig.Item>(k
         CONTACTS("contacts", R.string.Contacts, R.drawable.msg_contacts),
         ARCHIVE("archive", R.string.ArchivedChats, R.drawable.msg_archive),
         GHOST_MODE("ghost_mode", R.string.InuGhostMode, R.drawable.inu_ghost),
-        PARANOIA("paranoia", R.string.InuParanoiaMode, R.drawable.inu_tabler_spy),
         RESTART_APP("restart_app", R.string.InuRestartApp, R.drawable.msg_retry),
         SETTINGS("settings", R.string.Settings, R.drawable.msg_settings_old);
 
@@ -272,7 +271,6 @@ class DialogsMenuConfig(key: String) : MenuOrderConfig<DialogsMenuConfig.Item>(k
     companion object {
         private val OFF_BY_DEFAULT = setOf(
             Item.GHOST_MODE,
-            Item.PARANOIA,
             Item.FEED,
             Item.RECENT_CHATS,
             Item.CLEAR_CACHE,

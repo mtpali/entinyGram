@@ -18,7 +18,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/CallLogActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/CallLogActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/CallLogActivity.java
-@@ -958,7 +958,7 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
+@@ -956,7 +956,7 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
  
  		if (hasActiveCalls || hasCalls) {
  			items.add(UItem.asButton(ID_CREATE_CALL, R.drawable.menu_call_create, getString(R.string.GroupCallCreate2)).accent());
@@ -27,7 +27,7 @@ index 0000000..0000000 100644
  				items.add(UItem.asButton(ID_SHOW_IN_MAIN_TABS, R.drawable.menu_add_tab_24, getString(R.string.GroupCallShowInMainTabs)).accent());
  			}
  			items.add(UItem.asShadow(null));
-@@ -1118,7 +1118,7 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
+@@ -1116,7 +1116,7 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
  	public void onBecomeFullyVisible() {
  		super.onBecomeFullyVisible();
  
@@ -36,7 +36,7 @@ index 0000000..0000000 100644
  			hideCallTabsHintView = new HintView2(getContext(), HintView2.DIRECTION_TOP);
  			hideCallTabsHintView.setDuration(3000);
  			hideCallTabsHintView.setJoint(1, -(12 + 13));
-@@ -2024,7 +2024,7 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
+@@ -2020,7 +2020,7 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
  		ItemOptions io = ItemOptions.makeOptions(this, otherItem);
  		// io.setColors(getThemedColor(Theme.key_actionBarDefaultTitle), getThemedColor(Theme.key_actionBarDefaultTitle));
  		io.setDimAlpha(0x08);
@@ -45,7 +45,7 @@ index 0000000..0000000 100644
  			io.add(R.drawable.msg_archive_hide, getString(R.string.HideCallTab), () -> {
  				setCallsTabVisible(false);
  				final BulletinFactory factory = hasMainTabs ? BulletinFactory.global() : BulletinFactory.of(CallLogActivity.this);
-@@ -2040,13 +2040,13 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
+@@ -2036,13 +2036,13 @@ public class CallLogActivity extends BaseFragment implements NotificationCenter.
  	}
  
  	private void setCallsTabVisible(boolean visible) {
@@ -66,7 +66,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
-@@ -13996,7 +13996,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -13986,7 +13986,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                  }
              }
          }

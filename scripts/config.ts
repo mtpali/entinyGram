@@ -175,7 +175,6 @@ export const ICON_SELECTION: { pack: IconifyJSON, icons: string[], options?: Svg
       'cpu',
       'server',
       'microphone',
-      'spy',
       'key',
       'fingerprint',
       'shield-cancel',

@@ -524,7 +524,7 @@ index 0000000..0000000 100644
  
          listView = new UniversalRecyclerView(this, this::fillItems, this::onClick, this::onLongClick);
          listView.adapter.setApplyBackground(false);
-@@ -821,9 +820,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -819,9 +818,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
              if (item.object instanceof ProfileActivity.SearchAdapter.SearchResult) {
                  final ProfileActivity.SearchAdapter.SearchResult r = (ProfileActivity.SearchAdapter.SearchResult) item.object;
                  r.open(getParentLayout());
@@ -534,7 +534,7 @@ index 0000000..0000000 100644
              }
              if (item.object != null) {
                  search.addRecent(item.object);
-@@ -911,9 +907,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -909,9 +905,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
              if (item.object instanceof ProfileActivity.SearchAdapter.SearchResult) {
                  final ProfileActivity.SearchAdapter.SearchResult r = (ProfileActivity.SearchAdapter.SearchResult) item.object;
                  link = r.link;

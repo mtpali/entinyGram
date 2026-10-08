@@ -278,11 +278,11 @@ index 0000000..0000000 100644
              stringBuilder = new StringBuilder();
 -            stringBuilder.append(session.app_name);
 -            stringBuilder.append(" ").append(session.app_version);
-+            stringBuilder.append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppName(session.app_name));
-+            stringBuilder.append(" ").append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppVersion(session.app_version));
++            stringBuilder.append(desu.inugram.helpers.VersionHelper.getSessionAppName(session.app_name));
++            stringBuilder.append(" ").append(desu.inugram.helpers.VersionHelper.getSessionAppVersion(session.app_version));
  
-             if (session.current && desu.inugram.helpers.security.ParanoiaHelper.isDisguised()) {
-                 stringBuilder = new StringBuilder("Telegram Android " + desu.inugram.helpers.update.UpdateHelper.getStockVersionName());
+             detailTextView.setText(stringBuilder);
+         } else if (object instanceof TLRPC.TL_webAuthorization) {
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlertDocumentLayout.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlertDocumentLayout.java
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlertDocumentLayout.java
@@ -310,7 +310,7 @@ index 0000000..0000000 100644
              layoutParams.leftMargin = AndroidUtilities.dp(58);
              layoutParams.topMargin = AndroidUtilities.dp(6);
 -            subinfoTextView.setText(authorization.app_name);
-+            subinfoTextView.setText(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppName(authorization.app_name));
++            subinfoTextView.setText(desu.inugram.helpers.VersionHelper.getSessionAppName(authorization.app_name));
              subinfoTextView.setVisibility(VISIBLE);
              infoTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
              infoTextView.setTypeface(AndroidUtilities.bold());
@@ -373,11 +373,11 @@ index 0000000..0000000 100644
          stringBuilder = new StringBuilder();
 -        stringBuilder.append(session.app_name);
 -        stringBuilder.append(" ").append(session.app_version);
-+        stringBuilder.append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppName(session.app_name));
-+        stringBuilder.append(" ").append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppVersion(session.app_version));
-         if (session.current && desu.inugram.helpers.security.ParanoiaHelper.isDisguised()) {
-             stringBuilder = new StringBuilder("Telegram Android " + desu.inugram.helpers.update.UpdateHelper.getStockVersionName());
-         }
++        stringBuilder.append(desu.inugram.helpers.VersionHelper.getSessionAppName(session.app_name));
++        stringBuilder.append(" ").append(desu.inugram.helpers.VersionHelper.getSessionAppVersion(session.app_version));
+         applicationItemView.valueText.setText(stringBuilder);
+         Drawable drawable = ContextCompat.getDrawable(context, R.drawable.menu_devices).mutate();
+         drawable.setColorFilter(new PorterDuffColorFilter(Theme.getColor(Theme.key_windowBackgroundWhiteGrayIcon), PorterDuff.Mode.SRC_IN));
 diff --git a/TMessagesProj/src/main/res/values-de/strings.xml b/TMessagesProj/src/main/res/values-de/strings.xml
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/res/values-de/strings.xml

@@ -26,7 +26,7 @@ index 0000000..0000000 100644
      private Drawable premiumStar;
  
      public void updateStatus(TLRPC.User user, boolean animated) {
-+        if (!desu.inugram.helpers.security.ParanoiaHelper.isDisguised() && actionBar != null && communityId == 0 &&
++        if (actionBar != null && communityId == 0 &&
 +                (folderId == 0 || desu.inugram.InuConfig.DIALOGS_TITLE_TEXT_OVERRIDE_ARCHIVE.getValue())) {
 +            if (folderId == 0 && desu.inugram.InuConfig.DIALOGS_TITLE_TEXT.getValue() == desu.inugram.InuConfig.DialogsTitleTextItem.FOLDER) {
 +                // getDialogsTitle() has no FOLDER branch and falls through to the app name, so
@@ -40,7 +40,7 @@ index 0000000..0000000 100644
          if (dialogStoriesCell != null) {
              dialogStoriesCell.updateStatus(user, animated);
          }
-@@ -3713,6 +3728,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -3704,6 +3719,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                          checkListLoad(viewPages[0]);
                          viewPages[0].dialogsAdapter.resume();
                          viewPages[1].dialogsAdapter.pause();
@@ -48,7 +48,7 @@ index 0000000..0000000 100644
                      }
                  }
  
-@@ -6929,6 +6945,33 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -6920,6 +6936,33 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
          switchToCurrentSelectedMode(false);
      }
  
@@ -82,7 +82,7 @@ index 0000000..0000000 100644
      public void switchToCurrentSelectedMode(boolean animated) {
          for (int a = 0; a < viewPages.length; a++) {
              viewPages[a].listView.stopScroll();
-@@ -6955,6 +6998,19 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -6946,6 +6989,19 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
              viewPages[1].isLocked = filter.locked;
          }
  

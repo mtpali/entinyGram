@@ -18,7 +18,6 @@ import desu.inugram.helpers.dialogs.DrawerHelper.setupMainFragment
 import desu.inugram.helpers.menu.DialogsMenuConfig
 import desu.inugram.helpers.menu.DialogsMenuHelper
 import desu.inugram.helpers.security.GhostHelper
-import desu.inugram.helpers.security.ParanoiaHelper
 import desu.inugram.ui.drawer.DrawerAddCell
 import desu.inugram.ui.drawer.DrawerLayoutAdapter
 import desu.inugram.ui.drawer.DrawerProfileCell
@@ -26,7 +25,6 @@ import desu.inugram.ui.drawer.DrawerSwipeController
 import desu.inugram.ui.drawer.DrawerUserCell
 import desu.inugram.ui.drawer.SideMenultItemAnimator
 import desu.inugram.ui.settings.InuSettingsActivity
-import desu.inugram.ui.settings.ParanoiaActivity
 import desu.inugram.ui.settings.TosSettingsActivity
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
@@ -709,9 +707,6 @@ object DrawerHelper {
                         instance.updateStatus(UserConfig.getInstance(instance.currentAccount).currentUser, true)
                         BulletinFactory.of(instance).createImageBulletin(if (isGhost) R.drawable.inu_ghost_filled else R.drawable.inu_ghost, getString(if (isGhost) R.string.InuGhostEnabled else R.string.InuGhostDisabled)).show()
                     }
-                }
-                DialogsMenuConfig.Item.PARANOIA -> if (!ParanoiaHelper.isParanoia()) io.add(R.drawable.inu_tabler_spy, getString(R.string.InuParanoiaMode)) {
-                    instance.presentFragment(ParanoiaActivity())
                 }
                 DialogsMenuConfig.Item.RESTART_APP -> io.add(R.drawable.msg_retry, getString(R.string.InuRestartApp)) {
                     confirmRestartApp(instance)

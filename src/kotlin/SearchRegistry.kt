@@ -1,7 +1,6 @@
 package desu.inugram
 
 import android.content.Intent
-import desu.inugram.helpers.security.ParanoiaHelper
 import desu.inugram.ui.settings.AdditionalSettingsActivity
 import desu.inugram.ui.settings.AnnoyancesSettingsActivity
 import desu.inugram.ui.settings.AntiCensorshipSettingsActivity
@@ -23,7 +22,6 @@ import desu.inugram.ui.settings.DrawerMenuOrderActivity
 import desu.inugram.ui.settings.MenusSettingsActivity
 import desu.inugram.ui.settings.MessagesSettingsActivity
 import desu.inugram.ui.settings.RecentChatsSettingsActivity
-import desu.inugram.ui.settings.ParanoiaActivity
 import desu.inugram.ui.settings.PrivacySecurityActivity
 import desu.inugram.ui.settings.RegexFilterSettingsActivity
 import desu.inugram.ui.settings.SettingsPageActivity
@@ -77,7 +75,6 @@ object SearchRegistry {
             RegexFilterSettingsActivity.PAGE,
             TranslatorSettingsActivity.PAGE,
             PrivacySecurityActivity.PAGE,
-            ParanoiaActivity.PAGE,
             AntiCensorshipSettingsActivity.PAGE,
             DatacenterStatusActivity.PAGE,
             BackupSettingsActivity.PAGE,
@@ -119,7 +116,6 @@ object SearchRegistry {
         stock: Array<ProfileActivity.SearchAdapter.SearchResult>,
         f: BaseFragment,
     ): Array<ProfileActivity.SearchAdapter.SearchResult> {
-        if (ParanoiaHelper.shouldHideSettings()) return stock
         val extra = ArrayList<ProfileActivity.SearchAdapter.SearchResult>()
         for (page in pages) {
             if (page === FeedExcludedChannelsSettingsActivity.PAGE && !FeedHelper.isEnabled()) continue
@@ -152,7 +148,6 @@ object SearchRegistry {
 
     @JvmStatic
     fun tryHandleDeepLink(activity: LaunchActivity, intent: Intent?): Boolean {
-        if (ParanoiaHelper.shouldHideSettings()) return false
         val uri = intent?.data ?: return false
         if (uri.scheme != "tg") return false
         // entiny: match host and legacy {inu,entiny} segments case-insensitively while preserving trailing slug

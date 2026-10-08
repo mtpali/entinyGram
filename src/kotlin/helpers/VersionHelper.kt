@@ -1,7 +1,6 @@
 package desu.inugram.helpers
 
-import android.os.Build
-import desu.inugram.helpers.security.ParanoiaHelper
+import desu.inugram.InuConfig
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.BuildConfig
 import org.telegram.messenger.BuildVars
@@ -35,11 +34,23 @@ object VersionHelper {
 
     @JvmStatic
     fun getFullVersionInfo(): String {
-        if (ParanoiaHelper.isDisguised()) {
-            val abis = Build.SUPPORTED_ABIS
-            return "Telegram for Android v${stockVersionName} (${BuildConfig.STOCK_VERSION_CODE})\ndirect ${abis.getOrNull(0)} ${abis.getOrNull(1)}"
-        }
         return "${getVersionInfoString()}\nBuilt on: ${BuildVars.BUILD_DATE}"
     }
 
+    @JvmStatic
+    fun getSessionAppName(serverName: String): String {
+        if (!InuConfig.MASK_SERVER_APP_NAME.value) return serverName
+        if (serverName.contains("inugram", ignoreCase = true) || serverName.contains("entinygram", ignoreCase = true)) {
+            return runCatching { LocaleController.getString(R.string.AppName) }.getOrElse { serverName }
+        }
+        return serverName
+    }
+
+    private val GIT_SHA_SUFFIX = Regex("-[0-9a-fA-F]{6,40}(?=[ (]|$)")
+
+    @JvmStatic
+    fun getSessionAppVersion(rawVersion: String): String {
+        if (!InuConfig.MASK_SERVER_APP_NAME.value) return rawVersion
+        return GIT_SHA_SUFFIX.replace(rawVersion, "")
+    }
 }

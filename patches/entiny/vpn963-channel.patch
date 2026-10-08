@@ -156,7 +156,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
-@@ -754,10 +754,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -752,10 +752,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
              items.add(UItem.asShadow(null));
  
          items.add(UItem.asHeader(getString(R.string.SettingsHelp)));
@@ -168,7 +168,7 @@ index 0000000..0000000 100644
  
          if (SharedSettings.experimentalSettingsAllowed.get()) {
              items.add(UItem.asShadow(null));
-@@ -878,16 +875,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -876,16 +873,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                  UserSelectorBottomSheet.open(0, BirthdayController.getInstance(UserConfig.selectedAccount).getState());
                  break;
  
@@ -185,7 +185,7 @@ index 0000000..0000000 100644
              case 20:
                  ProfileActivity.sendLogs(getParentActivity(), false);
                  break;
-@@ -897,19 +884,15 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -895,19 +882,15 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
              case 22:
                  FileLog.cleanupLogs();
                  break;
@@ -209,7 +209,7 @@ index 0000000..0000000 100644
              case 99:
                  presentFragment(new desu.inugram.ui.settings.InuSettingsActivity());
                  break;
-@@ -948,7 +931,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+@@ -946,7 +929,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
      }
  
      public String getVersionName() {

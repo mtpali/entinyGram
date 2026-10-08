@@ -1,8 +1,8 @@
 misc/build-support.patch
 bugfix/photo-viewer-crop.patch
-misc/branding.patch
+entiny/base-branding.patch
 misc/remove-play.patch
-misc/settings-ui.patch
+entiny/settings-ui.patch
 misc/defaults.patch
 debloat/hide-trending-stickers.patch
 feature/show-seconds.patch
@@ -99,7 +99,7 @@ debloat/disable-scrim-blur.patch
 debloat/profile-scroll-snap.patch
 feature/deeplink-in-search.patch
 feature/main-tabs-double-tap.patch
-feature/reorder-accounts.patch
+entiny/reorder-accounts.patch
 feature/create-as-supergroup.patch
 bugfix/profile-scroll-jump.patch
 hooks/loginactivity.patch
@@ -144,7 +144,6 @@ bugfix/phantom-photo-seekbar.patch
 bugfix/phantom-peek-dialogs.patch
 hooks/notifications-controller.patch
 feature/passcode.patch
-feature/paranoia.patch
 bugfix/expand-emoji-tabs.patch
 bugfix/spoiler-reveal-keep.patch
 feature/reaction-confirm-non-member.patch
@@ -456,3 +455,4 @@ entiny/saved-texts.patch
 entiny/proxy-title-shortcut.patch
 entiny/forward-pro-topics.patch
 entiny/text-tab-default.patch
+entiny/shared-privacy-hooks.patch
