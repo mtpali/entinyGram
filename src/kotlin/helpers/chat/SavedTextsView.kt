@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -214,12 +215,17 @@ class SavedTextsView(
     companion object {
         @JvmStatic
         fun configureTabs(tabs: PagerSlidingTabStrip) {
+            tabs.setPadding(0, 0, 0, 0)
             tabs.setShouldExpand(true)
             tabs.layoutParams = LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 48f, Gravity.BOTTOM, 48f, 0f, 48f, 0f)
             for (i in 0..3) {
                 (tabs.getTab(i) as? TextView)?.apply {
+                    layoutParams = LinearLayout.LayoutParams(0, LayoutHelper.MATCH_PARENT, 1f)
+                    setPadding(AndroidUtilities.dp(11f), 0, AndroidUtilities.dp(11f), 0)
+                    gravity = Gravity.CENTER
                     setSingleLine(true)
                     ellipsize = TextUtils.TruncateAt.END
+                    setAutoSizeTextTypeUniformWithConfiguration(10, 14, 1, TypedValue.COMPLEX_UNIT_DIP)
                 }
             }
         }
