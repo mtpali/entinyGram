@@ -1,0 +1,94 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Thu, 8 Oct 2026 10:48:37 +0330
+Subject: [*] forward pro forum topics
+
+---
+ .../org/telegram/ui/Components/ShareAlert.java | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ShareAlert.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ShareAlert.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ShareAlert.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ShareAlert.java
+@@ -1109,7 +1109,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+             }
+         });
+         topicsBackActionBar.setVisibility(View.GONE);
+-        frameLayout.addView(topicsBackActionBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 58, Gravity.BOTTOM | Gravity.LEFT));
++        frameLayout.addView(topicsBackActionBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 58, (inu_forwardProActive ? Gravity.TOP : Gravity.BOTTOM) | Gravity.LEFT));
+ 
+         topicsGridView = new RecyclerListView(context, resourcesProvider);
+         topicsGridView.setLayoutManager(topicsLayoutManager = new GridLayoutManager(context, 4));
+@@ -2219,6 +2219,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+         searchView.setScaleX(0.9f + (1f - value) * 0.1f);
+         searchView.setScaleY(0.9f + (1f - value) * 0.1f);
+         searchView.setAlpha(1f - value);
++        desu.inugram.helpers.chat.ForwardProHelper.onTopicsTransition(this, value);
+ 
+         topicsBackActionBar.getBackButton().setTranslationX(-dp(16) * (1f - value));
+         topicsBackActionBar.getTitleTextView().setTranslationY(dp(16) * (1f - value));
+@@ -2312,7 +2313,8 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+             }
+             sendPopupLayout1.addView(showSendersNameView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 48));
+             showSendersNameView.setTextAndIcon(false ? LocaleController.getString(R.string.ShowSenderNames) : LocaleController.getString(R.string.ShowSendersName), 0);
+-            showSendersNameView.setChecked(showSendersName = true);
++            if (!desu.inugram.helpers.chat.ForwardProHelper.isActive(this)) showSendersName = true;
++            showSendersNameView.setChecked(showSendersName);
+ 
+             boolean inu_forwardProCaptionRow = desu.inugram.helpers.chat.ForwardProHelper.isActive(this);
+             ActionBarMenuSubItem hideSendersNameView = new ActionBarMenuSubItem(getContext(), true, false, !inu_forwardProCaptionRow, resourcesProvider);
+@@ -2528,7 +2530,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                     TLRPC.TL_forumTopic topic = selectedDialogTopics.get(selectedDialogs.get(key));
+                     long monoForumPeerId = topic != null && isMonoForum ? DialogObject.getPeerDialogId(topic.from_id) : 0;
+ 
+-                    MessageObject replyTopMsg = topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
++                    MessageObject replyTopMsg = desu.inugram.helpers.chat.ForwardProHelper.isActive(this) ? desu.inugram.helpers.chat.ForwardProHelper.getTopicReply(this, key) : topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
+                     if (replyTopMsg != null) {
+                         replyTopMsg.isTopicMainMessage = true;
+                     }
+@@ -2577,7 +2579,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                         if (price != null && price > 0) hadPaid = true;
+                         TLRPC.TL_forumTopic topic = selectedDialogTopics.get(selectedDialogs.get(key));
+                         long monoForumPeerId = topic != null && isMonoForum ? DialogObject.getPeerDialogId(topic.from_id) : 0;
+-                        MessageObject replyTopMsg = topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
++                        MessageObject replyTopMsg = desu.inugram.helpers.chat.ForwardProHelper.isActive(this) ? desu.inugram.helpers.chat.ForwardProHelper.getTopicReply(this, key) : topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
+ 
+                         SendMessagesHelper.SendMessageParams params;
+                         if (storyItem == null) {
+@@ -2588,7 +2590,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                             }
+                         } else {
+                             if (frameLayout2.getTag() != null && commentTextView.length() > 0 && text[0] != null) {
+-                                SendMessagesHelper.getInstance(currentAccount).sendMessage(SendMessagesHelper.SendMessageParams.of(text[0].toString(), key, null, replyTopMsg, null, true, null, null, null, withSound, 0, 0, null, false));
++                                SendMessagesHelper.getInstance(currentAccount).sendMessage(SendMessagesHelper.SendMessageParams.of(text[0].toString(), key, replyTopMsg, replyTopMsg, null, true, null, null, null, withSound, 0, 0, null, false));
+                             }
+                             params = SendMessagesHelper.SendMessageParams.of(null, key, replyTopMsg, replyTopMsg, null, true, null, null, null, withSound, 0, 0, null, false);
+                             params.sendingStory = storyItem;
+@@ -2605,7 +2607,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                         if (price != null && price > 0) hadPaid = true;
+                         TLRPC.TL_forumTopic topic = selectedDialogTopics.get(selectedDialogs.get(key));
+                         long monoForumPeerId = topic != null && isMonoForum ? DialogObject.getPeerDialogId(topic.from_id) : 0;
+-                        MessageObject replyTopMsg = topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
++                        MessageObject replyTopMsg = desu.inugram.helpers.chat.ForwardProHelper.isActive(this) ? desu.inugram.helpers.chat.ForwardProHelper.getTopicReply(this, key) : topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
+ 
+                         if (frameLayout2.getTag() != null && commentTextView.length() > 0) {
+                             SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(text[0] == null ? null : text[0].toString(), key, replyTopMsg, replyTopMsg, null, true, entities, null, null, withSound, 0, 0, null, false);
+@@ -3138,7 +3140,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                 case 1:
+                 default: {
+                     view = new View(context);
+-                    view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, ActionBar.getCurrentActionBarHeight()));
++                    view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, desu.inugram.helpers.chat.ForwardProHelper.isActive(ShareAlert.this) ? dp(inu_getHeaderHeight() - 2) : ActionBar.getCurrentActionBarHeight()));
+                     break;
+                 }
+             }
+@@ -3153,7 +3155,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                     cell.setAsNewBotForumTopic(isBotForumWithManageTopics);
+                 } else if (topics != null) {
+                     TLRPC.TL_forumTopic topic = getItemTopic(position);
+-                    cell.setTopic(selectedTopicDialog, topic, topic != null && selectedDialogs.indexOfKey(topic.id) >= 0, null);
++                    cell.setTopic(selectedTopicDialog, topic, desu.inugram.helpers.chat.ForwardProHelper.isActive(ShareAlert.this) ? desu.inugram.helpers.chat.ForwardProHelper.isTopicSelected(ShareAlert.this, selectedTopicDialog, topic) : topic != null && selectedDialogs.indexOfKey(topic.id) >= 0, null);
+                 }
+             }
+         }
