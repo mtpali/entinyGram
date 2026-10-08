@@ -10,7 +10,7 @@ most things are toggleable in `Settings → Telegram Settings`, with sensible op
 
 ## entinyGram additions
 
-- **Prepared texts**: an offline Text tab beside Emoji, GIFs and Stickers; add, edit and delete texts per account, then insert at the cursor for review before sending — *inspired by the NagramXF quick-reply workflow*.
+- **Prepared texts**: the composer opens on the offline Text tab beside Emoji, GIFs and Stickers; add, edit and delete texts per account, then insert at the cursor for review before sending — *inspired by the NagramXF quick-reply workflow*.
 - **Composer tabs**: centered, evenly spaced Emoji, GIFs, Stickers and Text labels that fit the panel.
 - **Forward Pro topics**: clear forum-topic selection and delivery to the selected topic, including edited messages and albums; sender attribution starts off.
 - **VPN963 settings**: English and Persian, Default icon pack, and a Telegram channel shortcut.
