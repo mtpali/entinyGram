@@ -13,7 +13,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesControll
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
-@@ -22573,6 +22573,7 @@ public class MessagesController extends BaseController implements NotificationCe
+@@ -22562,6 +22562,7 @@ public class MessagesController extends BaseController implements NotificationCe
          }
  
          hasArchivedChats = dialogsByFolder.get(1, null) != null;
@@ -41,7 +41,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
-@@ -8789,6 +8789,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -8779,6 +8779,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
  
          final boolean[] hasPinAction = new boolean[1];
          hasPinAction[0] = true;
@@ -49,7 +49,7 @@ index 0000000..0000000 100644
          TLRPC.Dialog dialog = getMessagesController().dialogs_dict.get(dialogId);
          boolean containsFilter;
          final MessagesController.DialogFilter filter = (
-@@ -8846,7 +8847,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -8836,7 +8837,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
              int newFilterAlwaysShowCount = newPinnedCount + newPinnedSecretCount - alreadyAdded;
              boolean secretLimitReached = containsFilter && filter != null ? false : newPinnedSecretCount + pinnedSecretCount > maxPinnedCount;
              boolean dialogsLimitReached = containsFilter && filter != null ? newFilterAlwaysShowCount > 0 && filter.alwaysShow.size() + newFilterAlwaysShowCount > maxPinnedCount : newPinnedCount + pinnedCount - alreadyAdded > maxPinnedCount;
@@ -63,7 +63,7 @@ index 0000000..0000000 100644
          }
  
          if (hasPinAction[0]) {
-@@ -8876,20 +8882,25 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -8866,20 +8872,25 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                          return;
                      }
                      if (!isDialogPinned(dialog)) {
@@ -99,7 +99,7 @@ index 0000000..0000000 100644
                          pinDialog(dialogId, false, filter, minPinnedNum, true);
                          undoView.showWithAction(0, UndoView.ACTION_UNPIN_DIALOGS, 1, 1600, null, null);
                      }
-@@ -9298,9 +9309,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -9288,9 +9299,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
              filter = null;
          }
          if (filter != null) {
@@ -111,7 +111,7 @@ index 0000000..0000000 100644
      }
  
      private boolean filterAlwaysShowsDialog(MessagesController.DialogFilter filter, long dialogId) {
-@@ -9331,6 +9342,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -9321,6 +9332,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
          }
          int count = selectedDialogs.size();
          int pinnedActionCount = 0;
@@ -119,7 +119,7 @@ index 0000000..0000000 100644
          if (action == archive || action == archive2) {
              ArrayList<Long> copy = new ArrayList<>(selectedDialogs);
              getMessagesController().addDialogToFolder(copy, canUnarchiveCount == 0 ? 1 : 0, -1, null, 0);
-@@ -9413,13 +9425,17 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -9403,13 +9415,17 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
              boolean secretLimitReached = containsFilter && filter != null ? false : newPinnedSecretCount + pinnedSecretCount > maxPinnedCount;
              boolean dialogsLimitReached = containsFilter && filter != null ? newFilterAlwaysShowCount > 0 && filter.alwaysShow.size() + newFilterAlwaysShowCount > maxPinnedCount : newPinnedCount + pinnedCount - alreadyAdded > maxPinnedCount;
              if (secretLimitReached || dialogsLimitReached) {
@@ -139,7 +139,7 @@ index 0000000..0000000 100644
              }
          } else if (action == community_ungroup) {
              if (alert) {
-@@ -9556,6 +9572,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -9546,6 +9562,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                          continue;
                      }
                      pinnedActionCount++;
@@ -150,7 +150,7 @@ index 0000000..0000000 100644
                      pinDialog(selectedDialog, true, filter, minPinnedNum, count == 1);
                      if (filter != null) {
                          minPinnedNum++;
-@@ -9574,6 +9594,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+@@ -9564,6 +9584,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                          continue;
                      }
                      pinnedActionCount++;

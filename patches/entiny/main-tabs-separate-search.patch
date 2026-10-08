@@ -4,8 +4,8 @@ Date: Sun, 27 Sep 2026 21:55:05 +0300
 Subject: [*] refine separate bottom search tab
 
 ---
- .../org/telegram/ui/MainTabsActivity.java     | 151 +++++++++++++++++-
- 1 file changed, 145 insertions(+), 6 deletions(-)
+ .../org/telegram/ui/MainTabsActivity.java     | 136 +++++++++++++++++-
+ 1 file changed, 130 insertions(+), 6 deletions(-)
 
 diff --git a/TMessagesProj/src/main/java/org/telegram/ui/MainTabsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/MainTabsActivity.java
 index 0000000..0000000 100644
@@ -28,7 +28,7 @@ index 0000000..0000000 100644
  import android.widget.LinearLayout;
  import android.widget.TextView;
  
-@@ -100,6 +103,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -99,6 +102,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
      private static final int INDEX_CALLS = 3;
      private static final int INDEX_PROFILE = 4;
      private static final int inu_INDEX_FEED = 5;
@@ -36,7 +36,7 @@ index 0000000..0000000 100644
  
      private static int indexToPosition(int index) {
          return MainTabsHelper.indexToPosition(index);
-@@ -115,7 +119,12 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -114,7 +118,12 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
      private UpdateLayoutWrapper updateLayoutWrapper;
      private FrameLayout tabsViewWrapper;
      private MainTabsLayout tabsView;
@@ -49,7 +49,7 @@ index 0000000..0000000 100644
      private View fadeView;
  
      public MainTabsActivity() {
-@@ -316,6 +325,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -315,6 +324,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          tabletLayout = false;
  
          final boolean compact = MainTabsHelper.isCompact();
@@ -57,9 +57,9 @@ index 0000000..0000000 100644
          final int mainTabsMargin = MainTabsHelper.getMainTabsMargin();
          final int tabsViewWidth = MainTabsHelper.getTabsViewWidth();
  
-@@ -328,13 +338,28 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
-         M3MainTabsHelper.applyTabsLayout(tabsView);
-         MainTabsHelper.applyIosTabsLayout(tabsView);
+@@ -325,13 +335,28 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+         tabsView.setPadding(paddingH, paddingV, paddingH, paddingV);
+         tabsView.setMaxWidth(dp(tabsViewWidth));
  
 -        tabs = new GlassTabView[6];
 +        tabs = new GlassTabView[7];
@@ -87,7 +87,7 @@ index 0000000..0000000 100644
          tabs[INDEX_CONTACTS].setOnLongClickListener(this::openContactsSelector);
          tabs[INDEX_CALLS].setOnLongClickListener(this::openCallsSelector);
          desu.inugram.helpers.LongPressDragMenuHelper.attach(tabs[INDEX_PROFILE], this::openAccountSelector);
-@@ -364,6 +389,21 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -360,6 +385,21 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
                      return;
                  }
  
@@ -109,7 +109,7 @@ index 0000000..0000000 100644
                  if (viewPager.getCurrentPosition() == position) {
                      final BaseFragment fragment = getCurrentVisibleFragment();
                      if (fragment instanceof MainTabsActivity.TabFragmentDelegate) {
-@@ -376,8 +416,10 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -372,8 +412,10 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
                  viewPager.scrollToPosition(position);
              });
  
@@ -122,8 +122,8 @@ index 0000000..0000000 100644
          }
  
          selectTab(viewPager.getCurrentPosition(), false);
-@@ -396,6 +438,29 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
-         M3MainTabsHelper.applyTabsBackground(tabsViewBackground);
+@@ -391,6 +433,29 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+         tabsViewBackground.setPadding(dp(mainTabsMargin - 0.334f));
          tabsView.setBackground(tabsViewBackground);
  
 +        if (separateSearchTab) {
@@ -152,7 +152,7 @@ index 0000000..0000000 100644
          BlurredBackgroundDrawableViewFactory iBlur3FactoryFade = new BlurredBackgroundDrawableViewFactory(iBlur3SourceColor);
          iBlur3FactoryFade.setSourceRootView(viewPositionWatcher, contentView);
  
-@@ -414,7 +479,23 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -409,7 +474,23 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
              }
          };
          tabsViewWrapper.setOnClickListener(v -> {});
@@ -175,33 +175,17 @@ index 0000000..0000000 100644
 +        tabsViewWrapper.addView(tabsBarContainer, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, MainTabsHelper.getMainTabsHeightWithMargins(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL));
 +        tabsViewWrapper.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> repositionSearchButton());
          tabsViewWrapper.setClipToPadding(false);
-         M3MainTabsHelper.applyTabsWrapper(tabsViewWrapper);
          contentView.addView(tabsViewWrapper, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
-@@ -964,7 +1045,23 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
-         if (!M3MainTabsHelper.applyTabsInsets(tabsViewWrapper, tabsView, systemInsets.left, systemInsets.right, navigationBarHeight)) {
-             final int iosSidePadding = MainTabsHelper.getIosSidePaddingExtra();
-             tabsViewWrapper.setPadding(systemInsets.left + iosSidePadding, 0, systemInsets.right + iosSidePadding, navigationBarHeight);
-+        } else {
-+            ViewGroup.LayoutParams barLp = tabsBarContainer.getLayoutParams();
-+            final int barHeight = dp(MainTabsHelper.getMainTabsHeight()) + navigationBarHeight;
-+            if (barLp.height != barHeight) {
-+                barLp.height = barHeight;
-+                tabsBarContainer.setLayoutParams(barLp);
-+            }
-+            if (searchTabContainer != null) {
-+                searchTabContainer.setPadding(0, 0, 0, navigationBarHeight);
-+                ViewGroup.LayoutParams searchLp = searchTabContainer.getLayoutParams();
-+                if (searchLp.height != barHeight) {
-+                    searchLp.height = barHeight;
-+                    searchTabContainer.setLayoutParams(searchLp);
-+                }
-+            }
+ 
+@@ -960,6 +1041,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          }
+ 
+         tabsViewWrapper.setPadding(systemInsets.left, 0, systemInsets.right, navigationBarHeight);
 +        repositionSearchButton();
  
          final WindowInsetsCompat consumed = isUpdateLayoutVisible ?
              insets.inset(0, 0, 0, navigationBarHeight) : insets;
-@@ -1086,6 +1183,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -1081,6 +1163,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          if (tabsView == null) return;
          if (MainTabsHelper.isHidden()) {
              tabsView.setVisibility(View.GONE);
@@ -209,7 +193,7 @@ index 0000000..0000000 100644
              return;
          }
          final boolean isUpdateLayoutVisible = updateLayoutWrapper.isUpdateLayoutVisible();
-@@ -1097,10 +1195,45 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -1092,10 +1175,45 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          final float scale = lerp(0.85f, 1f, factor);
  
          tabsViewWrapper.setTranslationY(lerp(hiddenY, normalY, factor));
@@ -257,7 +241,7 @@ index 0000000..0000000 100644
      }
  
      @Override
-@@ -1227,6 +1360,12 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
+@@ -1222,6 +1340,12 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
          if (tabsViewBackground != null) {
              tabsViewBackground.updateColors();
          }

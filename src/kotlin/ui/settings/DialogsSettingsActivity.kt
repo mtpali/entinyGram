@@ -33,7 +33,6 @@ open class DialogsSettingsActivity : SettingsPageActivity() {
     override fun getTitle(): CharSequence = LocaleController.getString(R.string.InuMainPage)
 
     override fun fillItems(items: ArrayList<UItem>, adapter: UniversalAdapter) {
-        items.add(mkSubPageButton(BUTTON_PILL_STACK, R.drawable.inu_tabler_stack_2, LocaleController.getString(R.string.InuPillStack)))
         items.add(mkSubPageButton(BUTTON_RECENT_CHATS, R.drawable.msg_recent, LocaleController.getString(R.string.InuRecentChats)))
         items.add(mkTwoLineCheckItem(TOGGLE_FEED_ENABLED, R.string.InuFeed, R.string.InuFeedToggleInfo, FeedHelper.isEnabled()))
         if (FeedHelper.isEnabled()) {
@@ -482,7 +481,6 @@ open class DialogsSettingsActivity : SettingsPageActivity() {
                 softRebuild()
             }
 
-            BUTTON_PILL_STACK -> presentFragment(PillStackSettingsActivity())
             BUTTON_RECENT_CHATS -> presentFragment(RecentChatsSettingsActivity())
             BUTTON_FEED_SETTINGS -> presentFragment(FeedExcludedChannelsSettingsActivity())
 
@@ -662,7 +660,6 @@ open class DialogsSettingsActivity : SettingsPageActivity() {
         private val BUTTON_COMMUNITY_DISPLAY_MODE = InuUtils.generateId()
         private val BUTTON_TITLE_TEXT = InuUtils.generateId()
         private val TOGGLE_TITLE_TEXT_OVERRIDE_ARCHIVE = InuUtils.generateId()
-        private val BUTTON_PILL_STACK = InuUtils.generateId()
         private val BUTTON_RECENT_CHATS = InuUtils.generateId()
         private val TOGGLE_FEED_ENABLED = InuUtils.generateId()
         private val BUTTON_FEED_SETTINGS = InuUtils.generateId()
@@ -727,7 +724,6 @@ open class DialogsSettingsActivity : SettingsPageActivity() {
                 SearchRegistry.Entry("dialogs-fab-hide-on-scroll", R.string.InuDialogsFabHideOnScroll, TOGGLE_FAB_HIDE_ON_SCROLL),
                 SearchRegistry.Entry("dialogs-fab-offset-for-bottom-bar", R.string.InuDialogsFabOffsetForBottomBar, TOGGLE_FAB_OFFSET_FOR_BOTTOM_BAR),
                 SearchRegistry.Entry("dialogs-fab-left-side", R.string.InuDialogsFabLeftSide, TOGGLE_FAB_LEFT_SIDE),
-                SearchRegistry.Entry("pill-stack-open", R.string.InuPillStack, BUTTON_PILL_STACK),
                 SearchRegistry.Entry("recent-chats-open", R.string.InuRecentChats, BUTTON_RECENT_CHATS),
                 SearchRegistry.Entry("feed-toggle", R.string.InuFeed, TOGGLE_FEED_ENABLED),
             ),

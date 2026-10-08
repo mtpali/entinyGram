@@ -1,0 +1,102 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:26:04 +0330
+Subject: [-] Remove obsolete editor and style hooks
+
+---
+ .../src/main/java/org/telegram/ui/Cells/ChatMessageCell.java | 2 +-
+ .../java/org/telegram/ui/Components/CaptionPhotoViewer.java  | 2 +-
+ .../org/telegram/ui/Components/ChatActivityEnterView.java    | 2 +-
+ .../java/org/telegram/ui/Components/ChatAttachAlert.java     | 2 +-
+ .../Components/blur3/drawable/BlurredBackgroundDrawable.java | 5 +----
+ 5 files changed, 5 insertions(+), 8 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
+@@ -7015,7 +7015,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+                     drawSideButton = 2;
+                 }
+             }
+-            drawSummarizeButton = !desu.inugram.InuConfig.HIDE_MESSAGE_SUMMARY.getValue() && TranslateController.isSummarizable(messageObject);
++            drawSummarizeButton = false;
+             if (messageObject.isWideChannelPost()) {
+                 drawSideButton = 0;
+                 drawSideButton2 = 0;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java
+@@ -529,7 +529,7 @@ public class CaptionPhotoViewer extends CaptionContainerView {
+ 
+     private boolean shownAiButton;
+     private void showAiButton(boolean show_) {
+-        final boolean show = show_ && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = false;
+ 
+         if (shownAiButton == show) return;
+         if (show) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java
+@@ -6146,7 +6146,7 @@ public class ChatActivityEnterView extends FrameLayout implements
+ 
+     private boolean shownAiButton;
+     private void showAiButton(boolean show_) {
+-        final boolean show = (show_ || richDraftActive) && parentFragment != null && !parentFragment.isSecretChat() && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = false;
+ 
+         if (shownAiButton == show) return;
+         if (show) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java
+@@ -6490,7 +6490,7 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
+ 
+     private boolean shownAiButton;
+     private void showAiButton(boolean show_) {
+-        final boolean show = show_ && (baseFragment instanceof ChatActivity && !((ChatActivity) baseFragment).isSecretChat()) && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = false;
+ 
+         if (shownAiButton == show) return;
+         if (show) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java
+@@ -411,7 +411,6 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
+         float[] radii, float strokeWidth, boolean isTop,
+         Paint paint
+     ) {
+-        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
+ 
+         final boolean radiiAreSame = isTop ?
+             radii[0] == radii[1] && radii[1] == radii[2] && radii[2] == radii[3]:
+@@ -513,7 +512,6 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
+ 
+     public static void drawStroke(Canvas canvas, float left, float top, float right, float bottom,
+                                      float radii, float strokeWidth, boolean isTop, Paint paint) {
+-        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
+         final float strokeHalf = strokeWidth / 2f;
+         canvas.save();
+         if (isTop) {
+@@ -667,7 +665,7 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
+             return;
+         }
+ 
+-        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, !desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue());
++        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, true);
+         ninePatchDrawable.setBounds(
+             boundProps.boundsWithPadding.left - ninePatchDrawablePadding.left,
+             boundProps.boundsWithPadding.top - ninePatchDrawablePadding.top,
+@@ -722,7 +720,6 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
+     }
+ 
+     private void drawStrokeInternalIfNeeded(Canvas canvas) {
+-        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
+         final int strokeColorTop = Theme.multAlpha(this.strokeColorTop, alpha / 255f);
+         final int strokeColorBottom = Theme.multAlpha(this.strokeColorBottom, alpha / 255f);
+ 

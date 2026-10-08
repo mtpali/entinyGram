@@ -337,7 +337,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/glass/GlassT
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/glass/GlassTabView.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/glass/GlassTabView.java
-@@ -580,6 +580,7 @@ public class GlassTabView extends FrameLayout implements MainTabsLayout.Tab, Fac
+@@ -572,6 +572,7 @@ public class GlassTabView extends FrameLayout implements MainTabsLayout.Tab, Fac
          REPLIES(R.raw.tab_reply, R.raw.tab_reply_reverse),
          WALLET(R.raw.tab_wallet, R.raw.tab_wallet_reverse),
          LINK(TabAnimationType.STATIC, R.drawable.tabs_link_24),

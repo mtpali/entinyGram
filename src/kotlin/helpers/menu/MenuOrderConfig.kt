@@ -115,7 +115,7 @@ class ChatMenuConfig(key: String) : MenuOrderConfig<ChatMenuConfig.Item>(key, It
         CALL("call", listOf(ChatActivity.call), R.string.Call, R.drawable.msg_callback),
         VIDEO_CALL("video_call", listOf(ChatActivity.video_call), R.string.VideoCall, R.drawable.msg_videocall),
         SEARCH("search", listOf(ChatActivity.search), R.string.Search, R.drawable.msg_search),
-        BOOST_GROUP("boost_group", listOf(ChatActivity.boost_group), R.string.BoostGroup, R.drawable.boost_channel_solar),
+        BOOST_GROUP("boost_group", listOf(ChatActivity.boost_group), R.string.BoostGroup, R.drawable.filled_limit_boost),
         TRANSLATE("translate", listOf(ChatActivity.translate), R.string.TranslateMessage, R.drawable.msg_translate),
         REPORT("report", listOf(ChatActivity.report), R.string.ReportChat, R.drawable.msg_report),
         ADD_CONTACT("add_contact", listOf(ChatActivity.share_contact), R.string.AddToContacts, R.drawable.msg_addcontact),
@@ -223,11 +223,7 @@ class ProfileMenuConfig(key: String) : MenuOrderConfig<ProfileMenuConfig.Item>(k
         TON("ton", 13, R.string.MyTON, R.drawable.settings_gram_24),
         WALLET("wallet", 0, R.string.InuSettingsRowWallet, R.drawable.settings_wallet),
         BUSINESS("business", 15, R.string.TelegramBusiness, R.drawable.settings_business),
-        PREMIUM_GIFTING("premium_gifting", 16, R.string.SendAGift, R.drawable.settings_gift),
-        QUESTION("question", 17, R.string.AskAQuestion, R.drawable.settings_ask),
-        FAQ("faq", 18, R.string.TelegramFAQ, R.drawable.settings_faq),
-        FEATURES("features", 23, R.string.TelegramFeatures, R.drawable.settings_features),
-        POLICY("policy", 19, R.string.PrivacyPolicy, R.drawable.settings_policy);
+        PREMIUM_GIFTING("premium_gifting", 16, R.string.SendAGift, R.drawable.settings_gift);
 
         companion object {
             private val byKey: Map<String, Item> by lazy { entries.associateBy { it.key } }
@@ -254,14 +250,13 @@ class DialogsMenuConfig(key: String) : MenuOrderConfig<DialogsMenuConfig.Item>(k
         THEME_TOGGLE("theme_toggle", R.string.InuMenuThemeToggle, R.drawable.menu_night_mode_24),
         COMPOSE("compose", R.string.InuMenuCompose, R.drawable.menu_topic_add),
         SAVED_MESSAGES("saved_messages", R.string.SavedMessages, R.drawable.outline_saved_24),
-        RECENT_CHATS("recent_chats", R.string.InuRecentChats, R.drawable.msg_recent_solar),
+        RECENT_CHATS("recent_chats", R.string.InuRecentChats, R.drawable.msg_recent),
         CLEAR_CACHE("clear_cache", R.string.InuClearCache, R.drawable.inu_tabler_trash_x),
         FEED("feed", R.string.InuFeed, R.drawable.msg_channel),
         MY_PROFILE("my_profile", R.string.MyProfile, R.drawable.left_status_profile),
         CONTACTS("contacts", R.string.Contacts, R.drawable.msg_contacts),
         ARCHIVE("archive", R.string.ArchivedChats, R.drawable.msg_archive),
         GHOST_MODE("ghost_mode", R.string.InuGhostMode, R.drawable.inu_ghost),
-        PARANOIA("paranoia", R.string.InuParanoiaMode, R.drawable.inu_tabler_spy),
         RESTART_APP("restart_app", R.string.InuRestartApp, R.drawable.msg_retry),
         SETTINGS("settings", R.string.Settings, R.drawable.msg_settings_old);
 
@@ -276,7 +271,6 @@ class DialogsMenuConfig(key: String) : MenuOrderConfig<DialogsMenuConfig.Item>(k
     companion object {
         private val OFF_BY_DEFAULT = setOf(
             Item.GHOST_MODE,
-            Item.PARANOIA,
             Item.FEED,
             Item.RECENT_CHATS,
             Item.CLEAR_CACHE,
@@ -353,7 +347,6 @@ class MessageMenuConfig(key: String) : MenuOrderConfig<MessageMenuConfig.Item>(k
             R.string.TranslateMessage,
             R.drawable.msg_translate
         ),
-        SUMMARIZE("summarize", listOf(ChatHelper.OPTION_SUMMARIZE), R.string.InuSummarize, R.drawable.inu_tabler_sparkles),
         EDIT("edit", listOf(ChatActivity.OPTION_EDIT), R.string.Edit, R.drawable.msg_edit),
         REPORT("report", listOf(ChatActivity.OPTION_REPORT_CHAT), R.string.ReportChat, R.drawable.msg_report),
         SHARE("share", listOf(ChatActivity.OPTION_SHARE), R.string.ShareFile, R.drawable.msg_share),
@@ -389,7 +382,7 @@ class MessageMenuConfig(key: String) : MenuOrderConfig<MessageMenuConfig.Item>(k
     override fun itemByKey(key: String): Item? = Item.forKey(key)
 
     companion object {
-        private val OFF_BY_DEFAULT = setOf(Item.REPLY_IN, Item.DETAILS, Item.FORWARD_NO_QUOTE, Item.SUMMARIZE, Item.REMOVE_FROM_CACHE, Item.REPEAT, Item.ADD_FILTER, Item.SET_REMINDER)
+        private val OFF_BY_DEFAULT = setOf(Item.REPLY_IN, Item.DETAILS, Item.FORWARD_NO_QUOTE, Item.REMOVE_FROM_CACHE, Item.REPEAT, Item.ADD_FILTER, Item.SET_REMINDER)
     }
 }
 

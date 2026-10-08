@@ -1,8 +1,8 @@
+import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import fs from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { basename, dirname, isAbsolute, join, relative, resolve } from 'node:path'
-import { execSync } from 'node:child_process'
 import { glob } from 'tinyglobby'
 import { $, chalk, quote } from 'zx'
 import {
@@ -247,7 +247,35 @@ export async function linkForkSource(repoDir: string) {
     }
   }
 
+  await pruneForkResources(repoDir)
   return dirty
+}
+
+async function pruneForkResources(repoDir: string) {
+  const directories = await glob('TMessagesProj*/src/**/res', { cwd: repoDir, onlyDirectories: true })
+  const files: string[] = []
+  const collect = async (directory: string) => {
+    for (const entry of await fs.readdir(join(repoDir, directory), { withFileTypes: true })) {
+      const path = join(directory, entry.name)
+      if (entry.isDirectory()) await collect(path)
+      else files.push(path)
+    }
+  }
+  for (const directory of directories) await collect(directory)
+  for (const file of files) {
+    const parts = file.split('/')
+    const directory = parts.at(-2) ?? ''
+    const locale = directory.match(/^values-([a-z]{2,3})(?:-r[A-Z]{2})?$/)?.[1]
+    const removedLocale = locale !== undefined && locale !== 'en' && locale !== 'fa'
+    const removedIcon = /^icon_[46]_/.test(basename(file))
+    const full = join(repoDir, file)
+    const stat = await fs.lstat(full).catch(() => null)
+    const staleLink = stat?.isSymbolicLink() && !existsSync(full)
+    if (!removedLocale && !removedIcon && !staleLink) continue
+    if (!stat || stat.isDirectory()) continue
+    await ensureSkipWorktree(repoDir, file)
+    await fs.rm(full)
+  }
 }
 
 export async function ensureGitExclude(repoDir: string, repoRelativePath: string) {
@@ -374,21 +402,21 @@ export async function generateStablePatchFromCommit(repoDir: string, commitId: s
 
   // Remove diffstat lines (e.g. " TMessagesProj/google-services.json | 5 +++--")
   clean = clean.replace(
-    /^[ \t]+\S.*\|\s*(?:\d+\s*[+\-]+|Bin\s+.*)\s*\n/gm,
-    (line) => (GARBAGE_FILE_PATTERNS.some(p => p.test(line)) ? '' : line),
+    /^[ \t]+\S.*\|[ \t]*(?:\d+[ \t]*[+\-]+[ \t]*|Bin[^\r\n]*)\n/gm,
+    line => (GARBAGE_FILE_PATTERNS.some(p => p.test(line)) ? '' : line),
   )
 
   // Remove mode change lines for garbage files (e.g. " mode change 100644 => 120000 TMessagesProj/google-services.json")
   clean = clean.replace(
     /^[ \t]*mode change \d+ => \d+ .*\n/gm,
-    (line) => (GARBAGE_FILE_PATTERNS.some(p => p.test(line)) ? '' : line),
+    line => (GARBAGE_FILE_PATTERNS.some(p => p.test(line)) ? '' : line),
   )
 
   // Remove full diff blocks for garbage files
   // Split on "diff --git" boundaries and drop matching blocks
   const diffBlocks = clean.split(/(?=^diff --git )/m)
   clean = diffBlocks
-    .filter(block => {
+    .filter((block) => {
       const firstLine = block.split('\n')[0] ?? ''
       if (!firstLine.startsWith('diff --git ')) return true // header or preamble
       return !isGarbagePath(firstLine)

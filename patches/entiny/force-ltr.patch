@@ -1,0 +1,58 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 06:17:38 +0900
+Subject: [+] Force LTR layout without changing the selected locale
+
+---
+ .../src/main/java/org/telegram/messenger/LocaleController.java | 3 +++
+ .../src/main/java/org/telegram/ui/LaunchActivity.java          | 2 ++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+@@ -1423,6 +1423,7 @@ public class LocaleController {
+             Locale.setDefault(currentLocale);
+             android.content.res.Configuration config = new android.content.res.Configuration();
+             config.locale = currentLocale;
++            desu.inugram.helpers.LayoutDirectionHelper.apply(config);
+             ApplicationLoader.applicationContext.getResources().updateConfiguration(config, ApplicationLoader.applicationContext.getResources().getDisplayMetrics());
+             changingConfiguration = false;
+             FileLog.d("applyLanguage: reloadLastFile=" + reloadLastFile + " force=" + force + " isLoadingRemote=" + isLoadingRemote);
+@@ -2723,6 +2724,7 @@ public class LocaleController {
+         isRTL = lang.length() == 2 && (lang.equals("ar") || lang.equals("fa") || lang.equals("he") || lang.equals("iw")) ||
+                 lang.startsWith("ar_") || lang.startsWith("fa_") || lang.startsWith("he_") || lang.startsWith("iw_")
+                 || currentLocaleInfo != null && currentLocaleInfo.isRtl;
++        if (desu.inugram.helpers.LayoutDirectionHelper.isForced()) isRTL = false;
+         nameDisplayOrder = lang.equals("ko") ? 2 : 1;
+ 
+         formatterBoostExpired = null;
+@@ -3171,6 +3173,7 @@ public class LocaleController {
+                         Locale.setDefault(currentLocale);
+                         Configuration config = new Configuration();
+                         config.locale = currentLocale;
++                        desu.inugram.helpers.LayoutDirectionHelper.apply(config);
+                         ApplicationLoader.applicationContext.getResources().updateConfiguration(config, ApplicationLoader.applicationContext.getResources().getDisplayMetrics());
+                         changingConfiguration = false;
+ 
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
+@@ -440,6 +440,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
+         flagSecureReason.attach();
+ 
+         super.onCreate(savedInstanceState);
++        desu.inugram.helpers.LayoutDirectionHelper.configureActivity(this);
+         if (Build.VERSION.SDK_INT >= 24) {
+             AndroidUtilities.isInMultiwindow = isInMultiWindowMode();
+         }
+@@ -7151,6 +7152,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
+         AndroidUtilities.checkDisplaySize(this, newConfig);
+         AndroidUtilities.setPreferredMaxRefreshRate(getWindow());
+         super.onConfigurationChanged(newConfig);
++        desu.inugram.helpers.LayoutDirectionHelper.configureActivity(this);
+         pipActivityHandler.onConfigurationChanged(newConfig);
+         AndroidUtilities.resetTabletFlag();
+         invalidateTabletMode();

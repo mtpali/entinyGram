@@ -5,7 +5,6 @@ import androidx.collection.LongSparseArray
 import androidx.core.content.edit
 import desu.inugram.InuConfig
 import desu.inugram.helpers.chat.BlockedMessagesHelper
-import desu.inugram.helpers.security.ParanoiaHelper
 import desu.inugram.helpers.security.PasscodeHelper
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.MessageObject
@@ -23,19 +22,17 @@ object NotificationsHelper {
     @JvmStatic
     fun smallIconRes(): Int = when (InuConfig.NOTIFICATION_ICON.value) {
         InuConfig.NotificationIconItem.TELEGRAM -> R.drawable.notification
-        InuConfig.NotificationIconItem.OLD_ENTINYGRAM -> R.drawable.icon_notification_old_inu
         else -> R.drawable.icon_notification_inu
     }
 
     @JvmStatic
     fun shouldSuppressNotifications(account: Int): Boolean =
-        PasscodeHelper.isAccountHidden(account) || ParanoiaHelper.shouldSuppressNotifications()
+        PasscodeHelper.isAccountHidden(account)
 
     @JvmStatic
     fun shouldSuppressMessageNotification(messageObject: MessageObject?): Boolean {
         if (messageObject == null) return false
         return BlockedMessagesHelper.shouldHide(messageObject)
-            || ParanoiaHelper.isHidden(messageObject.currentAccount, messageObject.dialogId)
     }
 
     // entiny: mirror in-memory wearNotificationsIds to disk so stock cancel paths survive process restart

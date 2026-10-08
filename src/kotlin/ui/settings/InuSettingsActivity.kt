@@ -8,7 +8,6 @@ import desu.inugram.SearchRegistry
 import desu.inugram.helpers.InuUtils
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.LocaleController
-import org.telegram.messenger.browser.Browser
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.ActionBarMenuItem
 import org.telegram.ui.Components.BulletinFactory
@@ -109,7 +108,6 @@ class InuSettingsActivity : SettingsPageActivity() {
         items.add(UItem.asShadow(null))
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.InuRootPrivacy)))
-        items.add(mkSubPageButton(CAT_AI, R.drawable.inu_tabler_sparkles, LocaleController.getString(R.string.InuAiCompose)))
         items.add(mkSubPageButton(CAT_TRANSLATOR, R.drawable.msg_translate, LocaleController.getString(R.string.InuTranslator)))
         items.add(mkSubPageButton(CAT_BEHAVIOR, R.drawable.inu_tabler_adjustments_horizontal, LocaleController.getString(R.string.InuCategoryBehavior)))
         items.add(mkSubPageButton(CAT_PRIVACY, R.drawable.inu_tabler_shield_check, LocaleController.getString(R.string.InuCategoryPrivacy)))
@@ -123,22 +121,6 @@ class InuSettingsActivity : SettingsPageActivity() {
         }
         items.add(UItem.asShadow(null))
 
-        items.add(
-            UItem.asButton(
-                BUTTON_CHANNEL_LINK,
-                R.drawable.inu_tabler_brand_telegram,
-                LocaleController.getString(R.string.InuAboutChannel),
-                "@entinyGram"
-            )
-        )
-        items.add(
-            UItem.asButton(
-                BUTTON_GITHUB,
-                R.drawable.inu_tabler_brand_github,
-                LocaleController.getString(R.string.InuAboutGitHub),
-                "Entaytion/entinyGram"
-            )
-        )
     }
 
     override fun onClick(item: UItem, view: View, position: Int, x: Float, y: Float) {
@@ -150,12 +132,10 @@ class InuSettingsActivity : SettingsPageActivity() {
             }
             return
         }
-        val ctx = context ?: return
         when (item.id) {
             CAT_APPEARANCE -> presentFragment(AppearanceSettingsActivity())
             CAT_CHATS -> presentFragment(CategoryChatsSettingsActivity())
             CAT_MESSAGES -> presentFragment(MessagesSettingsActivity())
-            CAT_AI -> presentFragment(AiSettingsActivity())
             CAT_TRANSLATOR -> presentFragment(TranslatorSettingsActivity())
             CAT_BEHAVIOR -> presentFragment(BehaviorSettingsActivity())
             CAT_PRIVACY -> presentFragment(PrivacySecurityActivity())
@@ -163,8 +143,6 @@ class InuSettingsActivity : SettingsPageActivity() {
             BUTTON_TOS -> presentFragment(TosSettingsActivity())
             CAT_SYSTEM -> presentFragment(AdditionalSettingsActivity())
             CAT_NICHE -> presentFragment(NicheSettingsActivity())
-            BUTTON_CHANNEL_LINK -> Browser.openUrl(ctx, "https://t.me/entinyGram")
-            BUTTON_GITHUB -> Browser.openUrl(ctx, "https://github.com/Entaytion/EntinyGram")
         }
     }
 
@@ -172,7 +150,6 @@ class InuSettingsActivity : SettingsPageActivity() {
         private val CAT_APPEARANCE = InuUtils.generateId()
         private val CAT_CHATS = InuUtils.generateId()
         private val CAT_MESSAGES = InuUtils.generateId()
-        private val CAT_AI = InuUtils.generateId()
         private val CAT_TRANSLATOR = InuUtils.generateId()
         private val CAT_BEHAVIOR = InuUtils.generateId()
         private val CAT_PRIVACY = InuUtils.generateId()
@@ -182,8 +159,6 @@ class InuSettingsActivity : SettingsPageActivity() {
         private val CAT_NICHE = InuUtils.generateId()
         private const val HEADER_TAP_COUNT = 5
         private const val HEADER_TAP_WINDOW_MS = 2000L
-        private val BUTTON_CHANNEL_LINK = InuUtils.generateId()
-        private val BUTTON_GITHUB = InuUtils.generateId()
 
         @JvmField
         val PAGE = SearchRegistry.Page(
@@ -192,8 +167,6 @@ class InuSettingsActivity : SettingsPageActivity() {
             iconRes = R.drawable.icon_settings_inu,
             factory = ::InuSettingsActivity,
             entries = listOf(
-                SearchRegistry.Entry("channel", R.string.InuAboutChannel, BUTTON_CHANNEL_LINK),
-                SearchRegistry.Entry("github", R.string.InuAboutGitHub, BUTTON_GITHUB),
                 SearchRegistry.Entry("open-translator", R.string.InuTranslator, CAT_TRANSLATOR),
             ),
         )

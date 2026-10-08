@@ -12,7 +12,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
-@@ -9663,6 +9663,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -9658,6 +9658,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
          if (listAdapter != null) {
              // saveScrollPosition();
              firstLayout = true;
@@ -20,7 +20,7 @@ index 0000000..0000000 100644
              listAdapter.notifyDataSetChanged();
          }
          if (!parentLayout.isInPreviewMode() && blurredView != null && blurredView.getVisibility() == View.VISIBLE) {
-@@ -10836,6 +10837,25 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -10831,6 +10832,25 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                      }
                  }
                  infoStartRow = rowCount;
@@ -46,7 +46,7 @@ index 0000000..0000000 100644
                  if (!isBot && (hasPhone || !hasInfo)) {
                      phoneRow = rowCount++;
                  }
-@@ -10847,6 +10867,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+@@ -10842,6 +10862,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                  }
                  if (ProfileHelper.shouldShowIdRow()) inu_idRow = rowCount++;
                  if (ProfileHelper.shouldShowRegDateRow(userId, currentChat)) inu_regDateRow = rowCount++;
@@ -67,10 +67,10 @@ index 0000000..0000000 100644
 +        // by ProfileSettingsHelper.reorder after the user's order is applied.
 +        final int inu_reorderFrom = items.size();
 +
-         if (!desu.inugram.helpers.security.ParanoiaHelper.shouldHideSettings()) {
-             items.add(SettingCell.Factory.of(99, IconBackgroundColors.ENTINY.top, IconBackgroundColors.ENTINY.bottom, R.drawable.icon_settings_inu, getString(R.string.InuSettings), getString(R.string.InuSettingsInfo)));
-             items.add(UItem.asShadow(null));
-@@ -761,6 +766,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+         items.add(SettingCell.Factory.of(99, IconBackgroundColors.ENTINY.top, IconBackgroundColors.ENTINY.bottom, R.drawable.icon_settings_inu, getString(R.string.InuSettings), getString(R.string.InuSettingsInfo)));
+         items.add(UItem.asShadow(null));
+ 
+@@ -759,6 +764,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
              items.add(SettingCell.Factory.of(22, 0xFFF45255, 0xFFDF3955, 0, getString(R.string.DebugClearLogs)));
          }
  

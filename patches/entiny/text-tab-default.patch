@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Thu, 8 Oct 2026 10:50:15 +0330
+Subject: [*] open composer on text tab
+
+---
+ .../src/main/java/org/telegram/ui/Components/EmojiView.java    | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
+@@ -6124,7 +6124,8 @@ public class EmojiView extends FrameLayout implements
+     }
+ 
+     public void onOpen(boolean forceEmoji, boolean groupEmojiHintWasVisible) {
+-        if (!forceEmoji && inu_tabType(pager.getCurrentItem()) == INU_TAB_TEXT) {
++        if (inu_savedTexts != null) {
++            pager.setCurrentItem(inu_tabPosition(INU_TAB_TEXT), false);
+             showBackspaceButton(false, false);
+             showStickerSettingsButton(false, false);
+             showBottomTab(true, false);

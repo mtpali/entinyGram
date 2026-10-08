@@ -150,7 +150,7 @@ index 0000000..0000000 100644
          }
  
          @Override
-@@ -986,6 +1060,8 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
+@@ -991,6 +1065,8 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                  return -6;
              } else if (position == deleteAllRow) {
                  return -8;
@@ -159,7 +159,7 @@ index 0000000..0000000 100644
              } else if (position == rotationRow) {
                  return -9;
              } else if (position == rotationTimeoutRow) {
-@@ -1003,7 +1079,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
+@@ -1008,7 +1084,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
          public int getItemViewType(int position) {
              if (position == useProxyShadowRow || position == proxyShadowRow) {
                  return VIEW_TYPE_SHADOW;

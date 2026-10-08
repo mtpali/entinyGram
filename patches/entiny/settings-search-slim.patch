@@ -1,0 +1,546 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:50:43 +0330
+Subject: [-] remove help from settings search
+
+---
+ .../messenger/MessagesController.java         |  42 ---
+ .../telegram/ui/Cells/SettingsSearchCell.java |   9 -
+ .../java/org/telegram/ui/ProfileActivity.java | 274 ++----------------
+ .../org/telegram/ui/SettingsActivity.java     |   7 -
+ 4 files changed, 28 insertions(+), 304 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
+@@ -368,9 +368,6 @@ public class MessagesController extends BaseController implements NotificationCe
+     private TLRPC.messages_Dialogs resetDialogsAll;
+     private SparseIntArray loadingPinnedDialogs = new SparseIntArray();
+ 
+-    public ArrayList<FaqSearchResult> faqSearchArray = new ArrayList<>();
+-    public TLRPC.WebPage faqWebPage;
+-
+     private int loadingNotificationSettings;
+     private boolean loadingNotificationSignUpSettings;
+ 
+@@ -1131,45 +1128,6 @@ public class MessagesController extends BaseController implements NotificationCe
+         private boolean loading;
+     }
+ 
+-    public static class FaqSearchResult {
+-
+-        public String title;
+-        public String[] path;
+-        public String url;
+-        public int num;
+-
+-        public FaqSearchResult(String t, String[] p, String u) {
+-            title = t;
+-            path = p;
+-            url = u;
+-        }
+-
+-        @Override
+-        public boolean equals(Object obj) {
+-            if (!(obj instanceof FaqSearchResult)) {
+-                return false;
+-            }
+-            FaqSearchResult result = (FaqSearchResult) obj;
+-            return title.equals(result.title);
+-        }
+-
+-        @Override
+-        public String toString() {
+-            SerializedData data = new SerializedData();
+-            data.writeInt32(num);
+-            data.writeInt32(0);
+-            data.writeString(title);
+-            data.writeInt32(path != null ? path.length : 0);
+-            if (path != null) {
+-                for (int a = 0; a < path.length; a++) {
+-                    data.writeString(path[a]);
+-                }
+-            }
+-            data.writeString(url);
+-            return Utilities.bytesToHex(data.toByteArray());
+-        }
+-    }
+-
+     public static class EmojiSound {
+         public long id;
+         public long accessHash;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/SettingsSearchCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/SettingsSearchCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/SettingsSearchCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/SettingsSearchCell.java
+@@ -223,9 +223,6 @@ public class SettingsSearchCell extends FrameLayout {
+             if (item.object instanceof ProfileActivity.SearchAdapter.SearchResult) {
+                 final ProfileActivity.SearchAdapter.SearchResult r = (ProfileActivity.SearchAdapter.SearchResult) item.object;
+                 ((SettingsSearchCell) view).setTextAndValueAndIcon(item.text, r.path, r.iconResId, divider);
+-            } else if (item.object instanceof MessagesController.FaqSearchResult) {
+-                final MessagesController.FaqSearchResult r = (MessagesController.FaqSearchResult) item.object;
+-                ((SettingsSearchCell) view).setTextAndValue(item.text, r.path, true, divider);
+             }
+         }
+ 
+@@ -243,12 +240,6 @@ public class SettingsSearchCell extends FrameLayout {
+             return item;
+         }
+ 
+-        public static UItem of(CharSequence text, MessagesController.FaqSearchResult faq) {
+-            UItem item = UItem.ofFactory(Factory.class);
+-            item.text = text;
+-            item.object = faq;
+-            return item;
+-        }
+     }
+ 
+ }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+@@ -5121,16 +5121,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 if (position < 0) {
+                     return;
+                 }
+-                Object object = numberRow;
+-                boolean add = true;
++                Object object = null;
+                 if (searchAdapter.searchWas) {
+                     if (position < searchAdapter.searchResults.size()) {
+                         object = searchAdapter.searchResults.get(position);
+-                    } else {
+-                        position -= searchAdapter.searchResults.size() + 1;
+-                        if (position >= 0 && position < searchAdapter.faqSearchResults.size()) {
+-                            object = searchAdapter.faqSearchResults.get(position);
+-                        }
+                     }
+                 } else {
+                     if (!searchAdapter.recentSearches.isEmpty()) {
+@@ -5138,23 +5132,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     }
+                     if (position >= 0 && position < searchAdapter.recentSearches.size()) {
+                         object = searchAdapter.recentSearches.get(position);
+-                    } else {
+-                        position -= searchAdapter.recentSearches.size() + 1;
+-                        if (position >= 0 && position < searchAdapter.faqSearchArray.size()) {
+-                            object = searchAdapter.faqSearchArray.get(position);
+-                            add = false;
+-                        }
+                     }
+                 }
+                 if (object instanceof SearchAdapter.SearchResult) {
+                     SearchAdapter.SearchResult result = (SearchAdapter.SearchResult) object;
+                     result.open(getParentLayout());
+-                } else if (object instanceof MessagesController.FaqSearchResult) {
+-                    MessagesController.FaqSearchResult result = (MessagesController.FaqSearchResult) object;
+-                    NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.openArticle, searchAdapter.faqWebPage, result.url);
+-                }
+-                if (add && object != null) {
+-                    searchAdapter.addRecent(object);
++                    searchAdapter.addRecent(result);
+                 }
+             });
+             searchListView.setOnItemLongClickListener((view, position) -> {
+@@ -5190,7 +5173,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             emptyView.setVisibility(View.GONE);
+             frameLayout.addView(emptyView);
+ 
+-            searchAdapter.loadFaqWebPage();
+         }
+ 
+         if (banFromGroup != 0) {
+@@ -14664,7 +14646,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         }
+ 
+         private SearchResult[] searchArray;
+-        private ArrayList<MessagesController.FaqSearchResult> faqSearchArray = new ArrayList<>();
+ 
+         private final BaseFragment fragment;
+         private final int currentAccount;
+@@ -14672,13 +14653,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+ 
+         private ArrayList<CharSequence> resultNames = new ArrayList<>();
+         private ArrayList<SearchResult> searchResults = new ArrayList<>();
+-        private ArrayList<MessagesController.FaqSearchResult> faqSearchResults = new ArrayList<>();
+         private ArrayList<Object> recentSearches = new ArrayList<>();
+         private boolean searchWas;
+         private Runnable searchRunnable;
+         private String lastSearchString;
+-        public TLRPC.WebPage faqWebPage;
+-        private boolean loadingFaqPage;
+ 
+         public SearchAdapter(BaseFragment fragment, Context context) {
+             this.fragment = fragment;
+@@ -14703,21 +14681,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         SerializedData data = new SerializedData(Utilities.hexToBytes(value));
+                         int num = data.readInt32(false);
+                         int type = data.readInt32(false);
+-                        if (type == 0) {
+-                            String title = data.readString(false);
+-                            int count = data.readInt32(false);
+-                            String[] path = null;
+-                            if (count > 0) {
+-                                path = new String[count];
+-                                for (int a = 0; a < count; a++) {
+-                                    path[a] = data.readString(false);
+-                                }
+-                            }
+-                            String url = data.readString(false);
+-                            MessagesController.FaqSearchResult result = new MessagesController.FaqSearchResult(title, path, url);
+-                            result.num = num;
+-                            recentSearches.add(result);
+-                        } else if (type == 1) {
++                        if (type == 1) {
+                             SearchResult result = resultHashMap.get(data.readInt32(false));
+                             if (result != null) {
+                                 result.num = num;
+@@ -15010,84 +14974,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             return MessagesController.getInstance(currentAccount).premiumFeaturesTypesToPosition.get(feature, -1) != -1;
+         }
+ 
+-        public void loadFaqWebPage() {
+-            faqWebPage = MessagesController.getInstance(currentAccount).faqWebPage;
+-            if (faqWebPage != null) {
+-                faqSearchArray.addAll(MessagesController.getInstance(currentAccount).faqSearchArray);
+-            }
+-            if (faqWebPage != null || loadingFaqPage) {
+-                return;
+-            }
+-            loadingFaqPage = true;
+-            final TLRPC.TL_messages_getWebPage req2 = new TLRPC.TL_messages_getWebPage();
+-            req2.url = LocaleController.getString(R.string.TelegramFaqUrl);
+-            req2.hash = 0;
+-            ConnectionsManager.getInstance(currentAccount).sendRequest(req2, (response2, error2) -> {
+-                if (response2 instanceof TLRPC.TL_messages_webPage) {
+-                    TLRPC.TL_messages_webPage res = (TLRPC.TL_messages_webPage) response2;
+-                    MessagesController.getInstance(currentAccount).putUsers(res.users, false);
+-                    MessagesController.getInstance(currentAccount).putChats(res.chats, false);
+-                    response2 = res.webpage;
+-                }
+-                if (response2 instanceof TLRPC.WebPage) {
+-                    ArrayList<MessagesController.FaqSearchResult> arrayList = new ArrayList<>();
+-                    TLRPC.WebPage page = (TLRPC.WebPage) response2;
+-                    if (page.cached_page != null) {
+-                        for (int a = 0, N = page.cached_page.blocks.size(); a < N; a++) {
+-                            TL_iv.PageBlock block = page.cached_page.blocks.get(a);
+-                            if (block instanceof TL_iv.pageBlockList) {
+-                                String paragraph = null;
+-                                if (a != 0) {
+-                                    TL_iv.PageBlock prevBlock = page.cached_page.blocks.get(a - 1);
+-                                    if (prevBlock instanceof TL_iv.pageBlockParagraph) {
+-                                        TL_iv.pageBlockParagraph pageBlockParagraph = (TL_iv.pageBlockParagraph) prevBlock;
+-                                        paragraph = ArticleViewer.getPlainText(pageBlockParagraph.text).toString();
+-                                    }
+-                                }
+-                                TL_iv.pageBlockList list = (TL_iv.pageBlockList) block;
+-                                for (int b = 0, N2 = list.items.size(); b < N2; b++) {
+-                                    TL_iv.PageListItem item = list.items.get(b);
+-                                    if (item instanceof TL_iv.TL_pageListItemText) {
+-                                        TL_iv.TL_pageListItemText itemText = (TL_iv.TL_pageListItemText) item;
+-                                        String url = ArticleViewer.getUrl(itemText.text);
+-                                        String text = ArticleViewer.getPlainText(itemText.text).toString();
+-                                        if (TextUtils.isEmpty(url) || TextUtils.isEmpty(text)) {
+-                                            continue;
+-                                        }
+-                                        String[] path;
+-                                        if (paragraph != null) {
+-                                            path = new String[]{LocaleController.getString(R.string.SettingsSearchFaq), paragraph};
+-                                        } else {
+-                                            path = new String[]{LocaleController.getString(R.string.SettingsSearchFaq)};
+-                                        }
+-                                        arrayList.add(new MessagesController.FaqSearchResult(text, path, url));
+-                                    }
+-                                }
+-                            } else if (block instanceof TL_iv.pageBlockAnchor) {
+-                                break;
+-                            }
+-                        }
+-                        faqWebPage = page;
+-                    }
+-                    AndroidUtilities.runOnUIThread(() -> {
+-                        faqSearchArray.addAll(arrayList);
+-                        MessagesController.getInstance(currentAccount).faqSearchArray = arrayList;
+-                        MessagesController.getInstance(currentAccount).faqWebPage = faqWebPage;
+-                        if (!searchWas) {
+-                            notifyDataSetChanged();
+-                        }
+-                    });
+-                }
+-                loadingFaqPage = false;
+-            });
+-        }
+-
+         @Override
+         public int getItemCount() {
+             if (searchWas) {
+-                return searchResults.size() + (faqSearchResults.isEmpty() ? 0 : 1 + faqSearchResults.size());
++                return searchResults.size();
+             }
+-            return (recentSearches.isEmpty() ? 0 : recentSearches.size() + 1) + (faqSearchArray.isEmpty() ? 0 : faqSearchArray.size() + 1);
++            return recentSearches.isEmpty() ? 0 : recentSearches.size() + 1;
+         }
+ 
+         @Override
+@@ -15097,87 +14989,33 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+ 
+         @Override
+         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+-            switch (holder.getItemViewType()) {
+-                case 0: {
+-                    SettingsSearchCell searchCell = (SettingsSearchCell) holder.itemView;
+-                    if (searchWas) {
+-                        if (position < searchResults.size()) {
+-                            SearchResult result = searchResults.get(position);
+-                            SearchResult prevResult = position > 0 ? searchResults.get(position - 1) : null;
+-                            int icon;
+-                            if (prevResult != null && prevResult.iconResId == result.iconResId) {
+-                                icon = 0;
+-                            } else {
+-                                icon = result.iconResId;
+-                            }
+-                            searchCell.setTextAndValueAndIcon(resultNames.get(position), result.path, icon, position < searchResults.size() - 1);
+-                        } else {
+-                            position -= searchResults.size() + 1;
+-                            MessagesController.FaqSearchResult result = faqSearchResults.get(position);
+-                            searchCell.setTextAndValue(resultNames.get(position + searchResults.size()), result.path, true, position < searchResults.size() - 1);
+-                        }
+-                    } else {
+-                        if (!recentSearches.isEmpty()) {
+-                            position--;
+-                        }
+-                        if (position < recentSearches.size()) {
+-                            Object object = recentSearches.get(position);
+-                            if (object instanceof SearchResult) {
+-                                SearchResult result = (SearchResult) object;
+-                                searchCell.setTextAndValue(result.searchTitle, result.path, false, position < recentSearches.size() - 1);
+-                            } else if (object instanceof MessagesController.FaqSearchResult) {
+-                                MessagesController.FaqSearchResult result = (MessagesController.FaqSearchResult) object;
+-                                searchCell.setTextAndValue(result.title, result.path, true, position < recentSearches.size() - 1);
+-                            }
+-                        } else {
+-                            position -= recentSearches.size() + 1;
+-                            MessagesController.FaqSearchResult result = faqSearchArray.get(position);
+-                            searchCell.setTextAndValue(result.title, result.path, true, position < recentSearches.size() - 1);
+-                        }
+-                    }
+-                    break;
+-                }
+-                case 1: {
+-                    GraySectionCell sectionCell = (GraySectionCell) holder.itemView;
+-                    sectionCell.setText(LocaleController.getString(R.string.SettingsFaqSearchTitle));
+-                    break;
+-                }
+-                case 2: {
+-                    HeaderCell headerCell = (HeaderCell) holder.itemView;
+-                    headerCell.setText(LocaleController.getString(R.string.SettingsRecent));
+-                    break;
+-                }
++            if (holder.getItemViewType() == 2) {
++                ((HeaderCell) holder.itemView).setText(LocaleController.getString(R.string.SettingsRecent));
++                return;
++            }
++            SettingsSearchCell searchCell = (SettingsSearchCell) holder.itemView;
++            if (searchWas) {
++                SearchResult result = searchResults.get(position);
++                SearchResult previous = position > 0 ? searchResults.get(position - 1) : null;
++                int icon = previous != null && previous.iconResId == result.iconResId ? 0 : result.iconResId;
++                searchCell.setTextAndValueAndIcon(resultNames.get(position), result.path, icon, position < searchResults.size() - 1);
++            } else {
++                position--;
++                SearchResult result = (SearchResult) recentSearches.get(position);
++                searchCell.setTextAndValue(result.searchTitle, result.path, false, position < recentSearches.size() - 1);
+             }
+         }
+ 
+         public void fillItems(ArrayList<UItem> items) {
+-            int position = 0;
+             if (searchWas) {
+-                for (SearchResult r : searchResults) {
+-                    items.add(SettingsSearchCell.Factory.of(resultNames.get(position++), r));
+-                }
+-                if (!faqSearchResults.isEmpty()) {
+-                    items.add(UItem.asGraySection(getString(R.string.SettingsFaqSearchTitle)));
+-                    for (MessagesController.FaqSearchResult r : faqSearchResults) {
+-                        items.add(SettingsSearchCell.Factory.of(resultNames.get(position++), r));
+-                    }
+-                }
+-            } else {
+-                if (!recentSearches.isEmpty()) {
+-                    items.add(UItem.asGraySection(getString(R.string.SettingsRecent)));
+-                    for (Object r : recentSearches) {
+-                        if (r instanceof SearchResult) {
+-                            items.add(SettingsSearchCell.Factory.of(((SearchResult) r).searchTitle, (SearchResult) r));
+-                        } else if (r instanceof MessagesController.FaqSearchResult) {
+-                            items.add(SettingsSearchCell.Factory.of(((MessagesController.FaqSearchResult) r).title, (MessagesController.FaqSearchResult) r));
+-                        }
+-                    }
++                for (int position = 0; position < searchResults.size(); position++) {
++                    items.add(SettingsSearchCell.Factory.of(resultNames.get(position), searchResults.get(position)));
+                 }
+-                if (!faqSearchArray.isEmpty()) {
+-                    items.add(UItem.asGraySection(getString(R.string.SettingsFaqSearchTitle)));
+-                    for (MessagesController.FaqSearchResult r : faqSearchArray) {
+-                        items.add(SettingsSearchCell.Factory.of(r.title, r));
+-                    }
++            } else if (!recentSearches.isEmpty()) {
++                items.add(UItem.asGraySection(getString(R.string.SettingsRecent)));
++                for (Object object : recentSearches) {
++                    SearchResult result = (SearchResult) object;
++                    items.add(SettingsSearchCell.Factory.of(result.searchTitle, result));
+                 }
+             }
+         }
+@@ -15189,9 +15027,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 case 0:
+                     view = new SettingsSearchCell(mContext);
+                     break;
+-                case 1:
+-                    view = new GraySectionCell(mContext);
+-                    break;
+                 case 2:
+                 default:
+                     view = new HeaderCell(mContext, 16);
+@@ -15203,27 +15038,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+ 
+         @Override
+         public int getItemViewType(int position) {
+-            if (searchWas) {
+-                if (position < searchResults.size()) {
+-                    return 0;
+-                } else if (position == searchResults.size()) {
+-                    return 1;
+-                }
+-            } else {
+-                if (position == 0) {
+-                    if (!recentSearches.isEmpty()) {
+-                        return 2;
+-                    } else {
+-                        return 1;
+-                    }
+-                } else if (!recentSearches.isEmpty() && position == recentSearches.size() + 1) {
+-                    return 1;
+-                }
+-            }
+-            return 0;
++            return !searchWas && position == 0 && !recentSearches.isEmpty() ? 2 : 0;
+         }
+ 
+         public void addRecent(Object object) {
++            if (!(object instanceof SearchResult)) return;
+             int index = recentSearches.indexOf(object);
+             if (index >= 0) {
+                 recentSearches.remove(index);
+@@ -15240,8 +15059,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 Object o = recentSearches.get(a);
+                 if (o instanceof SearchResult) {
+                     ((SearchResult) o).num = a;
+-                } else if (o instanceof MessagesController.FaqSearchResult) {
+-                    ((MessagesController.FaqSearchResult) o).num = a;
+                 }
+                 toSave.add(o.toString());
+             }
+@@ -15257,8 +15074,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         private int getNum(Object o) {
+             if (o instanceof SearchResult) {
+                 return ((SearchResult) o).num;
+-            } else if (o instanceof MessagesController.FaqSearchResult) {
+-                return ((MessagesController.FaqSearchResult) o).num;
+             }
+             return 0;
+         }
+@@ -15272,7 +15087,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             if (TextUtils.isEmpty(text)) {
+                 searchWas = false;
+                 searchResults.clear();
+-                faqSearchResults.clear();
+                 resultNames.clear();
+                 if (fragment instanceof ProfileActivity) {
+                     try {
+@@ -15285,7 +15099,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             }
+             Utilities.searchQueue.postRunnable(searchRunnable = () -> {
+                 ArrayList<SearchResult> results = new ArrayList<>();
+-                ArrayList<MessagesController.FaqSearchResult> faqResults = new ArrayList<>();
+                 ArrayList<CharSequence> names = new ArrayList<>();
+                 String[] searchArgs = text.split(" ");
+                 String[] translitArgs = new String[searchArgs.length];
+@@ -15338,36 +15151,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         }
+                     }
+                 }
+-                if (faqWebPage != null) {
+-                    for (int a = 0, N = faqSearchArray.size(); a < N; a++) {
+-                        MessagesController.FaqSearchResult result = faqSearchArray.get(a);
+-                        String title = " " + result.title.toLowerCase();
+-                        SpannableStringBuilder stringBuilder = null;
+-                        for (int i = 0; i < searchArgs.length; i++) {
+-                            if (searchArgs[i].length() != 0) {
+-                                String searchString = searchArgs[i];
+-                                int index = title.indexOf(" " + searchString);
+-                                if (index < 0 && translitArgs[i] != null) {
+-                                    searchString = translitArgs[i];
+-                                    index = title.indexOf(" " + searchString);
+-                                }
+-                                if (index >= 0) {
+-                                    if (stringBuilder == null) {
+-                                        stringBuilder = new SpannableStringBuilder(result.title);
+-                                    }
+-                                    stringBuilder.setSpan(new ForegroundColorSpan(fragment.getThemedColor(Theme.key_windowBackgroundWhiteBlueText4)), index, index + searchString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+-                                } else {
+-                                    break;
+-                                }
+-                            }
+-                            if (stringBuilder != null && i == searchArgs.length - 1) {
+-                                faqResults.add(result);
+-                                names.add(stringBuilder);
+-                            }
+-                        }
+-                    }
+-                }
+-
+                 AndroidUtilities.runOnUIThread(() -> {
+                     if (!text.equals(lastSearchString)) {
+                         return;
+@@ -15382,7 +15165,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     }
+                     searchWas = true;
+                     searchResults = results;
+-                    faqSearchResults = faqResults;
+                     resultNames = names;
+                     notifyDataSetChanged();
+                     if (fragment instanceof ProfileActivity) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+@@ -351,7 +351,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+                 listView.adapter.update(true);
+             }
+         };
+-        search.loadFaqWebPage();
+ 
+         listView = new UniversalRecyclerView(this, this::fillItems, this::onClick, this::onLongClick);
+         listView.adapter.setApplyBackground(false);
+@@ -819,9 +818,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+             if (item.object instanceof ProfileActivity.SearchAdapter.SearchResult) {
+                 final ProfileActivity.SearchAdapter.SearchResult r = (ProfileActivity.SearchAdapter.SearchResult) item.object;
+                 r.open(getParentLayout());
+-            } else if (item.object instanceof MessagesController.FaqSearchResult) {
+-                final MessagesController.FaqSearchResult r = (MessagesController.FaqSearchResult) item.object;
+-                NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.openArticle, search.faqWebPage, r.url);
+             }
+             if (item.object != null) {
+                 search.addRecent(item.object);
+@@ -909,9 +905,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+             if (item.object instanceof ProfileActivity.SearchAdapter.SearchResult) {
+                 final ProfileActivity.SearchAdapter.SearchResult r = (ProfileActivity.SearchAdapter.SearchResult) item.object;
+                 link = r.link;
+-            } else if (item.object instanceof MessagesController.FaqSearchResult) {
+-                final MessagesController.FaqSearchResult r = (MessagesController.FaqSearchResult) item.object;
+-                link = r.url;
+             }
+             if (!TextUtils.isEmpty(link)) {
+                 final String finalLink = link;

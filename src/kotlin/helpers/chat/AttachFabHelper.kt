@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
-import desu.inugram.helpers.theme.M3FabHelper
 import desu.inugram.helpers.theme.NonIslandHelper
 import org.telegram.messenger.AndroidUtilities
+import org.telegram.messenger.utils.ViewOutlineProviderImpl
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.PhotoViewer
 import org.telegram.ui.Components.ChatAttachAlert
@@ -59,12 +59,12 @@ object AttachFabHelper {
 
     fun applyFabStyle(fab: View, resourcesProvider: Theme.ResourcesProvider?) {
         val accentColor = Theme.getColor(Theme.key_chat_messagePanelSend, resourcesProvider)
-        fab.background = M3FabHelper.makeSelectorBackground(
-            FAB_SIZE,
+        fab.background = Theme.createSimpleSelectorCircleDrawable(
+            AndroidUtilities.dp(FAB_SIZE.toFloat()),
             accentColor,
             Theme.blendOver(accentColor, 0x28FFFFFF),
         )
-        fab.outlineProvider = M3FabHelper.outlineProvider()
+        fab.outlineProvider = ViewOutlineProviderImpl.BOUNDS_OVAL
         fab.elevation = AndroidUtilities.dp(4f).toFloat()
     }
 

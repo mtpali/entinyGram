@@ -17,7 +17,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MediaDataControl
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/MediaDataController.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/MediaDataController.java
-@@ -7003,7 +7003,7 @@ public class MediaDataController extends BaseController {
+@@ -7000,7 +7000,7 @@ public class MediaDataController extends BaseController {
      }
  
      public static void addTextStyleRuns(MessageObject msg, Spannable text) {
@@ -26,7 +26,7 @@ index 0000000..0000000 100644
      }
  
      public static void addTextStyleRuns(TLRPC.DraftMessage msg, Spannable text, int allowedFlags) {
-@@ -7011,7 +7011,7 @@ public class MediaDataController extends BaseController {
+@@ -7008,7 +7008,7 @@ public class MediaDataController extends BaseController {
      }
  
      public static void addTextStyleRuns(MessageObject msg, Spannable text, int allowedFlags) {
@@ -61,8 +61,8 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesControll
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
-@@ -8947,6 +8947,9 @@ public class MessagesController extends BaseController implements NotificationCe
-                 totalBlockedCount = desu.inugram.helpers.security.ParanoiaHelper.adjustBlockedTotal(currentAccount, totalBlockedCount);
+@@ -8939,6 +8939,9 @@ public class MessagesController extends BaseController implements NotificationCe
+                 }
                  loadingBlockedPeers = false;
                  getNotificationCenter().postNotificationName(NotificationCenter.blockedUsersDidLoad);
 +                if (!blockedEndReached && desu.inugram.helpers.chat.BlockedMessagesHelper.isEnabled()) {
@@ -75,7 +75,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsCon
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsController.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsController.java
-@@ -2470,16 +2470,17 @@ public class NotificationsController extends BaseController implements Notificat
+@@ -2467,16 +2467,17 @@ public class NotificationsController extends BaseController implements Notificat
              return null;
          }
          String text = messageObject.messageOwner.message;

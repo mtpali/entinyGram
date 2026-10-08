@@ -215,9 +215,6 @@ object MonetHelper {
     }
     private var lastMonetSignature: Long? = null
     private val peerColorCache = java.util.concurrent.ConcurrentHashMap<Int, Int>()
-    private val avatarTextColorCache = java.util.concurrent.ConcurrentHashMap<Long, Int>()
-    private const val AVATAR_TEXT_DARK_TONE = 15.0
-    private const val AVATAR_TEXT_MIN_CHROMA = 40.0
     private var overlayReceiverRegistered = false
     private var themeReloadReceiverRegistered = false
 
@@ -432,20 +429,6 @@ object MonetHelper {
         else -> inColorKey
     }
 
-    @JvmStatic
-    fun getAvatarTextColor(fallback: Int, background: Int, background2: Int): Int {
-        if (!InuConfig.MATERIAL3_AVATARS.value || !(Theme.getActiveTheme()?.inu_isMonetNight() ?: false)) return fallback
-        val cacheKey = (background.toLong() shl 32) or (background2.toLong() and 0xFFFFFFFFL)
-        return avatarTextColorCache.getOrPut(cacheKey) {
-            try {
-                val hct = Hct.fromInt(ColorUtils.blendARGB(background, background2, 0.5f))
-                Hct.from(hct.hue, max(hct.chroma, AVATAR_TEXT_MIN_CHROMA), AVATAR_TEXT_DARK_TONE).toInt()
-            } catch (_: Exception) {
-                fallback
-            }
-        }
-    }
-
     private fun softenColorForDarkText(color: Int): Int {
         val neutralTextColor = resolveColor("n1_50")
         return ColorUtils.blendARGB(color, neutralTextColor, DARK_NAME_SOFTEN_RATIO)
@@ -460,7 +443,6 @@ object MonetHelper {
 
     private fun clearThemeColorCaches() {
         peerColorCache.clear()
-        avatarTextColorCache.clear()
     }
 
     fun refreshMonetThemeIfChanged() {

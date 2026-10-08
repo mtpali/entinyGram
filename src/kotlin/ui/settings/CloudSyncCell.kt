@@ -121,7 +121,7 @@ class CloudSyncCell(
             switchView,
             LayoutHelper.createFrame(
                 37,
-                if (InuConfig.MATERIAL3_SWITCHES.value) 24f else 20f,
+                20f,
                 Gravity.END or Gravity.CENTER_VERTICAL,
                 0f, 0f, 20f, 0f,
             ),

@@ -203,7 +203,7 @@ abstract class SettingsPageActivity : UniversalFragment() {
                     it.checked,
                     0,
                     subtext != null,
-                    !InuConfig.M3_SECTIONS_STYLE.value
+                    true
                 )
                 (view as? NotificationsCheckCell)?.setDrawLine(false)
             }
@@ -236,7 +236,7 @@ abstract class SettingsPageActivity : UniversalFragment() {
                     it.checked,
                     0,
                     subtext != null,
-                    !InuConfig.M3_SECTIONS_STYLE.value,
+                    true,
                 )
                 (view as? NotificationsCheckCell)?.setDrawLine(false)
             }
@@ -327,7 +327,7 @@ abstract class SettingsPageActivity : UniversalFragment() {
                     checked,
                     0,
                     subtext != null,
-                    !InuConfig.M3_SECTIONS_STYLE.value
+                    true
                 )
                 (view as? NotificationsCheckCell)?.setDrawLine(true)
             }

@@ -18,24 +18,19 @@ import desu.inugram.helpers.dialogs.DrawerHelper.setupMainFragment
 import desu.inugram.helpers.menu.DialogsMenuConfig
 import desu.inugram.helpers.menu.DialogsMenuHelper
 import desu.inugram.helpers.security.GhostHelper
-import desu.inugram.helpers.security.ParanoiaHelper
-import desu.inugram.helpers.update.UpdateHelper
 import desu.inugram.ui.drawer.DrawerAddCell
 import desu.inugram.ui.drawer.DrawerLayoutAdapter
 import desu.inugram.ui.drawer.DrawerProfileCell
-import desu.inugram.ui.drawer.DrawerProxyCell
 import desu.inugram.ui.drawer.DrawerSwipeController
 import desu.inugram.ui.drawer.DrawerUserCell
 import desu.inugram.ui.drawer.SideMenultItemAnimator
 import desu.inugram.ui.settings.InuSettingsActivity
-import desu.inugram.ui.settings.ParanoiaActivity
 import desu.inugram.ui.settings.TosSettingsActivity
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.DialogObject
 import org.telegram.messenger.FileLoader
-import org.telegram.messenger.ImageLoader
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.tgnet.ConnectionsManager
 import org.telegram.tgnet.TLRPC
@@ -328,20 +323,8 @@ object DrawerHelper {
     fun refreshMenuButton(drawable: MenuDrawable?, animated: Boolean) {
         if (drawable != null) menuDrawableRef = drawable
         val d = drawable ?: menuDrawableRef ?: return
-        val type: Int
-        val downloadProgress: Float
-        if (SharedConfig.isAppUpdateAvailable()) {
-            if (UpdateHelper.isPendingStart || UpdateHelper.isDownloading()) {
-                type = MenuDrawable.TYPE_UDPATE_DOWNLOADING
-                downloadProgress = UpdateHelper.getDownloadProgress() ?: 0f
-            } else {
-                type = MenuDrawable.TYPE_UDPATE_AVAILABLE
-                downloadProgress = 0f
-            }
-        } else {
-            type = MenuDrawable.TYPE_DEFAULT
-            downloadProgress = 0f
-        }
+        val type = MenuDrawable.TYPE_DEFAULT
+        val downloadProgress = 0f
         d.setType(type, animated)
         d.setUpdateDownloadProgress(downloadProgress, animated)
     }
@@ -708,7 +691,7 @@ object DrawerHelper {
                 DialogsMenuConfig.Item.ARCHIVE -> io.add(R.drawable.msg_archive, getString(R.string.ArchivedChats)) {
                     instance.presentFragment(DialogsActivity(Bundle().apply { putInt("folderId", 1) }))
                 }
-                DialogsMenuConfig.Item.RECENT_CHATS -> io.add(R.drawable.msg_recent_solar, getString(R.string.InuRecentChats)) {
+                DialogsMenuConfig.Item.RECENT_CHATS -> io.add(R.drawable.msg_recent, getString(R.string.InuRecentChats)) {
                     RecentChatsHelper.show(instance, instance.getActionBar())
                 }
                 DialogsMenuConfig.Item.CLEAR_CACHE -> io.add(R.drawable.inu_tabler_trash_x, getString(R.string.InuClearCache)) {
@@ -724,9 +707,6 @@ object DrawerHelper {
                         instance.updateStatus(UserConfig.getInstance(instance.currentAccount).currentUser, true)
                         BulletinFactory.of(instance).createImageBulletin(if (isGhost) R.drawable.inu_ghost_filled else R.drawable.inu_ghost, getString(if (isGhost) R.string.InuGhostEnabled else R.string.InuGhostDisabled)).show()
                     }
-                }
-                DialogsMenuConfig.Item.PARANOIA -> if (!ParanoiaHelper.isParanoia()) io.add(R.drawable.inu_tabler_spy, getString(R.string.InuParanoiaMode)) {
-                    instance.presentFragment(ParanoiaActivity())
                 }
                 DialogsMenuConfig.Item.RESTART_APP -> io.add(R.drawable.msg_retry, getString(R.string.InuRestartApp)) {
                     confirmRestartApp(instance)

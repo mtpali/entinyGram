@@ -1,12 +1,7 @@
 package desu.inugram
 
 import android.content.Intent
-import desu.inugram.helpers.security.ParanoiaHelper
 import desu.inugram.ui.settings.AdditionalSettingsActivity
-import desu.inugram.ui.settings.AiEditorSettingsActivity
-import desu.inugram.ui.settings.AiSettingsActivity
-import desu.inugram.ui.settings.AiSummarySettingsActivity
-import desu.inugram.ui.settings.AiVoiceSettingsActivity
 import desu.inugram.ui.settings.AnnoyancesSettingsActivity
 import desu.inugram.ui.settings.AntiCensorshipSettingsActivity
 import desu.inugram.ui.settings.AntiDeletionSettingsActivity
@@ -15,30 +10,24 @@ import desu.inugram.ui.settings.BackupSettingsActivity
 import desu.inugram.ui.settings.BehaviorSettingsActivity
 import desu.inugram.ui.settings.CacheManagementSettingsActivity
 import desu.inugram.ui.settings.CategoryChatsSettingsActivity
-import desu.inugram.ui.settings.ChatHeaderSettingsActivity
 import desu.inugram.ui.settings.DatacenterStatusActivity
-import desu.inugram.ui.settings.DialogsSettingsActivity
 import desu.inugram.helpers.feed.FeedHelper
 import desu.inugram.ui.settings.FeedExcludedChannelsSettingsActivity
 import desu.inugram.ui.settings.GhostModeSettingsActivity
 import desu.inugram.ui.settings.IconPacksSettingsActivity
 import desu.inugram.ui.settings.InuSettingsActivity
-import desu.inugram.ui.settings.IosStyleSettingsActivity
 import desu.inugram.ui.settings.MessageDesignSettingsActivity
 import desu.inugram.ui.settings.DrawerSettingsActivity
 import desu.inugram.ui.settings.DrawerMenuOrderActivity
 import desu.inugram.ui.settings.MenusSettingsActivity
 import desu.inugram.ui.settings.MessagesSettingsActivity
-import desu.inugram.ui.settings.PillStackSettingsActivity
 import desu.inugram.ui.settings.RecentChatsSettingsActivity
-import desu.inugram.ui.settings.ParanoiaActivity
 import desu.inugram.ui.settings.PrivacySecurityActivity
 import desu.inugram.ui.settings.RegexFilterSettingsActivity
 import desu.inugram.ui.settings.SettingsPageActivity
 import desu.inugram.ui.settings.StalkerPackSettingsActivity
 import desu.inugram.ui.settings.TosSettingsActivity
 import desu.inugram.ui.settings.TranslatorSettingsActivity
-import desu.inugram.ui.settings.WeatherLocationActivity
 import desu.inugram.ui.settings.fonts.FontStackActivity
 import desu.inugram.ui.settings.fonts.FontsSettingsActivity
 import org.telegram.messenger.LocaleController
@@ -67,8 +56,6 @@ object SearchRegistry {
             CacheManagementSettingsActivity.PAGE,
             InuSettingsActivity.PAGE,
             AppearanceSettingsActivity.PAGE,
-            ChatHeaderSettingsActivity.PAGE,
-            IosStyleSettingsActivity.PAGE,
             MessageDesignSettingsActivity.PAGE,
             DrawerSettingsActivity.PAGE,
             DrawerMenuOrderActivity.PAGE,
@@ -78,23 +65,16 @@ object SearchRegistry {
             FontStackActivity.PAGE,
             CategoryChatsSettingsActivity.PAGE,
             MessagesSettingsActivity.PAGE,
-            AiSettingsActivity.PAGE,
-            AiVoiceSettingsActivity.PAGE,
-            AiEditorSettingsActivity.PAGE,
-            AiSummarySettingsActivity.PAGE,
             AnnoyancesSettingsActivity.PAGE,
             BehaviorSettingsActivity.PAGE,
             TosSettingsActivity.PAGE,
             GhostModeSettingsActivity.PAGE,
-            PillStackSettingsActivity.PAGE,
             RecentChatsSettingsActivity.PAGE,
-            WeatherLocationActivity.PAGE,
             AntiDeletionSettingsActivity.PAGE,
             StalkerPackSettingsActivity.PAGE,
             RegexFilterSettingsActivity.PAGE,
             TranslatorSettingsActivity.PAGE,
             PrivacySecurityActivity.PAGE,
-            ParanoiaActivity.PAGE,
             AntiCensorshipSettingsActivity.PAGE,
             DatacenterStatusActivity.PAGE,
             BackupSettingsActivity.PAGE,
@@ -136,7 +116,6 @@ object SearchRegistry {
         stock: Array<ProfileActivity.SearchAdapter.SearchResult>,
         f: BaseFragment,
     ): Array<ProfileActivity.SearchAdapter.SearchResult> {
-        if (ParanoiaHelper.shouldHideSettings()) return stock
         val extra = ArrayList<ProfileActivity.SearchAdapter.SearchResult>()
         for (page in pages) {
             if (page === FeedExcludedChannelsSettingsActivity.PAGE && !FeedHelper.isEnabled()) continue
@@ -169,7 +148,6 @@ object SearchRegistry {
 
     @JvmStatic
     fun tryHandleDeepLink(activity: LaunchActivity, intent: Intent?): Boolean {
-        if (ParanoiaHelper.shouldHideSettings()) return false
         val uri = intent?.data ?: return false
         if (uri.scheme != "tg") return false
         // entiny: match host and legacy {inu,entiny} segments case-insensitively while preserving trailing slug

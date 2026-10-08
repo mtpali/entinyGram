@@ -1,0 +1,217 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:50:44 +0330
+Subject: [*] disable smooth transitions by default
+
+---
+ .../src/main/java/org/telegram/messenger/SharedConfig.java    | 2 +-
+ .../main/java/org/telegram/ui/ActionBar/ActionBarLayout.java  | 4 ++--
+ .../src/main/java/org/telegram/ui/ChangeBioActivity.java      | 2 +-
+ .../src/main/java/org/telegram/ui/ChangeNameActivity.java     | 2 +-
+ .../src/main/java/org/telegram/ui/ChangeUsernameActivity.java | 2 +-
+ TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java | 2 +-
+ .../src/main/java/org/telegram/ui/Components/Bulletin.java    | 2 +-
+ .../ui/Components/Reactions/ReactionsEffectOverlay.java       | 2 +-
+ .../telegram/ui/Components/RecyclerAnimationScrollHelper.java | 2 +-
+ .../main/java/org/telegram/ui/LiteModeSettingsActivity.java   | 4 ++--
+ .../src/main/java/org/telegram/ui/ProfileActivity.java        | 2 +-
+ .../src/main/java/org/telegram/ui/ThemeActivity.java          | 4 ++--
+ .../src/main/java/org/telegram/ui/ThemeSetUrlActivity.java    | 2 +-
+ 13 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java b/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
+@@ -1768,7 +1768,7 @@ public class SharedConfig {
+ 
+     public static boolean animationsEnabled() {
+         if (animationsEnabled == null) {
+-            animationsEnabled = MessagesController.getGlobalMainSettings().getBoolean("view_animations", true);
++            animationsEnabled = MessagesController.getGlobalMainSettings().getBoolean("view_animations", false);
+         }
+         return animationsEnabled;
+     }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
+@@ -2038,7 +2038,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+         if (parentActivity.getCurrentFocus() != null && fragment.hideKeyboardOnShow() && !preview) {
+             AndroidUtilities.hideKeyboard(parentActivity.getCurrentFocus());
+         }
+-        boolean needAnimation = preview || !forceWithoutAnimation && MessagesController.getGlobalMainSettings().getBoolean("view_animations", true);
++        boolean needAnimation = preview || !forceWithoutAnimation && MessagesController.getGlobalMainSettings().getBoolean("view_animations", false);
+ 
+         final BaseFragment currentFragment = !fragmentsStack.isEmpty() ? fragmentsStack.get(fragmentsStack.size() - 1) : null;
+ 
+@@ -2603,7 +2603,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+             AndroidUtilities.hideKeyboard(parentActivity.getCurrentFocus());
+         }
+         setInnerTranslationX(0);
+-        boolean needAnimation = !forceNoAnimation && (inPreviewMode || transitionAnimationPreviewMode || animated && MessagesController.getGlobalMainSettings().getBoolean("view_animations", true));
++        boolean needAnimation = !forceNoAnimation && (inPreviewMode || transitionAnimationPreviewMode || animated && MessagesController.getGlobalMainSettings().getBoolean("view_animations", false));
+         final BaseFragment currentFragment = fragmentsStack.get(fragmentsStack.size() - 1);
+         BaseFragment previousFragment = null;
+         if (fragmentsStack.size() > 1) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChangeBioActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChangeBioActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChangeBioActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChangeBioActivity.java
+@@ -187,7 +187,7 @@ public class ChangeBioActivity extends BaseFragment {
+     public void onResume() {
+         super.onResume();
+         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-        boolean animations = preferences.getBoolean("view_animations", true);
++        boolean animations = preferences.getBoolean("view_animations", false);
+         if (!animations) {
+             firstNameField.requestFocus();
+             AndroidUtilities.showKeyboard(firstNameField);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChangeNameActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChangeNameActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChangeNameActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChangeNameActivity.java
+@@ -161,7 +161,7 @@ public class ChangeNameActivity extends BaseFragment {
+     public void onResume() {
+         super.onResume();
+         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-        boolean animations = preferences.getBoolean("view_animations", true);
++        boolean animations = preferences.getBoolean("view_animations", false);
+         if (!animations) {
+             firstNameField.requestFocus();
+             AndroidUtilities.showKeyboard(firstNameField);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChangeUsernameActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChangeUsernameActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChangeUsernameActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChangeUsernameActivity.java
+@@ -1174,7 +1174,7 @@ public class ChangeUsernameActivity extends BaseFragment {
+     public void onResume() {
+         super.onResume();
+         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-        boolean animations = preferences.getBoolean("view_animations", true);
++        boolean animations = preferences.getBoolean("view_animations", false);
+         if (!animations) {
+             focusUsernameField(false);
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
+@@ -6496,7 +6496,7 @@ public class ChatActivity extends BaseFragment implements
+         paddingTopHeight = 0;
+         botDraftHeightController.setRecyclerView(chatListView);
+         invalidateChatListViewTopPadding();
+-        if (MessagesController.getGlobalMainSettings().getBoolean("view_animations", true)) {
++        if (MessagesController.getGlobalMainSettings().getBoolean("view_animations", false)) {
+             chatListItemAnimator = new ChatListItemAnimator(this, chatListView, themeDelegate) {
+ 
+                 Runnable finishRunnable;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/Bulletin.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/Bulletin.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/Bulletin.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/Bulletin.java
+@@ -506,7 +506,7 @@ public class Bulletin {
+     }
+ 
+     private static boolean isTransitionsEnabled() {
+-        return MessagesController.getGlobalMainSettings().getBoolean("view_animations", true);
++        return MessagesController.getGlobalMainSettings().getBoolean("view_animations", false);
+     }
+ 
+     public void updatePosition() {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/Reactions/ReactionsEffectOverlay.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/Reactions/ReactionsEffectOverlay.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/Reactions/ReactionsEffectOverlay.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/Reactions/ReactionsEffectOverlay.java
+@@ -773,7 +773,7 @@ public class ReactionsEffectOverlay {
+         if (cell == null || visibleReaction == null || baseFragment == null || baseFragment.getParentActivity() == null) {
+             return;
+         }
+-        boolean animationEnabled = MessagesController.getGlobalMainSettings().getBoolean("view_animations", true);
++        boolean animationEnabled = MessagesController.getGlobalMainSettings().getBoolean("view_animations", false);
+         if (!animationEnabled || desu.inugram.InuConfig.HIDE_REACTIONS_ENTRY.getValue()) {
+             return;
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerAnimationScrollHelper.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerAnimationScrollHelper.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerAnimationScrollHelper.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerAnimationScrollHelper.java
+@@ -74,7 +74,7 @@ public class RecyclerAnimationScrollHelper {
+         }
+ 
+         int n = recyclerView.getChildCount();
+-        if (n == 0 || !MessagesController.getGlobalMainSettings().getBoolean("view_animations", true)) {
++        if (n == 0 || !MessagesController.getGlobalMainSettings().getBoolean("view_animations", false)) {
+             layoutManager.scrollToPositionWithOffset(position, offset, bottom);
+             return;
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LiteModeSettingsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/LiteModeSettingsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/LiteModeSettingsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/LiteModeSettingsActivity.java
+@@ -141,7 +141,7 @@ public class LiteModeSettingsActivity extends BaseFragment {
+             } else if (item.viewType == VIEW_TYPE_SWITCH2) {
+                 if (item.type == SWITCH_TYPE_SMOOTH_TRANSITIONS) {
+                     SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-                    boolean animations = preferences.getBoolean("view_animations", true);
++                    boolean animations = preferences.getBoolean("view_animations", false);
+                     SharedPreferences.Editor editor = preferences.edit();
+                     editor.putBoolean("view_animations", !animations);
+                     SharedConfig.setAnimationsEnabled(!animations);
+@@ -409,7 +409,7 @@ public class LiteModeSettingsActivity extends BaseFragment {
+                 TextCell textCell = (TextCell) holder.itemView;
+                 if (item.type == SWITCH_TYPE_SMOOTH_TRANSITIONS) {
+                     SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-                    boolean animations = preferences.getBoolean("view_animations", true);
++                    boolean animations = preferences.getBoolean("view_animations", false);
+                     textCell.setTextAndCheck(item.text, animations, false);
+                 }
+             }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+@@ -9761,7 +9761,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             needTimerImage = type != 0;
+             needStarImage = type != 0;
+             updateStar();
+-            if (preferences.getBoolean("view_animations", true)) {
++            if (preferences.getBoolean("view_animations", false)) {
+                 playProfileAnimation = type;
+             } else if (type == 2) {
+                 expandPhoto = true;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ThemeActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ThemeActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ThemeActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ThemeActivity.java
+@@ -1111,7 +1111,7 @@ public class ThemeActivity extends BaseFragment implements NotificationCenter.No
+         listView.setOnItemClickListener((view, position, x, y) -> {
+             if (position == enableAnimationsRow) {
+                 SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-                boolean animations = preferences.getBoolean("view_animations", true);
++                boolean animations = preferences.getBoolean("view_animations", false);
+                 SharedPreferences.Editor editor = preferences.edit();
+                 editor.putBoolean("view_animations", !animations);
+                 SharedConfig.setAnimationsEnabled(!animations);
+@@ -2608,7 +2608,7 @@ public class ThemeActivity extends BaseFragment implements NotificationCenter.No
+                         textCheckCell.setTextAndCheck(getString("AutoNightLocation", R.string.AutoNightLocation), Theme.autoNightScheduleByLocation, true);
+                     } else if (position == enableAnimationsRow) {
+                         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-                        textCheckCell.setTextAndCheck(getString("EnableAnimations", R.string.EnableAnimations), preferences.getBoolean("view_animations", true), true);
++                        textCheckCell.setTextAndCheck(getString("EnableAnimations", R.string.EnableAnimations), preferences.getBoolean("view_animations", false), true);
+                     } else if (position == sendByEnterRow) {
+                         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+                         textCheckCell.setTextAndCheck(getString("SendByEnter", R.string.SendByEnter), preferences.getBoolean("send_by_enter", false), true);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ThemeSetUrlActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ThemeSetUrlActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ThemeSetUrlActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ThemeSetUrlActivity.java
+@@ -409,7 +409,7 @@ public class ThemeSetUrlActivity extends BaseFragment implements NotificationCen
+     public void onResume() {
+         super.onResume();
+         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-        boolean animations = preferences.getBoolean("view_animations", true);
++        boolean animations = preferences.getBoolean("view_animations", false);
+         if (!animations && creatingNewTheme) {
+             linkField.requestFocus();
+             AndroidUtilities.showKeyboard(linkField);

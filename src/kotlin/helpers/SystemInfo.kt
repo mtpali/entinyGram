@@ -9,7 +9,7 @@ import android.os.Environment
 import android.os.PowerManager
 import android.os.Process
 import android.os.UserManager
-import desu.inugram.helpers.update.UpdateHelper
+import desu.inugram.helpers.VersionHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.SharedConfig
@@ -18,7 +18,7 @@ import java.time.Instant
 
 object SystemInfo {
     fun build(): String = buildString {
-        append(UpdateHelper.getVersionInfoString()).append("\n")
+        append(VersionHelper.getVersionInfoString()).append("\n")
         append("Android ${Build.VERSION.RELEASE} SDK ${Build.VERSION.SDK_INT}\n")
         append("Device ${Build.MANUFACTURER} ${Build.MODEL} (${Build.FINGERPRINT})\n")
         append("Performance class current=${SharedConfig.performanceClassName(SharedConfig.getDevicePerformanceClass())}")

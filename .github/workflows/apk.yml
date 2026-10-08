@@ -1,0 +1,169 @@
+name: Build Telegram APKs
+
+on:
+  push:
+    branches: [main, telegram-name-and-icons, vpn963-slim-settings]
+    paths-ignore: ['**/*.md']
+  workflow_dispatch:
+
+concurrency:
+  group: telegram-apks-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  BASE_BUILD_CODE: 2026100700
+
+jobs:
+  configuration:
+    name: Validate Firebase setup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Check Firebase before downloading native sources
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          TELEGRAM_APP_ID: ${{ secrets.TELEGRAM_APP_ID }}
+          TELEGRAM_APP_HASH: ${{ secrets.TELEGRAM_APP_HASH }}
+        run: python3 scripts/ci/configure-firebase.py worktree --validate-only
+
+  build:
+    name: Build ${{ matrix.arch }}
+    needs: configuration
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: armv7
+            abi: armeabi-v7a
+          - arch: armv8
+            abi: arm64-v8a
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
+        with:
+          tool-cache: false
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: false
+          swap-storage: true
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.13
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Configure git
+        run: |
+          git config --global user.name 'mtpali build'
+          git config --global user.email '316823762+mtpali@users.noreply.github.com'
+      - run: bun install --frozen-lockfile
+      - name: Materialize source
+        run: bun run setup -- --no-stgit
+      - name: Validate source
+        run: |
+          bun run tsx scripts/entinychecker.ts
+          bun run tsx scripts/check-translations.ts
+          bun run lint-patches
+          bun run generate-icons
+          git diff --exit-code -- src/res/launcher/generated
+      - name: Configure required Firebase client
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          TELEGRAM_APP_ID: ${{ secrets.TELEGRAM_APP_ID }}
+          TELEGRAM_APP_HASH: ${{ secrets.TELEGRAM_APP_HASH }}
+        run: python3 scripts/ci/configure-firebase.py worktree
+      - uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c
+      - uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: telegram-${{ matrix.abi }}
+          max-size: 3G
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd
+        with:
+          packages: >-
+            platforms;android-36
+            build-tools;36.0.0
+            cmake;3.22.1
+            ndk;27.2.12479018
+      - name: Configure Gradle memory
+        run: |
+          mkdir -p ~/.gradle
+          printf '%s\n' 'org.gradle.caching=true' 'org.gradle.jvmargs=-Xmx6G -XX:MaxMetaspaceSize=2G -XX:+UseParallelGC -Dfile.encoding=UTF-8' >> ~/.gradle/gradle.properties
+      - name: Assemble signed APK
+        working-directory: worktree
+        env:
+          ABI_FILTERS: ${{ matrix.abi }}
+          COMMIT_ID: ${{ github.sha }}
+          INU_BUILD_TYPE: release
+        run: |
+          export INU_BUILD=$((BASE_BUILD_CODE + GITHUB_RUN_NUMBER))
+          ./gradlew --no-daemon --max-workers=4 :TMessagesProj:compileReleaseKotlin :TMessagesProj:compileReleaseJavaWithJavac :TMessagesProj_App:compileReleaseJavaWithJavac
+          ./gradlew --no-daemon --max-workers=4 :TMessagesProj_App:assembleRelease
+      - name: Check APK and stage output
+        env:
+          ARCH: ${{ matrix.arch }}
+          ABI: ${{ matrix.abi }}
+        run: |
+          mkdir -p out
+          version=$(sed -n 's/^APP_VERSION_NAME=//p' worktree/gradle.properties | tr -d '\r')
+          apk="out/Telegram-$version-$ARCH.apk"
+          cp worktree/TMessagesProj_App/build/outputs/apk/release/app.apk "$apk"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs "$apk"
+          python3 scripts/ci/verify-apk.py "$apk" "$ABI" "$ANDROID_HOME/build-tools/36.0.0/aapt" worktree/TMessagesProj/google-services.json > "out/build-info-$ARCH.json"
+          (cd out && sha256sum "Telegram-$version-$ARCH.apk" > "SHA256SUMS-$ARCH.txt")
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Telegram-${{ matrix.arch }}-${{ github.sha }}
+          path: out/
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    name: Publish preview APKs
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: Telegram-*-${{ github.sha }}
+          path: out
+          merge-multiple: true
+      - name: Publish both architectures
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="telegram-preview-${GITHUB_RUN_NUMBER}-${GITHUB_SHA:0:7}"
+          cat > release-notes.md <<'NOTES'
+          Telegram 12.10.6 personal build, based on entinyGram v12.10.6-202610040.
+
+          - Telegram app name and NagramXF default icon.
+          - Blue stock Telegram icon retained; old entinyGram icon removed.
+          - Force LTR in Settings → Telegram Settings → Appearance; restart to apply.
+          - Offline Text tab beside Emoji, GIFs and Stickers: add, edit and delete prepared texts per account; tap to insert into the draft before sending.
+          - Removed all seven Material Design options and Pill Stack, including their helpers and settings pages.
+          - Hide All Chats defaults on when other folders exist; the primary floating action defaults to None.
+          - Tap the main chat-list title to open proxy settings, including while connecting.
+          - Signed armv7 (armeabi-v7a) and armv8 (arm64-v8a) APKs.
+          - Recovered entinyGram Firebase client; matching FCM resources retained and verified in both APKs.
+
+          These preview APKs use the source project's development signing key and inherited Telegram API configuration. The default Firebase client was reconstructed from earlier entinyGram APKs. Its project remains under the original maintainer's control. Background push delivery still needs a device test with Google Play services and notification permission.
+          NOTES
+          gh release create "$tag" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title "Telegram — armv7 and armv8 (build $GITHUB_RUN_NUMBER)" --notes-file release-notes.md out/*

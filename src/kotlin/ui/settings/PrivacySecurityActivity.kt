@@ -5,7 +5,6 @@ import desu.inugram.InuConfig
 import desu.inugram.SearchRegistry
 import desu.inugram.helpers.InuUtils
 import desu.inugram.helpers.security.BiometricHelper
-import desu.inugram.helpers.security.ParanoiaHelper
 import desu.inugram.helpers.security.PasscodeHelper
 import desu.inugram.helpers.UrlCleanerHelper
 import org.telegram.messenger.AndroidUtilities
@@ -38,15 +37,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
                     BUTTON_PASSCODE,
                     R.drawable.inu_tabler_key,
                     LocaleController.getString(R.string.InuPerAccountPasscode)
-                )
-            )
-        }
-        if (!ParanoiaHelper.isParanoia()) {
-            items.add(
-                mkSubPageButton(
-                    BUTTON_PARANOIA,
-                    R.drawable.inu_tabler_spy,
-                    LocaleController.getString(R.string.InuParanoiaMode)
                 )
             )
         }
@@ -124,24 +114,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
                     InuConfig.BIOMETRIC_ALLOW_DEVICE_CREDENTIAL.value
                 )
             )
-            items.add(
-                mkTwoLineCheckItem(
-                    TOGGLE_BIOMETRIC_LOCK_ARCHIVE,
-                    R.string.InuBiometricLockArchive,
-                    R.string.InuBiometricLockArchiveInfo,
-                    InuConfig.BIOMETRIC_LOCK_ARCHIVE.value
-                )
-            )
-            if (InuConfig.BIOMETRIC_LOCK_ARCHIVE.value) {
-                items.add(
-                    mkTwoLineCheckItem(
-                        TOGGLE_BIOMETRIC_LOCK_ARCHIVE_EVERY_TIME,
-                        R.string.InuBiometricLockArchiveEveryTime,
-                        R.string.InuBiometricLockArchiveEveryTimeInfo,
-                        InuConfig.BIOMETRIC_LOCK_ARCHIVE_EVERY_TIME.value
-                    )
-                )
-            }
             items.add(UItem.asShadow(null))
         }
     }
@@ -149,7 +121,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
     override fun onClick(item: UItem, view: View, position: Int, x: Float, y: Float) {
         when (item.id) {
             BUTTON_PASSCODE -> presentFragment(PasscodeSettingsActivity())
-            BUTTON_PARANOIA -> presentFragment(ParanoiaActivity())
             BUTTON_ANTI_CENSORSHIP -> presentFragment(AntiCensorshipSettingsActivity())
             TOGGLE_HIDE_MY_PHONE_NUMBER -> {
                 val new = InuConfig.HIDE_MY_PHONE_NUMBER.toggle()
@@ -188,16 +159,7 @@ class PrivacySecurityActivity : SettingsPageActivity() {
                 (view as? NotificationsCheckCell)?.isChecked = new
             }
 
-            TOGGLE_BIOMETRIC_LOCK_ARCHIVE -> {
-                val new = InuConfig.BIOMETRIC_LOCK_ARCHIVE.toggle()
-                (view as? NotificationsCheckCell)?.isChecked = new
-                listView?.adapter?.update(true)
-            }
 
-            TOGGLE_BIOMETRIC_LOCK_ARCHIVE_EVERY_TIME -> {
-                val new = InuConfig.BIOMETRIC_LOCK_ARCHIVE_EVERY_TIME.toggle()
-                (view as? NotificationsCheckCell)?.isChecked = new
-            }
         }
     }
 
@@ -270,7 +232,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
 
     companion object {
         private val BUTTON_PASSCODE = InuUtils.generateId()
-        private val BUTTON_PARANOIA = InuUtils.generateId()
         private val BUTTON_ANTI_CENSORSHIP = InuUtils.generateId()
         private val TOGGLE_HIDE_MY_PHONE_NUMBER = InuUtils.generateId()
         private val TOGGLE_DISABLE_SENSITIVE = InuUtils.generateId()
@@ -281,8 +242,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
         private val TOGGLE_BIOMETRIC_DELETE_CHAT = InuUtils.generateId()
         private val TOGGLE_BIOMETRIC_LOGOUT = InuUtils.generateId()
         private val TOGGLE_BIOMETRIC_DEVICE_CREDENTIAL = InuUtils.generateId()
-        private val TOGGLE_BIOMETRIC_LOCK_ARCHIVE = InuUtils.generateId()
-        private val TOGGLE_BIOMETRIC_LOCK_ARCHIVE_EVERY_TIME = InuUtils.generateId()
 
         @JvmField val PAGE = SearchRegistry.Page(
             slug = "privacy-security",
@@ -298,8 +257,6 @@ class PrivacySecurityActivity : SettingsPageActivity() {
                 SearchRegistry.Entry("biometric-confirm-delete-chat", R.string.InuBiometricConfirmDeleteChat, TOGGLE_BIOMETRIC_DELETE_CHAT),
                 SearchRegistry.Entry("biometric-confirm-logout", R.string.InuBiometricConfirmLogout, TOGGLE_BIOMETRIC_LOGOUT),
                 SearchRegistry.Entry("biometric-allow-device-credential", R.string.InuBiometricAllowDeviceCredential, TOGGLE_BIOMETRIC_DEVICE_CREDENTIAL),
-                SearchRegistry.Entry("biometric-lock-archive", R.string.InuBiometricLockArchive, TOGGLE_BIOMETRIC_LOCK_ARCHIVE),
-                SearchRegistry.Entry("biometric-lock-archive-every-time", R.string.InuBiometricLockArchiveEveryTime, TOGGLE_BIOMETRIC_LOCK_ARCHIVE_EVERY_TIME),
             ),
         )
     }

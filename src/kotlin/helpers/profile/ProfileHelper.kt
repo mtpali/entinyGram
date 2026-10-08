@@ -8,7 +8,6 @@ import android.graphics.Shader
 import android.content.DialogInterface
 import android.os.Bundle
 import android.graphics.drawable.Drawable
-import android.view.HapticFeedbackConstants
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -25,7 +24,6 @@ import desu.inugram.ui.profile.DeleteProfilePhotosSheet
 import org.json.JSONArray
 import org.telegram.messenger.AccountInstance
 import org.telegram.messenger.AndroidUtilities
-import org.telegram.messenger.BuildVars
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.ChatObject
 import org.telegram.messenger.DialogObject
@@ -64,7 +62,6 @@ object ProfileHelper {
     const val ACTION_TOGGLE_PRESENCE_WATCH = 511
     const val ACTION_DELETE_MY_MESSAGES = 512
     const val ACTION_EXPORT_CHAT = 513
-    const val ACTION_EDIT_LOCAL_NAME = 514
     const val ACTION_DEBUG_CLEAR_CACHE = 599
 
     private const val GRADIENT_FADE_DARK = 0x80000000.toInt()
@@ -81,9 +78,6 @@ object ProfileHelper {
 
     @JvmStatic
     fun preferMediaTab(): Boolean = InuConfig.PROFILE_PREFER_MEDIA_TAB.value
-
-    @JvmStatic
-    fun useMaterialProfileActions(): Boolean = InuConfig.MATERIAL_PROFILE_ACTIONS.value
 
     @JvmStatic
     fun applyReduceMotionAlpha(openAnimationInProgress: Boolean, diff: Float, vararg views: View?) {
@@ -284,17 +278,10 @@ object ProfileHelper {
                 )
             }
         }
-        if (InuConfig.LOCAL_NAMES.value && dialogId != 0L && !DialogObject.isEncryptedDialog(dialogId)) {
-            otherItem.addSubItem(
-                ACTION_EDIT_LOCAL_NAME,
-                R.drawable.msg_edit,
-                LocaleController.getString(R.string.InuLocalName),
-            )
-        }
         if (InuConfig.CHAT_EXPORT.value && dialogId != 0L && !DialogObject.isEncryptedDialog(dialogId)) {
             otherItem.addSubItem(
                 ACTION_EXPORT_CHAT,
-                R.drawable.msg_share_solar,
+                R.drawable.msg_forward_noquote,
                 LocaleController.getString(R.string.InuChatExport),
             )
         }
@@ -331,10 +318,6 @@ object ProfileHelper {
             ACTION_TOGGLE_HIDE_WALLPAPER -> ChatHelper.toggleRemoveWallpaper(currentAccount, dialogId)
             ACTION_TOGGLE_HIDE_THEME -> ChatHelper.toggleRemoveTheme(currentAccount, dialogId)
             ACTION_TOGGLE_HIDE_MESSAGES -> BlockedMessagesHelper.toggleExtraHidden(currentAccount, dialogId)
-            ACTION_EDIT_LOCAL_NAME -> {
-                val fragment = LaunchActivity.getLastFragment() ?: return true
-                LocalNameHelper.showEditor(fragment, currentAccount, dialogId)
-            }
             ACTION_TOGGLE_GHOST_DIALOG -> {
                 val fragment = LaunchActivity.getLastFragment() ?: return true
                 GhostHelper.showChatOverridesDialog(fragment, currentAccount, dialogId)

@@ -30,8 +30,6 @@ import androidx.core.content.edit
 import desu.inugram.InuConfig
 import desu.inugram.helpers.InuUtils
 import desu.inugram.helpers.StickerDownloadHelper
-import desu.inugram.helpers.ai.AiComposeHelper
-import desu.inugram.helpers.ai.AiSummaryHelper
 import desu.inugram.helpers.WebAppHelper
 import desu.inugram.helpers.cloud.SettingsBackupHelper
 import desu.inugram.helpers.font.FontImportHelper
@@ -60,7 +58,6 @@ import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.SendMessageChatArguments
 import org.telegram.messenger.R
 import org.telegram.messenger.SendMessagesHelper
-import org.telegram.messenger.TranslateController
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.UserObject
 import org.telegram.messenger.Utilities
@@ -88,7 +85,6 @@ import org.telegram.ui.Components.RLottieDrawable
 import org.telegram.ui.Components.Reactions.ReactionsLayoutInBubble
 import org.telegram.ui.Components.ReactionsContainerLayout
 import org.telegram.ui.Components.ScaleStateListAnimator
-import org.telegram.ui.Components.ShareAlert
 import org.telegram.ui.Components.URLSpanUserMention
 import org.telegram.ui.DialogsActivity
 import org.telegram.ui.LaunchActivity
@@ -117,7 +113,6 @@ object ChatHelper {
     const val OPTION_TRANSLATE_REVERT = 508
     const val OPTION_FORWARD_NO_QUOTE = 509
     const val OPTION_REPLY_IN_DMS = 510
-    const val OPTION_SUMMARIZE = 511
     const val OPTION_REMOVE_FROM_CACHE = 512
     const val OPTION_COPY_MEDIA = 513
     const val OPTION_REPEAT = 514
@@ -127,7 +122,6 @@ object ChatHelper {
     const val OPTION_EDIT_HISTORY = 518
     const val OPTION_SAVE_STICKER_TO_DOWNLOADS = 521
     const val OPTION_MARK_AS_READ = 522
-    const val OPTION_AI_SUMMARIZE = 523
     const val OPTION_ADD_FILTER = 524
     const val OPTION_BURN_ONE_TIME = 526
     const val OPTION_SAVE_ONE_TIME = 527
@@ -422,17 +416,8 @@ object ChatHelper {
             icons.add(R.drawable.msg_translate)
         }
 
-        if (InuConfig.AI_SUMMARY_ENABLED.value && AiComposeHelper.endpointFor(AiComposeHelper.Feature.SUMMARY) != null && AiSummaryHelper.canSummarize(selectedObject)) {
-            items.add(LocaleController.getString(R.string.InuAiSummary))
-            options.add(OPTION_AI_SUMMARIZE)
-            icons.add(R.drawable.magic_stick_solar)
-        }
 
-        if (!selectedObject.messageOwner.summarizedOpen && InuConfig.HIDE_MESSAGE_SUMMARY.value && TranslateController.isSummarizable(selectedObject)) {
-            items.add(LocaleController.getString(R.string.InuSummarize))
-            options.add(OPTION_SUMMARIZE)
-            icons.add(R.drawable.magic_stick_solar)
-        }
+
 
         if (allowSendActions && !noforwards && dialogId != UserConfig.getInstance(activity.currentAccount).clientUserId) {
             items.add(LocaleController.getString(R.string.InuSaveToSavedMessages))
@@ -843,15 +828,8 @@ object ChatHelper {
 
             OPTION_TRANSLATE_REVERT -> TranslateHelper.revert(activity, selectedObjectGroup?.captionMessage ?: selectedObject)
 
-            OPTION_SUMMARIZE -> {
-                val cell = activity.findMessageCell(selectedObject.id, false) as? ChatMessageCell ?: return true
-                cell.delegate?.didPressSummarize(cell, false)
-            }
 
-            OPTION_AI_SUMMARIZE -> {
-                val context = activity.parentActivity ?: return true
-                AiSummaryHelper.summarize(context, selectedObject)
-            }
+
 
             OPTION_REMOVE_FROM_CACHE -> {
                 val parent = activity.parentActivity

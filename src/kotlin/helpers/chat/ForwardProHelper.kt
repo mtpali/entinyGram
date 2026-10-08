@@ -70,6 +70,7 @@ object ForwardProHelper {
         var toggleActiveColor: Int = 0
         var toggleInactiveColor: Int = 0
         var filterTabsView: FilterTabsView? = null
+        var searchRow: View? = null
         var selectedFilterId: Int = 0
     }
 
@@ -96,6 +97,7 @@ object ForwardProHelper {
         return states.getOrPut(alert) {
             AlertState().also {
                 it.active = pendingOverride ?: InuConfig.FORWARD_PRO.value
+                if (it.active) alert.showSendersName = false
                 it.editedText = pendingInitialEditedText
                 pendingOverride = null
                 pendingInitialEditedText = null
@@ -154,7 +156,7 @@ object ForwardProHelper {
 
         val authorIcon = makeToggle(R.drawable.msg_openprofile, R.string.ShowSendersName)
         val silentIcon = makeToggle(R.drawable.input_notify_off, R.string.SendWithoutSound)
-        val scheduleIcon = makeToggle(R.drawable.msg_calendar2_solar, R.string.ScheduleMessage)
+        val scheduleIcon = makeToggle(R.drawable.msg_calendar2, R.string.ScheduleMessage)
         val captionIcon = makeToggle(R.drawable.outline_caption_24, R.string.InuForwardProHideCaption)
         state.authorIcon = authorIcon
         state.silentSendIcon = silentIcon
@@ -204,7 +206,7 @@ object ForwardProHelper {
             addView(searchView, LinearLayout.LayoutParams(0, LayoutHelper.WRAP_CONTENT, 1f))
             addView(toggleContainer, LinearLayout.LayoutParams(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT))
         }
-
+        state.searchRow = searchRow
         frameLayout.addView(searchRow, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 40f, Gravity.TOP or Gravity.LEFT, 11f, 7f, 11f, 0f))
         updateQuickToggleIcons(alert)
     }
@@ -230,6 +232,36 @@ object ForwardProHelper {
     fun getScheduleDate(alert: ShareAlert): Int {
         val state = getState(alert)
         return if (state.active) state.scheduleDate else 0
+    }
+
+    @JvmStatic
+    fun onTopicsTransition(alert: ShareAlert, progress: Float) {
+        val state = getState(alert)
+        if (!state.active) return
+        val alpha = 1f - progress.coerceIn(0f, 1f)
+        for (view in listOfNotNull(state.searchRow, state.filterTabsView)) {
+            view.alpha = alpha
+            view.visibility = if (alpha == 0f) View.INVISIBLE else View.VISIBLE
+        }
+    }
+
+    @JvmStatic
+    fun getTopicReply(alert: ShareAlert, dialogId: Long): MessageObject? {
+        if (MessagesController.getInstance(alert.currentAccount).isMonoForum(dialogId)) return null
+        val topic = alert.selectedDialogTopics[alert.selectedDialogs.get(dialogId)] ?: return null
+        val message = topic.topicStartMessage?.takeIf { it.id == topic.id } ?: TLRPC.TL_message().apply {
+            id = topic.id
+            peer_id = MessagesController.getInstance(alert.currentAccount).getPeer(dialogId)
+            this.message = ""
+            action = TLRPC.TL_messageActionTopicCreate().apply { title = topic.title }
+        }
+        return MessageObject(alert.currentAccount, message, false, false).apply { isTopicMainMessage = true }
+    }
+
+    @JvmStatic
+    fun isTopicSelected(alert: ShareAlert, dialog: TLRPC.Dialog?, topic: TLRPC.TL_forumTopic?): Boolean {
+        if (dialog == null || topic == null) return false
+        return alert.selectedDialogTopics[alert.selectedDialogs.get(dialog.id)]?.id == topic.id
     }
 
     @JvmStatic
@@ -453,11 +485,11 @@ object ForwardProHelper {
             val isMonoForum = MessagesController.getInstance(account).isMonoForum(did)
             val topic = selectedTopics[selectedDialogs.get(did)]
             val monoForumPeerId = if (topic != null && isMonoForum) DialogObject.getPeerDialogId(topic.from_id) else 0L
-            val replyTopMsg = if (topic != null && !isMonoForum) MessageObject(account, topic.topicStartMessage, false, false).apply { isTopicMainMessage = true } else null
+            val replyTopMsg = getTopicReply(alert, did)
 
             if (hasComment) {
                 val params = SendMessagesHelper.SendMessageParams.of(
-                    comment.toString(), did, null, replyTopMsg, null, true,
+                    comment.toString(), did, replyTopMsg, replyTopMsg, null, true,
                     commentEntities, null, null, withSound, 0, 0, null, false
                 )
                 params.monoForumPeer = monoForumPeerId
@@ -580,7 +612,7 @@ object ForwardProHelper {
         scheduleDate: Int
     ) {
         SendMessagesHelper.prepareSendingMedia(
-            accountInstance, mediaList, targetDialogId, null,
+            accountInstance, mediaList, targetDialogId, replyTopMsg,
             replyTopMsg, null, null, false, true, null, withSound, scheduleDate, 0, 0,
             false, null, null, 0, messages[0].messageOwner?.invert_media ?: false, 0, monoForumPeerId, null
         )
@@ -670,7 +702,7 @@ object ForwardProHelper {
             val text = owner.message.orEmpty()
             if (text.isEmpty()) return false
             val params = SendMessagesHelper.SendMessageParams.of(
-                text, targetDialogId, null, replyTopMsg, null, false,
+                text, targetDialogId, replyTopMsg, replyTopMsg, null, false,
                 entities, null, null, withSound, 0, 0, null, false
             )
             params.monoForumPeer = monoForumPeerId
@@ -682,7 +714,7 @@ object ForwardProHelper {
         val photo = owner.media?.photo as? TLRPC.TL_photo
         if (photo != null) {
             val params = SendMessagesHelper.SendMessageParams.of(
-                photo, path, targetDialogId, null, replyTopMsg, caption, entities,
+                photo, path, targetDialogId, replyTopMsg, replyTopMsg, caption, entities,
                 null, null, withSound, 0, 0, owner.ttl, null, false, msg.hasMediaSpoilers()
             )
             params.monoForumPeer = monoForumPeerId
@@ -700,7 +732,7 @@ object ForwardProHelper {
                 msg.videoEditedInfo
             }
             val params = SendMessagesHelper.SendMessageParams.of(
-                document, videoEditedInfo, path, targetDialogId, null, replyTopMsg, caption, entities,
+                document, videoEditedInfo, path, targetDialogId, replyTopMsg, replyTopMsg, caption, entities,
                 null, null, withSound, 0, 0, owner.ttl, null, null, false, msg.hasMediaSpoilers()
             )
             params.monoForumPeer = monoForumPeerId

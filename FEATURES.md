@@ -3,12 +3,30 @@
 > non-exhaustive list of what this fork adds, tweaks or fixes vs stock telegram android.
 > keep this updated as patches are added/removed.
 
-most things are toggleable in `Settings → entinyGram`, with sensible opinionated defaults.
+most things are toggleable in `Settings → Telegram Settings`, with sensible opinionated defaults.
 
 🐶 - Inugram-exclusive (as far as i know, as of writing)
 📡 - entinyGram-exclusive
 
 ## entinyGram additions
+
+- **Prepared texts**: the composer opens on the offline Text tab beside Emoji, GIFs and Stickers; add, edit and delete texts per account, then insert at the cursor for review before sending — *inspired by the NagramXF quick-reply workflow*.
+- **Composer tabs**: centered, evenly spaced Emoji, GIFs, Stickers and Text labels that fit the panel.
+- **Forward Pro topics**: clear forum-topic selection and delivery to the selected topic, including edited messages and albums; sender attribution starts off.
+- **VPN963 settings**: English and Persian, Default icon pack, and a Telegram channel shortcut.
+- **Media defaults**: automatic downloads, pinned-message alerts, raise-to-listen and recording interruptions start off; power-saving options start off.
+- **Download folder**: Telegram; full numbers display without rounding by default.
+- **Slim source**: removed custom AI, iOS controls, local Premium unlocks, archive locking, internal updates, Aqua and Vintage icons; Pill Stack and its telemetry, weather and rate pages.
+- **Privacy settings**: removed Paranoia Mode, its hidden-chat filters, disguise and launcher shortcut; retired shortcuts are cleared after updates.
+- **Standard interface**: removed all seven Material Design switches, components and effects from Design settings.
+- **Chat defaults**: hide the All Chats folder tab when other folders exist, and set the primary floating action to None; saved user choices remain respected.
+- **Proxy title shortcut**: tap Telegram above the main chat list to open proxy settings, including while a connection-status title is shown.
+
+- **Firebase client**: restored entinyGram push configuration, retained in release APKs.
+
+- **Force LTR**: keep left-to-right layout with Persian; restart to apply.
+
+- **Telegram branding**: Telegram app name and NagramXF default icon; the blue Telegram icon remains available — *icon from [mtpali/NagramXF](https://github.com/mtpali/NagramXF)*.
 
 our own layer on top of the inugram patchset: restricted Telegram features, privacy tools, and power-user controls.
 
@@ -53,9 +71,6 @@ our own layer on top of the inugram patchset: restricted Telegram features, priv
 - 📡 **disable FLAG_SECURE**: allow screenshots and screen recording in protected windows, secret chats, expiring media and protected stories
 - 📡 **hide screenshot notifications** in secret chats
 - 📡 copy text and select messages in protected chats
-- 📡 **local Telegram Premium**: Premium UI and limits on the client side
-- 📡 **local custom emoji**: send Premium custom emoji without Premium
-- 📡 **local names**: change name, username, photo, bio, verified badge, Premium badge and emoji status of any person, bot, group or channel on your device only, with export and import
 - 📡 **content protection & forward bypass**:
   - save any story to gallery, or auto-save the ones you view
   - copy and forward from protected chats and channels
@@ -67,7 +82,6 @@ our own layer on top of the inugram patchset: restricted Telegram features, priv
 - 📡 **LLM translation with conversation context**
 - 📡 **input actions**: translate a draft before sending, link preview toggle, find & replace, attachment picker from the input menu
 - 📡 **translate in send preview** - *inspired by [NagramX](https://github.com/temporaryna/NagramXTurbo)*
-- 📡 **free voice transcription** via Groq Whisper, Gemini Flash, OpenAI or Cloudflare AI
 - 📡 **official-app emulation**: purchases and premium checkout without official app blocks
 - 📡 **raised limits**: pins, favorites and folders
 - 📡 **skip login code countdown** - *inspired by [NiagramX](https://github.com/HSSkyBoy/NiagramX)*
@@ -77,18 +91,8 @@ our own layer on top of the inugram patchset: restricted Telegram features, priv
 - 📡 **avatar corners**: adjustable radius - *ported from [NagramXF](https://github.com/Keeperorowner/NagramXF)*
 - 📡 **standalone AMOLED theme** - *ported from NagramX Turbo*
 - 📡 **theme switch recovery**: fixes interrupted theme transitions and stale Monet palettes
-- 📡 **liquid glass controls**: adjustable refraction angle and intensity - *ported from [Nagram](https://github.com/NextAlone/Nagram)*
 - 📡 **niche settings**: extra hidden options, revealed by tapping the settings header five times
-- 📡 **icon packs**: Stock, Solar, VKUI and Phosphor
-- 📡 **iOS-style design** - *ported from [exteraless](https://github.com/exteraless/exteraless), [Cherrygram](https://github.com/arsLan4k1390/Cherrygram) and [Nagram X Turbo](https://github.com/temporaryna/NagramXTurbo)*:
-  - compact bottom navigation bar
-  - compact chat header pill with adjustable avatar placement
-  - option to hide the chat avatar and keep the three-dot menu
-  - iOS-style input bar with optional compact mode
-- 📡 **action button style**: Accent, Neutral or White - *ported from [Nagram X Turbo](https://github.com/temporaryna/NagramXTurbo) (@temporaryna)*
-- 📡 **header centering** and customizable chat headers
-- 📡 **compact pill & profile transition fixes**
-- 📡 **auto marquee** for long titles - *inspired by auto_marquee plugin (@chestertech)*
+- 📡 **icon pack**: Default
 - 📡 **show spoilers directly**
 - 📡 **customizable bottom tabs**, with an optional separate Search button - *button layout ported from [NagramXF](https://github.com/Keeperorowner/NagramXF)*
 - 📡 **recent chats**: popup, side panel or full page with tabs, search and history limit - *inspired by [exteraless](https://github.com/exteraless/exteraless), [Aprel Gram](https://t.me/aprelmods) and [NagramXF](https://github.com/Keeperorowner/NagramXF)*
@@ -101,12 +105,11 @@ our own layer on top of the inugram patchset: restricted Telegram features, priv
 - 📡 **color-coded online dot** - *inspired by [NagramX](https://github.com/NextAlone/NagramX)*
 - 📡 **clock format**: system, 12-hour or 24-hour
 - 📡 **branded first-run intro**
-- 📡 **pill stack**: interactive pills in chats search bar - *ported from [exteraGram](https://github.com/exteraless/exteraless)*
 - 📡 **support card**: optional way to support the developer, can be hidden
 
 ### profile & identity tools
 
-- 📡 **developer badges** in chat headers and profiles
+- 📡 **developer badges** in chat headers and profiles, with working icon taps
 - 📡 **mutual contact icon**
 - 📡 **estimated registration date & DC** in profiles
 - 📡 **delete profile photos**: all or selected
@@ -118,9 +121,6 @@ our own layer on top of the inugram patchset: restricted Telegram features, priv
 
 - 📡 **message details & JSON view**
 - 📡 **url parsing improvements**
-- 📡 **AI providers as cards**: add any number of providers (Gemini, OpenAI, Groq, OpenRouter, Cloudflare or a custom OpenAI-compatible endpoint), auto-detect the endpoint, pick models from a searchable list and choose which one serves chat and voice
-- 📡 **AI by task**: voice-to-text, AI editor and message summaries each get their own provider, model and temperature; AI editor opens on your own provider
-- 📡 **ai compose & tools**: rewrite, translate and format drafts
 - 📡 **typing status spoof**: fake "typing…", "recording…" or "uploading…" in any chat
 - 📡 **background downloads** - *ported from [MaxExteraPlugins](https://github.com/MaxExteraPlugins)*
 - 📡 **small GIFs** in chat bubbles - *ported from [Nagram](https://github.com/NextAlone/Nagram)*
@@ -134,7 +134,7 @@ our own layer on top of the inugram patchset: restricted Telegram features, priv
 - 📡 **smaller APK**
 - 📡 **Forward Pro**: edit text or captions before forwarding, keep albums grouped - *inspired by Turbotel / NagramX*
 - 📡 **instant mark reactions as read** - *inspired by [exteraless](https://github.com/exteraless/exteraless)*
-- 📡 **calendar system**: Gregorian, Hijri or Jalali
+- 📡 **Persian calendar**: Solar Hijri dates and history calendar — *behavior inspired by [NagramXF](https://github.com/mtpali/NagramXF)*
 - 📡 **local folders** once the server limit is reached
 - 📡 **folder icon picker**
 - 📡 **separator after mention** - *inspired by [exteraGram](https://github.com/exteraSquad/exteraGram)*
@@ -196,14 +196,7 @@ the sections below contain the broader feature set: inugram functionality, featu
 - 🐶 toggleable scrim blur
 - toggle to disable glass glare
 - 🐶 reduce menu motion: skip context menu stagger and reaction bar slide-in/scale animations
-- material 3:
-  - switches
-  - fabs
-  - predictive back
-  - navigation animation
-  - lists & sections
-  - avatars (tonal on-container initials instead of white)
-  - profile action buttons
+- predictive back with stock or Material 3 motion
 - 🐶 toggle to replace profile photo bottom blur with a plain gradient fade
 - disable number rounding
 - export/import settings to/from json file
@@ -211,7 +204,6 @@ the sections below contain the broader feature set: inugram functionality, featu
 - search and deeplinks for fork settings, incl. `tg://settings/...` links tapped from inside a chat message
 - osmdroid-based map view (default) — pure-Java OpenStreetMap renderer with no native libraries, replacing the old MapLibre view to cut ~12MB of native code from the APK
 - customizable map preview provider
-- in-app updater - *ported from [Nekogram](https://github.com/Nekogram/Nekogram)*
 - 🐶 crash report sheet: catches uncaught exceptions, offers to share the log on next launch, posts a tap-to-restart notification
 - keep search query after picking a result in peer selection screens
 
@@ -353,17 +345,7 @@ the sections below contain the broader feature set: inugram functionality, featu
 - 🐶 launcher shortcut that asks which account to open
 - 📡 option to hide recent/frequent chats from the app icon's long-press menu
 - per-account passcodes, hidden accounts, panic code, hidden settings deeplink - *ported from [Nekogram](https://github.com/Nekogram/Nekogram)*
-- 🐶 paranoia mode: pick chats/channels to hide everywhere; all secret chats hidden too; exit by typing a custom code in chat search
-  - optional whitelist mode: hide everything *except* the picked chats (service notifications stay visible)
-  - optionally hide the Inugram settings entirely when enabled
-  - optionally disguise as stock Telegram when enabled
-  - optionally silence all notifications while enabled
-  - optionally hide all other accounts while enabled
-  - optionally collapse folder tabs (show only All Chats) while enabled
-  - optionally hide your own stories (ring, profile tabs, archive) while enabled
-  - optional launcher long-press shortcut to enter it quickly (hidden while active)
 - biometric confirmation before deleting/clearing a chat or logging out - *inspired by [Cherrygram](https://github.com/arsLan4k1390/Cherrygram)*
-- optional biometric lock on Archived Chats — ask once per app session or every time you open the archive
 - session list in Settings > Devices shows the real app name (entinyGram) instead of the registered api_id title ("Inugram")
 
 ### behavior

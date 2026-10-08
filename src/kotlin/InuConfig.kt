@@ -13,7 +13,6 @@ import desu.inugram.helpers.menu.MainTabsMenuConfig
 import desu.inugram.helpers.menu.MessageMenuConfig
 import desu.inugram.helpers.menu.ProfileInfoMenuConfig
 import desu.inugram.helpers.menu.ProfileMenuConfig
-import desu.inugram.helpers.pillstack.PillStackMenuConfig
 import desu.inugram.ui.FormattingPopupConfig
 
 object InuConfig {
@@ -236,34 +235,13 @@ object InuConfig {
     val SHOW_SECONDS = BoolItem("show_seconds", false)
 
     @JvmField
-    val DISABLE_ROUNDING = BoolItem("disable_rounding", false)
-
-    @JvmField
-    val MATERIAL3_SWITCHES = BoolItem("material3_switches", false)
-
-    @JvmField
-    val MATERIAL3_FABS = BoolItem("material3_fabs", true)
-
-    @JvmField
-    val M3_SECTIONS_STYLE = BoolItem("m3_sections_style", false)
-
-    @JvmField
-    val MATERIAL3_AVATARS = BoolItem("material3_avatars", false)
+    val DISABLE_ROUNDING = BoolItem("disable_rounding", true)
 
     @JvmField
     val AVATAR_CORNERS = FloatItem("avatar_corners", 28.0f)
 
     @JvmField
     val UNIFIED_AVATAR_RADIUS = BoolItem("unified_avatar_radius", false)
-
-    @JvmField
-    val MATERIAL_PROFILE_ACTIONS = BoolItem("material_profile_actions", false)
-
-    @JvmField
-    val M3_NAVIGATION_ANIMATION = BoolItem("m3_navigation_animation", false)
-
-    @JvmField
-    val M3_BOTTOM_TABS = BoolItem("m3_bottom_tabs", false)
 
     // entiny: monet_prev stores theme state snapshot before monet enabled ("day"|"night"|"autoNightType")
     @JvmField
@@ -291,17 +269,6 @@ object InuConfig {
 
     @JvmField
     val PREDICTIVE_BACK_MODE = PredictiveBackModeItem()
-
-    class CalendarSystemItem : IntItem("calendar_system", GREGORIAN) {
-        companion object {
-            const val GREGORIAN = 0
-            const val HIJRI = 1
-            const val PERSIAN = 2
-        }
-    }
-
-    @JvmField
-    val CALENDAR_SYSTEM = CalendarSystemItem()
 
     class ClockFormatItem : IntItem("clock_format", SYSTEM) {
         companion object {
@@ -409,7 +376,7 @@ object InuConfig {
     val ATTACH_CAMERA_SQUARE = BoolItem("attach_camera_square", true)
 
     @JvmField
-    val DOWNLOAD_DIRECTORY = StringItem("download_directory", "entinyGram")
+    val DOWNLOAD_DIRECTORY = "Telegram"
 
     @JvmField
     val AUTO_DISABLE_PROXY_ON_VPN = BoolItem("auto_disable_proxy_on_vpn", false)
@@ -480,7 +447,7 @@ object InuConfig {
     @JvmField val BOTTOM_TABS_SEARCH_SEPARATE = BoolItem("bottom_tabs_search_separate", false)
 
     @JvmField
-    val DIALOGS_FAB_MAIN_ACTION = IntItem("dialogs_fab_main_action", 1)
+    val DIALOGS_FAB_MAIN_ACTION = IntItem("dialogs_fab_main_action", 0)
 
     @JvmField
     val DIALOGS_FAB_SECONDARY_ACTION = IntItem("dialogs_fab_secondary_action", 2)
@@ -612,161 +579,7 @@ object InuConfig {
     val HIDE_BOT_WEBVIEW_DIALOGS = BoolItem("hide_bot_webview_dialogs", true)
 
     @JvmField
-    val HIDE_AI_EDITOR = BoolItem("hide_ai_editor", false)
-
-    @JvmField
-    val AI_CHAT_ACTIVE_PROVIDER = IntItem("ai_chat_active_provider", TRANSCRIBE_PROVIDER_GEMINI)
-
-    @JvmField
-    val AI_PROVIDERS = StringItem("ai_providers", "", exportable = false)
-
-    @JvmField
-    val AI_CHAT_PROVIDER_ID = StringItem("ai_chat_provider_id", "", exportable = false)
-
-    @JvmField
-    val AI_VOICE_PROVIDER_ID = StringItem("ai_voice_provider_id", "", exportable = false)
-
-    @JvmField
-    val AI_VOICE_MODEL = StringItem("ai_voice_model", "", exportable = false)
-
-    @JvmField
-    val AI_EDITOR_PROVIDER_ID = StringItem("ai_editor_provider_id", "", exportable = false)
-
-    @JvmField
-    val AI_EDITOR_MODEL = StringItem("ai_editor_model", "", exportable = false)
-
-    @JvmField
-    val AI_SUMMARY_PROVIDER_ID = StringItem("ai_summary_provider_id", "", exportable = false)
-
-    @JvmField
-    val AI_SUMMARY_MODEL = StringItem("ai_summary_model", "", exportable = false)
-
-    @JvmField
-    val AI_SUMMARY_TEMPERATURE = FloatItem("ai_summary_temperature", -1f)
-
-    @JvmField
-    val AI_PROVIDER_GROQ_KEY = StringItem("ai_provider_groq_key", "", exportable = false)
-
-    @JvmField
-    val AI_PROVIDER_GEMINI_KEY = StringItem("ai_provider_gemini_key", "", exportable = false)
-
-    @JvmField
-    val AI_PROVIDER_OPENAI_KEY = StringItem("ai_provider_openai_key", "", exportable = false)
-
-    @JvmField
-    val AI_CHAT_GROQ_MODEL = StringItem("ai_chat_groq_model", "llama-3.3-70b-versatile", exportable = false)
-
-    @JvmField
-    val AI_CHAT_GEMINI_MODEL = StringItem("ai_chat_gemini_model", "gemini-3.1-flash-lite", exportable = false)
-
-    @JvmField
-    val AI_CHAT_OPENAI_MODEL = StringItem("ai_chat_openai_model", "gpt-4o-mini", exportable = false)
-
-    @JvmField
-    val AI_CHAT_OPENROUTER_KEY = StringItem("ai_chat_openrouter_key", "", exportable = false)
-
-    @JvmField
-    val AI_CHAT_OPENROUTER_MODEL = StringItem("ai_chat_openrouter_model", "openai/gpt-4o-mini", exportable = false)
-
-    @JvmField
-    val AI_CHAT_CUSTOM_URL = StringItem("ai_chat_custom_url", "", exportable = false)
-
-    @JvmField
-    val AI_CHAT_CUSTOM_KEY = StringItem("ai_chat_custom_key", "", exportable = false)
-
-    @JvmField
-    val AI_CHAT_CUSTOM_MODEL = StringItem("ai_chat_custom_model", "", exportable = false)
-
-    @JvmField
-    val AI_CHAT_CUSTOM_NAME = StringItem("ai_chat_custom_name", "", exportable = false)
-
-    @JvmField
-    val AI_SUMMARY_ENABLED = BoolItem("ai_summary_enabled", false)
-
-    @JvmField
-    val AI_REASONING_ENABLED = BoolItem("ai_reasoning_enabled", false)
-
-    @JvmField
-    val AI_REASONING_EFFORT = StringItem("ai_reasoning_effort", "medium")
-
-    @JvmField
-    val AI_ROLES = desu.inugram.helpers.ai.AiRolesConfig("ai_roles")
-
-    @JvmField
-    val AI_ACTIVE_ROLE = StringItem("ai_active_role", "", exportable = false)
-
-    @JvmField
-    val AI_ROLES_SEEDED = BoolItem("ai_roles_seeded", false, exportable = false)
-
-    @JvmField
-    val AI_STREAM_ENABLED = BoolItem("ai_stream_enabled", true)
-
-    @JvmField
-    val AI_ONLY_ANSWER = BoolItem("ai_only_answer", false)
-
-    @JvmField
-    val AI_INSERT_QUOTE = BoolItem("ai_insert_quote", true)
-
-    @JvmField
-    val AI_TEMPERATURE = FloatItem("ai_temperature", 1.0f)
-
-    const val TRANSCRIBE_PROVIDER_GROQ = 0
-    const val TRANSCRIBE_PROVIDER_GEMINI = 1
-    const val TRANSCRIBE_PROVIDER_OPENAI = 2
-    const val TRANSCRIBE_PROVIDER_CF = 3
-    const val TRANSCRIBE_PROVIDER_CUSTOM = 4
-    const val AI_PROVIDER_OPENROUTER = 5
-
-    @JvmField
-    val AI_TRANSCRIBE_ENABLED = BoolItem("ai_transcribe_enabled", false)
-
-    @JvmField
-    val AI_TRANSCRIBE_PROVIDER = IntItem("ai_transcribe_provider", TRANSCRIBE_PROVIDER_GROQ)
-
-    @JvmField
-    val AI_TRANSCRIBE_GROQ_MODEL = StringItem("ai_transcribe_groq_model", "whisper-large-v3-turbo", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_GEMINI_MODEL = StringItem("ai_transcribe_gemini_model", "gemini-3.5-flash", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_OPENAI_MODEL = StringItem("ai_transcribe_openai_model", "whisper-1", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_CF_ACCOUNT_ID = StringItem("ai_transcribe_cf_account_id", "", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_CF_API_TOKEN = StringItem("ai_transcribe_cf_api_token", "", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_CF_MODEL = StringItem("ai_transcribe_cf_model", "@cf/openai/whisper", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_CUSTOM_URL = StringItem("ai_transcribe_custom_url", "", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_CUSTOM_KEY = StringItem("ai_transcribe_custom_key", "", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_CUSTOM_MODEL = StringItem("ai_transcribe_custom_model", "", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_CUSTOM_NAME = StringItem("ai_transcribe_custom_name", "", exportable = false)
-
-    @JvmField
-    val AI_TRANSCRIBE_PROMPT = StringItem("ai_transcribe_prompt", "")
-
-    @JvmField
-    val AI_TRANSCRIBE_LANGUAGE = StringItem("ai_transcribe_language", "")
-
-    @JvmField
     val HIDE_RICH_EDITOR_BUTTON = BoolItem("hide_rich_editor_button", false)
-
-    @JvmField
-    val HIDE_MESSAGE_SUMMARY = BoolItem("hide_message_summary", false)
-
-    @JvmField
-    val HIDE_IV_SUMMARY = BoolItem("hide_iv_summary", false)
 
     @JvmField
     val HIDE_REPOST_TO_STORY = BoolItem("hide_repost_to_story", true)
@@ -951,7 +764,7 @@ object InuConfig {
     val FOLDERS_UNREAD_COUNTER_MODE = FoldersUnreadCounterModeItem()
 
     @JvmField
-    val HIDE_ALL_CHATS_TAB = BoolItem("hide_all_chats_tab", false)
+    val HIDE_ALL_CHATS_TAB = BoolItem("hide_all_chats_tab", true)
 
     @JvmField
     val REMEMBER_SELECTED_FOLDER = BoolItem("remember_selected_folder", false)
@@ -1159,18 +972,6 @@ object InuConfig {
     val DISABLE_SCRIM_BLUR = BoolItem("disable_scrim_blur", false)
 
     @JvmField
-    val DISABLE_GLASS_GLARE = BoolItem("disable_glass_glare", false)
-
-    @JvmField
-    val LIQUID_GLASS_ANGLE = IntItem("liquid_glass_angle", 0)
-
-    @JvmField
-    val LIQUID_GLASS_INTENSITY = IntItem("liquid_glass_intensity", 75)
-
-    @JvmField
-    val LIQUID_GLASS_TINT = IntItem("liquid_glass_tint", 100)
-
-    @JvmField
     val NICHE_SETTINGS_UNLOCKED = BoolItem("niche_settings_unlocked", false)
 
     @JvmField
@@ -1217,18 +1018,6 @@ object InuConfig {
 
     @JvmField
     val CHAT_INPUT_TEXT_SIZE = IntItem("chat_input_text_size", 18)
-
-    @JvmField
-    val IOS_INPUT_BUTTON_PLACEMENT = BoolItem("ios_button_placement", false)
-
-    @JvmField
-    val IOS_INPUT_APPEARANCE = BoolItem("ios_input_appearance", false)
-
-    @JvmField
-    val COMPACT_INPUT_SIZE = BoolItem("compact_input_size", false)
-
-    @JvmField
-    val ACTION_BUTTON_STYLE = IntItem("action_button_style", 0)
 
     @JvmField
     val REACTION_BAR_BELOW = BoolItem("reaction_bar_below", false)
@@ -1370,53 +1159,8 @@ object InuConfig {
     @JvmField
     val ANIMATION_SPEED = FloatItem("animation_speed", 1.0f)
 
-    class IconReplacementItem : IntItem("icon_replacement", OFF) {
-        companion object {
-            const val OFF = 0
-            const val SOLAR = 1
-            const val VKUI = 2
-            const val PHOSPHOR = 3
-        }
-    }
-
-    @JvmField
-    val ICON_REPLACEMENT = IconReplacementItem()
-
-    @JvmField
-    val CENTER_TITLE_MAIN = BoolItem("center_title_main", false)
-
-    @JvmField
-    val CENTER_TITLE_CHATS = BoolItem("center_title_chats", false)
-
-    @JvmField
-    val CENTER_TITLE_RIGHT_AVATAR = BoolItem("center_title_right_avatar", false)
-
-    @JvmField
-    val IOS_BOTTOM_NAVIGATION_BAR = BoolItem("ios_bottom_navigation_bar", false)
-
-    @JvmField
-    val IOS_CHATS_TAB_RETURNS_TO_FIRST_FOLDER = BoolItem("ios_chats_tab_returns_to_first_folder", false)
-
     @JvmField
     val DIALOG_AVATAR_OPENS_PROFILE = BoolItem("dialog_avatar_opens_profile", false)
-
-    @JvmField
-    val IOS_CHAT_HEADER = BoolItem("ios_chat_header", false)
-
-    @JvmField
-    val HIDE_CHAT_AVATAR = BoolItem("hide_chat_avatar", false)
-
-    @JvmField
-    val IOS_CHAT_HEADER_AVATAR_SLOT = BoolItem("ios_chat_header_avatar_slot", false)
-
-    @JvmField
-    val IOS_CHAT_HEADER_AVATAR_STATIC = BoolItem("ios_chat_header_avatar_static", false)
-
-    @JvmField
-    val CHAT_HEADER_NO_PILL = BoolItem("chat_header_no_pill", false)
-
-    @JvmField
-    val CHAT_TITLE_MARQUEE = BoolItem("chat_title_marquee", false)
 
     @JvmField
     val SAVE_SELF_DESTRUCT_MEDIA = BoolItem("save_self_destruct_media", false)
@@ -1441,9 +1185,6 @@ object InuConfig {
 
     @JvmField
     val SAVE_SELECTED_FILES = BoolItem("save_selected_files", false)
-
-    @JvmField
-    val LOCAL_NAMES = BoolItem("local_names", false)
 
     @JvmField
     val AUTO_SAVE_STORIES = BoolItem("auto_save_stories", false)
@@ -1540,12 +1281,17 @@ object InuConfig {
     val REGEX_FILTER_MODE = RegexFilterModeItem()
 
     class NotificationIconItem : IntItem("notification_icon", TELEGRAM) {
+        override fun read(prefs: SharedPreferences): Int =
+            if (prefs.getInt(key, default) == TELEGRAM) TELEGRAM else NAGRAMXF
+
         companion object {
             const val TELEGRAM = 0
-            const val INUGRAM = 1
-            const val OLD_ENTINYGRAM = 2
+            const val NAGRAMXF = 1
         }
     }
+
+    @JvmField
+    val FORCE_LTR = BoolItem("force_ltr", false)
 
     @JvmField
     val NOTIFICATION_ICON = NotificationIconItem()
@@ -1572,23 +1318,6 @@ object InuConfig {
 
     @JvmField
     val MAP_PREVIEW_PROVIDER = MapPreviewProviderItem()
-
-    class UpdatesEnabledItem : BoolItem("updates_enabled", true, exportable = false) {
-        override fun read(prefs: SharedPreferences): Boolean {
-            if (!prefs.contains(key) && prefs.contains("update_channel")) {
-                val value = prefs.getInt("update_channel", 1) != 0
-                prefs.edit { putBoolean(key, value) }
-                return value
-            }
-            return prefs.getBoolean(key, default)
-        }
-    }
-
-    @JvmField
-    val UPDATES_ENABLED = UpdatesEnabledItem()
-
-    @JvmField
-    val UPDATES_INCLUDE_BETA = BoolItem("updates_include_beta", false)
 
     // entiny: push through a UnifiedPush distributor (ntfy etc.) instead of Firebase
     @JvmField
@@ -1624,9 +1353,6 @@ object InuConfig {
 
     @JvmField
     val MINIMIZE_STICKERS_CREATOR = BoolItem("minimize_stickers_creator", true, exportable = false)
-
-    @JvmField
-    val UPDATE_LAST_CHECK_MS = LongItem("update_last_check_ms", 0L, exportable = false)
 
     @JvmField
     val CLOUD_SYNC_ACCOUNT_ID = LongItem("cloud_sync_account_id", 0L, exportable = false)
@@ -1766,12 +1492,6 @@ object InuConfig {
     @JvmField
     val BIOMETRIC_ALLOW_DEVICE_CREDENTIAL = BoolItem("biometric_allow_device_credential", false)
 
-    @JvmField
-    val BIOMETRIC_LOCK_ARCHIVE = BoolItem("biometric_lock_archive", false)
-
-    @JvmField
-    val BIOMETRIC_LOCK_ARCHIVE_EVERY_TIME = BoolItem("biometric_lock_archive_every_time", false)
-
     // entiny: run-records are non-exportable so restoring a backup cannot re-arm the migration
     @JvmField
     val GHOST_MASTER_FLAG_MIGRATED = BoolItem("ghost_master_flag_migrated", false, exportable = false)
@@ -1851,12 +1571,6 @@ object InuConfig {
     val GHOST_SCOPE_CHANNELS = BoolItem("ghost_scope_channels", true)
 
     @JvmField
-    val LOCAL_PREMIUM = BoolItem("local_premium", false)
-
-    @JvmField
-    val LOCAL_CUSTOM_EMOJI = BoolItem("local_custom_emoji", false)
-
-    @JvmField
     val HIDE_DEV_BADGES = BoolItem("hide_dev_badges", false)
 
     @JvmField
@@ -1899,61 +1613,4 @@ object InuConfig {
     @JvmField
     val FEED_MARK_READ_ON_SCROLL = BoolItem("feed_mark_read_on_scroll", true)
 
-    // entiny: Pill Stack, ported from exteraGram/exteraless -- see src/kotlin/helpers/pillstack/.
-    @JvmField
-    val PILL_STACK_ENABLED = BoolItem("pill_stack_enabled", false)
-
-    @JvmField
-    val PILL_STACK_VISIBLE_COUNT = IntItem("pill_stack_visible_count", 1)
-
-    @JvmField
-    val PILL_STACK_INFINITE_SCROLL = BoolItem("pill_stack_infinite_scroll", false)
-
-    @JvmField
-    val PILL_STACK_ACTIVE_PILLS = StringItem("pill_stack_active_pills", "")
-
-    @JvmField
-    val PILL_STACK_HIDDEN_PILLS = StringItem("pill_stack_hidden_pills", "")
-
-    @JvmField
-    val PILL_STACK_LAYOUT = PillStackMenuConfig("pill_stack_layout")
-
-    @JvmField
-    val PILL_STACK_RATE_INSTANCES = StringItem("pill_stack_rate_instances", "")
-
-    @JvmField
-    val PILL_STACK_RATE_CACHE = StringItem("pill_stack_rate_cache", "", exportable = false)
-
-    @JvmField
-    val PILL_STACK_RATE_CACHE_TIME = LongItem("pill_stack_rate_cache_time", 0L, exportable = false)
-
-    @JvmField
-    val PILL_STACK_GOLD_CACHE = StringItem("pill_stack_gold_cache", "", exportable = false)
-
-    @JvmField
-    val PILL_STACK_GOLD_CACHE_TIME = LongItem("pill_stack_gold_cache_time", 0L, exportable = false)
-
-    // entiny: which pill id each visible slot last settled on, so a rebuild (e.g. reattaching the search bar) doesn't snap back to slot 0.
-    @JvmField
-    val PILL_STACK_LAST_ACTIVE = StringItem("pill_stack_last_active", "", exportable = false)
-
-    // entiny: niche -- render the pills in the action bar next to the menu instead of inside the chats search bar
-    @JvmField
-    val PILL_STACK_IN_HEADER = BoolItem("pill_stack_in_header", false)
-
-    @JvmField
-    val PILL_STACK_PROXY_COUNTRY = BoolItem("pill_stack_proxy_country", true)
-
-    // entiny: weather pill location -- the device position by default, or a point picked on the map (no location permission)
-    @JvmField
-    val WEATHER_USE_CURRENT_LOCATION = BoolItem("weather_use_current_location", true)
-
-    @JvmField
-    val WEATHER_FAHRENHEIT = BoolItem("weather_fahrenheit", false)
-
-    @JvmField
-    val WEATHER_LOCATION = StringItem("weather_location", "")
-
-    @JvmField
-    val WEATHER_LOCATION_ADDRESS = StringItem("weather_location_address", "")
 }

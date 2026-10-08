@@ -34,7 +34,7 @@ object InstantViewHelper {
 
     @JvmStatic
     fun shouldHideBlock(block: TL_iv.PageBlock?): Boolean {
-        if (InuConfig.HIDE_IV_SUMMARY.value && block is TL_iv.pageBlockBlockquote) {
+        if (block is TL_iv.pageBlockBlockquote) {
             val caption = ArticleViewer.getPlainText(block.caption) ?: return false
             return caption.toString() == COCOON_SUMMARY_CAPTION
         }

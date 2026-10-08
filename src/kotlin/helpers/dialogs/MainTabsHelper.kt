@@ -27,49 +27,35 @@ import desu.inugram.helpers.icons.ScaledIconDrawable
 import desu.inugram.helpers.feed.FeedHelper
 import desu.inugram.helpers.menu.MainTabsMenuConfig
 import desu.inugram.helpers.security.PasscodeHelper
-import desu.inugram.helpers.theme.M3MainTabsHelper
 
 
 object MainTabsHelper {
     const val MAIN_TABS_MARGIN_COMPACT: Int = 4
     const val MAIN_TABS_HEIGHT_COMPACT: Int = 48
-    const val MAIN_TABS_HEIGHT_IOS: Int = 60
     const val TAB_WIDTH: Int = 76
     const val TAB_WIDTH_COMPACT: Int = 64
     const val TAB_PADDING: Int = 4
     private const val TAB_SCRIM_RADIUS = 28
     private const val TABS_INNER_PADDING: Int = 4
-    private const val TABS_INNER_PADDING_IOS: Int = 6
-    private const val TABS_SIDE_PADDING_EXTRA_IOS: Int = 8
 
     @JvmStatic
     val isCompact: Boolean
         get() = InuConfig.BOTTOM_TABS_COMPACT_MODE.value
 
     @JvmStatic
-    val isMaterial: Boolean
-        get() = InuConfig.M3_BOTTOM_TABS.value
-
-    @JvmStatic
-    val isIos: Boolean
-        get() = InuConfig.IOS_BOTTOM_NAVIGATION_BAR.value && !isMaterial
-
-    @JvmStatic
     fun createTabScrimBackground(anchor: View, color: Int): Drawable {
-        val radius = if (isMaterial) M3MainTabsHelper.SCRIM_RADIUS else TAB_SCRIM_RADIUS
-        val bg = Theme.createRoundRectDrawable(dp(radius.toFloat()), color)
+        val bg = Theme.createRoundRectDrawable(dp(TAB_SCRIM_RADIUS.toFloat()), color)
         bg.paint.setShadowLayer(dp(6f).toFloat(), 0f, dp(1f).toFloat(), Theme.multAlpha(0xFF000000.toInt(), 0.15f))
-        M3MainTabsHelper.sizeScrimBackground(bg, anchor)
         return bg
     }
 
     @JvmStatic
     fun getMainTabsBottomOffset(navigationBarHeight: Int): Int =
-        if (isMaterial) 0 else navigationBarHeight + dp(mainTabsMargin.toFloat())
+        navigationBarHeight + dp(mainTabsMargin.toFloat())
 
     @JvmStatic
     fun getMainTabsBlurHeight(navigationBarHeight: Int): Int =
-        dp(mainTabsHeight.toFloat()) + if (isMaterial) navigationBarHeight else 0
+        dp(mainTabsHeight.toFloat())
 
     @JvmStatic
     val isHidden: Boolean
@@ -91,7 +77,7 @@ object MainTabsHelper {
     fun hasSearchTab(): Boolean = MainTabsMenuConfig.Item.SEARCH in cachedEnabledOrder
 
     @JvmStatic
-    fun isSearchTabSeparate(): Boolean = hasSearchTab() && InuConfig.BOTTOM_TABS_SEARCH_SEPARATE.value && !isMaterial
+    fun isSearchTabSeparate(): Boolean = hasSearchTab() && InuConfig.BOTTOM_TABS_SEARCH_SEPARATE.value
 
     @JvmStatic
     fun setEnabled(index: Int, enabled: Boolean) {
@@ -133,8 +119,6 @@ object MainTabsHelper {
     @JvmStatic
     val mainTabsHeight: Int
         get() = when {
-            isMaterial -> M3MainTabsHelper.barHeight
-            isIos -> MAIN_TABS_HEIGHT_IOS
             isCompact -> MAIN_TABS_HEIGHT_COMPACT
             else -> DialogsActivity.MAIN_TABS_HEIGHT
         }
@@ -142,7 +126,6 @@ object MainTabsHelper {
     @JvmStatic
     val mainTabsMargin: Int
         get() = when {
-            isMaterial -> 0
             isCompact -> MAIN_TABS_MARGIN_COMPACT
             else -> DialogsActivity.MAIN_TABS_MARGIN
         }
@@ -150,21 +133,6 @@ object MainTabsHelper {
     @JvmStatic
     val mainTabsHeightWithMargins: Int
         get() = mainTabsHeight + mainTabsMargin * 2
-
-    @JvmStatic
-    val tabsInnerPaddingVertical: Int
-        get() = mainTabsMargin + if (isIos) TABS_INNER_PADDING_IOS else TABS_INNER_PADDING
-
-    @JvmStatic
-    val iosSidePaddingExtra: Int
-        get() = if (isIos) dp(TABS_SIDE_PADDING_EXTRA_IOS.toFloat()) else 0
-
-    @JvmStatic
-    fun applyIosTabsLayout(tabsView: org.telegram.ui.MainTabsLayout) {
-        if (!isIos) return
-        tabsView.inu_materialTabs = true
-        tabsView.setMaxWidth(0)
-    }
 
     @JvmStatic
     val fragmentsCount: Int

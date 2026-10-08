@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 7 Oct 2026 12:34:43 +0330
+Subject: [*] Initialize every network profile with downloads off
+
+---
+ .../main/java/org/telegram/messenger/DownloadController.java  | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/DownloadController.java b/TMessagesProj/src/main/java/org/telegram/messenger/DownloadController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/DownloadController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/DownloadController.java
+@@ -268,11 +268,8 @@ public class DownloadController extends BaseController implements NotificationCe
+         boolean newConfig;
+         if ((newConfig = preferences.contains("newConfig")) || !getUserConfig().isClientActivated()) {
+             mobilePreset = new Preset(preferences.getString("mobilePreset", defaultMedium), defaultMedium);
+-            if (!preferences.contains("mobilePreset")) mobilePreset.enabled = false;
+             wifiPreset = new Preset(preferences.getString("wifiPreset", defaultHigh), defaultHigh);
+-            if (!preferences.contains("wifiPreset")) wifiPreset.enabled = false;
+             roamingPreset = new Preset(preferences.getString("roamingPreset", defaultLow), defaultLow);
+-            if (!preferences.contains("roamingPreset")) roamingPreset.enabled = false;
+             currentMobilePreset = preferences.getInt("currentMobilePreset", 3);
+             currentWifiPreset = preferences.getInt("currentWifiPreset", 3);
+             currentRoamingPreset = preferences.getInt("currentRoamingPreset", 3);
+@@ -323,6 +320,7 @@ public class DownloadController extends BaseController implements NotificationCe
+             editor.commit();
+         }
+ 
++        desu.inugram.helpers.DownloadDefaultsHelper.initialize(this, preferences);
+         AndroidUtilities.runOnUIThread(() -> {
+             getNotificationCenter().addObserver(DownloadController.this, NotificationCenter.fileLoadFailed);
+             getNotificationCenter().addObserver(DownloadController.this, NotificationCenter.fileLoaded);

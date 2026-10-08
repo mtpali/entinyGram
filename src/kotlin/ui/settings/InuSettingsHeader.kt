@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import desu.inugram.helpers.theme.MonetHelper
-import desu.inugram.helpers.update.UpdateHelper
+import desu.inugram.helpers.VersionHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.BuildConfig
 import org.telegram.messenger.BuildVars
@@ -37,9 +37,9 @@ class InuSettingsHeader(context: Context) : LinearLayout(context) {
 
     private val title = TextView(context).apply {
         text = if (BuildVars.isBetaApp()) {
-            "entinyGram ${LocaleController.getString(R.string.InuVersionBetaSuffix)}"
+            "VPN963 ${LocaleController.getString(R.string.InuVersionBetaSuffix)}"
         } else {
-            "entinyGram"
+            "VPN963"
         }
         setTextSize(android.util.TypedValue.COMPLEX_UNIT_DIP, 18f)
         setTypeface(AndroidUtilities.bold())
@@ -49,7 +49,7 @@ class InuSettingsHeader(context: Context) : LinearLayout(context) {
     }
 
     private val subtitle = TextView(context).apply {
-        text = "${UpdateHelper.stockVersionName} (${BuildConfig.STOCK_VERSION_CODE})"
+        text = "${VersionHelper.stockVersionName} (${BuildConfig.STOCK_VERSION_CODE})"
         setTextSize(android.util.TypedValue.COMPLEX_UNIT_DIP, 13f)
         setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteGrayText2))
         isSingleLine = true

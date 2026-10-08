@@ -212,7 +212,7 @@ diff --git a/TMessagesProj/src/main/AndroidManifest.xml b/TMessagesProj/src/main
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/AndroidManifest.xml
 +++ b/TMessagesProj/src/main/AndroidManifest.xml
-@@ -624,12 +624,6 @@
+@@ -608,12 +608,6 @@
              </intent-filter>
          </receiver>
  
@@ -225,7 +225,7 @@ index 0000000..0000000 100644
          <receiver android:name=".WearReplyReceiver" android:enabled="true"/>
  
          <service
-@@ -740,25 +734,6 @@
+@@ -724,25 +718,6 @@
  
          <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true" />
  
@@ -925,7 +925,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java b/T
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
-@@ -90,9 +90,6 @@ import androidx.core.view.ViewCompat;
+@@ -88,9 +88,6 @@ import androidx.core.view.ViewCompat;
  
  import com.google.android.gms.common.api.Status;
  import com.google.common.primitives.Longs;
@@ -935,7 +935,7 @@ index 0000000..0000000 100644
  
  import org.telegram.PhoneFormat.PhoneFormat;
  import org.telegram.messenger.AccountInstance;
-@@ -1942,15 +1939,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
+@@ -1928,15 +1925,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
  
                      final LinkManager linkManager = new LinkManager(this, intentAccount[0], progress, openedTelegram);
                      if (linkManager.handle(data)) {
@@ -951,7 +951,7 @@ index 0000000..0000000 100644
                          return true;
                      }
  
-@@ -2859,15 +2847,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
+@@ -2845,15 +2833,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                                  }
                              }
                          }

@@ -8,7 +8,6 @@ import android.util.Pair
 import androidx.core.content.edit
 import androidx.core.graphics.withSave
 import desu.inugram.InuConfig
-import desu.inugram.helpers.security.ParanoiaHelper
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.MessagesController
@@ -282,7 +281,6 @@ object FolderHelper {
     @JvmStatic
     @JvmOverloads
     fun shouldExcludeFromCounter(currentAccount: Int, dialogId: Long, user: TLRPC.User? = null): Boolean {
-        if (ParanoiaHelper.isHidden(currentAccount, dialogId)) return true
         val mode = InuConfig.FOLDERS_UNREAD_COUNTER_MODE.value
         if (mode == InuConfig.FoldersUnreadCounterModeItem.EXCLUDE_MUTED_NON_DMS && dialogId > 0) {
             if (user == null || !user.bot) return false

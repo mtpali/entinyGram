@@ -3,13 +3,9 @@ package desu.inugram.ui.settings
 import android.view.View
 import desu.inugram.InuConfig
 import desu.inugram.SearchRegistry
-import desu.inugram.helpers.profile.LocalNameHelper
 import desu.inugram.helpers.InuUtils
-import desu.inugram.helpers.LocalPremiumHelper
 import org.telegram.messenger.LocaleController
-import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
-import org.telegram.messenger.UserConfig
 import org.telegram.ui.Cells.NotificationsCheckCell
 import org.telegram.ui.Components.UItem
 import org.telegram.ui.Components.UniversalAdapter
@@ -24,33 +20,7 @@ class TosSettingsActivity : SettingsPageActivity() {
         items.add(mkSubPageButton(CAT_ANTI_DELETION, R.drawable.inu_tabler_trash_off, LocaleController.getString(R.string.InuAntiDeletion)))
         items.add(mkSubPageButton(CAT_STALKER_PACK, R.drawable.inu_tabler_radar, LocaleController.getString(R.string.InuStalkerPack)))
         items.add(mkSubPageButton(CAT_REGEX_FILTER, R.drawable.inu_tabler_filter, LocaleController.getString(R.string.InuRegexFilter)))
-        items.add(mkSubPageButton(CAT_DEVICE_SPOOF, R.drawable.phosphor_device_mobile, LocaleController.getString(R.string.InuDeviceSpoof)))
-        items.add(UItem.asShadow(null))
-
-        items.add(UItem.asHeader(LocaleController.getString(R.string.InuPremiumUnlock)))
-        items.add(
-            mkTwoLineCheckItem(
-                TOGGLE_LOCAL_PREMIUM,
-                R.string.InuLocalPremium,
-                R.string.InuLocalPremiumInfo,
-                InuConfig.LOCAL_PREMIUM.value,
-            )
-        )
-        items.add(
-            mkTwoLineCheckItem(
-                TOGGLE_LOCAL_CUSTOM_EMOJI,
-                R.string.InuLocalCustomEmoji,
-                R.string.InuLocalCustomEmojiInfo,
-                InuConfig.LOCAL_CUSTOM_EMOJI.value,
-            )
-        )
-        items.add(
-            UItem.asButton(
-                BUTTON_LOCAL_NAMES,
-                LocaleController.getString(R.string.InuLocalNames),
-                if (InuConfig.LOCAL_NAMES.value) LocalNameHelper.count(currentAccount).toString() else LocaleController.getString(R.string.PasswordOff),
-            )
-        )
+        items.add(mkSubPageButton(CAT_DEVICE_SPOOF, R.drawable.msg_newphone, LocaleController.getString(R.string.InuDeviceSpoof)))
         items.add(UItem.asShadow(null))
 
         items.add(UItem.asHeader(LocaleController.getString(R.string.InuContentProtectionBypass)))
@@ -157,24 +127,7 @@ class TosSettingsActivity : SettingsPageActivity() {
             CAT_STALKER_PACK -> presentFragment(StalkerPackSettingsActivity())
             CAT_REGEX_FILTER -> presentFragment(RegexFilterSettingsActivity())
             CAT_DEVICE_SPOOF -> presentFragment(desu.inugram.ui.spoof.DeviceSpoofSettingsActivity())
-            BUTTON_LOCAL_NAMES -> presentFragment(LocalNamesSettingsActivity())
 
-            TOGGLE_LOCAL_PREMIUM -> {
-                val new = InuConfig.LOCAL_PREMIUM.toggle()
-                (view as? NotificationsCheckCell)?.isChecked = new
-                val userConfig = UserConfig.getInstance(currentAccount)
-                if (new) {
-                    LocalPremiumHelper.applyToSelfUser(userConfig.getCurrentUser(), currentAccount)
-                } else {
-                    LocalPremiumHelper.clearSelfUser(userConfig.getCurrentUser())
-                }
-                NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.currentUserPremiumStatusChanged)
-                NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.premiumStatusChangedGlobal)
-            }
-            TOGGLE_LOCAL_CUSTOM_EMOJI -> {
-                val new = InuConfig.LOCAL_CUSTOM_EMOJI.toggle()
-                (view as? NotificationsCheckCell)?.isChecked = new
-            }
             TOGGLE_SAVE_ANY_STORY -> {
                 val new = InuConfig.SAVE_ANY_STORY.toggle()
                 (view as? NotificationsCheckCell)?.isChecked = new
@@ -223,9 +176,6 @@ class TosSettingsActivity : SettingsPageActivity() {
         private val CAT_REGEX_FILTER = InuUtils.generateId()
         private val CAT_DEVICE_SPOOF = InuUtils.generateId()
 
-        private val TOGGLE_LOCAL_PREMIUM = InuUtils.generateId()
-        private val TOGGLE_LOCAL_CUSTOM_EMOJI = InuUtils.generateId()
-        private val BUTTON_LOCAL_NAMES = InuUtils.generateId()
         private val TOGGLE_SAVE_ANY_STORY = InuUtils.generateId()
         private val TOGGLE_AUTO_SAVE_STORIES = InuUtils.generateId()
         private val TOGGLE_ALLOW_FORWARD_RESTRICTED = InuUtils.generateId()
@@ -243,9 +193,6 @@ class TosSettingsActivity : SettingsPageActivity() {
             iconRes = R.drawable.inu_tabler_lock_open,
             factory = ::TosSettingsActivity,
             entries = listOf(
-                SearchRegistry.Entry("local-premium", R.string.InuLocalPremium, TOGGLE_LOCAL_PREMIUM),
-                SearchRegistry.Entry("local-custom-emoji", R.string.InuLocalCustomEmoji, TOGGLE_LOCAL_CUSTOM_EMOJI),
-                SearchRegistry.Entry("local-names", R.string.InuLocalNames, BUTTON_LOCAL_NAMES),
                 SearchRegistry.Entry("save-any-story", R.string.InuSaveAnyStory, TOGGLE_SAVE_ANY_STORY),
                 SearchRegistry.Entry("auto-save-stories", R.string.InuAutoSaveStories, TOGGLE_AUTO_SAVE_STORIES),
                 SearchRegistry.Entry("allow-forward-restricted", R.string.InuAllowForwardRestricted, TOGGLE_ALLOW_FORWARD_RESTRICTED),

@@ -1,3 +1,5 @@
+> Personal Telegram build: see [FORK.md](FORK.md) for branding, Force LTR, ARM downloads and build configuration.
+
 <p align="center">
   <img src="assets/logo.svg" alt="entinyGram Logo" width="108" height="108" />
 </p>

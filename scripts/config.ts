@@ -58,30 +58,6 @@ export const forkSyncFiles: ForkSyncFile[] = [
     target: 'TMessagesProj/src/main/res/values',
   },
   {
-    source: 'src/res/values-ru/strings_inu.xml',
-    target: 'TMessagesProj/src/main/res/values-ru',
-  },
-  {
-    source: 'src/res/values-uk/strings_inu.xml',
-    target: 'TMessagesProj/src/main/res/values-uk',
-  },
-  {
-    source: 'src/res/values-ja/strings_inu.xml',
-    target: 'TMessagesProj/src/main/res/values-ja',
-  },
-  {
-    source: 'src/res/values-zh-rCN/strings_inu.xml',
-    target: 'TMessagesProj/src/main/res/values-zh-rCN',
-  },
-  {
-    source: 'src/res/values-tr/strings_inu.xml',
-    target: 'TMessagesProj/src/main/res/values-tr',
-  },
-  {
-    source: 'src/res/values-ar/strings_inu.xml',
-    target: 'TMessagesProj/src/main/res/values-ar',
-  },
-  {
     source: 'src/res/values-fa/strings_inu.xml',
     target: 'TMessagesProj/src/main/res/values-fa',
   },
@@ -102,18 +78,6 @@ export const forkSyncFiles: ForkSyncFile[] = [
   {
     source: 'src/res/drawable-xxhdpi/*',
     target: 'TMessagesProj/src/main/res/drawable-xxhdpi',
-  },
-  {
-    source: 'src/res/drawable/solar/*',
-    target: 'TMessagesProj/src/main/res/drawable',
-  },
-  {
-    source: 'src/res/drawable/vkui/*',
-    target: 'TMessagesProj/src/main/res/drawable',
-  },
-  {
-    source: 'src/res/drawable/phosphor/*',
-    target: 'TMessagesProj/src/main/res/drawable',
   },
   {
     source: 'src/res/drawable/*.xml',
@@ -143,6 +107,16 @@ export const forkSyncFiles: ForkSyncFile[] = [
     replace: true,
   },
   {
+    source: 'src/firebase/google-services.json',
+    target: 'TMessagesProj',
+    replace: true,
+  },
+  {
+    source: 'src/firebase/google-services.json',
+    target: 'TMessagesProj_App',
+    replace: true,
+  },
+  {
     source: 'src/google-services.json',
     target: 'TMessagesProj',
     replace: true,
@@ -153,6 +127,16 @@ export const forkSyncFiles: ForkSyncFile[] = [
     replace: true,
   },
 ]
+
+for (const density of ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']) {
+  for (const type of ['mipmap', 'drawable']) {
+    forkSyncFiles.push({
+      source: `src/res/launcher/generated/${type}-${density}/*`,
+      target: `TMessagesProj/src/main/res/${type}-${density}`,
+      replace: true,
+    })
+  }
+}
 
 export const ICON_SELECTION: { pack: IconifyJSON, icons: string[], options?: SvgToDrawableOptions }[] = [
   {
@@ -191,7 +175,6 @@ export const ICON_SELECTION: { pack: IconifyJSON, icons: string[], options?: Svg
       'cpu',
       'server',
       'microphone',
-      'spy',
       'key',
       'fingerprint',
       'shield-cancel',

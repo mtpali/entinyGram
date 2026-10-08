@@ -13,7 +13,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivity
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java
 +++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java
-@@ -3056,14 +3056,12 @@ public class ChatActivityEnterView extends FrameLayout implements
+@@ -3040,14 +3040,12 @@ public class ChatActivityEnterView extends FrameLayout implements
                          if (!hasRecordVideo || calledRecordRunnable) {
                              startedDraggingX = -1;
                              if (hasRecordVideo && isInVideoMode()) {
@@ -30,7 +30,7 @@ index 0000000..0000000 100644
                                      return true;
                                  }
                                  delegate.needStartRecordVideo(1, true, 0, 0, voiceOnce ? 0x7FFFFFFF : 0, effectId, 0);
-@@ -3072,7 +3070,7 @@ public class ChatActivityEnterView extends FrameLayout implements
+@@ -3056,7 +3054,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                                  if (recordingAudioVideo && isInScheduleMode()) {
                                      AlertsCreator.createScheduleDatePickerDialog(parentActivity, parentFragment.getDialogId(), (notify, scheduleDate, scheduleRepeatPeriod) -> MediaController.getInstance().stopRecording(1, notify, scheduleDate, false, 0), () -> MediaController.getInstance().stopRecording(0, false, 0, false, 0), resourcesProvider);
                                  }
@@ -39,7 +39,7 @@ index 0000000..0000000 100644
                                      if (isInVideoMode()) {
                                          if (slideText != null) {
                                              slideText.setEnabled(false);
-@@ -3088,9 +3086,7 @@ public class ChatActivityEnterView extends FrameLayout implements
+@@ -3072,9 +3070,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                                              slideText.setEnabled(false);
                                          }
                                      }
@@ -50,7 +50,7 @@ index 0000000..0000000 100644
                                      return true;
                                  }
                                  MediaController.getInstance().stopRecording(isInScheduleMode() ? 3 : 1, true, 0, voiceOnce, 0);
-@@ -3178,14 +3174,12 @@ public class ChatActivityEnterView extends FrameLayout implements
+@@ -3162,14 +3158,12 @@ public class ChatActivityEnterView extends FrameLayout implements
                          } else if (!hasRecordVideo || calledRecordRunnable) {
                              startedDraggingX = -1;
                              if (hasRecordVideo && isInVideoMode()) {
@@ -67,7 +67,7 @@ index 0000000..0000000 100644
                                      return true;
                                  }
                                  CameraController.getInstance().cancelOnInitRunnable(onFinishInitCameraRunnable);
-@@ -3194,7 +3188,7 @@ public class ChatActivityEnterView extends FrameLayout implements
+@@ -3178,7 +3172,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                              } else if (!sendVoiceEnabled) {
                                  delegate.needShowMediaBanHint();
                              } else {
@@ -76,7 +76,7 @@ index 0000000..0000000 100644
                                      if (sendButtonVisible) {
                                          calledRecordRunnable = true;
                                      }
-@@ -3203,9 +3197,7 @@ public class ChatActivityEnterView extends FrameLayout implements
+@@ -3187,9 +3181,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                                      if (slideText != null) {
                                          slideText.setEnabled(false);
                                      }
@@ -87,7 +87,7 @@ index 0000000..0000000 100644
                                      return true;
                                  }
                                  if (recordingAudioVideo && isInScheduleMode()) {
-@@ -12476,7 +12468,10 @@ public class ChatActivityEnterView extends FrameLayout implements
+@@ -12457,7 +12449,10 @@ public class ChatActivityEnterView extends FrameLayout implements
                              }
                          };
                          if (!showConfirmAlert(runnable)) {
@@ -99,7 +99,7 @@ index 0000000..0000000 100644
                          }
                      });
                  }
-@@ -12750,7 +12745,10 @@ public class ChatActivityEnterView extends FrameLayout implements
+@@ -12731,7 +12726,10 @@ public class ChatActivityEnterView extends FrameLayout implements
                      MediaDataController.getInstance(currentAccount).addRecentSticker(MediaDataController.TYPE_IMAGE, parent, sticker, (int) (System.currentTimeMillis() / 1000), false);
                  };
                  if (!showConfirmAlert(runnable)) {
