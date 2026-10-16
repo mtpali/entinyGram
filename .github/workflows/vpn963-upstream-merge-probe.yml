@@ -22,8 +22,15 @@ jobs:
           persist-credentials: false
       - name: Fetch verified upstream release
         run: |
-          git fetch --no-tags https://github.com/entaytion/entinyGram.git refs/tags/v13.0.2-202610160
-          test "$(git rev-parse FETCH_HEAD)" = ce6a86fac193cbec5d3122e1ef9e5006e53a9d4c
+          git fetch --no-tags https://github.com/entaytion/entinyGram.git \\
+            refs/tags/v12.10.6-202610040:refs/tags/vpn963-upstream-old \\
+            refs/tags/v13.0.2-202610160:refs/tags/vpn963-upstream-new
+          test "$(git rev-parse refs/tags/vpn963-upstream-old)" = 77b9c206998cc4bdaf8d24cc55ae312daf426c24
+          test "$(git rev-parse refs/tags/vpn963-upstream-new)" = ce6a86fac193cbec5d3122e1ef9e5006e53a9d4c
+          root=$(git rev-list --max-parents=0 HEAD | head -1)
+          test -n "$root"
+          git replace --graft "$root" refs/tags/vpn963-upstream-old
+          test "$(git merge-base HEAD refs/tags/vpn963-upstream-new)" = 77b9c206998cc4bdaf8d24cc55ae312daf426c24
       - name: Analyze merge without committing or pushing
         run: |
           set -uo pipefail
@@ -31,12 +38,12 @@ jobs:
           git config user.email '316823762+mtpali@users.noreply.github.com'
           {
             echo '=== Common ancestor ==='
-            git merge-base HEAD FETCH_HEAD || true
+            git merge-base HEAD refs/tags/vpn963-upstream-new || true
             echo '=== Upstream and fork commits since ancestor ==='
             git rev-list --left-right --count HEAD...FETCH_HEAD || true
             echo '=== Merge attempt ==='
             result=0
-            git merge --no-commit --no-ff FETCH_HEAD || result=$?
+            git merge --no-commit --no-ff refs/tags/vpn963-upstream-new || result=$?
             echo "Merge exit code: $result"
             echo '=== Conflicting files ==='
             git diff --name-only --diff-filter=U | head -200 || true
