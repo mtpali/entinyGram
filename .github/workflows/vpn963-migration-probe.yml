@@ -24,9 +24,10 @@ jobs:
           bun-version: 1.3.13
       - name: Install StGit
         run: |
-          sudo apt-get update
-          sudo apt-get install -y stgit
+          curl -fsSL --retry 3 -o /tmp/stgit.deb https://github.com/stacked-git/stgit/releases/download/v2.7.0/stgit_2.7.0-1_amd64.deb
+          sudo apt-get install -y /tmp/stgit.deb
           stg --version
+          stg import --help | grep -q -- '--3way'
       - name: Configure Git
         run: |
           git config --global user.name 'mtpali migration probe'
