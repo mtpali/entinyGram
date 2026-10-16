@@ -1,0 +1,58 @@
+name: VPN963 upstream integration diagnostics
+
+on:
+  push:
+    branches: [vpn963-v13.0.2]
+    paths:
+      - '.github/workflows/vpn963-upstream-merge-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  merge-probe:
+    name: Inspect v13.0.2 upstream merge
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Fetch verified upstream release
+        run: |
+          git fetch --no-tags https://github.com/entaytion/entinyGram.git refs/tags/v13.0.2-202610160
+          test "$(git rev-parse FETCH_HEAD)" = ce6a86fac193cbec5d3122e1ef9e5006e53a9d4c
+      - name: Analyze merge without committing or pushing
+        run: |
+          set -uo pipefail
+          git config user.name 'mtpali migration probe'
+          git config user.email '316823762+mtpali@users.noreply.github.com'
+          {
+            echo '=== Common ancestor ==='
+            git merge-base HEAD FETCH_HEAD || true
+            echo '=== Upstream and fork commits since ancestor ==='
+            git rev-list --left-right --count HEAD...FETCH_HEAD || true
+            echo '=== Merge attempt ==='
+            git merge --no-commit --no-ff FETCH_HEAD
+            result=$?
+            echo "Merge exit code: $result"
+            echo '=== Conflicting files ==='
+            git diff --name-only --diff-filter=U || true
+            echo '=== Conflict statuses ==='
+            git status --short | grep -E '^(AA|AU|UA|DD|DU|UD|UU)' || true
+            echo '=== File status summary ==='
+            git status --short | awk '{print $1}' | sort | uniq -c | sort -nr | head -30
+            echo '=== Critical migration paths ==='
+            git status --short | grep -E 'src/(kotlin|fork)|patches/entiny|series|upstream-commit|scripts/|\.github/' | head -200 || true
+          } > integration-report.txt 2>&1
+          cat integration-report.txt
+      - name: Upload integration report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vpn963-v13-upstream-merge-report
+          path: integration-report.txt
+          if-no-files-found: error
+          retention-days: 30
