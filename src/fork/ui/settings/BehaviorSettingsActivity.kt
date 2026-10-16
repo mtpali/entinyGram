@@ -658,6 +658,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
         private val TOGGLE_MEMORY_TRIM = InuUtils.generateId()
         private val TOGGLE_SAVE_SELECTED_FILES = InuUtils.generateId()
         private val TOGGLE_DISABLE_ROUNDING = InuUtils.generateId()
+        private val BUTTON_CALENDAR_SYSTEM = InuUtils.generateId()
         private val BUTTON_CLOCK_FORMAT = InuUtils.generateId()
         private val TOGGLE_ACCOUNT_SWITCH_SHORTCUT = InuUtils.generateId()
 
@@ -728,6 +729,7 @@ class BehaviorSettingsActivity : SettingsPageActivity() {
                 SearchRegistry.Entry("disable-quick-share", R.string.InuDisableQuickShare, TOGGLE_DISABLE_QUICK_SHARE),
                 SearchRegistry.Entry("memory-trim", R.string.InuMemoryTrim, TOGGLE_MEMORY_TRIM),
                 SearchRegistry.Entry("save-selected-files", R.string.InuSaveSelectedFiles, TOGGLE_SAVE_SELECTED_FILES),
+                SearchRegistry.Entry("calendar-system", R.string.InuCalendarSystem, BUTTON_CALENDAR_SYSTEM),
                 SearchRegistry.Entry("clock-format", R.string.InuClockFormat, BUTTON_CLOCK_FORMAT),
                 SearchRegistry.Entry("account-switch-shortcut", R.string.InuAccountSwitchShortcut, TOGGLE_ACCOUNT_SWITCH_SHORTCUT),
             ),

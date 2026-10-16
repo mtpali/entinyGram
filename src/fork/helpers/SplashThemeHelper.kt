@@ -11,8 +11,6 @@ object SplashThemeHelper {
         if (activity == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
         val theme = when {
             LauncherIconController.isEnabled(LauncherIconController.LauncherIcon.DEFAULT) -> R.style.Theme_TMessages_Start
-            LauncherIconController.isEnabled(LauncherIconController.LauncherIcon.OLD) -> R.style.Theme_TMessages_Start_Old
-            LauncherIconController.isEnabled(LauncherIconController.LauncherIcon.INU_TRIBUTE) -> R.style.Theme_TMessages_Start_Tribute
             else -> R.style.Theme_TMessages_Start_Plain
         }
         try {

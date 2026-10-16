@@ -1449,7 +1449,7 @@
     <string name="InuAppIconsSelect">اعمال آیکون</string>
     <string name="InuBackupImportSheetReplace">جایگزینی همه تنظیمات</string>
     <string name="InuBiometricExplicitConfirmation">تأیید اضافی</string>
-
+    <string name="InuBiometricExplicitConfirmationInfo">پس از اسکن موفق چهره/عنبیه یک ضربه اضافی بخواهید</string>
     <string name="InuBiometricRequireConfirmationActions">هنگام حذف گفتگوها یا خروج از حساب</string>
     <string name="InuBiometricRequireConfirmationBots">در مینی‌اپ‌ها</string>
     <string name="InuBiometricRequireConfirmationPasscode">هنگام باز کردن قفل برنامه</string>

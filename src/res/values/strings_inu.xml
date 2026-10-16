@@ -1142,7 +1142,7 @@
     <string name="InuBiometricConfirm">Biometric confirmation</string>
     <string name="InuBiometricConfirmTitle">Confirm your identity</string>
     <string name="InuBiometricExplicitConfirmation">Extra confirmation</string>
-
+    <string name="InuBiometricExplicitConfirmationInfo">Ask for an extra tap after successful face/iris scans</string>
     <string name="InuBiometricRequireConfirmationPasscode">When unlocking the app</string>
     <string name="InuBiometricRequireConfirmationBots">In mini apps</string>
     <string name="InuBiometricRequireConfirmationActions">When deleting chats or logging out</string>

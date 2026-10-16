@@ -199,7 +199,7 @@ class ChatMenuConfig(key: String) : MenuOrderConfig<ChatMenuConfig.Item>(key, It
             Item.RECENT_ACTIONS, Item.GO_TO_BEGINNING, Item.GO_TO_MESSAGE,
             Item.STATISTICS, Item.ADMINISTRATORS, Item.PERMISSIONS, Item.INVITE_LINKS,
             Item.LINKED_CHAT, Item.HIDE_TITLE, Item.CLEAR_DELETED,
-            Item.CHAT_EXPORT, Item.CHAT_LOCAL_NAME, Item.CHAT_MARK_READ, Item.CHAT_DELETE_MY_MESSAGES,
+            Item.CHAT_EXPORT, Item.CHAT_MARK_READ, Item.CHAT_DELETE_MY_MESSAGES,
         )
     }
 }

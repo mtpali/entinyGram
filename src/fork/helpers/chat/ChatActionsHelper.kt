@@ -77,7 +77,6 @@ object ChatActionsHelper {
     const val ACTION_CLEAR_DELETED = 525
     const val ACTION_DELETED_MESSAGES = 541
     const val ACTION_CHAT_EXPORT = 543
-    const val ACTION_CHAT_LOCAL_NAME = 544
     const val ACTION_CHAT_MARK_READ = 545
     const val ACTION_CHAT_DELETE_MY_MESSAGES = 546
     const val ACTION_EDITED_MESSAGES = 547
@@ -332,7 +331,6 @@ object ChatActionsHelper {
             ACTION_TYPING_SPOOF -> showTypingSpoofSelector(activity)
             // same handlers as the profile menu, keyed by its ids
             ACTION_CHAT_EXPORT -> ProfileHelper.handleMenuClick(ProfileHelper.ACTION_EXPORT_CHAT, null, activity.currentAccount, activity.dialogId)
-            ACTION_CHAT_LOCAL_NAME -> ProfileHelper.handleMenuClick(ProfileHelper.ACTION_EDIT_LOCAL_NAME, null, activity.currentAccount, activity.dialogId)
             ACTION_CHAT_MARK_READ -> ProfileHelper.handleMenuClick(ProfileHelper.ACTION_MARK_AS_READ, null, activity.currentAccount, activity.dialogId)
             ACTION_CHAT_DELETE_MY_MESSAGES -> ProfileHelper.handleMenuClick(ProfileHelper.ACTION_DELETE_MY_MESSAGES, null, activity.currentAccount, activity.dialogId)
             ACTION_REGEX_CHAT_FILTERS -> activity.presentFragment(desu.inugram.ui.settings.RegexChatFilterSettingsActivity(activity.dialogId))
