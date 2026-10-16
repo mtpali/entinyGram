@@ -1,7 +1,9 @@
 import fs from 'node:fs/promises'
 import { join } from 'node:path'
-import { ICON_SELECTION, patchesDir, rootDir, worktreeDir } from './config.js'
+import { $ } from 'zx'
+import { worktreeDir as defaultWorktreeDir, ICON_SELECTION, patchesDir, rootDir } from './config.js'
 import {
+  applySubmodulePatches,
   cd,
   cloneUpstream,
   configureGitLineEndings,
@@ -24,6 +26,12 @@ import {
 import { svgBodyToVectorDrawable } from './svg-to-vector.js'
 
 const BRANCH = 'inugram'
+const args = process.argv.slice(2)
+const force = args.includes('--force')
+const ci = args.includes('--ci')
+const noSubmodules = args.includes('--no-submodules')
+const worktreeDir = defaultWorktreeDir
+const excludedSubmodules: string[] = []
 
 function sameOrder(actual: string[], expected: string[]) {
   return actual.length === expected.length && actual.every((value, index) => value === expected[index])
@@ -123,11 +131,21 @@ async function generateIconDrawables(repoDir: string) {
   return dirty
 }
 
+async function writeBuildProperties() {
+  const name = 'inu-build.properties'
+  await ensureGitExclude(worktreeDir, name)
+  const target = join(worktreeDir, name)
+  const contents = `inu.pluginless=true\n`
+  if (await fs.readFile(target, 'utf8').catch(() => null) === contents) return false
+  await fs.writeFile(target, contents)
+  return true
+}
+
 async function ensureAdGuardFilter() {
   // AdGuard URL Tracking filter (list 17). Bundled as an asset; gitignored.
   const target = join(rootDir, 'src/res/assets/adguard_url_tracking.txt')
   if (await fs.stat(target).then(() => true, () => false)) return
-  const url = 'https://filters.adtidy.org/extension/ublock/filters/17.txt'
+  const url = 'https://filters.adtidy.org/android/filters/17.txt'
   step(`Downloading AdGuard URL Tracking filter -> ${target}`)
   const res = await fetch(url)
   if (!res.ok) throw new Error(`Failed to download ${url}: ${res.status} ${res.statusText}`)
@@ -150,9 +168,17 @@ function isPrefix(prefix: string[], full: string[]) {
   return prefix.length <= full.length && prefix.every((name, i) => name === full[i])
 }
 
-async function ensurePatches(expected: string[], seriesEntries: string[]) {
+async function isStackOnCommit(commit: string) {
+  const base = (await cd(worktreeDir)`stg id {base}`).stdout.trim()
+  return base.startsWith(commit)
+}
+
+async function ensurePatches(expected: string[], seriesEntries: string[], commit: string) {
   const repo = cd(worktreeDir)
   const existing = await getAllPatchNames(worktreeDir)
+  if (!await isStackOnCommit(commit)) {
+    throw new Error(`Stack base is not the pinned upstream ${commit} (use --force to reset)`)
+  }
 
   if (existing.length === 0) {
     await importSeries(seriesEntries)
@@ -176,7 +202,7 @@ async function ensurePatches(expected: string[], seriesEntries: string[]) {
   }
 }
 
-async function forceReimportPatches(seriesEntries: string[]) {
+async function forceReimportPatches(seriesEntries: string[], commit: string) {
   const repo = cd(worktreeDir)
 
   await assertCleanWorktree('force-reimport')
@@ -193,47 +219,50 @@ async function forceReimportPatches(seriesEntries: string[]) {
     await repo`stg delete ${name}`
   }
 
+  if (!await isStackOnCommit(commit)) {
+    const known = await $({ cwd: worktreeDir, nothrow: true })`git cat-file -e ${commit}^{commit}`
+    if (known.exitCode !== 0) {
+      step(`Fetching upstream ${commit}`)
+      await repo`git fetch upstream ${commit}`
+    }
+    step(`Moving stack base to ${commit}`)
+    await repo`stg rebase ${commit}`
+  }
+
   await importSeries(seriesEntries)
 }
-
-const args = process.argv.slice(2)
-const force = args.includes('--force')
-const noStgit = args.includes('--no-stgit')
-const noSubmodules = args.includes('--no-submodules')
 
 const commit = await readPinnedUpstreamCommit()
 const seriesEntries = await readSeries()
 
-if (noStgit) {
+if (ci) {
   if (hasGitRepo(worktreeDir)) {
-    throw new Error(`--no-stgit needs a fresh worktree (${worktreeDir} already exists)`)
+    throw new Error(`--ci needs a fresh worktree (${worktreeDir} already exists)`)
   }
-  await cloneUpstream(worktreeDir, commit)
+  await cloneUpstream(worktreeDir, commit, true)
   const repo = cd(worktreeDir)
   for (const entry of seriesEntries) {
     step(`Applying ${entry}`)
     const patchPath = join(patchesDir, entry).replaceAll('\\', '/')
-    await repo`git apply --allow-empty ${patchPath}`
+    await repo`git apply --index --allow-empty ${patchPath}`
   }
-  if (!noSubmodules) await syncSubmodules(worktreeDir)
-  await ensureAdGuardFilter()
-  await linkForkSource(worktreeDir)
-  await generateIconDrawables(worktreeDir)
-  success('Flat setup complete')
 } else {
-  const expectedPatches = seriesEntries.map(patchNameFromSeriesEntry)
   await ensureWorktree(commit)
   const branchExisted = await ensureBranch(commit)
   await ensureStgitStack(commit, branchExisted, force)
   if (force) {
-    await forceReimportPatches(seriesEntries)
+    await forceReimportPatches(seriesEntries, commit)
   } else {
-    await ensurePatches(expectedPatches, seriesEntries)
+    await ensurePatches(seriesEntries.map(patchNameFromSeriesEntry), seriesEntries, commit)
   }
-  const syncedSubmodules = noSubmodules ? false : await syncSubmodules(worktreeDir)
-  await ensureAdGuardFilter()
-  await ensureGitExclude(worktreeDir, '.kotlin')
-  const linkedAny = await linkForkSource(worktreeDir)
-  const generatedAny = await generateIconDrawables(worktreeDir)
-  success(linkedAny || generatedAny || syncedSubmodules ? 'Setup complete' : 'Up to date')
 }
+
+const configuredBuild = await writeBuildProperties()
+const syncedSubmodules = noSubmodules ? false : await syncSubmodules(worktreeDir, excludedSubmodules, ci)
+const patchedSubmodules = noSubmodules ? false : await applySubmodulePatches(worktreeDir, excludedSubmodules)
+await ensureAdGuardFilter()
+await ensureGitExclude(worktreeDir, '.kotlin')
+await ensureGitExclude(worktreeDir, '.cxx')
+const linkedAny = await linkForkSource(worktreeDir)
+const generatedAny = await generateIconDrawables(worktreeDir)
+success(configuredBuild || linkedAny || generatedAny || syncedSubmodules || patchedSubmodules ? 'Setup complete' : 'Up to date')

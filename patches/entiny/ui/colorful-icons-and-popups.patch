@@ -1,0 +1,104 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Wed, 5 Aug 2026 10:20:40 +0300
+Subject: feat(ui): adapt colorful icons, Monet theme transitions, dialog inputs, and popups
+
+---
+ .../main/java/org/telegram/ui/Cells/TextCell.java    | 12 ++++++++++--
+ .../telegram/ui/Components/IconBackgroundColors.java |  3 ++-
+ .../java/org/telegram/ui/Components/ItemOptions.java |  4 ++--
+ .../main/java/org/telegram/ui/SettingsActivity.java  |  2 +-
+ 4 files changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/TextCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/TextCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/TextCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/TextCell.java
+@@ -479,6 +479,10 @@ public class TextCell extends FrameLayout {
+     }
+ 
+     public void setTextAndValueAndColorfulIcon(String text, CharSequence value, boolean animated, int resId, int colorTop, int colorBottom, boolean divider) {
++        setTextAndValueAndColorfulIcon(text, value, animated, resId, colorTop, colorBottom, divider, false);
++    }
++
++    public void setTextAndValueAndColorfulIcon(String text, CharSequence value, boolean animated, int resId, int colorTop, int colorBottom, boolean divider, boolean forceStock) {
+         imageLeft = 21;
+         offsetFromImage = getOffsetFromImage(false);
+         textView.setText(text);
+@@ -486,7 +490,7 @@ public class TextCell extends FrameLayout {
+         valueTextView.setText(value == null ? "" : TextUtils.ellipsize(valueText = value, valueTextView.getPaint(), AndroidUtilities.displaySize.x / 2.5f, TextUtils.TruncateAt.END), animated);
+         valueTextView.setVisibility(VISIBLE);
+         valueSpoilersTextView.setVisibility(GONE);
+-        setColorfulIcon(colorTop, colorBottom, resId);
++        setColorfulIcon(colorTop, colorBottom, resId, forceStock);
+         valueImageView.setVisibility(GONE);
+         needDivider = divider;
+         setWillNotDraw(!needDivider);
+@@ -623,13 +627,17 @@ public class TextCell extends FrameLayout {
+     }
+ 
+     public void setColorfulIcon(int colorTop, int colorBottom, int resId) {
++        setColorfulIcon(colorTop, colorBottom, resId, false);
++    }
++
++    public void setColorfulIcon(int colorTop, int colorBottom, int resId, boolean forceStock) {
+         offsetFromImage = getOffsetFromImage(true);
+         imageView.setVisibility(VISIBLE);
+         imageView.setPadding(dp(2), dp(2), dp(2), dp(2));
++        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+         imageView.setTranslationX(dp(LocaleController.isRTL ? 0 : -3));
+         imageView.setImageResource(resId);
+         imageView.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
+-
+         final boolean border = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();
+         SettingsActivity.SettingCell.Background drawable = new SettingsActivity.SettingCell.Background();
+         drawable.setColor(colorTop, colorBottom);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/IconBackgroundColors.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/IconBackgroundColors.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/IconBackgroundColors.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/IconBackgroundColors.java
+@@ -13,7 +13,8 @@ public enum IconBackgroundColors {
+     RED(0xFFF45255, 0xFFDF3955),
+     CYAN(0xFF32C0CE, 0xFF1D9CC6),
+     PURPLE(0xFFC46EF4, 0xFF9F55DF),
+-    GRAY(0xFF8699AA, 0xFF6E8397);
++    GRAY(0xFF8699AA, 0xFF6E8397),
++    ENTINY(0xFFF20C3C, 0xFFF20C3C);
+ 
+     public final int top;
+     public final int bottom;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ItemOptions.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ItemOptions.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ItemOptions.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ItemOptions.java
+@@ -217,7 +217,7 @@ public class ItemOptions {
+         this.resourcesProvider = fragment.getResourceProvider();
+         this.context = fragment.getContext();
+         this.scrimView = scrimView;
+-        this.dimAlpha = AndroidUtilities.computePerceivedBrightness(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider)) > .705 ? 0x66 : 0x33;
++        this.dimAlpha = AndroidUtilities.computePerceivedBrightness(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider)) > .705 ? 0x26 : 0x33;
+         this.swipeback = swipeback;
+         this.useScrollView = useScrollView;
+         this.shownFromBottom = shownFromBottom;
+@@ -238,7 +238,7 @@ public class ItemOptions {
+         this.resourcesProvider = resourcesProvider;
+         this.context = container.getContext();
+         this.scrimView = scrimView;
+-        this.dimAlpha = AndroidUtilities.computePerceivedBrightness(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider)) > .705 ? 0x66 : 0x33;
++        this.dimAlpha = AndroidUtilities.computePerceivedBrightness(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider)) > .705 ? 0x26 : 0x33;
+         this.swipeback = swipeback;
+         this.shownFromBottom = shownFromBottom;
+         this.useScrollView = useScrollView;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+@@ -704,7 +704,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+         }
+ 
+         if (!desu.inugram.helpers.security.ParanoiaHelper.shouldHideSettings()) {
+-            items.add(SettingCell.Factory.of(99, IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom, R.drawable.icon_settings_inu, getString(R.string.InuSettings), getString(R.string.InuSettingsInfo)));
++            items.add(SettingCell.Factory.of(99, IconBackgroundColors.ENTINY.top, IconBackgroundColors.ENTINY.bottom, R.drawable.icon_settings_inu, getString(R.string.InuSettings), getString(R.string.InuSettingsInfo)));
+             items.add(UItem.asShadow(null));
+         }
+ 

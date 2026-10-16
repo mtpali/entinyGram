@@ -1,0 +1,3133 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Fri, 16 Oct 2026 19:37:13 +0200
+Subject: [=] Preserve VPN963 customizations on 13.0.2
+
+---
+ .gitmodules                                   |   3 -
+ TMessagesProj/build.gradle                    |  78 +----
+ TMessagesProj/proguard-rules.pro              |  10 +-
+ TMessagesProj/src/main/AndroidManifest.xml    |  64 +---
+ .../telegram/messenger/AndroidUtilities.java  |   2 +-
+ .../messenger/DownloadController.java         |   1 +
+ .../messenger/FilesMigrationService.java      |   6 +-
+ .../org/telegram/messenger/ImageLoader.java   |   8 +-
+ .../java/org/telegram/messenger/LiteMode.java |  10 +-
+ .../telegram/messenger/LocaleController.java  |  95 +-----
+ .../telegram/messenger/MediaController.java   |  22 +-
+ .../messenger/MessagesController.java         |  42 ---
+ .../messenger/NotificationsController.java    |   2 +-
+ .../org/telegram/messenger/SharedConfig.java  |  14 +-
+ .../org/telegram/ui/ActionBar/ActionBar.java  |   2 +-
+ .../ui/ActionBar/ActionBarLayout.java         |  18 +-
+ .../telegram/ui/ActionBar/SimpleTextView.java |   2 -
+ .../org/telegram/ui/CalendarActivity.java     |  19 +-
+ .../telegram/ui/Cells/ChatMessageCell.java    |   2 +-
+ .../org/telegram/ui/Cells/SessionCell.java    |   4 +-
+ .../telegram/ui/Cells/SettingsSearchCell.java |   9 -
+ .../java/org/telegram/ui/Cells/TextCell.java  |  14 +-
+ .../org/telegram/ui/ChangeBioActivity.java    |   2 +-
+ .../org/telegram/ui/ChangeNameActivity.java   |   2 +-
+ .../telegram/ui/ChangeUsernameActivity.java   |   2 +-
+ .../java/org/telegram/ui/ChatActivity.java    |   2 +-
+ .../ui/Components/AvatarDrawable.java         |   2 +-
+ .../org/telegram/ui/Components/Bulletin.java  |   2 +-
+ .../ui/Components/CaptionPhotoViewer.java     |   2 +-
+ .../ui/Components/ChatActivityEnterView.java  |   8 +-
+ .../ui/Components/ChatAttachAlert.java        |   2 +-
+ .../ChatAttachAlertDocumentLayout.java        |   2 +-
+ .../org/telegram/ui/Components/EmojiView.java | 180 ++++++----
+ .../Reactions/ReactionsEffectOverlay.java     |   2 +-
+ .../RecyclerAnimationScrollHelper.java        |   2 +-
+ .../telegram/ui/Components/ShareAlert.java    |  18 +-
+ .../org/telegram/ui/Components/UndoView.java  |   2 +-
+ .../drawable/BlurredBackgroundDrawable.java   |   5 +-
+ .../java/org/telegram/ui/DialogsActivity.java |  20 +-
+ .../java/org/telegram/ui/IntroActivity.java   |   2 +-
+ .../java/org/telegram/ui/LaunchActivity.java  |   2 +
+ .../telegram/ui/LauncherIconController.java   |   6 +-
+ .../telegram/ui/LiteModeSettingsActivity.java |   4 +-
+ .../ui/NotificationsSettingsActivity.java     |   4 +-
+ .../java/org/telegram/ui/ProfileActivity.java | 320 ++----------------
+ .../org/telegram/ui/SessionBottomSheet.java   |   7 +-
+ .../org/telegram/ui/SettingsActivity.java     |  44 +--
+ .../ui/Stories/DialogStoriesCell.java         |  21 +-
+ .../java/org/telegram/ui/ThemeActivity.java   |   4 +-
+ .../org/telegram/ui/ThemeSetUrlActivity.java  |   2 +-
+ .../src/main/res/values-ar/strings.xml        |   4 +-
+ .../src/main/res/values-de/strings.xml        |   4 +-
+ .../src/main/res/values-es/strings.xml        |   6 +-
+ .../src/main/res/values-it/strings.xml        |   4 +-
+ .../src/main/res/values-ko/strings.xml        |   4 +-
+ .../src/main/res/values-nl/strings.xml        |   4 +-
+ .../src/main/res/values-pt-rBR/strings.xml    |   6 +-
+ .../src/main/res/values-ru/strings.xml        |   6 +-
+ .../src/main/res/values-uk/strings.xml        |   6 +-
+ TMessagesProj/src/main/res/values/strings.xml |  10 +-
+ TMessagesProj_App/build.gradle                | 139 +-------
+ TMessagesProj_App/jni/CMakeLists.txt          |  10 -
+ TMessagesProj_App/jni/lsplant                 |   1 -
+ build.gradle                                  |   4 -
+ 64 files changed, 328 insertions(+), 978 deletions(-)
+ delete mode 100644 TMessagesProj_App/jni/CMakeLists.txt
+ delete mode 160000 TMessagesProj_App/jni/lsplant
+
+diff --git a/.gitmodules b/.gitmodules
+index 0000000..0000000 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -55,6 +55,3 @@
+ [submodule "TMessagesProj/jni/third_party/libprisma"]
+ 	path = TMessagesProj/jni/third_party/libprisma
+ 	url = https://github.com/TelegramMessenger/libprisma.git
+-[submodule "TMessagesProj_App/jni/lsplant"]
+-	path = TMessagesProj_App/jni/lsplant
+-	url = https://github.com/LSPosed/LSPlant.git
+diff --git a/TMessagesProj/build.gradle b/TMessagesProj/build.gradle
+index 0000000..0000000 100644
+--- a/TMessagesProj/build.gradle
++++ b/TMessagesProj/build.gradle
+@@ -134,64 +134,6 @@ dependencies {
+ }
+ 
+ def inuSourceDir = file('src/inu/kotlin')
+-def inuGeneratedSources = layout.buildDirectory.dir('generated/inu/kotlin')
+-def inuSources = fileTree(inuSourceDir) {
+-    include '**/*.kt'
+-    if (rootProject.ext.inuPluginless) {
+-        exclude '**/helpers/plugins/**', '**/ui/settings/Plugin*.kt',
+-            '**/ui/settings/GrantPresentations.kt', '**/ui/settings/ButtonCellFactory.kt',
+-            '**/ui/settings/WarningBanner.kt'
+-    }
+-}
+-def preprocessInuSources = tasks.register('preprocessInuSources') {
+-    inputs.files(inuSources).withPathSensitivity(PathSensitivity.RELATIVE)
+-    inputs.property('plugins', !rootProject.ext.inuPluginless)
+-    outputs.dir(inuGeneratedSources)
+-    doLast {
+-        def processed = inuSources.files.collectEntries { source ->
+-            def stack = []
+-            def active = true
+-            def output = new StringBuilder()
+-            source.getText('UTF-8').split('(?<=\n)', -1).eachWithIndex { line, index ->
+-                def directive = line =~ /^[\t ]*\/\/[\t ]*#(\w+)(?:[\t ]+([^\r\n]*?))?[\t ]*(?:\r?\n)?$/
+-                def newline = line.endsWith('\r\n') ? '\r\n' : line.endsWith('\n') ? '\n' : ''
+-                if (!directive.matches()) {
+-                    output.append(active ? line : newline)
+-                    return
+-                }
+-                def argument = directive.group(2)?.trim() ?: ''
+-                switch (directive.group(1)) {
+-                    case 'if':
+-                        if (argument != 'PLUGINS') throw new GradleException("${source}:${index + 1}: expected #if PLUGINS")
+-                        stack.add([parent: active, alternate: false, line: index + 1])
+-                        active = active && !rootProject.ext.inuPluginless
+-                        break
+-                    case 'else':
+-                        if (argument || stack.empty || stack.last().alternate) throw new GradleException("${source}:${index + 1}: unexpected #else")
+-                        stack.last().alternate = true
+-                        active = stack.last().parent && rootProject.ext.inuPluginless
+-                        break
+-                    case 'endif':
+-                        if (argument || stack.empty) throw new GradleException("${source}:${index + 1}: unexpected #endif")
+-                        active = stack.removeLast().parent
+-                        break
+-                    default:
+-                        throw new GradleException("${source}:${index + 1}: unknown directive #${directive.group(1)}")
+-                }
+-                output.append(newline)
+-            }
+-            if (!stack.empty) throw new GradleException("${source}:${stack.last().line}: unclosed #if")
+-            [(inuSourceDir.toPath().relativize(source.toPath()).toString()): output.toString()]
+-        }
+-        def targetDir = inuGeneratedSources.get().asFile
+-        delete targetDir
+-        processed.each { path, contents ->
+-            def target = new File(targetDir, path)
+-            target.parentFile.mkdirs()
+-            target.setText(contents, 'UTF-8')
+-        }
+-    }
+-}
+ 
+ android {
+     compileSdk 36
+@@ -201,14 +143,7 @@ android {
+     sourceSets.main.jniLibs.directories.clear()
+     sourceSets.main.jniLibs.directories.add('./jni/')
+     sourceSets.androidTest.kotlin.directories.add('src/androidTest/kotlin')
+-    sourceSets.main.kotlin.directories.add(inuGeneratedSources.get().asFile.absolutePath)
+-    if (rootProject.ext.inuPluginless) {
+-        sourceSets.androidTest.kotlin.directories.clear()
+-        sourceSets.androidTest.assets.directories.clear()
+-    } else {
+-        sourceSets.androidTest.jniLibs.directories.add("$rootDir/TMessagesProj_App/build/inuTestJniLibs")
+-    }
+-
++    sourceSets.main.kotlin.directories.add(inuSourceDir.absolutePath)
+     // inu
+     sourceSets.main.kotlin.directories.add('src/main/kotlin-osmdroid')
+     // end inu
+@@ -233,10 +168,9 @@ android {
+ 
+ 
+     defaultConfig {
+-        buildConfigField "boolean", "INU_PLUGINLESS", rootProject.ext.inuPluginless.toString()
+         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+         testInstrumentationRunnerArguments package: "desu.inugram"
+-        minSdkVersion 23
++        minSdkVersion 26
+         targetSdkVersion 36
+ 
+         ndk {
+@@ -336,10 +270,4 @@ task checkVisibility {
+     }
+ }
+ 
+-preBuild.dependsOn checkVisibility, preprocessInuSources
+-
+-if (!rootProject.ext.inuPluginless) {
+-    tasks.matching { it.name ==~ /merge.*AndroidTestJniLibFolders/ }.configureEach {
+-        dependsOn ':TMessagesProj_App:prepareInuTestJniLibs'
+-    }
+-}
++preBuild.dependsOn checkVisibility
+diff --git a/TMessagesProj/proguard-rules.pro b/TMessagesProj/proguard-rules.pro
+index 0000000..0000000 100644
+--- a/TMessagesProj/proguard-rules.pro
++++ b/TMessagesProj/proguard-rules.pro
+@@ -73,11 +73,11 @@
+ -dontwarn a.a.a.a.**
+ -dontwarn com.stripe.android.stripe3ds2.**
+ -dontwarn com.stripe.**
+--keep class desu.inugram.** { *; }
+--dontobfuscate
+--dontoptimize
++-keep class !desu.inugram.helpers.AccountRoute,desu.inugram.** { *; }
+ # /inu
+ 
+ # Use -keep to explicitly keep any other classes shrinking would remove
+-#-dontoptimize
+-#-dontobfuscate
+\ No newline at end of file
++-dontoptimize
++-keepnames class !desu.inugram.helpers.AccountRoute,**
++-keepclassmembernames class !desu.inugram.helpers.AccountRoute,** { *; }
++-keep,allowobfuscation,allowshrinking class desu.inugram.helpers.AccountRoute { *; }
+diff --git a/TMessagesProj/src/main/AndroidManifest.xml b/TMessagesProj/src/main/AndroidManifest.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/AndroidManifest.xml
++++ b/TMessagesProj/src/main/AndroidManifest.xml
+@@ -131,22 +131,6 @@
+             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+         </activity-alias>
+ 
+-        <activity-alias
+-            android:enabled="false"
+-            android:name="org.telegram.messenger.OldIcon"
+-            android:targetActivity="org.telegram.ui.LaunchActivity"
+-            android:theme="@style/Theme.TMessages.Start.Old"
+-            android:icon="@mipmap/ic_launcher_old"
+-            android:roundIcon="@mipmap/ic_launcher_old"
+-            android:exported="true">
+-
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+-                <category android:name="android.intent.category.LAUNCHER" />
+-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+-            </intent-filter>
+-            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+-        </activity-alias>
+ 
+         <activity-alias
+             android:enabled="false"
+@@ -164,54 +148,8 @@
+             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+         </activity-alias>
+ 
+-        <activity-alias
+-            android:enabled="false"
+-            android:name="org.telegram.messenger.DisguiseIcon"
+-            android:targetActivity="org.telegram.ui.LaunchActivity"
+-            android:label="@string/InuDisguiseName"
+-            android:icon="@mipmap/ic_launcher_stock"
+-            android:roundIcon="@mipmap/ic_launcher_stock_round"
+-            android:exported="true">
+-
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+-                <category android:name="android.intent.category.LAUNCHER" />
+-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+-            </intent-filter>
+-            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+-        </activity-alias>
+-
+-        <activity-alias
+-            android:enabled="false"
+-            android:name="org.telegram.messenger.VintageIcon"
+-            android:targetActivity="org.telegram.ui.LaunchActivity"
+-            android:icon="@mipmap/icon_6_launcher"
+-            android:roundIcon="@mipmap/icon_6_launcher_round"
+-            android:exported="true">
+ 
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+-                <category android:name="android.intent.category.LAUNCHER" />
+-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+-            </intent-filter>
+-            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+-        </activity-alias>
+ 
+-        <activity-alias
+-            android:enabled="false"
+-            android:name="org.telegram.messenger.AquaIcon"
+-            android:targetActivity="org.telegram.ui.LaunchActivity"
+-            android:icon="@mipmap/icon_4_launcher"
+-            android:roundIcon="@mipmap/icon_4_launcher_round"
+-            android:exported="true">
+-
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+-                <category android:name="android.intent.category.LAUNCHER" />
+-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+-            </intent-filter>
+-            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+-        </activity-alias>
+ 
+         <activity-alias
+             android:enabled="false"
+@@ -663,7 +601,7 @@
+ 
+         <receiver android:name=".NotificationDismissReceiver" android:exported="false"/>
+ 
+-        <receiver android:name="desu.inugram.helpers.update.ApkInstaller$UpdateReceiver" android:exported="false">
++        <receiver android:name="desu.inugram.helpers.LauncherRecoveryReceiver" android:exported="false">
+             <intent-filter>
+                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+             </intent-filter>
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/AndroidUtilities.java b/TMessagesProj/src/main/java/org/telegram/messenger/AndroidUtilities.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/AndroidUtilities.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/AndroidUtilities.java
+@@ -3693,7 +3693,7 @@ public class AndroidUtilities {
+         }
+         File storageDir = null;
+         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+-            storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++            storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+             if (!storageDir.mkdirs()) {
+                 if (!storageDir.exists()) {
+                     if (BuildVars.LOGS_ENABLED) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/DownloadController.java b/TMessagesProj/src/main/java/org/telegram/messenger/DownloadController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/DownloadController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/DownloadController.java
+@@ -320,6 +320,7 @@ public class DownloadController extends BaseController implements NotificationCe
+             editor.commit();
+         }
+ 
++        desu.inugram.helpers.DownloadDefaultsHelper.initialize(this, preferences);
+         AndroidUtilities.runOnUIThread(() -> {
+             getNotificationCenter().addObserver(DownloadController.this, NotificationCenter.fileLoadFailed);
+             getNotificationCenter().addObserver(DownloadController.this, NotificationCenter.fileLoaded);
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/FilesMigrationService.java b/TMessagesProj/src/main/java/org/telegram/messenger/FilesMigrationService.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/FilesMigrationService.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/FilesMigrationService.java
+@@ -97,8 +97,8 @@ public class FilesMigrationService extends Service {
+         }
+ 
+         File newPath = ApplicationLoader.applicationContext.getExternalFilesDir(null);
+-        File telegramPath = new File(newPath, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
+-        File oldPath = new File(path, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++        File telegramPath = new File(newPath, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
++        File oldPath = new File(path, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+ 
+         totalFilesCount = getFilesCount(oldPath);
+ 
+@@ -204,7 +204,7 @@ public class FilesMigrationService extends Service {
+                     }
+                 }
+             }
+-            File oldDirectory = new File(path, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++            File oldDirectory = new File(path, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+             hasOldFolder = oldDirectory.exists();
+         }
+         if (hasOldFolder) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/ImageLoader.java b/TMessagesProj/src/main/java/org/telegram/messenger/ImageLoader.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/ImageLoader.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/ImageLoader.java
+@@ -2506,14 +2506,14 @@ public class ImageLoader {
+                     try {
+                         if (ApplicationLoader.applicationContext.getExternalMediaDirs().length > 0) {
+                             publicMediaDir = getPublicStorageDir();
+-                            publicMediaDir = new File(publicMediaDir, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                            publicMediaDir = new File(publicMediaDir, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                             publicMediaDir.mkdirs();
+                         }
+                     } catch (Exception e) {
+                         FileLog.e(e);
+                     }
+                     newPath = ApplicationLoader.applicationContext.getExternalFilesDir(null);
+-                    telegramPath = new File(newPath, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                    telegramPath = new File(newPath, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                 } else {
+                     boolean isSdCard = !TextUtils.isEmpty(SharedConfig.storageCacheDir) && path.getAbsolutePath().startsWith(SharedConfig.storageCacheDir);
+                     if (!isSdCard) {
+@@ -2522,7 +2522,7 @@ public class ImageLoader {
+                             path = ApplicationLoader.applicationContext.getExternalFilesDir(null);
+                         }
+                     }
+-                    telegramPath = new File(path, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                    telegramPath = new File(path, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                 }
+                 telegramPath.mkdirs();
+ 
+@@ -2532,7 +2532,7 @@ public class ImageLoader {
+                         File dir = dirs.get(a);
+                         if (dir != null && !TextUtils.isEmpty(SharedConfig.storageCacheDir) && dir.getAbsolutePath().startsWith(SharedConfig.storageCacheDir)) {
+                             path = dir;
+-                            telegramPath = new File(path, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                            telegramPath = new File(path, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                             telegramPath.mkdirs();
+                             break;
+                         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/LiteMode.java b/TMessagesProj/src/main/java/org/telegram/messenger/LiteMode.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/LiteMode.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/LiteMode.java
+@@ -188,15 +188,7 @@ public class LiteMode {
+     }
+ 
+     public static void loadPreference() {
+-        int defaultValue = PRESET_HIGH, batteryDefaultValue = BATTERY_HIGH;
+-        if (SharedConfig.getDevicePerformanceClass() == SharedConfig.PERFORMANCE_CLASS_LOW) {
+-            defaultValue = PRESET_LOW;
+-            batteryDefaultValue = BATTERY_LOW;
+-        } else if (SharedConfig.getDevicePerformanceClass() == SharedConfig.PERFORMANCE_CLASS_AVERAGE) {
+-            defaultValue = PRESET_MEDIUM;
+-            batteryDefaultValue = BATTERY_MEDIUM;
+-        }
+-
++        int defaultValue = 0, batteryDefaultValue = 0;
+         final SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+         if (!preferences.contains("lite_mode6")) {
+             if (preferences.contains("lite_mode5")) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/LocaleController.java
+@@ -605,87 +605,7 @@ public class LocaleController {
+         languages.add(localeInfo);
+         languagesDict.put(localeInfo.shortName, localeInfo);
+ 
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Italiano";
+-        localeInfo.nameEnglish = "Italian";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "it";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Español";
+-        localeInfo.nameEnglish = "Spanish";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "es";
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Deutsch";
+-        localeInfo.nameEnglish = "German";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "de";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Nederlands";
+-        localeInfo.nameEnglish = "Dutch";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "nl";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "العربية";
+-        localeInfo.nameEnglish = "Arabic";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "ar";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        localeInfo.isRtl = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Português (Brasil)";
+-        localeInfo.nameEnglish = "Portuguese (Brazil)";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "pt_br";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "한국어";
+-        localeInfo.nameEnglish = "Korean";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "ko";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Українська";
+-        localeInfo.nameEnglish = "Ukrainian";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "uk";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
+-        localeInfo = new LocaleInfo();
+-        localeInfo.name = "Русский";
+-        localeInfo.nameEnglish = "Russian";
+-        localeInfo.shortName = localeInfo.pluralLangCode = "ru";
+-        localeInfo.pathToFile = null;
+-        localeInfo.builtIn = true;
+-        languages.add(localeInfo);
+-        languagesDict.put(localeInfo.shortName, localeInfo);
+-
++        desu.inugram.helpers.LanguageHelper.addPersian(this);
+         loadOtherLanguages();
+         if (remoteLanguages.isEmpty()) {
+             AndroidUtilities.runOnUIThread(() -> loadRemoteLanguages(UserConfig.selectedAccount));
+@@ -1048,6 +968,7 @@ public class LocaleController {
+             String languageName = stringMap.get("LanguageName");
+             String languageNameInEnglish = stringMap.get("LanguageNameInEnglish");
+             String languageCode = stringMap.get("LanguageCode");
++            if (!desu.inugram.helpers.LanguageHelper.isSupported(languageCode)) return false;
+ 
+             if (languageName != null && languageName.length() > 0 &&
+                     languageNameInEnglish != null && languageNameInEnglish.length() > 0 &&
+@@ -1178,6 +1099,7 @@ public class LocaleController {
+             String[] localesArr = locales.split("&");
+             for (String locale : localesArr) {
+                 LocaleInfo localeInfo = LocaleInfo.createWithString(locale);
++                if (localeInfo == null || !desu.inugram.helpers.LanguageHelper.isSupported(localeInfo.shortName)) continue;
+                 if (localeInfo != null) {
+                     otherLanguages.add(localeInfo);
+                 }
+@@ -1188,6 +1110,7 @@ public class LocaleController {
+             String[] localesArr = locales.split("&");
+             for (String locale : localesArr) {
+                 LocaleInfo localeInfo = LocaleInfo.createWithString(locale);
++                if (localeInfo == null || !desu.inugram.helpers.LanguageHelper.isSupported(localeInfo.shortName)) continue;
+                 localeInfo.shortName = localeInfo.shortName.replace("-", "_");
+                 if (remoteLanguagesDict.containsKey(localeInfo.getKey())) {
+                     continue;
+@@ -1201,6 +1124,7 @@ public class LocaleController {
+             String[] localesArr = locales.split("&");
+             for (String locale : localesArr) {
+                 LocaleInfo localeInfo = LocaleInfo.createWithString(locale);
++                if (localeInfo == null || !desu.inugram.helpers.LanguageHelper.isSupported(localeInfo.shortName)) continue;
+                 if (localeInfo == null) {
+                     continue;
+                 }
+@@ -1307,6 +1231,7 @@ public class LocaleController {
+     }
+ 
+     public int applyLanguage(final LocaleInfo localeInfo, boolean override, boolean init, boolean fromFile, boolean force, final int currentAccount, Runnable onDone) {
++        if (localeInfo == null || !desu.inugram.helpers.LanguageHelper.isSupported(localeInfo.shortName)) return 0;
+         if (localeInfo == null) {
+             return 0;
+         }
+@@ -1402,6 +1327,7 @@ public class LocaleController {
+             Locale.setDefault(currentLocale);
+             android.content.res.Configuration config = new android.content.res.Configuration();
+             config.locale = currentLocale;
++            desu.inugram.helpers.LayoutDirectionHelper.apply(config);
+             ApplicationLoader.applicationContext.getResources().updateConfiguration(config, ApplicationLoader.applicationContext.getResources().getDisplayMetrics());
+             changingConfiguration = false;
+             FileLog.d("applyLanguage: reloadLastFile=" + reloadLastFile + " force=" + force + " isLoadingRemote=" + isLoadingRemote);
+@@ -2667,10 +2593,10 @@ public class LocaleController {
+         }
+         FastDateFormat formatter;
+         try {
+-            formatter = FastDateFormat.getInstance(format, locale);
++            formatter = desu.inugram.helpers.CalendarHelper.formatter(format, locale);
+         } catch (Exception e) {
+             format = defaultFormat;
+-            formatter = FastDateFormat.getInstance(format, locale);
++            formatter = desu.inugram.helpers.CalendarHelper.formatter(format, locale);
+         }
+         return formatter;
+     }
+@@ -2688,6 +2614,7 @@ public class LocaleController {
+         isRTL = lang.length() == 2 && (lang.equals("ar") || lang.equals("fa") || lang.equals("he") || lang.equals("iw")) ||
+                 lang.startsWith("ar_") || lang.startsWith("fa_") || lang.startsWith("he_") || lang.startsWith("iw_")
+                 || currentLocaleInfo != null && currentLocaleInfo.isRtl;
++        if (desu.inugram.helpers.LayoutDirectionHelper.isForced()) isRTL = false;
+         nameDisplayOrder = lang.equals("ko") ? 2 : 1;
+ 
+         formatterBoostExpired = null;
+@@ -3134,6 +3061,7 @@ public class LocaleController {
+                         Locale.setDefault(currentLocale);
+                         Configuration config = new Configuration();
+                         config.locale = currentLocale;
++                        desu.inugram.helpers.LayoutDirectionHelper.apply(config);
+                         ApplicationLoader.applicationContext.getResources().updateConfiguration(config, ApplicationLoader.applicationContext.getResources().getDisplayMetrics());
+                         changingConfiguration = false;
+ 
+@@ -3176,6 +3104,7 @@ public class LocaleController {
+                     }
+                     for (int a = 0, size = res.objects.size(); a < size; a++) {
+                         TLRPC.TL_langPackLanguage language = (TLRPC.TL_langPackLanguage) res.objects.get(a);
++                        if (!desu.inugram.helpers.LanguageHelper.isSupported(language.lang_code)) continue;
+                         if (BuildVars.LOGS_ENABLED) {
+                             FileLog.d("loaded lang " + language.name);
+                         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MediaController.java b/TMessagesProj/src/main/java/org/telegram/messenger/MediaController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/MediaController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/MediaController.java
+@@ -5338,7 +5338,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+             if (Build.VERSION.SDK_INT >= 29) {
+                 final ContentValues cv = new ContentValues();
+                 final Uri uriToInsert = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+-                final File dirDest = new File(Environment.DIRECTORY_DOWNLOADS, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                final File dirDest = new File(Environment.DIRECTORY_DOWNLOADS, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                 cv.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
+                 cv.put(MediaStore.Downloads.DISPLAY_NAME, filename);
+                 cv.put(MediaStore.MediaColumns.MIME_TYPE, outputMime);
+@@ -5360,7 +5360,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                     }
+                 }
+             } else {
+-                final File destDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                final File destDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                 destDir.mkdirs();
+                 File destFile = new File(destDir, filename);
+                 if (!destFile.exists()) {
+@@ -5583,11 +5583,11 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                     } else {
+                         File destFile;
+                         if (type == 0) {
+-                            destFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                            destFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                             destFile.mkdirs();
+                             destFile = new File(destFile, AndroidUtilities.generateFileName(0, FileLoader.getFileExtension(sourceFile)));
+                         } else if (type == 1) {
+-                            destFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                            destFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                             destFile.mkdirs();
+                             destFile = new File(destFile, AndroidUtilities.generateFileName(1, FileLoader.getFileExtension(sourceFile)));
+                         } else {
+@@ -5597,7 +5597,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                             } else {
+                                 dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+                             }
+-                            dir = new File(dir, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                            dir = new File(dir, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                             dir.mkdirs();
+                             destFile = new File(dir, name);
+                             if (destFile.exists()) {
+@@ -5742,7 +5742,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                     final String filename = AndroidUtilities.generateFileName(0, "jpg");
+                     final ContentValues cv = new ContentValues();
+                     final Uri uriToInsert = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+-                    final File dirDest = new File(Environment.DIRECTORY_PICTURES, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                    final File dirDest = new File(Environment.DIRECTORY_PICTURES, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                     cv.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
+                     cv.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
+                     cv.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+@@ -5764,7 +5764,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                         }
+                     }
+                 } else {
+-                    final File destDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                    final File destDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                     destDir.mkdirs();
+                     File destFile = new File(destDir, AndroidUtilities.generateFileName(0, "jpg"));
+                     if (!destFile.exists()) {
+@@ -5895,7 +5895,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                     filename = AndroidUtilities.generateFileName(0, extension);
+                 }
+                 uriToInsert = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+-                File dirDest = new File(Environment.DIRECTORY_PICTURES, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                File dirDest = new File(Environment.DIRECTORY_PICTURES, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
+                 contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
+                 contentValues.put(MediaStore.Images.Media.MIME_TYPE, mimeType);
+@@ -5903,7 +5903,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                 if (filename == null) {
+                     filename = AndroidUtilities.generateFileName(1, extension);
+                 }
+-                File dirDest = new File(Environment.DIRECTORY_MOVIES, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                File dirDest = new File(Environment.DIRECTORY_MOVIES, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
+                 uriToInsert = MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+                 contentValues.put(MediaStore.Video.Media.DISPLAY_NAME, filename);
+@@ -5911,7 +5911,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                 if (filename == null) {
+                     filename = sourceFile.getName();
+                 }
+-                File dirDest = new File(Environment.DIRECTORY_DOWNLOADS, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                File dirDest = new File(Environment.DIRECTORY_DOWNLOADS, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
+                 uriToInsert = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+                 contentValues.put(MediaStore.Downloads.DISPLAY_NAME, filename);
+@@ -5919,7 +5919,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
+                 if (filename == null) {
+                     filename = sourceFile.getName();
+                 }
+-                File dirDest = new File(Environment.DIRECTORY_MUSIC, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
++                File dirDest = new File(Environment.DIRECTORY_MUSIC, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
+                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
+                 uriToInsert = MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+                 contentValues.put(MediaStore.Audio.Media.DISPLAY_NAME, filename);
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesController.java
+@@ -370,9 +370,6 @@ public class MessagesController extends BaseController implements NotificationCe
+     private TLRPC.messages_Dialogs resetDialogsAll;
+     private SparseIntArray loadingPinnedDialogs = new SparseIntArray();
+ 
+-    public ArrayList<FaqSearchResult> faqSearchArray = new ArrayList<>();
+-    public TLRPC.WebPage faqWebPage;
+-
+     private int loadingNotificationSettings;
+     private boolean loadingNotificationSignUpSettings;
+ 
+@@ -1123,45 +1120,6 @@ public class MessagesController extends BaseController implements NotificationCe
+         private boolean loading;
+     }
+ 
+-    public static class FaqSearchResult {
+-
+-        public String title;
+-        public String[] path;
+-        public String url;
+-        public int num;
+-
+-        public FaqSearchResult(String t, String[] p, String u) {
+-            title = t;
+-            path = p;
+-            url = u;
+-        }
+-
+-        @Override
+-        public boolean equals(Object obj) {
+-            if (!(obj instanceof FaqSearchResult)) {
+-                return false;
+-            }
+-            FaqSearchResult result = (FaqSearchResult) obj;
+-            return title.equals(result.title);
+-        }
+-
+-        @Override
+-        public String toString() {
+-            SerializedData data = new SerializedData();
+-            data.writeInt32(num);
+-            data.writeInt32(0);
+-            data.writeString(title);
+-            data.writeInt32(path != null ? path.length : 0);
+-            if (path != null) {
+-                for (int a = 0; a < path.length; a++) {
+-                    data.writeString(path[a]);
+-                }
+-            }
+-            data.writeString(url);
+-            return Utilities.bytesToHex(data.toByteArray());
+-        }
+-    }
+-
+     public static class EmojiSound {
+         public long id;
+         public long accessHash;
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsController.java b/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsController.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/NotificationsController.java
+@@ -1199,7 +1199,7 @@ public class NotificationsController extends BaseController implements Notificat
+ 
+             LongSparseArray<Boolean> settingsCache = new LongSparseArray<>();
+             SharedPreferences preferences = getAccountInstance().getNotificationsSettings();
+-            boolean allowPinned = preferences.getBoolean("PinnedMessages", true);
++            boolean allowPinned = preferences.getBoolean("PinnedMessages", false);
+             int popup = 0;
+             boolean hasScheduled = false;
+ 
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java b/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/SharedConfig.java
+@@ -287,7 +287,7 @@ public class SharedConfig {
+     public static String searchEngineCustomURLQuery, searchEngineCustomURLAutocomplete;
+     public static boolean chatBubbles = Build.VERSION.SDK_INT >= 30;
+     public static boolean raiseToSpeak = false;
+-    public static boolean raiseToListen = true;
++    public static boolean raiseToListen = false;
+     public static boolean nextMediaTap = true;
+     public static boolean recordViaSco = false;
+     public static boolean adaptableColorInBrowser = true;
+@@ -597,7 +597,7 @@ public class SharedConfig {
+             SaveToGallerySettingsHelper.load(preferences);
+             mapPreviewType = preferences.getInt("mapPreviewType", 2);
+             searchEngineType = preferences.getInt("searchEngineType", 0);
+-            raiseToListen = preferences.getBoolean("raise_to_listen", true);
++            raiseToListen = preferences.getBoolean("raise_to_listen", false);
+             raiseToSpeak = preferences.getBoolean("raise_to_speak", false);
+             nextMediaTap = preferences.getBoolean("next_media_on_tap", true);
+             recordViaSco = preferences.getBoolean("record_via_sco", false);
+@@ -625,7 +625,7 @@ public class SharedConfig {
+             }
+             streamMedia = preferences.getBoolean("streamMedia", true);
+             saveStreamMedia = preferences.getBoolean("saveStreamMedia", true);
+-            pauseMusicOnRecord = preferences.getBoolean("pauseMusicOnRecord", true);
++            pauseMusicOnRecord = preferences.getBoolean("pauseMusicOnRecord", false);
+             pauseMusicOnMedia = preferences.getBoolean("pauseMusicOnMedia", false);
+             forceDisableTabletMode = preferences.getBoolean("forceDisableTabletMode", false);
+             streamAllVideo = preferences.getBoolean("streamAllVideo", BuildVars.DEBUG_VERSION);
+@@ -1540,10 +1540,10 @@ public class SharedConfig {
+     public static void checkSaveToGalleryFiles() {
+         Utilities.globalQueue.postRunnable(() -> {
+             try {
+-                File telegramPath = new File(Environment.getExternalStorageDirectory(), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue());
+-                File imagePath = new File(telegramPath, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue() + " Images");
++                File telegramPath = new File(Environment.getExternalStorageDirectory(), desu.inugram.InuConfig.DOWNLOAD_DIRECTORY);
++                File imagePath = new File(telegramPath, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY + " Images");
+                 imagePath.mkdir();
+-                File videoPath = new File(telegramPath, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue() + " Video");
++                File videoPath = new File(telegramPath, desu.inugram.InuConfig.DOWNLOAD_DIRECTORY + " Video");
+                 videoPath.mkdir();
+ 
+                 if (!BuildVars.NO_SCOPED_STORAGE) {
+@@ -1772,7 +1772,7 @@ public class SharedConfig {
+ 
+     public static boolean animationsEnabled() {
+         if (animationsEnabled == null) {
+-            animationsEnabled = MessagesController.getGlobalMainSettings().getBoolean("view_animations", true);
++            animationsEnabled = MessagesController.getGlobalMainSettings().getBoolean("view_animations", false);
+         }
+         return animationsEnabled;
+     }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBar.java b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBar.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBar.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBar.java
+@@ -2684,7 +2684,7 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
+     }
+ 
+     public boolean iOSUnreadBadgeAvailable() {
+-        return desu.inugram.InuConfig.UNREAD_BADGE_ON_BACK_BUTTON_IOS.getValue() && isIOSUnreadBadgeAvailable;
++        return false;
+     }
+ 
+     public class UnreadImageView extends ImageView {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarLayout.java
+@@ -976,9 +976,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+                 progress = value / containerView.getMeasuredWidth();
+             }
+             final BaseFragment prevFragment = fragmentsStack.get(fragmentsStack.size() - 2);
+-            if (!((startedTracking || animationInProgress) && desu.inugram.helpers.theme.Material3NavigationAnimation.applySlideProgress(this, progress))) {
+-                prevFragment.onSlideProgress(false, progress);
+-            }
++            prevFragment.onSlideProgress(false, progress);
+             final BaseFragment currFragment = fragmentsStack.get(fragmentsStack.size() - 1);
+             float ratio = MathUtils.clamp(2f * progress, 0f, 1f);
+             if (currFragment.isBeginToShow()) {
+@@ -1303,7 +1301,6 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+     }
+ 
+     public void onSlideAnimationEnd(final boolean backAnimation) {
+-        desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
+         if (!backAnimation) {
+             if (fragmentsStack.size() < 2) {
+                 // racing closeLastFragment drained the stack mid-animation;
+@@ -1850,9 +1847,6 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+                 }
+                 lastFrameTime = newTime;
+                 float duration = (preview && open ? 190.0f : 150.0f) / desu.inugram.InuConfig.ANIMATION_SPEED.getValue();
+-                if (!preview && desu.inugram.helpers.theme.Material3NavigationAnimation.isEnabled()) {
+-                    duration = desu.inugram.helpers.theme.Material3NavigationAnimation.DURATION / desu.inugram.InuConfig.ANIMATION_SPEED.getValue();
+-                }
+                 animationProgress += dt / duration;
+                 if (animationProgress > 1.0f) {
+                     animationProgress = 1.0f;
+@@ -1897,7 +1891,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+                 } else {
+                     interpolated = decelerateInterpolator.getInterpolation(animationProgress);
+                 }
+-                if (open && !desu.inugram.helpers.theme.Material3NavigationAnimation.applyOpenFrame(ActionBarLayout.this, animationProgress, preview)) {
++                if (open) {
+                     float clampedInterpolated = MathUtils.clamp(interpolated, 0, 1);
+                     containerView.setAlpha(clampedInterpolated);
+                     if (preview) {
+@@ -1916,7 +1910,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+                     } else {
+                         containerView.setTranslationX(dp(48) * (1.0f - interpolated));
+                     }
+-                } else if (!open && !desu.inugram.helpers.theme.Material3NavigationAnimation.applyCloseFrame(ActionBarLayout.this, animationProgress, preview)) {
++                } else {
+                     float clampedReverseInterpolated = MathUtils.clamp(1f - interpolated, 0, 1);
+                     containerViewBack.setAlpha(clampedReverseInterpolated);
+                     if (preview) {
+@@ -2026,7 +2020,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+         if (parentActivity.getCurrentFocus() != null && fragment.hideKeyboardOnShow() && !preview) {
+             AndroidUtilities.hideKeyboard(parentActivity.getCurrentFocus());
+         }
+-        boolean needAnimation = preview || !forceWithoutAnimation && MessagesController.getGlobalMainSettings().getBoolean("view_animations", true);
++        boolean needAnimation = preview || !forceWithoutAnimation && MessagesController.getGlobalMainSettings().getBoolean("view_animations", false);
+ 
+         final BaseFragment currentFragment = !fragmentsStack.isEmpty() ? fragmentsStack.get(fragmentsStack.size() - 1) : null;
+ 
+@@ -2552,7 +2546,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+             AndroidUtilities.hideKeyboard(parentActivity.getCurrentFocus());
+         }
+         setInnerTranslationX(0);
+-        boolean needAnimation = !forceNoAnimation && (inPreviewMode || transitionAnimationPreviewMode || animated && MessagesController.getGlobalMainSettings().getBoolean("view_animations", true));
++        boolean needAnimation = !forceNoAnimation && (inPreviewMode || transitionAnimationPreviewMode || animated && MessagesController.getGlobalMainSettings().getBoolean("view_animations", false));
+         final BaseFragment currentFragment = fragmentsStack.get(fragmentsStack.size() - 1);
+         BaseFragment previousFragment = null;
+         if (fragmentsStack.size() > 1) {
+@@ -3165,7 +3159,6 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+             oldFragment = null;
+             Runnable endRunnable = onCloseAnimationEndRunnable;
+             onCloseAnimationEndRunnable = null;
+-            desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
+             if (endRunnable != null) {
+                 endRunnable.run();
+             }
+@@ -3199,7 +3192,6 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
+             oldFragment = null;
+             Runnable endRunnable = onOpenAnimationEndRunnable;
+             onOpenAnimationEndRunnable = null;
+-            desu.inugram.helpers.theme.Material3NavigationAnimation.cleanup(this);
+             endRunnable.run();
+             checkNeedRebuild();
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/SimpleTextView.java b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/SimpleTextView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/SimpleTextView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ActionBar/SimpleTextView.java
+@@ -1357,8 +1357,6 @@ public class SimpleTextView extends View implements Drawable.Callback {
+     private boolean maybeClick;
+ 
+     private int rightDrawable2X, rightDrawable2Y;
+-    private OnClickListener rightDrawable2OnClickListener;
+-    private boolean maybeClick2;
+ 
+     public void setRightDrawableOnClick(OnClickListener onClickListener) {
+         rightDrawableOnClickListener = onClickListener;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/CalendarActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/CalendarActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/CalendarActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/CalendarActivity.java
+@@ -67,7 +67,7 @@ import org.telegram.ui.Stories.StoryViewer;
+ 
+ import java.time.YearMonth;
+ import java.util.ArrayList;
+-import java.util.Calendar;
++import android.icu.util.Calendar;
+ 
+ public class CalendarActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
+ 
+@@ -143,7 +143,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+         this.photosVideosTypeFilter = photosVideosTypeFilter;
+ 
+         if (selectedDate != 0) {
+-            Calendar calendar = Calendar.getInstance();
++            Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
+             calendar.setTimeInMillis(selectedDate * 1000L);
+             selectedYear = calendar.get(Calendar.YEAR);
+             selectedMonth = calendar.get(Calendar.MONTH);
+@@ -359,7 +359,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+ 
+         fragmentView = contentView;
+ 
+-        Calendar calendar = Calendar.getInstance();
++        Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
+         startFromYear = calendar.get(Calendar.YEAR);
+         startFromMonth = calendar.get(Calendar.MONTH);
+ 
+@@ -487,7 +487,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+         }
+         req.offset_id = lastId;
+ 
+-        Calendar calendar = Calendar.getInstance();
++        Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
+         listView.setItemAnimator(null);
+         getConnectionsManager().sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
+             if (error == null) {
+@@ -594,7 +594,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+     private void updateFromStoriesList() {
+         loading = storiesList.isLoading();
+ 
+-        Calendar calendar = Calendar.getInstance();
++        Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
+         messagesByYearMounth.clear();
+         minDate = Integer.MAX_VALUE;
+         for (int i = 0; i < storiesList.messageObjects.size(); ++i) {
+@@ -1177,11 +1177,10 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
+                 }
+             }
+ 
+-            YearMonth yearMonthObject = YearMonth.of(year, monthInYear + 1);
+-            daysInMonth = yearMonthObject.lengthOfMonth();
+-
+-            Calendar calendar = Calendar.getInstance();
+-            calendar.set(year, monthInYear, 0);
++            Calendar calendar = desu.inugram.helpers.CalendarHelper.calendar();
++            calendar.set(year, monthInYear, 1);
++            daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
++            calendar.set(Calendar.DAY_OF_MONTH, 0);
+             startDayOfWeek = (calendar.get(Calendar.DAY_OF_WEEK) + 6) % 7;
+             startMonthTime = (int) (calendar.getTimeInMillis() / 1000L);
+ 
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java
+@@ -7015,7 +7015,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
+                     drawSideButton = 2;
+                 }
+             }
+-            drawSummarizeButton = !desu.inugram.InuConfig.HIDE_MESSAGE_SUMMARY.getValue() && TranslateController.isSummarizable(messageObject);
++            drawSummarizeButton = false;
+             if (messageObject.isWideChannelPost()) {
+                 drawSideButton = 0;
+                 drawSideButton2 = 0;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/SessionCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/SessionCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/SessionCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/SessionCell.java
+@@ -248,8 +248,8 @@ public class SessionCell extends FrameLayout {
+             detailExTextView.setText(spannableStringBuilder);
+ 
+             stringBuilder = new StringBuilder();
+-            stringBuilder.append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppName(session.app_name));
+-            stringBuilder.append(" ").append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppVersion(session.app_version));
++            stringBuilder.append(desu.inugram.helpers.VersionHelper.getSessionAppName(session.app_name));
++            stringBuilder.append(" ").append(desu.inugram.helpers.VersionHelper.getSessionAppVersion(session.app_version));
+ 
+             detailTextView.setText(stringBuilder);
+         } else if (object instanceof TLRPC.TL_webAuthorization) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/SettingsSearchCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/SettingsSearchCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/SettingsSearchCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/SettingsSearchCell.java
+@@ -223,9 +223,6 @@ public class SettingsSearchCell extends FrameLayout {
+             if (item.object instanceof ProfileActivity.SearchAdapter.SearchResult) {
+                 final ProfileActivity.SearchAdapter.SearchResult r = (ProfileActivity.SearchAdapter.SearchResult) item.object;
+                 ((SettingsSearchCell) view).setTextAndValueAndIcon(item.text, r.path, r.iconResId, divider);
+-            } else if (item.object instanceof MessagesController.FaqSearchResult) {
+-                final MessagesController.FaqSearchResult r = (MessagesController.FaqSearchResult) item.object;
+-                ((SettingsSearchCell) view).setTextAndValue(item.text, r.path, true, divider);
+             }
+         }
+ 
+@@ -243,12 +240,6 @@ public class SettingsSearchCell extends FrameLayout {
+             return item;
+         }
+ 
+-        public static UItem of(CharSequence text, MessagesController.FaqSearchResult faq) {
+-            UItem item = UItem.ofFactory(Factory.class);
+-            item.text = text;
+-            item.object = faq;
+-            return item;
+-        }
+     }
+ 
+ }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Cells/TextCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Cells/TextCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Cells/TextCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Cells/TextCell.java
+@@ -204,7 +204,14 @@ public class TextCell extends FrameLayout {
+             subtitleView.measure(MeasureSpec.makeMeasureSpec(width - dp(71 + leftPadding) - valueWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(dp(20), MeasureSpec.EXACTLY));
+         }
+         if (imageView.getVisibility() == VISIBLE) {
+-            imageView.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
++            if (imageView.getBackground() != null) {
++                // Colorful rows use the settings gradient square with a 24dp glyph.
++                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
++                final int tileSpec = MeasureSpec.makeMeasureSpec(dp(28), MeasureSpec.EXACTLY);
++                imageView.measure(tileSpec, tileSpec);
++            } else {
++                imageView.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
++            }
+         }
+         if (valueImageView.getVisibility() == VISIBLE) {
+             valueImageView.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
+@@ -633,11 +640,14 @@ public class TextCell extends FrameLayout {
+     public void setColorfulIcon(int colorTop, int colorBottom, int resId, boolean forceStock) {
+         offsetFromImage = getOffsetFromImage(true);
+         imageView.setVisibility(VISIBLE);
+-        imageView.setPadding(dp(2), dp(2), dp(2), dp(2));
++        final int iconPadding = dp(2);
++        imageView.setPadding(iconPadding, iconPadding, iconPadding, iconPadding);
+         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+         imageView.setTranslationX(dp(LocaleController.isRTL ? 0 : -3));
+         imageView.setImageResource(resId);
++
+         imageView.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
++
+         final boolean border = resourcesProvider != null ? resourcesProvider.isDark() : Theme.isCurrentThemeDark();
+         SettingsActivity.SettingCell.Background drawable = new SettingsActivity.SettingCell.Background();
+         drawable.setColor(colorTop, colorBottom);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChangeBioActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChangeBioActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChangeBioActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChangeBioActivity.java
+@@ -187,7 +187,7 @@ public class ChangeBioActivity extends BaseFragment {
+     public void onResume() {
+         super.onResume();
+         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-        boolean animations = preferences.getBoolean("view_animations", true);
++        boolean animations = preferences.getBoolean("view_animations", false);
+         if (!animations) {
+             firstNameField.requestFocus();
+             AndroidUtilities.showKeyboard(firstNameField);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChangeNameActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChangeNameActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChangeNameActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChangeNameActivity.java
+@@ -161,7 +161,7 @@ public class ChangeNameActivity extends BaseFragment {
+     public void onResume() {
+         super.onResume();
+         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-        boolean animations = preferences.getBoolean("view_animations", true);
++        boolean animations = preferences.getBoolean("view_animations", false);
+         if (!animations) {
+             firstNameField.requestFocus();
+             AndroidUtilities.showKeyboard(firstNameField);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChangeUsernameActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChangeUsernameActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChangeUsernameActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChangeUsernameActivity.java
+@@ -1174,7 +1174,7 @@ public class ChangeUsernameActivity extends BaseFragment {
+     public void onResume() {
+         super.onResume();
+         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-        boolean animations = preferences.getBoolean("view_animations", true);
++        boolean animations = preferences.getBoolean("view_animations", false);
+         if (!animations) {
+             focusUsernameField(false);
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
+@@ -6566,7 +6566,7 @@ public class ChatActivity extends BaseFragment implements
+         paddingTopHeight = 0;
+         botDraftHeightController.setRecyclerView(chatListView);
+         invalidateChatListViewTopPadding();
+-        if (MessagesController.getGlobalMainSettings().getBoolean("view_animations", true)) {
++        if (MessagesController.getGlobalMainSettings().getBoolean("view_animations", false)) {
+             chatListItemAnimator = new ChatListItemAnimator(this, chatListView, themeDelegate) {
+ 
+                 Runnable finishRunnable;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/AvatarDrawable.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/AvatarDrawable.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/AvatarDrawable.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/AvatarDrawable.java
+@@ -573,7 +573,7 @@ public class AvatarDrawable extends Drawable {
+             return;
+         }
+         int size = bounds.width();
+-        namePaint.setColor(ColorUtils.setAlphaComponent(desu.inugram.helpers.theme.MonetHelper.getAvatarTextColor(getThemedColor(Theme.key_avatar_text), getColor(), getColor2()), alpha));
++        namePaint.setColor(ColorUtils.setAlphaComponent(getThemedColor(Theme.key_avatar_text), alpha));
+         Paint backgroundPaint = Theme.avatar_backgroundPaint;
+         if (hasAdvancedGradient && advancedGradient != null) {
+             advancedGradient.setBounds(bounds.left, bounds.top, bounds.left + size, bounds.top + size);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/Bulletin.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/Bulletin.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/Bulletin.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/Bulletin.java
+@@ -506,7 +506,7 @@ public class Bulletin {
+     }
+ 
+     private static boolean isTransitionsEnabled() {
+-        return MessagesController.getGlobalMainSettings().getBoolean("view_animations", true);
++        return MessagesController.getGlobalMainSettings().getBoolean("view_animations", false);
+     }
+ 
+     public void updatePosition() {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/CaptionPhotoViewer.java
+@@ -529,7 +529,7 @@ public class CaptionPhotoViewer extends CaptionContainerView {
+ 
+     private boolean shownAiButton;
+     private void showAiButton(boolean show_) {
+-        final boolean show = show_ && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = false;
+ 
+         if (shownAiButton == show) return;
+         if (show) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java
+@@ -5978,7 +5978,7 @@ public class ChatActivityEnterView extends FrameLayout implements
+                 } else {
+                     currentPage = emojiView.getCurrentPage();
+                 }
+-                if (currentPage == 0 || !allowStickers && !allowGifs) {
++                if (currentPage == 0 || currentPage == EmojiView.INU_TAB_TEXT || !allowStickers && !allowGifs) {
+                     allowChangeToSmile = false;
+                 }
+ 
+@@ -6128,7 +6128,7 @@ public class ChatActivityEnterView extends FrameLayout implements
+ 
+     private boolean shownAiButton;
+     private void showAiButton(boolean show_) {
+-        final boolean show = (show_ || richDraftActive) && parentFragment != null && !parentFragment.isSecretChat() && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = false;
+ 
+         if (shownAiButton == show) return;
+         if (show) {
+@@ -12610,6 +12610,8 @@ public class ChatActivityEnterView extends FrameLayout implements
+                 return searchToOpenProgress;
+             }
+         });
++        emojiView.inu_enableSavedTexts(text -> desu.inugram.helpers.chat.SavedTextsView.insertText(
++            mOverrideEditTextView != null ? mOverrideEditTextView : ChatActivityEnterView.this.messageEditText, text));
+         emojiView.setDragListener(new EmojiView.DragListener() {
+ 
+             boolean wasExpanded;
+@@ -13079,7 +13081,7 @@ public class ChatActivityEnterView extends FrameLayout implements
+             } else {
+                 currentPage = emojiView.getCurrentPage();
+             }
+-            if (currentPage == 0 || !allowStickers && !allowGifs) {
++            if (currentPage == 0 || currentPage == EmojiView.INU_TAB_TEXT || !allowStickers && !allowGifs) {
+                 nextIcon = ChatActivityEnterViewAnimatedIconView.State.SMILE;
+             } else if (messageEditText != null && !TextUtils.isEmpty(messageEditText.getText())) {
+                 nextIcon = ChatActivityEnterViewAnimatedIconView.State.SMILE;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java
+@@ -6562,7 +6562,7 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
+ 
+     private boolean shownAiButton;
+     private void showAiButton(boolean show_) {
+-        final boolean show = show_ && (baseFragment instanceof ChatActivity && !((ChatActivity) baseFragment).isSecretChat()) && !desu.inugram.InuConfig.HIDE_AI_EDITOR.getValue();
++        final boolean show = false;
+ 
+         if (shownAiButton == show) return;
+         if (show) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlertDocumentLayout.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlertDocumentLayout.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlertDocumentLayout.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlertDocumentLayout.java
+@@ -1351,7 +1351,7 @@ public class ChatAttachAlertDocumentLayout extends ChatAttachAlert.AttachAlertLa
+ 
+         ListItem fs;
+         try {
+-            String appFolderName = desu.inugram.InuConfig.DOWNLOAD_DIRECTORY.getValue();
++            String appFolderName = desu.inugram.InuConfig.DOWNLOAD_DIRECTORY;
+             File telegramPath = new File(ApplicationLoader.applicationContext.getExternalFilesDir(null), appFolderName);
+             if (telegramPath.exists()) {
+                 fs = new ListItem();
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
+@@ -192,6 +192,8 @@ public class EmojiView extends FrameLayout implements
+     private final static int TAB_EMOJI = 0;
+     private final static int TAB_GIFS = 1;
+     private final static int TAB_STICKERS = 2;
++    public static final int INU_TAB_TEXT = 3;
++    private desu.inugram.helpers.chat.SavedTextsView inu_savedTexts;
+ 
+     public int emojiCacheType = AnimatedEmojiDrawable.CACHE_TYPE_KEYBOARD;
+ 
+@@ -293,6 +295,8 @@ public class EmojiView extends FrameLayout implements
+                 currentTabs.add(allTabs.get(i));
+             } if (allTabs.get(i).type == TAB_GIFS && allowGifs) {
+                 currentTabs.add(allTabs.get(i));
++            } if (allTabs.get(i).type == INU_TAB_TEXT) {
++                currentTabs.add(allTabs.get(i));
+             }  if (allTabs.get(i).type == TAB_STICKERS && allowStickers) {
+                 currentTabs.add(allTabs.get(i));
+             }
+@@ -305,6 +309,7 @@ public class EmojiView extends FrameLayout implements
+             pager.setAdapter(emojiPagerAdapter);
+             if (typeTabs != null) {
+                 typeTabs.setViewPager(pager);
++                if (inu_savedTexts != null) desu.inugram.helpers.chat.SavedTextsView.configureTabs(typeTabs);
+             }
+         }
+     }
+@@ -2600,9 +2605,10 @@ public class EmojiView extends FrameLayout implements
+ 
+             @Override
+             public void setCurrentItem(int item, boolean smoothScroll) {
+-                startStopVisibleGifs(item == 1);
++                int type = inu_tabType(item);
++                startStopVisibleGifs(type == TAB_GIFS);
+                 if (item == getCurrentItem()) {
+-                    if (item == 0) {
++                    if (type == TAB_EMOJI) {
+                         tabsMinusDy[Type.EMOJIS] = 0;
+                         ObjectAnimator animator = ObjectAnimator.ofFloat(emojiTabs, TRANSLATION_Y, 0);
+                         animator.setDuration(150);
+@@ -2612,10 +2618,12 @@ public class EmojiView extends FrameLayout implements
+                         if (emojiTabs != null) {
+                             emojiTabs.select(0);
+                         }
+-                    } else if (item == 1) {
++                    } else if (type == TAB_GIFS && gifGridView != null) {
+                         gifGridView.smoothScrollToPosition(0);
+-                    } else {
++                    } else if (type == TAB_STICKERS && stickersGridView != null) {
+                         stickersGridView.smoothScrollToPosition(1);
++                    } else if (type == INU_TAB_TEXT && inu_savedTexts != null) {
++                        inu_savedTexts.scrollToTop();
+                     }
+                     return;
+                 }
+@@ -2711,15 +2719,15 @@ public class EmojiView extends FrameLayout implements
+                     EmojiView.this.onPageScrolled(position, getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), positionOffsetPixels);
+                     showBottomTab(true, true);
+                     SearchField currentField;
+-                    int p = pager.getCurrentItem();
++                    int p = inu_tabType(pager.getCurrentItem());
+                     if (p == 0) {
+                         currentField = emojiSearchField;
+                     } else if (p == 1) {
+                         currentField = gifSearchField;
+                     } else {
+-                        currentField = stickersSearchField;
++                        currentField = p == TAB_STICKERS ? stickersSearchField : null;
+                     }
+-                    String currentFieldText = currentField.searchEditText.getText().toString();
++                    String currentFieldText = currentField == null ? null : currentField.searchEditText.getText().toString();
+                     for (int a = 0; a < 3; a++) {
+                         SearchField field;
+                         if (a == 0) {
+@@ -2729,31 +2737,37 @@ public class EmojiView extends FrameLayout implements
+                         } else {
+                             field = stickersSearchField;
+                         }
+-                        if (field == null || field == currentField || field.searchEditText == null || field.searchEditText.getText().toString().equals(currentFieldText)) {
++                        if (currentFieldText == null || field == null || field == currentField || field.searchEditText == null || field.searchEditText.getText().toString().equals(currentFieldText)) {
+                             continue;
+                         }
+                         field.searchEditText.setText(currentFieldText);
+                         field.searchEditText.setSelection(currentFieldText.length());
+                     }
+-                    startStopVisibleGifs((position == 0 && positionOffset > 0) || position == 1);
++                    startStopVisibleGifs(inu_tabType(position) == TAB_GIFS || (positionOffset > 0 && inu_tabType(position + 1) == TAB_GIFS));
+                     updateStickerTabsPosition();
+                 }
+ 
+                 @Override
+                 public void onPageSelected(int position) {
++                    int type = inu_tabType(position);
++                    if (type == INU_TAB_TEXT && delegate.isSearchOpened()) {
++                        closeSearch(false, -1);
++                        delegate.onSearchOpenClose(0);
++                        showBottomTab(true, true);
++                    }
+                     saveNewPage();
+-                    showBackspaceButton(position == 0, true);
+-                    showStickerSettingsButton(position == 2 && (shouldDrawBackground || shouldDrawStickerSettings), true);
++                    showBackspaceButton(type == TAB_EMOJI, true);
++                    showStickerSettingsButton(type == TAB_STICKERS && (shouldDrawBackground || shouldDrawStickerSettings), true);
+                     if (delegate.isSearchOpened()) {
+-                        if (position == 0) {
++                        if (type == TAB_EMOJI) {
+                             if (emojiSearchField != null) {
+                                 emojiSearchField.searchEditText.requestFocus();
+                             }
+-                        } else if (position == 1) {
++                        } else if (type == TAB_GIFS) {
+                             if (gifSearchField != null) {
+                                 gifSearchField.searchEditText.requestFocus();
+                             }
+-                        } else {
++                        } else if (type == TAB_STICKERS) {
+                             if (stickersSearchField != null) {
+                                 stickersSearchField.searchEditText.requestFocus();
+                             }
+@@ -2777,13 +2791,13 @@ public class EmojiView extends FrameLayout implements
+             bottomTabContainer.addView(searchButton, LayoutHelper.createFrame(48, 48, Gravity.BOTTOM | Gravity.LEFT, 2, 0, 2, 0));
+             searchButton.setOnClickListener(v -> {
+                 SearchField currentField;
+-                int currentItem = pager.getCurrentItem();
++                int currentItem = inu_tabType(pager.getCurrentItem());
+                 if (currentItem == 0) {
+                     currentField = emojiSearchField;
+                 } else if (currentItem == 1) {
+                     currentField = gifSearchField;
+                 } else {
+-                    currentField = stickersSearchField;
++                    currentField = currentItem == TAB_STICKERS ? stickersSearchField : null;
+                 }
+                 if (currentField == null) {
+                     return;
+@@ -3819,34 +3833,15 @@ public class EmojiView extends FrameLayout implements
+     }
+ 
+     private void checkGridVisibility(int position, float positionOffset) {
+-        if (stickersContainer == null || gifContainer == null) {
+-            return;
+-        }
+-        if (position == 0) {
+-            emojiGridView.setVisibility(View.VISIBLE);
+-            gifGridView.setVisibility(positionOffset == 0 ? View.GONE : View.VISIBLE);
+-            gifTabs.setVisibility(positionOffset == 0 ? View.GONE : View.VISIBLE);
+-            stickersGridView.setVisibility(View.GONE);
+-            if (stickersTabContainer != null) {
+-                stickersTabContainer.setVisibility(View.GONE);
+-            }
+-        } else if (position == 1) {
+-            emojiGridView.setVisibility(View.GONE);
+-            gifGridView.setVisibility(View.VISIBLE);
+-            gifTabs.setVisibility(View.VISIBLE);
+-            stickersGridView.setVisibility(positionOffset == 0 ? View.GONE : View.VISIBLE);
+-            if (stickersTabContainer != null) {
+-                stickersTabContainer.setVisibility(positionOffset == 0 ? View.GONE : View.VISIBLE);
+-            }
+-        } else if (position == 2) {
+-            emojiGridView.setVisibility(View.GONE);
+-            gifGridView.setVisibility(View.GONE);
+-            gifTabs.setVisibility(View.GONE);
+-            stickersGridView.setVisibility(View.VISIBLE);
+-            if (stickersTabContainer != null) {
+-                stickersTabContainer.setVisibility(View.VISIBLE);
+-            }
+-        }
++        int type = inu_tabType(position);
++        int nextType = positionOffset > 0 ? inu_tabType(position + 1) : -1;
++        emojiGridView.setVisibility(type == TAB_EMOJI || nextType == TAB_EMOJI ? View.VISIBLE : View.GONE);
++        boolean gifsVisible = type == TAB_GIFS || nextType == TAB_GIFS;
++        if (gifGridView != null) gifGridView.setVisibility(gifsVisible ? View.VISIBLE : View.GONE);
++        if (gifTabs != null) gifTabs.setVisibility(gifsVisible ? View.VISIBLE : View.GONE);
++        boolean stickersVisible = type == TAB_STICKERS || nextType == TAB_STICKERS;
++        if (stickersGridView != null) stickersGridView.setVisibility(stickersVisible ? View.VISIBLE : View.GONE);
++        if (stickersTabContainer != null) stickersTabContainer.setVisibility(stickersVisible ? View.VISIBLE : View.GONE);
+     }
+ 
+     private void openPremiumAnimatedEmojiFeature() {
+@@ -4953,7 +4948,7 @@ public class EmojiView extends FrameLayout implements
+             searchAnimation = null;
+         }
+ 
+-        int currentItem = pager.getCurrentItem();
++        int currentItem = inu_tabType(pager.getCurrentItem());
+         if (currentItem == 2 && scrollToSet != -1) {
+             TLRPC.TL_messages_stickerSet set = MediaDataController.getInstance(currentAccount).getStickerSetById(scrollToSet);
+             if (set != null) {
+@@ -5533,10 +5528,11 @@ public class EmojiView extends FrameLayout implements
+             return;
+         }
+         int newPage;
+-        int currentItem = pager.getCurrentItem();
+-        if (currentItem == 2) {
++        int type = inu_tabType(pager.getCurrentItem());
++        if (type == INU_TAB_TEXT) return; // Keep stock selected_page valid for emoji panels without Text.
++        if (type == TAB_STICKERS) {
+             newPage = 1;
+-        } else if (currentItem == 1) {
++        } else if (type == TAB_GIFS) {
+             newPage = 2;
+         } else {
+             newPage = 0;
+@@ -5556,9 +5552,10 @@ public class EmojiView extends FrameLayout implements
+         if (delegate == null) {
+             return;
+         }
+-        if (position == 1) {
++        int type = inu_tabType(position);
++        if (type == TAB_GIFS) {
+             delegate.onTabOpened(positionOffsetPixels != 0 ? 2 : 0);
+-        } else if (position == 2) {
++        } else if (type == TAB_STICKERS) {
+             delegate.onTabOpened(3);
+         } else {
+             delegate.onTabOpened(0);
+@@ -5884,6 +5881,7 @@ public class EmojiView extends FrameLayout implements
+     }
+ 
+     public void updateColors() {
++        if (inu_savedTexts != null) inu_savedTexts.updateColors();
+         if (!shouldDrawBackground) {
+             setBackground(null);
+             bottomTabContainerBackground.setBackground(null);
+@@ -6080,6 +6078,30 @@ public class EmojiView extends FrameLayout implements
+         ContentPreviewViewer.getInstance().reset();
+     }
+ 
++    private int inu_tabType(int position) {
++        return position >= 0 && position < currentTabs.size() ? currentTabs.get(position).type : -1;
++    }
++
++    private int inu_tabPosition(int type) {
++        for (int i = 0; i < currentTabs.size(); i++) if (currentTabs.get(i).type == type) return i;
++        return 0;
++    }
++
++    public void inu_enableSavedTexts(Utilities.Callback<String> onSelect) {
++        if (inu_savedTexts != null) return;
++        inu_savedTexts = new desu.inugram.helpers.chat.SavedTextsView(getContext(), fragment, currentAccount, resourcesProvider, onSelect);
++        Tab textTab = new Tab();
++        textTab.type = INU_TAB_TEXT;
++        textTab.view = inu_savedTexts;
++        allTabs.add(textTab);
++        currentTabs.add(textTab);
++        emojiPagerAdapter.notifyDataSetChanged();
++        if (typeTabs != null) {
++            typeTabs.notifyDataSetChanged();
++            desu.inugram.helpers.chat.SavedTextsView.configureTabs(typeTabs);
++        }
++    }
++
+     public void setDelegate(EmojiViewDelegate emojiViewDelegate) {
+         delegate = emojiViewDelegate;
+     }
+@@ -6102,6 +6124,13 @@ public class EmojiView extends FrameLayout implements
+     }
+ 
+     public void onOpen(boolean forceEmoji, boolean groupEmojiHintWasVisible) {
++        if (inu_savedTexts != null) {
++            pager.setCurrentItem(inu_tabPosition(INU_TAB_TEXT), false);
++            showBackspaceButton(false, false);
++            showStickerSettingsButton(false, false);
++            showBottomTab(true, false);
++            return;
++        }
+         if (currentPage != 0 && stickersBanned) {
+             currentPage = 0;
+         }
+@@ -6132,8 +6161,8 @@ public class EmojiView extends FrameLayout implements
+         } else if (currentPage == 1) {
+             showBackspaceButton(false, false);
+             showStickerSettingsButton(shouldDrawBackground || shouldDrawStickerSettings, false);
+-            if (pager.getCurrentItem() != 2) {
+-                pager.setCurrentItem(2, false);
++            if (pager.getCurrentItem() != inu_tabPosition(TAB_STICKERS)) {
++                pager.setCurrentItem(inu_tabPosition(TAB_STICKERS), false);
+             }
+             if (stickersTab != null) {
+                 firstTabUpdate = true;
+@@ -6150,8 +6179,8 @@ public class EmojiView extends FrameLayout implements
+         } else if (currentPage == 2) {
+             showBackspaceButton(false, false);
+             showStickerSettingsButton(false, false);
+-            if (pager.getCurrentItem() != 1) {
+-                pager.setCurrentItem(1, false);
++            if (pager.getCurrentItem() != inu_tabPosition(TAB_GIFS)) {
++                pager.setCurrentItem(inu_tabPosition(TAB_GIFS), false);
+             }
+             if (gifTabs != null) {
+                 gifTabs.selectTab(0);
+@@ -6225,7 +6254,7 @@ public class EmojiView extends FrameLayout implements
+     }
+ 
+     public int getCurrentPage() {
+-        return currentPage;
++        return inu_tabType(pager.getCurrentItem()) == INU_TAB_TEXT ? INU_TAB_TEXT : currentPage;
+     }
+ 
+     public void onDestroy() {
+@@ -6316,20 +6345,20 @@ public class EmojiView extends FrameLayout implements
+         } else {
+             currentChatId = 0;
+         }
+-        View view = typeTabs.getTab(stickersBanned ? 2 : 0);
+-        if (view != null) {
+-            view.setAlpha(currentChatId != 0 ? 0.15f : 1.0f);
+-            if (stickersBanned) {
+-                if (currentChatId != 0 && pager.getCurrentItem() != 0) {
+-                    showBackspaceButton(true, true);
+-                    showStickerSettingsButton(false, true);
+-                    pager.setCurrentItem(0, false);
+-                }
+-            } else {
+-                if (currentChatId != 0 && pager.getCurrentItem() != 1) {
+-                    showBackspaceButton(false, true);
+-                    showStickerSettingsButton(false, true);
+-                    pager.setCurrentItem(1, false);
++        for (int i = 0; i < currentTabs.size(); i++) {
++            int type = inu_tabType(i);
++            boolean banned = type == TAB_EMOJI || type == INU_TAB_TEXT ? emojiBanned : stickersBanned;
++            View view = typeTabs.getTab(i);
++            if (view != null) view.setAlpha(currentChatId != 0 && banned ? 0.15f : 1f);
++        }
++        int type = inu_tabType(pager.getCurrentItem());
++        boolean banned = type == TAB_EMOJI || type == INU_TAB_TEXT ? emojiBanned : stickersBanned;
++        if (currentChatId != 0 && banned) {
++            for (int i = 0; i < currentTabs.size(); i++) {
++                int candidate = inu_tabType(i);
++                if (!(candidate == TAB_EMOJI || candidate == INU_TAB_TEXT ? emojiBanned : stickersBanned)) {
++                    pager.setCurrentItem(i, false);
++                    break;
+                 }
+             }
+         }
+@@ -8603,11 +8632,12 @@ public class EmojiView extends FrameLayout implements
+ 
+         @Override
+         public boolean canScrollToTab(int position) {
+-            if ((position == 1 || position == 2) && stickersBanned) {
+-                showStickerBanHint(true, false, position == 1);
++            int type = inu_tabType(position);
++            if ((type == TAB_GIFS || type == TAB_STICKERS) && stickersBanned) {
++                showStickerBanHint(true, false, type == TAB_GIFS);
+                 return false;
+             }
+-            if (position == 0 && emojiBanned) {
++            if ((type == TAB_EMOJI || type == INU_TAB_TEXT) && emojiBanned) {
+                 showStickerBanHint(true, true, false);
+                 return false;
+             }
+@@ -8624,13 +8654,15 @@ public class EmojiView extends FrameLayout implements
+         }
+ 
+         public CharSequence getPageTitle(int position) {
+-            switch (position) {
++            switch (inu_tabType(position)) {
+                 case 0:
+                     return getString(R.string.Emoji);
+                 case 1:
+                     return getString(R.string.AccDescrGIFs);
+                 case 2:
+                     return getString(R.string.AccDescrStickers);
++                case INU_TAB_TEXT:
++                    return getString(R.string.InuSavedTextsTab);
+             }
+             return null;
+         }
+@@ -10371,4 +10403,4 @@ public class EmojiView extends FrameLayout implements
+             setFoundPackButtonText(view, stickerSet, set, sticker, isEmoji, true);
+         });
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/Reactions/ReactionsEffectOverlay.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/Reactions/ReactionsEffectOverlay.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/Reactions/ReactionsEffectOverlay.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/Reactions/ReactionsEffectOverlay.java
+@@ -773,7 +773,7 @@ public class ReactionsEffectOverlay {
+         if (cell == null || visibleReaction == null || baseFragment == null || baseFragment.getParentActivity() == null) {
+             return;
+         }
+-        boolean animationEnabled = MessagesController.getGlobalMainSettings().getBoolean("view_animations", true);
++        boolean animationEnabled = MessagesController.getGlobalMainSettings().getBoolean("view_animations", false);
+         if (!animationEnabled || desu.inugram.InuConfig.HIDE_REACTIONS_ENTRY.getValue()) {
+             return;
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerAnimationScrollHelper.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerAnimationScrollHelper.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerAnimationScrollHelper.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerAnimationScrollHelper.java
+@@ -74,7 +74,7 @@ public class RecyclerAnimationScrollHelper {
+         }
+ 
+         int n = recyclerView.getChildCount();
+-        if (n == 0 || !MessagesController.getGlobalMainSettings().getBoolean("view_animations", true)) {
++        if (n == 0 || !MessagesController.getGlobalMainSettings().getBoolean("view_animations", false)) {
+             layoutManager.scrollToPositionWithOffset(position, offset, bottom);
+             return;
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/ShareAlert.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/ShareAlert.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/ShareAlert.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/ShareAlert.java
+@@ -1109,7 +1109,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+             }
+         });
+         topicsBackActionBar.setVisibility(View.GONE);
+-        frameLayout.addView(topicsBackActionBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 58, Gravity.BOTTOM | Gravity.LEFT));
++        frameLayout.addView(topicsBackActionBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 58, (inu_forwardProActive ? Gravity.TOP : Gravity.BOTTOM) | Gravity.LEFT));
+ 
+         topicsGridView = new RecyclerListView(context, resourcesProvider);
+         topicsGridView.setLayoutManager(topicsLayoutManager = new GridLayoutManager(context, 4));
+@@ -2219,6 +2219,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+         searchView.setScaleX(0.9f + (1f - value) * 0.1f);
+         searchView.setScaleY(0.9f + (1f - value) * 0.1f);
+         searchView.setAlpha(1f - value);
++        desu.inugram.helpers.chat.ForwardProHelper.onTopicsTransition(this, value);
+ 
+         topicsBackActionBar.getBackButton().setTranslationX(-dp(16) * (1f - value));
+         topicsBackActionBar.getTitleTextView().setTranslationY(dp(16) * (1f - value));
+@@ -2312,7 +2313,8 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+             }
+             sendPopupLayout1.addView(showSendersNameView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 48));
+             showSendersNameView.setTextAndIcon(false ? LocaleController.getString(R.string.ShowSenderNames) : LocaleController.getString(R.string.ShowSendersName), 0);
+-            showSendersNameView.setChecked(showSendersName = true);
++            if (!desu.inugram.helpers.chat.ForwardProHelper.isActive(this)) showSendersName = true;
++            showSendersNameView.setChecked(showSendersName);
+ 
+             boolean inu_forwardProCaptionRow = desu.inugram.helpers.chat.ForwardProHelper.isActive(this);
+             ActionBarMenuSubItem hideSendersNameView = new ActionBarMenuSubItem(getContext(), true, false, !inu_forwardProCaptionRow, resourcesProvider);
+@@ -2528,7 +2530,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                     TLRPC.TL_forumTopic topic = selectedDialogTopics.get(selectedDialogs.get(key));
+                     long monoForumPeerId = topic != null && isMonoForum ? DialogObject.getPeerDialogId(topic.from_id) : 0;
+ 
+-                    MessageObject replyTopMsg = topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
++                    MessageObject replyTopMsg = desu.inugram.helpers.chat.ForwardProHelper.isActive(this) ? desu.inugram.helpers.chat.ForwardProHelper.getTopicReply(this, key) : topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
+                     if (replyTopMsg != null) {
+                         replyTopMsg.isTopicMainMessage = true;
+                     }
+@@ -2577,7 +2579,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                         if (price != null && price > 0) hadPaid = true;
+                         TLRPC.TL_forumTopic topic = selectedDialogTopics.get(selectedDialogs.get(key));
+                         long monoForumPeerId = topic != null && isMonoForum ? DialogObject.getPeerDialogId(topic.from_id) : 0;
+-                        MessageObject replyTopMsg = topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
++                        MessageObject replyTopMsg = desu.inugram.helpers.chat.ForwardProHelper.isActive(this) ? desu.inugram.helpers.chat.ForwardProHelper.getTopicReply(this, key) : topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
+ 
+                         SendMessagesHelper.SendMessageParams params;
+                         if (storyItem == null) {
+@@ -2588,7 +2590,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                             }
+                         } else {
+                             if (frameLayout2.getTag() != null && commentTextView.length() > 0 && text[0] != null) {
+-                                SendMessagesHelper.getInstance(currentAccount).sendMessage(SendMessagesHelper.SendMessageParams.of(text[0].toString(), key, null, replyTopMsg, null, true, null, null, null, withSound, 0, 0, null, false));
++                                SendMessagesHelper.getInstance(currentAccount).sendMessage(SendMessagesHelper.SendMessageParams.of(text[0].toString(), key, replyTopMsg, replyTopMsg, null, true, null, null, null, withSound, 0, 0, null, false));
+                             }
+                             params = SendMessagesHelper.SendMessageParams.of(null, key, replyTopMsg, replyTopMsg, null, true, null, null, null, withSound, 0, 0, null, false);
+                             params.sendingStory = storyItem;
+@@ -2605,7 +2607,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                         if (price != null && price > 0) hadPaid = true;
+                         TLRPC.TL_forumTopic topic = selectedDialogTopics.get(selectedDialogs.get(key));
+                         long monoForumPeerId = topic != null && isMonoForum ? DialogObject.getPeerDialogId(topic.from_id) : 0;
+-                        MessageObject replyTopMsg = topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
++                        MessageObject replyTopMsg = desu.inugram.helpers.chat.ForwardProHelper.isActive(this) ? desu.inugram.helpers.chat.ForwardProHelper.getTopicReply(this, key) : topic != null && !isMonoForum ? new MessageObject(currentAccount, topic.topicStartMessage, false, false) : null;
+ 
+                         if (frameLayout2.getTag() != null && commentTextView.length() > 0) {
+                             SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(text[0] == null ? null : text[0].toString(), key, replyTopMsg, replyTopMsg, null, true, entities, null, null, withSound, 0, 0, null, false);
+@@ -3138,7 +3140,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                 case 1:
+                 default: {
+                     view = new View(context);
+-                    view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, ActionBar.getCurrentActionBarHeight()));
++                    view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, desu.inugram.helpers.chat.ForwardProHelper.isActive(ShareAlert.this) ? dp(inu_getHeaderHeight() - 2) : ActionBar.getCurrentActionBarHeight()));
+                     break;
+                 }
+             }
+@@ -3153,7 +3155,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
+                     cell.setAsNewBotForumTopic(isBotForumWithManageTopics);
+                 } else if (topics != null) {
+                     TLRPC.TL_forumTopic topic = getItemTopic(position);
+-                    cell.setTopic(selectedTopicDialog, topic, topic != null && selectedDialogs.indexOfKey(topic.id) >= 0, null);
++                    cell.setTopic(selectedTopicDialog, topic, desu.inugram.helpers.chat.ForwardProHelper.isActive(ShareAlert.this) ? desu.inugram.helpers.chat.ForwardProHelper.isTopicSelected(ShareAlert.this, selectedTopicDialog, topic) : topic != null && selectedDialogs.indexOfKey(topic.id) >= 0, null);
+                 }
+             }
+         }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/UndoView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/UndoView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/UndoView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/UndoView.java
+@@ -1208,7 +1208,7 @@ public class UndoView extends FrameLayout {
+ 
+             layoutParams.leftMargin = AndroidUtilities.dp(58);
+             layoutParams.topMargin = AndroidUtilities.dp(6);
+-            subinfoTextView.setText(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppName(authorization.app_name));
++            subinfoTextView.setText(desu.inugram.helpers.VersionHelper.getSessionAppName(authorization.app_name));
+             subinfoTextView.setVisibility(VISIBLE);
+             infoTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+             infoTextView.setTypeface(AndroidUtilities.bold());
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java
+@@ -411,7 +411,6 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
+         float[] radii, float strokeWidth, boolean isTop,
+         Paint paint
+     ) {
+-        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
+ 
+         final boolean radiiAreSame = isTop ?
+             radii[0] == radii[1] && radii[1] == radii[2] && radii[2] == radii[3]:
+@@ -513,7 +512,6 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
+ 
+     public static void drawStroke(Canvas canvas, float left, float top, float right, float bottom,
+                                      float radii, float strokeWidth, boolean isTop, Paint paint) {
+-        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
+         final float strokeHalf = strokeWidth / 2f;
+         canvas.save();
+         if (isTop) {
+@@ -667,7 +665,7 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
+             return;
+         }
+ 
+-        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, !desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue());
++        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, true);
+         ninePatchDrawable.setBounds(
+             boundProps.boundsWithPadding.left - ninePatchDrawablePadding.left,
+             boundProps.boundsWithPadding.top - ninePatchDrawablePadding.top,
+@@ -722,7 +720,6 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
+     }
+ 
+     private void drawStrokeInternalIfNeeded(Canvas canvas) {
+-        if (desu.inugram.InuConfig.DISABLE_GLASS_GLARE.getValue()) return;
+         final int strokeColorTop = Theme.multAlpha(this.strokeColorTop, alpha / 255f);
+         final int strokeColorBottom = Theme.multAlpha(this.strokeColorBottom, alpha / 255f);
+ 
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/DialogsActivity.java
+@@ -3058,7 +3058,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+     private Drawable premiumStar;
+ 
+     public void updateStatus(TLRPC.User user, boolean animated) {
+-        if (!desu.inugram.helpers.security.ParanoiaHelper.isDisguised() && actionBar != null && communityId == 0 &&
++        if (actionBar != null && communityId == 0 &&
+                 (folderId == 0 || desu.inugram.InuConfig.DIALOGS_TITLE_TEXT_OVERRIDE_ARCHIVE.getValue())) {
+             if (folderId == 0 && desu.inugram.InuConfig.DIALOGS_TITLE_TEXT.getValue() == desu.inugram.InuConfig.DialogsTitleTextItem.FOLDER) {
+                 // getDialogsTitle() has no FOLDER branch and falls through to the app name, so
+@@ -3254,6 +3254,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+         if (rightSlidingDialogContainer != null && rightSlidingDialogContainer.hasFragment()) {
+             return;
+         }
++        if (!onlySelect && initialDialogsType == DIALOGS_TYPE_DEFAULT && folderId == 0 && communityId == 0) {
++            action = () -> presentFragment(new ProxyListActivity());
++        }
+         super.setTitleOverlayText(title, titleId, action);
+         if (actionBar != null && selectAnimatedEmojiDialog != null && selectAnimatedEmojiDialog.getContentView() instanceof SelectAnimatedEmojiDialog) {
+             SimpleTextView textView = actionBar.getTitleTextView();
+@@ -3584,16 +3587,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+             } else {
+                 statusDrawable = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(null, dp(26));
+                 statusDrawable.center = true;
+-                if (desu.inugram.helpers.security.ParanoiaHelper.isDisguised()) {
+-                logoDrawable = context.getResources().getDrawable(R.drawable.telegram_logo_2).mutate();
+-                logoDrawable.setBounds(0, dp(2), logoDrawable.getIntrinsicWidth(), dp(2) + logoDrawable.getIntrinsicHeight());
+-                logoDrawable.setColorFilter(getThemedColor(Theme.key_telegram_color_dialogsLogo), PorterDuff.Mode.MULTIPLY);
+-                SpannableStringBuilder ssb = new SpannableStringBuilder(getString(R.string.AppName));
+-                ssb.setSpan(new ImageSpan(logoDrawable), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+-                actionBar.setTitle(ssb, statusDrawable);
+-                } else {
+-                    actionBar.setTitle(desu.inugram.helpers.chat.ChatHelper.getDialogsTitle(currentAccount), statusDrawable);
+-                }
++                actionBar.setTitle(desu.inugram.helpers.chat.ChatHelper.getDialogsTitle(currentAccount), statusDrawable);
+                 updateStatus(UserConfig.getInstance(currentAccount).getCurrentUser(), false);
+             }
+             if (folderId == 0) {
+@@ -3606,6 +3600,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
+             actionBar.setClipContent(true);
+         //}
+         actionBar.setTitleActionRunnable(() -> {
++            if (!onlySelect && initialDialogsType == DIALOGS_TYPE_DEFAULT && folderId == 0 && communityId == 0) {
++                presentFragment(new ProxyListActivity());
++                return;
++            }
+             if (initialDialogsType != DIALOGS_TYPE_WIDGET) {
+                 hideFloatingButton(false);
+             }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/IntroActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/IntroActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/IntroActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/IntroActivity.java
+@@ -807,7 +807,7 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
+             }, 21);
+             loadTexture(v -> {
+                 Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+-                paint.setColor(0xFFF20C3C); // entinyGram brand color, it should not be colored by the theme
++                paint.setColor(0xFF000000); // NagramXF icon background, independent of the theme
+                 int size = dp(ICON_HEIGHT_DP);
+                 Bitmap bm = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+                 Canvas c = new Canvas(bm);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/LaunchActivity.java
+@@ -449,6 +449,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
+         flagSecureReason.attach();
+ 
+         super.onCreate(savedInstanceState);
++        desu.inugram.helpers.LayoutDirectionHelper.configureActivity(this);
+         if (Build.VERSION.SDK_INT >= 24) {
+             AndroidUtilities.isInMultiwindow = isInMultiWindowMode();
+         }
+@@ -7164,6 +7165,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
+         AndroidUtilities.checkDisplaySize(this, newConfig);
+         AndroidUtilities.setPreferredMaxRefreshRate(getWindow());
+         super.onConfigurationChanged(newConfig);
++        desu.inugram.helpers.LayoutDirectionHelper.configureActivity(this);
+         pipActivityHandler.onConfigurationChanged(newConfig);
+         AndroidUtilities.resetTabletFlag();
+         invalidateTabletMode();
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LauncherIconController.java b/TMessagesProj/src/main/java/org/telegram/ui/LauncherIconController.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/LauncherIconController.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/LauncherIconController.java
+@@ -35,14 +35,10 @@ public class LauncherIconController {
+ 
+     public enum LauncherIcon {
+         DEFAULT("DefaultIcon", R.drawable.icon_background_inu, R.drawable.icon_foreground_inu, R.string.AppIconDefault),
+-        OLD("OldIcon", R.drawable.icon_background_old_inu, R.drawable.icon_foreground_old_inu, R.string.InuAppIconOldEntinygram),
+         STOCK("StockIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.InuAppIconStock),
+-        VINTAGE("VintageIcon", R.drawable.icon_6_background_sa, R.mipmap.icon_6_foreground_sa, R.string.AppIconVintage),
+-        AQUA("AquaIcon", R.drawable.icon_4_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconAqua),
+         PREMIUM("PremiumIcon", R.drawable.icon_3_background_sa, R.mipmap.icon_3_foreground_sa, R.string.AppIconPremium, true),
+         TURBO("TurboIcon", R.drawable.icon_5_background_sa, R.mipmap.icon_5_foreground_sa, R.string.AppIconTurbo, true),
+-        NOX("NoxIcon", R.mipmap.icon_2_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconNox, true),
+-        DISGUISE("DisguiseIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconDefault);
++        NOX("NoxIcon", R.mipmap.icon_2_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconNox, true);
+ 
+         public final String key;
+         public final int background;
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/LiteModeSettingsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/LiteModeSettingsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/LiteModeSettingsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/LiteModeSettingsActivity.java
+@@ -141,7 +141,7 @@ public class LiteModeSettingsActivity extends BaseFragment {
+             } else if (item.viewType == VIEW_TYPE_SWITCH2) {
+                 if (item.type == SWITCH_TYPE_SMOOTH_TRANSITIONS) {
+                     SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-                    boolean animations = preferences.getBoolean("view_animations", true);
++                    boolean animations = preferences.getBoolean("view_animations", false);
+                     SharedPreferences.Editor editor = preferences.edit();
+                     editor.putBoolean("view_animations", !animations);
+                     SharedConfig.setAnimationsEnabled(!animations);
+@@ -409,7 +409,7 @@ public class LiteModeSettingsActivity extends BaseFragment {
+                 TextCell textCell = (TextCell) holder.itemView;
+                 if (item.type == SWITCH_TYPE_SMOOTH_TRANSITIONS) {
+                     SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-                    boolean animations = preferences.getBoolean("view_animations", true);
++                    boolean animations = preferences.getBoolean("view_animations", false);
+                     textCell.setTextAndCheck(item.text, animations, false);
+                 }
+             }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/NotificationsSettingsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/NotificationsSettingsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/NotificationsSettingsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/NotificationsSettingsActivity.java
+@@ -691,7 +691,7 @@ public class NotificationsSettingsActivity extends BaseFragment implements Notif
+             } */else if (position == pinnedMessageRow) {
+                 SharedPreferences preferences = MessagesController.getNotificationsSettings(currentAccount);
+                 SharedPreferences.Editor editor = preferences.edit();
+-                enabled = preferences.getBoolean("PinnedMessages", true);
++                enabled = preferences.getBoolean("PinnedMessages", false);
+                 editor.putBoolean("PinnedMessages", !enabled);
+                 editor.commit();
+             } else if (position == androidAutoAlertRow) {
+@@ -1014,7 +1014,7 @@ public class NotificationsSettingsActivity extends BaseFragment implements Notif
+                     } else if (position == contactJoinedRow) {
+                         checkCell.setTextAndCheck(getString("ContactJoined", R.string.ContactJoined), preferences.getBoolean("EnableContactJoined", true), true);
+                     } else if (position == pinnedMessageRow) {
+-                        checkCell.setTextAndCheck(getString("PinnedMessages", R.string.PinnedMessages), preferences.getBoolean("PinnedMessages", true), false);
++                        checkCell.setTextAndCheck(getString("PinnedMessages", R.string.PinnedMessages), preferences.getBoolean("PinnedMessages", false), false);
+                     } else if (position == androidAutoAlertRow) {
+                         checkCell.setTextAndCheck("Android Auto", preferences.getBoolean("EnableAutoNotifications", false), true);
+                     } else if (position == notificationsServiceRow) {
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ProfileActivity.java
+@@ -640,10 +640,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+     private int stickersRow;
+     private int devicesRow;
+     private int devicesSectionRow;
+-    private int helpHeaderRow;
+-    private int questionRow;
+-    private int faqRow;
+-    private int policyRow;
+     private int helpSectionCell;
+     private int debugHeaderRow;
+     private int sendLogsRow;
+@@ -4605,12 +4601,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 presentFragment(new LiteModeSettingsActivity());
+             } else if (position == devicesRow) {
+                 presentFragment(new SessionsActivity(0));
+-            } else if (position == questionRow) {
+-                showDialog(AlertsCreator.createSupportAlert(ProfileActivity.this, resourcesProvider));
+-            } else if (position == faqRow) {
+-                Browser.openUrl(getParentActivity(), LocaleController.getString(R.string.TelegramFaqUrl));
+-            } else if (position == policyRow) {
+-                Browser.openUrl(getParentActivity(), LocaleController.getString(R.string.PrivacyPolicyUrl));
+             } else if (position == sendLogsRow) {
+                 sendLogs(getParentActivity(), false);
+             } else if (position == sendLastLogsRow) {
+@@ -5136,16 +5126,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 if (position < 0) {
+                     return;
+                 }
+-                Object object = numberRow;
+-                boolean add = true;
++                Object object = null;
+                 if (searchAdapter.searchWas) {
+                     if (position < searchAdapter.searchResults.size()) {
+                         object = searchAdapter.searchResults.get(position);
+-                    } else {
+-                        position -= searchAdapter.searchResults.size() + 1;
+-                        if (position >= 0 && position < searchAdapter.faqSearchResults.size()) {
+-                            object = searchAdapter.faqSearchResults.get(position);
+-                        }
+                     }
+                 } else {
+                     if (!searchAdapter.recentSearches.isEmpty()) {
+@@ -5153,23 +5137,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     }
+                     if (position >= 0 && position < searchAdapter.recentSearches.size()) {
+                         object = searchAdapter.recentSearches.get(position);
+-                    } else {
+-                        position -= searchAdapter.recentSearches.size() + 1;
+-                        if (position >= 0 && position < searchAdapter.faqSearchArray.size()) {
+-                            object = searchAdapter.faqSearchArray.get(position);
+-                            add = false;
+-                        }
+                     }
+                 }
+                 if (object instanceof SearchAdapter.SearchResult) {
+                     SearchAdapter.SearchResult result = (SearchAdapter.SearchResult) object;
+                     result.open(getParentLayout());
+-                } else if (object instanceof MessagesController.FaqSearchResult) {
+-                    MessagesController.FaqSearchResult result = (MessagesController.FaqSearchResult) object;
+-                    NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.openArticle, searchAdapter.faqWebPage, result.url);
+-                }
+-                if (add && object != null) {
+-                    searchAdapter.addRecent(object);
++                    searchAdapter.addRecent(result);
+                 }
+             });
+             searchListView.setOnItemLongClickListener((view, position) -> {
+@@ -5205,7 +5178,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             emptyView.setVisibility(View.GONE);
+             frameLayout.addView(emptyView);
+ 
+-            searchAdapter.loadFaqWebPage();
+         }
+ 
+         if (banFromGroup != 0) {
+@@ -9794,7 +9766,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             needTimerImage = type != 0;
+             needStarImage = type != 0;
+             updateStar();
+-            if (preferences.getBoolean("view_animations", true)) {
++            if (preferences.getBoolean("view_animations", false)) {
+                 playProfileAnimation = type;
+             } else if (type == 2) {
+                 expandPhoto = true;
+@@ -10619,10 +10591,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         stickersRow = -1;
+         devicesRow = -1;
+         devicesSectionRow = -1;
+-        helpHeaderRow = -1;
+-        questionRow = -1;
+-        faqRow = -1;
+-        policyRow = -1;
+         helpSectionCell = -1;
+         debugHeaderRow = -1;
+         sendLogsRow = -1;
+@@ -10807,10 +10775,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 if (premiumRow >= 0 || starsRow >= 0 || tonRow >= 0 || businessRow >= 0 || premiumGiftingRow >= 0) {
+                     premiumSectionsRow = rowCount++;
+                 }
+-                helpHeaderRow = rowCount++;
+-                questionRow = rowCount++;
+-                faqRow = rowCount++;
+-                policyRow = rowCount++;
+                 if (BuildVars.LOGS_ENABLED || BuildVars.DEBUG_PRIVATE_VERSION) {
+                     helpSectionCell = rowCount++;
+                     debugHeaderRow = rowCount++;
+@@ -13667,8 +13631,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         headerCell.setText(LocaleController.getString(R.string.SETTINGS));
+                     } else if (position == numberSectionRow) {
+                         headerCell.setText(LocaleController.getString(R.string.Account));
+-                    } else if (position == helpHeaderRow) {
+-                        headerCell.setText(LocaleController.getString(R.string.SettingsHelp));
+                     } else if (position == debugHeaderRow) {
+                         headerCell.setText(LocaleController.getString(R.string.SettingsDebug));
+                     } else if (position == botPermissionsHeader) {
+@@ -14078,12 +14040,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         textCell.setTextAndIcon(LocaleController.getString(R.string.StickersName), R.drawable.msg2_sticker, true);
+                     } else if (position == liteModeRow) {
+                         textCell.setTextAndIcon(LocaleController.getString(R.string.PowerUsage), R.drawable.msg2_battery, true);
+-                    } else if (position == questionRow) {
+-                        textCell.setTextAndIcon(LocaleController.getString(R.string.AskAQuestion), R.drawable.msg2_ask_question, true);
+-                    } else if (position == faqRow) {
+-                        textCell.setTextAndIcon(LocaleController.getString(R.string.TelegramFAQ), R.drawable.msg2_help, true);
+-                    } else if (position == policyRow) {
+-                        textCell.setTextAndIcon(LocaleController.getString(R.string.PrivacyPolicy), R.drawable.msg2_policy, false);
+                     } else if (position == sendLogsRow) {
+                         textCell.setText(LocaleController.getString(R.string.DebugSendLogs), true);
+                     } else if (position == sendLastLogsRow) {
+@@ -14519,8 +14475,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 return position == notificationRow || position == numberRow || position == privacyRow ||
+                         position == languageRow || position == setUsernameRow || position == bioRow ||
+                         position == versionRow || position == dataRow || position == chatRow ||
+-                        position == questionRow || position == devicesRow || position == filtersRow || position == stickersRow ||
+-                        position == faqRow || position == policyRow || position == sendLogsRow || position == sendLastLogsRow ||
++                        position == devicesRow || position == filtersRow || position == stickersRow ||
++                        position == sendLogsRow || position == sendLastLogsRow ||
+                         position == clearLogsRow || position == switchBackendRow || position == setAvatarRow ||
+                         position == addToGroupButtonRow || position == premiumRow || position == premiumGiftingRow ||
+                         position == businessRow || position == liteModeRow || position == birthdayRow || position == channelRow ||
+@@ -14550,7 +14506,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         @Override
+         public int getItemViewType(int position) {
+             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
+-                    position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
++                    position == numberSectionRow || position == debugHeaderRow || position == botPermissionsHeader) {
+                 return VIEW_TYPE_HEADER;
+             } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == inu_idRow || position == inu_regDateRow) {
+                 return VIEW_TYPE_TEXT_DETAIL;
+@@ -14565,8 +14521,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     position == addMemberRow || position == joinRow || position == unblockRow ||
+                     position == sendMessageRow || position == notificationRow || position == privacyRow ||
+                     position == languageRow || position == dataRow || position == chatRow ||
+-                    position == questionRow || position == devicesRow || position == filtersRow || position == stickersRow ||
+-                    position == faqRow || position == policyRow || position == sendLogsRow || position == sendLastLogsRow ||
++                    position == devicesRow || position == filtersRow || position == stickersRow ||
++                    position == sendLogsRow || position == sendLastLogsRow ||
+                     position == clearLogsRow || position == switchBackendRow || position == setAvatarRow || position == addToGroupButtonRow ||
+                     position == addToContactsRow || position == liteModeRow || position == premiumGiftingRow || position == businessRow ||
+                     position == botStarsBalanceRow || position == botTonBalanceRow || position == channelBalanceRow || position == botPermissionLocation ||
+@@ -14698,7 +14654,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         }
+ 
+         private SearchResult[] searchArray;
+-        private ArrayList<MessagesController.FaqSearchResult> faqSearchArray = new ArrayList<>();
+ 
+         private final BaseFragment fragment;
+         private final int currentAccount;
+@@ -14706,13 +14661,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+ 
+         private ArrayList<CharSequence> resultNames = new ArrayList<>();
+         private ArrayList<SearchResult> searchResults = new ArrayList<>();
+-        private ArrayList<MessagesController.FaqSearchResult> faqSearchResults = new ArrayList<>();
+         private ArrayList<Object> recentSearches = new ArrayList<>();
+         private boolean searchWas;
+         private Runnable searchRunnable;
+         private String lastSearchString;
+-        public TLRPC.WebPage faqWebPage;
+-        private boolean loadingFaqPage;
+ 
+         public SearchAdapter(BaseFragment fragment, Context context) {
+             this.fragment = fragment;
+@@ -14737,21 +14689,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         SerializedData data = new SerializedData(Utilities.hexToBytes(value));
+                         int num = data.readInt32(false);
+                         int type = data.readInt32(false);
+-                        if (type == 0) {
+-                            String title = data.readString(false);
+-                            int count = data.readInt32(false);
+-                            String[] path = null;
+-                            if (count > 0) {
+-                                path = new String[count];
+-                                for (int a = 0; a < count; a++) {
+-                                    path[a] = data.readString(false);
+-                                }
+-                            }
+-                            String url = data.readString(false);
+-                            MessagesController.FaqSearchResult result = new MessagesController.FaqSearchResult(title, path, url);
+-                            result.num = num;
+-                            recentSearches.add(result);
+-                        } else if (type == 1) {
++                        if (type == 1) {
+                             SearchResult result = resultHashMap.get(data.readInt32(false));
+                             if (result != null) {
+                                 result.num = num;
+@@ -15032,9 +14970,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     new SearchResult(405, getString(R.string.ShowTranslateButton), getString(R.string.Language), R.drawable.msg2_language, () -> f.presentFragment(new LanguageSelectActivity())).withLink("tg://settings/language/show-button"),
+                     MessagesController.getInstance(currentAccount).getTranslateController().isContextTranslateEnabled() ? new SearchResult(406, getString(R.string.DoNotTranslate), getString(R.string.Language), R.drawable.msg2_language, () -> f.presentFragment(new LanguageSelectActivity())).withLink("tg://settings/language/do-not-translate") : null,
+ 
+-                    new SearchResult(402, getString(R.string.AskAQuestion), getString(R.string.SettingsHelp), R.drawable.msg2_help, () -> f.showDialog(AlertsCreator.createSupportAlert(f, null))).withLink("tg://settings/ask-question"),
+-                    new SearchResult(403, getString(R.string.TelegramFAQ), getString(R.string.SettingsHelp), R.drawable.msg2_help, () -> Browser.openUrl(f.getParentActivity(), getString(R.string.TelegramFaqUrl))).withLink("tg://settings/faq"),
+-                    new SearchResult(404, getString(R.string.PrivacyPolicy), getString(R.string.SettingsHelp), R.drawable.msg2_help, () -> Browser.openUrl(f.getParentActivity(), getString(R.string.PrivacyPolicyUrl))).withLink("tg://settings/privacy-policy"),
++
+             }, f);
+         }
+ 
+@@ -15046,84 +14982,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             return MessagesController.getInstance(currentAccount).premiumFeaturesTypesToPosition.get(feature, -1) != -1;
+         }
+ 
+-        public void loadFaqWebPage() {
+-            faqWebPage = MessagesController.getInstance(currentAccount).faqWebPage;
+-            if (faqWebPage != null) {
+-                faqSearchArray.addAll(MessagesController.getInstance(currentAccount).faqSearchArray);
+-            }
+-            if (faqWebPage != null || loadingFaqPage) {
+-                return;
+-            }
+-            loadingFaqPage = true;
+-            final TLRPC.TL_messages_getWebPage req2 = new TLRPC.TL_messages_getWebPage();
+-            req2.url = LocaleController.getString(R.string.TelegramFaqUrl);
+-            req2.hash = 0;
+-            ConnectionsManager.getInstance(currentAccount).sendRequest(req2, (response2, error2) -> {
+-                if (response2 instanceof TLRPC.TL_messages_webPage) {
+-                    TLRPC.TL_messages_webPage res = (TLRPC.TL_messages_webPage) response2;
+-                    MessagesController.getInstance(currentAccount).putUsers(res.users, false);
+-                    MessagesController.getInstance(currentAccount).putChats(res.chats, false);
+-                    response2 = res.webpage;
+-                }
+-                if (response2 instanceof TLRPC.WebPage) {
+-                    ArrayList<MessagesController.FaqSearchResult> arrayList = new ArrayList<>();
+-                    TLRPC.WebPage page = (TLRPC.WebPage) response2;
+-                    if (page.cached_page != null) {
+-                        for (int a = 0, N = page.cached_page.blocks.size(); a < N; a++) {
+-                            TL_iv.PageBlock block = page.cached_page.blocks.get(a);
+-                            if (block instanceof TL_iv.pageBlockList) {
+-                                String paragraph = null;
+-                                if (a != 0) {
+-                                    TL_iv.PageBlock prevBlock = page.cached_page.blocks.get(a - 1);
+-                                    if (prevBlock instanceof TL_iv.pageBlockParagraph) {
+-                                        TL_iv.pageBlockParagraph pageBlockParagraph = (TL_iv.pageBlockParagraph) prevBlock;
+-                                        paragraph = ArticleViewer.getPlainText(pageBlockParagraph.text).toString();
+-                                    }
+-                                }
+-                                TL_iv.pageBlockList list = (TL_iv.pageBlockList) block;
+-                                for (int b = 0, N2 = list.items.size(); b < N2; b++) {
+-                                    TL_iv.PageListItem item = list.items.get(b);
+-                                    if (item instanceof TL_iv.TL_pageListItemText) {
+-                                        TL_iv.TL_pageListItemText itemText = (TL_iv.TL_pageListItemText) item;
+-                                        String url = ArticleViewer.getUrl(itemText.text);
+-                                        String text = ArticleViewer.getPlainText(itemText.text).toString();
+-                                        if (TextUtils.isEmpty(url) || TextUtils.isEmpty(text)) {
+-                                            continue;
+-                                        }
+-                                        String[] path;
+-                                        if (paragraph != null) {
+-                                            path = new String[]{LocaleController.getString(R.string.SettingsSearchFaq), paragraph};
+-                                        } else {
+-                                            path = new String[]{LocaleController.getString(R.string.SettingsSearchFaq)};
+-                                        }
+-                                        arrayList.add(new MessagesController.FaqSearchResult(text, path, url));
+-                                    }
+-                                }
+-                            } else if (block instanceof TL_iv.pageBlockAnchor) {
+-                                break;
+-                            }
+-                        }
+-                        faqWebPage = page;
+-                    }
+-                    AndroidUtilities.runOnUIThread(() -> {
+-                        faqSearchArray.addAll(arrayList);
+-                        MessagesController.getInstance(currentAccount).faqSearchArray = arrayList;
+-                        MessagesController.getInstance(currentAccount).faqWebPage = faqWebPage;
+-                        if (!searchWas) {
+-                            notifyDataSetChanged();
+-                        }
+-                    });
+-                }
+-                loadingFaqPage = false;
+-            });
+-        }
+-
+         @Override
+         public int getItemCount() {
+             if (searchWas) {
+-                return searchResults.size() + (faqSearchResults.isEmpty() ? 0 : 1 + faqSearchResults.size());
++                return searchResults.size();
+             }
+-            return (recentSearches.isEmpty() ? 0 : recentSearches.size() + 1) + (faqSearchArray.isEmpty() ? 0 : faqSearchArray.size() + 1);
++            return recentSearches.isEmpty() ? 0 : recentSearches.size() + 1;
+         }
+ 
+         @Override
+@@ -15133,87 +14997,33 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+ 
+         @Override
+         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+-            switch (holder.getItemViewType()) {
+-                case 0: {
+-                    SettingsSearchCell searchCell = (SettingsSearchCell) holder.itemView;
+-                    if (searchWas) {
+-                        if (position < searchResults.size()) {
+-                            SearchResult result = searchResults.get(position);
+-                            SearchResult prevResult = position > 0 ? searchResults.get(position - 1) : null;
+-                            int icon;
+-                            if (prevResult != null && prevResult.iconResId == result.iconResId) {
+-                                icon = 0;
+-                            } else {
+-                                icon = result.iconResId;
+-                            }
+-                            searchCell.setTextAndValueAndIcon(resultNames.get(position), result.path, icon, position < searchResults.size() - 1);
+-                        } else {
+-                            position -= searchResults.size() + 1;
+-                            MessagesController.FaqSearchResult result = faqSearchResults.get(position);
+-                            searchCell.setTextAndValue(resultNames.get(position + searchResults.size()), result.path, true, position < searchResults.size() - 1);
+-                        }
+-                    } else {
+-                        if (!recentSearches.isEmpty()) {
+-                            position--;
+-                        }
+-                        if (position < recentSearches.size()) {
+-                            Object object = recentSearches.get(position);
+-                            if (object instanceof SearchResult) {
+-                                SearchResult result = (SearchResult) object;
+-                                searchCell.setTextAndValue(result.searchTitle, result.path, false, position < recentSearches.size() - 1);
+-                            } else if (object instanceof MessagesController.FaqSearchResult) {
+-                                MessagesController.FaqSearchResult result = (MessagesController.FaqSearchResult) object;
+-                                searchCell.setTextAndValue(result.title, result.path, true, position < recentSearches.size() - 1);
+-                            }
+-                        } else {
+-                            position -= recentSearches.size() + 1;
+-                            MessagesController.FaqSearchResult result = faqSearchArray.get(position);
+-                            searchCell.setTextAndValue(result.title, result.path, true, position < recentSearches.size() - 1);
+-                        }
+-                    }
+-                    break;
+-                }
+-                case 1: {
+-                    GraySectionCell sectionCell = (GraySectionCell) holder.itemView;
+-                    sectionCell.setText(LocaleController.getString(R.string.SettingsFaqSearchTitle));
+-                    break;
+-                }
+-                case 2: {
+-                    HeaderCell headerCell = (HeaderCell) holder.itemView;
+-                    headerCell.setText(LocaleController.getString(R.string.SettingsRecent));
+-                    break;
+-                }
++            if (holder.getItemViewType() == 2) {
++                ((HeaderCell) holder.itemView).setText(LocaleController.getString(R.string.SettingsRecent));
++                return;
++            }
++            SettingsSearchCell searchCell = (SettingsSearchCell) holder.itemView;
++            if (searchWas) {
++                SearchResult result = searchResults.get(position);
++                SearchResult previous = position > 0 ? searchResults.get(position - 1) : null;
++                int icon = previous != null && previous.iconResId == result.iconResId ? 0 : result.iconResId;
++                searchCell.setTextAndValueAndIcon(resultNames.get(position), result.path, icon, position < searchResults.size() - 1);
++            } else {
++                position--;
++                SearchResult result = (SearchResult) recentSearches.get(position);
++                searchCell.setTextAndValue(result.searchTitle, result.path, false, position < recentSearches.size() - 1);
+             }
+         }
+ 
+         public void fillItems(ArrayList<UItem> items) {
+-            int position = 0;
+             if (searchWas) {
+-                for (SearchResult r : searchResults) {
+-                    items.add(SettingsSearchCell.Factory.of(resultNames.get(position++), r));
+-                }
+-                if (!faqSearchResults.isEmpty()) {
+-                    items.add(UItem.asGraySection(getString(R.string.SettingsFaqSearchTitle)));
+-                    for (MessagesController.FaqSearchResult r : faqSearchResults) {
+-                        items.add(SettingsSearchCell.Factory.of(resultNames.get(position++), r));
+-                    }
+-                }
+-            } else {
+-                if (!recentSearches.isEmpty()) {
+-                    items.add(UItem.asGraySection(getString(R.string.SettingsRecent)));
+-                    for (Object r : recentSearches) {
+-                        if (r instanceof SearchResult) {
+-                            items.add(SettingsSearchCell.Factory.of(((SearchResult) r).searchTitle, (SearchResult) r));
+-                        } else if (r instanceof MessagesController.FaqSearchResult) {
+-                            items.add(SettingsSearchCell.Factory.of(((MessagesController.FaqSearchResult) r).title, (MessagesController.FaqSearchResult) r));
+-                        }
+-                    }
++                for (int position = 0; position < searchResults.size(); position++) {
++                    items.add(SettingsSearchCell.Factory.of(resultNames.get(position), searchResults.get(position)));
+                 }
+-                if (!faqSearchArray.isEmpty()) {
+-                    items.add(UItem.asGraySection(getString(R.string.SettingsFaqSearchTitle)));
+-                    for (MessagesController.FaqSearchResult r : faqSearchArray) {
+-                        items.add(SettingsSearchCell.Factory.of(r.title, r));
+-                    }
++            } else if (!recentSearches.isEmpty()) {
++                items.add(UItem.asGraySection(getString(R.string.SettingsRecent)));
++                for (Object object : recentSearches) {
++                    SearchResult result = (SearchResult) object;
++                    items.add(SettingsSearchCell.Factory.of(result.searchTitle, result));
+                 }
+             }
+         }
+@@ -15225,9 +15035,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 case 0:
+                     view = new SettingsSearchCell(mContext);
+                     break;
+-                case 1:
+-                    view = new GraySectionCell(mContext);
+-                    break;
+                 case 2:
+                 default:
+                     view = new HeaderCell(mContext, 16);
+@@ -15239,27 +15046,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+ 
+         @Override
+         public int getItemViewType(int position) {
+-            if (searchWas) {
+-                if (position < searchResults.size()) {
+-                    return 0;
+-                } else if (position == searchResults.size()) {
+-                    return 1;
+-                }
+-            } else {
+-                if (position == 0) {
+-                    if (!recentSearches.isEmpty()) {
+-                        return 2;
+-                    } else {
+-                        return 1;
+-                    }
+-                } else if (!recentSearches.isEmpty() && position == recentSearches.size() + 1) {
+-                    return 1;
+-                }
+-            }
+-            return 0;
++            return !searchWas && position == 0 && !recentSearches.isEmpty() ? 2 : 0;
+         }
+ 
+         public void addRecent(Object object) {
++            if (!(object instanceof SearchResult)) return;
+             int index = recentSearches.indexOf(object);
+             if (index >= 0) {
+                 recentSearches.remove(index);
+@@ -15276,8 +15067,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                 Object o = recentSearches.get(a);
+                 if (o instanceof SearchResult) {
+                     ((SearchResult) o).num = a;
+-                } else if (o instanceof MessagesController.FaqSearchResult) {
+-                    ((MessagesController.FaqSearchResult) o).num = a;
+                 }
+                 toSave.add(o.toString());
+             }
+@@ -15293,8 +15082,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+         private int getNum(Object o) {
+             if (o instanceof SearchResult) {
+                 return ((SearchResult) o).num;
+-            } else if (o instanceof MessagesController.FaqSearchResult) {
+-                return ((MessagesController.FaqSearchResult) o).num;
+             }
+             return 0;
+         }
+@@ -15308,7 +15095,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             if (TextUtils.isEmpty(text)) {
+                 searchWas = false;
+                 searchResults.clear();
+-                faqSearchResults.clear();
+                 resultNames.clear();
+                 if (fragment instanceof ProfileActivity) {
+                     try {
+@@ -15321,7 +15107,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             }
+             Utilities.searchQueue.postRunnable(searchRunnable = () -> {
+                 ArrayList<SearchResult> results = new ArrayList<>();
+-                ArrayList<MessagesController.FaqSearchResult> faqResults = new ArrayList<>();
+                 ArrayList<CharSequence> names = new ArrayList<>();
+                 String[] searchArgs = text.toLowerCase(Locale.ROOT).split(" ");
+                 String[] translitArgs = new String[searchArgs.length];
+@@ -15374,36 +15159,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                         }
+                     }
+                 }
+-                if (faqWebPage != null) {
+-                    for (int a = 0, N = faqSearchArray.size(); a < N; a++) {
+-                        MessagesController.FaqSearchResult result = faqSearchArray.get(a);
+-                        String title = " " + result.title.toLowerCase(Locale.ROOT);
+-                        SpannableStringBuilder stringBuilder = null;
+-                        for (int i = 0; i < searchArgs.length; i++) {
+-                            if (searchArgs[i].length() != 0) {
+-                                String searchString = searchArgs[i];
+-                                int index = title.indexOf(" " + searchString);
+-                                if (index < 0 && translitArgs[i] != null) {
+-                                    searchString = translitArgs[i];
+-                                    index = title.indexOf(" " + searchString);
+-                                }
+-                                if (index >= 0) {
+-                                    if (stringBuilder == null) {
+-                                        stringBuilder = new SpannableStringBuilder(result.title);
+-                                    }
+-                                    stringBuilder.setSpan(new ForegroundColorSpan(fragment.getThemedColor(Theme.key_windowBackgroundWhiteBlueText4)), index, index + searchString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+-                                } else {
+-                                    break;
+-                                }
+-                            }
+-                            if (stringBuilder != null && i == searchArgs.length - 1) {
+-                                faqResults.add(result);
+-                                names.add(stringBuilder);
+-                            }
+-                        }
+-                    }
+-                }
+-
+                 AndroidUtilities.runOnUIThread(() -> {
+                     if (!text.equals(lastSearchString)) {
+                         return;
+@@ -15418,7 +15173,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+                     }
+                     searchWas = true;
+                     searchResults = results;
+-                    faqSearchResults = faqResults;
+                     resultNames = names;
+                     notifyDataSetChanged();
+                     if (fragment instanceof ProfileActivity) {
+@@ -15954,10 +15708,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
+             put(++pointer, stickersRow, sparseIntArray);
+             put(++pointer, devicesRow, sparseIntArray);
+             put(++pointer, devicesSectionRow, sparseIntArray);
+-            put(++pointer, helpHeaderRow, sparseIntArray);
+-            put(++pointer, questionRow, sparseIntArray);
+-            put(++pointer, faqRow, sparseIntArray);
+-            put(++pointer, policyRow, sparseIntArray);
+             put(++pointer, helpSectionCell, sparseIntArray);
+             put(++pointer, debugHeaderRow, sparseIntArray);
+             put(++pointer, sendLogsRow, sparseIntArray);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SessionBottomSheet.java b/TMessagesProj/src/main/java/org/telegram/ui/SessionBottomSheet.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/SessionBottomSheet.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/SessionBottomSheet.java
+@@ -110,11 +110,8 @@ public class SessionBottomSheet extends BottomSheet {
+ 
+         ItemView applicationItemView = new ItemView(context, false);
+         stringBuilder = new StringBuilder();
+-        stringBuilder.append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppName(session.app_name));
+-        stringBuilder.append(" ").append(desu.inugram.helpers.security.ParanoiaHelper.getSessionAppVersion(session.app_version));
+-        if (session.current && desu.inugram.helpers.security.ParanoiaHelper.isDisguised()) {
+-            stringBuilder = new StringBuilder("Telegram Android " + desu.inugram.helpers.update.UpdateHelper.getStockVersionName());
+-        }
++        stringBuilder.append(desu.inugram.helpers.VersionHelper.getSessionAppName(session.app_name));
++        stringBuilder.append(" ").append(desu.inugram.helpers.VersionHelper.getSessionAppVersion(session.app_version));
+         applicationItemView.valueText.setText(stringBuilder);
+         Drawable drawable = ContextCompat.getDrawable(context, R.drawable.menu_devices).mutate();
+         drawable.setColorFilter(new PorterDuffColorFilter(Theme.getColor(Theme.key_windowBackgroundWhiteGrayIcon), PorterDuff.Mode.SRC_IN));
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/SettingsActivity.java
+@@ -344,7 +344,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+ 
+         otherItem = menu.addItem(1, R.drawable.ic_ab_other);
+         otherItem.setContentDescription(getString(R.string.AccDescrMoreOptions));
+-        if (UserConfig.getActivatedAccountsCount() > 1 && !desu.inugram.helpers.security.ParanoiaHelper.hidesOtherAccounts()) {
++        if (UserConfig.getActivatedAccountsCount() > 1) {
+             otherItem.addSubItem(98, R.drawable.tabs_reorder, getString(R.string.InuReorderAccounts));
+         }
+         otherItem.addSubItem(2, R.drawable.msg_leave, getString(R.string.LogOut));
+@@ -355,7 +355,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+                 listView.adapter.update(true);
+             }
+         };
+-        search.loadFaqWebPage();
+ 
+         listView = new UniversalRecyclerView(this, this::fillItems, this::onClick, this::onLongClick);
+         listView.adapter.setApplyBackground(false);
+@@ -722,10 +721,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+         // (InuConfig.PROFILE_SETTINGS_ROWS). Separators added here are rebuilt per stock group
+         // by ProfileSettingsHelper.reorder after the user's order is applied.
+ 
+-        if (!desu.inugram.helpers.security.ParanoiaHelper.shouldHideSettings()) {
+-            items.add(SettingCell.Factory.of(99, IconBackgroundColors.ENTINY.top, IconBackgroundColors.ENTINY.bottom, R.drawable.icon_settings_inu, getString(R.string.InuSettings), getString(R.string.InuSettingsInfo)));
+-            items.add(UItem.asShadow(null));
+-        }
++        items.add(SettingCell.Factory.of(99, IconBackgroundColors.ENTINY.top, IconBackgroundColors.ENTINY.bottom, R.drawable.icon_settings_inu, getString(R.string.InuSettings), getString(R.string.InuSettingsInfo)));
++        items.add(UItem.asShadow(null));
+ 
+         items.add(SettingCell.Factory.of(1, IconBackgroundColors.BLUE.top, IconBackgroundColors.BLUE.bottom, R.drawable.settings_account, getString(R.string.SettingsAccount), getString(R.string.SettingsAccountInfo)));
+         items.add(SettingCell.Factory.of(2, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom, R.drawable.settings_chat, getString(R.string.SettingsChat), getString(R.string.SettingsChatInfo)));
+@@ -769,10 +766,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+             items.add(UItem.asShadow(null));
+ 
+         items.add(UItem.asHeader(getString(R.string.SettingsHelp)));
+-        items.add(SettingCell.Factory.of(17, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom, R.drawable.settings_ask, getString(R.string.AskAQuestion)));
+-        items.add(SettingCell.Factory.of(18, IconBackgroundColors.BLUE_LIGHT.top, IconBackgroundColors.BLUE_LIGHT.bottom, R.drawable.settings_faq, getString(R.string.TelegramFAQ)));
+-        items.add(SettingCell.Factory.of(23, IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom, R.drawable.settings_features, getString(R.string.TelegramFeatures)));
+-        items.add(SettingCell.Factory.of(19, IconBackgroundColors.GREEN.top, IconBackgroundColors.GREEN.bottom, R.drawable.settings_policy, getString(R.string.PrivacyPolicy)));
++        items.add(SettingCell.Factory.of(98, IconBackgroundColors.BLUE_LIGHT.top, IconBackgroundColors.BLUE_LIGHT.bottom, R.drawable.inu_tabler_brand_telegram, desu.inugram.helpers.AccountRoute.title()));
+ 
+         if (SharedSettings.experimentalSettingsAllowed.get()) {
+             items.add(UItem.asShadow(null));
+@@ -839,9 +833,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+             if (item.object instanceof ProfileActivity.SearchAdapter.SearchResult) {
+                 final ProfileActivity.SearchAdapter.SearchResult r = (ProfileActivity.SearchAdapter.SearchResult) item.object;
+                 r.open(getParentLayout());
+-            } else if (item.object instanceof MessagesController.FaqSearchResult) {
+-                final MessagesController.FaqSearchResult r = (MessagesController.FaqSearchResult) item.object;
+-                NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.openArticle, search.faqWebPage, r.url);
+             }
+             if (item.object != null) {
+                 search.addRecent(item.object);
+@@ -896,16 +887,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+                 UserSelectorBottomSheet.open(0, BirthdayController.getInstance(UserConfig.selectedAccount).getState());
+                 break;
+ 
+-            case 17:
+-                showDialog(AlertsCreator.createSupportAlert(this, resourceProvider));
+-                break;
+-            case 18:
+-                Browser.openUrl(getParentActivity(), LocaleController.getString(R.string.TelegramFaqUrl));
+-                break;
+-            case 19:
+-                Browser.openUrl(getParentActivity(), LocaleController.getString(R.string.PrivacyPolicyUrl));
+-                break;
+-
+             case 20:
+                 ProfileActivity.sendLogs(getParentActivity(), false);
+                 break;
+@@ -915,19 +896,15 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+             case 22:
+                 FileLog.cleanupLogs();
+                 break;
+-            case 23: {
+-                if (MessagesController.getInstance(currentAccount).isFrozen()) {
+-                    AccountFrozenAlert.show(currentAccount);
+-                } else {
+-                    Browser.openUrl(getContext(), LocaleController.getString(R.string.TelegramFeaturesUrl));
+-                }
+-                break;
+-            }
+             case 24: {
+                 presentFragment(new RoundVideoSettingsActivity());
+                 break;
+             }
+ 
++            case 98:
++                desu.inugram.helpers.AccountRoute.open(this);
++                break;
++
+             case 99:
+                 presentFragment(new desu.inugram.ui.settings.InuSettingsActivity());
+                 break;
+@@ -946,9 +923,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+             if (item.object instanceof ProfileActivity.SearchAdapter.SearchResult) {
+                 final ProfileActivity.SearchAdapter.SearchResult r = (ProfileActivity.SearchAdapter.SearchResult) item.object;
+                 link = r.link;
+-            } else if (item.object instanceof MessagesController.FaqSearchResult) {
+-                final MessagesController.FaqSearchResult r = (MessagesController.FaqSearchResult) item.object;
+-                link = r.url;
+             }
+             if (!TextUtils.isEmpty(link)) {
+                 final String finalLink = link;
+@@ -966,7 +940,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
+     }
+ 
+     public String getVersionName() {
+-        return desu.inugram.helpers.update.UpdateHelper.getFullVersionInfo();
++        return desu.inugram.helpers.VersionHelper.getFullVersionInfo();
+     }
+ 
+     @Override
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Stories/DialogStoriesCell.java b/TMessagesProj/src/main/java/org/telegram/ui/Stories/DialogStoriesCell.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Stories/DialogStoriesCell.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Stories/DialogStoriesCell.java
+@@ -628,11 +628,11 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
+                     currentTitle = str;
+                 }
+             } else {
+-                currentTitle = menuItemsOffset < dp(50) ? (desu.inugram.helpers.security.ParanoiaHelper.isDisguised() ? null : desu.inugram.helpers.chat.ChatHelper.getDialogsTitle(currentAccount)) :
++                currentTitle = menuItemsOffset < dp(50) ? desu.inugram.helpers.chat.ChatHelper.getDialogsTitle(currentAccount) :
+                     LocaleController.getString(R.string.MyStory);
+             }
+         } else {
+-            currentTitle = menuItemsOffset < dp(50) ? (desu.inugram.helpers.security.ParanoiaHelper.isDisguised() ? null : desu.inugram.helpers.chat.ChatHelper.getDialogsTitle(currentAccount)) :
++            currentTitle = menuItemsOffset < dp(50) ? desu.inugram.helpers.chat.ChatHelper.getDialogsTitle(currentAccount) :
+                 LocaleController.formatPluralString("Stories", totalCount);
+         }
+ 
+@@ -946,11 +946,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
+             telegramLogoView.setTranslationX(titleView.getTranslationX() + dp(1));
+             telegramLogoView.setTranslationY(bottomY + dp(14 + FAKE_TOP_PADDING + 4.333f) + translationOffset /*titleView.getTranslationY() + dpf2(37.33f)*/);
+ 
+-            if (desu.inugram.helpers.security.ParanoiaHelper.isDisguised()) {
+-                emojiStatusView.setTranslationX(titleView.getTranslationX() - dpf2(3.33f) + telegramLogoView.getMeasuredWidth());
+-            } else {
+-                emojiStatusView.setTranslationX(titleView.getTranslationX() + titleView.getDrawable().getCurrentWidth() + dpf2(2.66f));
+-            }
++            emojiStatusView.setTranslationX(titleView.getTranslationX() + titleView.getDrawable().getCurrentWidth() + dpf2(2.66f));
+             emojiStatusView.setTranslationY(bottomY + dp(14 - 11 + FAKE_TOP_PADDING + 4.333f) + translationOffset);
+ 
+             subtitleOverlayContainer.setTranslationX(titleView.getTranslationX());
+@@ -2214,22 +2210,19 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
+     private void checkUi_titleVisibility() {
+         final float progress = MathUtils.clamp(Math.min(collapsedProgress, collapsedProgress2), 0, 1);
+         final float titleVisibility = animatorHasTitleText.getFloatValue();
+-        final float logoVisibility = 1f - titleVisibility;
+         final float titleAlpha = titleVisibility * progress;
+-        final float logoAlpha = logoVisibility * progress;
+-        final boolean inu_disguised = desu.inugram.helpers.security.ParanoiaHelper.isDisguised();
+ 
+         if (titleView != null) {
+             titleView.setAlpha(titleAlpha);
+             titleView.setVisibility(titleAlpha > 0 ? VISIBLE : GONE);
+         }
+         if (telegramLogoView != null) {
+-            telegramLogoView.setAlpha(inu_disguised ? logoAlpha : 0f);
+-            telegramLogoView.setVisibility(inu_disguised && logoAlpha > 0 ? VISIBLE : GONE);
++            telegramLogoView.setAlpha(0f);
++            telegramLogoView.setVisibility(GONE);
+         }
+         if (emojiStatusView != null) {
+-            emojiStatusView.setAlpha(inu_disguised ? logoAlpha : progress);
+-            emojiStatusView.setVisibility((inu_disguised ? logoAlpha > 0 : progress > 0) ? VISIBLE : GONE);
++            emojiStatusView.setAlpha(progress);
++            emojiStatusView.setVisibility((progress > 0) ? VISIBLE : GONE);
+         }
+         if (subtitleOverlayContainer != null) {
+             subtitleOverlayContainer.setAlpha(progress);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ThemeActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ThemeActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ThemeActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ThemeActivity.java
+@@ -1115,7 +1115,7 @@ public class ThemeActivity extends BaseFragment implements NotificationCenter.No
+         listView.setOnItemClickListener((view, position, x, y) -> {
+             if (position == enableAnimationsRow) {
+                 SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-                boolean animations = preferences.getBoolean("view_animations", true);
++                boolean animations = preferences.getBoolean("view_animations", false);
+                 SharedPreferences.Editor editor = preferences.edit();
+                 editor.putBoolean("view_animations", !animations);
+                 SharedConfig.setAnimationsEnabled(!animations);
+@@ -2613,7 +2613,7 @@ public class ThemeActivity extends BaseFragment implements NotificationCenter.No
+                         textCheckCell.setTextAndCheck(getString("AutoNightLocation", R.string.AutoNightLocation), Theme.autoNightScheduleByLocation, true);
+                     } else if (position == enableAnimationsRow) {
+                         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-                        textCheckCell.setTextAndCheck(getString("EnableAnimations", R.string.EnableAnimations), preferences.getBoolean("view_animations", true), true);
++                        textCheckCell.setTextAndCheck(getString("EnableAnimations", R.string.EnableAnimations), preferences.getBoolean("view_animations", false), true);
+                     } else if (position == sendByEnterRow) {
+                         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+                         textCheckCell.setTextAndCheck(getString("SendByEnter", R.string.SendByEnter), preferences.getBoolean("send_by_enter", false), true);
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ThemeSetUrlActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ThemeSetUrlActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ThemeSetUrlActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ThemeSetUrlActivity.java
+@@ -409,7 +409,7 @@ public class ThemeSetUrlActivity extends BaseFragment implements NotificationCen
+     public void onResume() {
+         super.onResume();
+         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
+-        boolean animations = preferences.getBoolean("view_animations", true);
++        boolean animations = preferences.getBoolean("view_animations", false);
+         if (!animations && creatingNewTheme) {
+             linkField.requestFocus();
+             AndroidUtilities.showKeyboard(linkField);
+diff --git a/TMessagesProj/src/main/res/values-ar/strings.xml b/TMessagesProj/src/main/res/values-ar/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-ar/strings.xml
++++ b/TMessagesProj/src/main/res/values-ar/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">تيليجرام</string>
+-    <string name="AppNameBeta">(Beta) تيليجرام</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">العربية</string>
+     <string name="English">الإنجليزية</string>
+     <string name="LanguageNameInEnglish">Arabic</string>
+diff --git a/TMessagesProj/src/main/res/values-de/strings.xml b/TMessagesProj/src/main/res/values-de/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-de/strings.xml
++++ b/TMessagesProj/src/main/res/values-de/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">entinyGram</string>
+-    <string name="AppNameBeta">entinyGram Beta</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">Deutsch</string>
+     <string name="English">Englisch</string>
+     <string name="LanguageNameInEnglish">German</string>
+diff --git a/TMessagesProj/src/main/res/values-es/strings.xml b/TMessagesProj/src/main/res/values-es/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-es/strings.xml
++++ b/TMessagesProj/src/main/res/values-es/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">entinyGram</string>
+-    <string name="AppNameBeta">entinyGram Beta</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">Español</string>
+     <string name="English">Inglés</string>
+     <string name="LanguageNameInEnglish">Spanish</string>
+@@ -1258,7 +1258,7 @@
+     <string name="PermissionDrawAboveOtherAppsTitle">Modo imagen en imagen</string>
+     <string name="PermissionDrawAboveOtherAppsGroupCallTitle">Superposición del videochat</string>
+     <!--Intro view-->
+-    <string name="Page1Title">entinyGram</string>
++    <string name="Page1Title">Telegram</string>
+     <string name="Page2Title">Rápido</string>
+     <string name="Page3Title">Gratuito</string>
+     <string name="Page4Title">Seguro</string>
+diff --git a/TMessagesProj/src/main/res/values-it/strings.xml b/TMessagesProj/src/main/res/values-it/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-it/strings.xml
++++ b/TMessagesProj/src/main/res/values-it/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">entinyGram</string>
+-    <string name="AppNameBeta">entinyGram Beta</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">Italiano</string>
+     <string name="English">Inglese</string>
+     <string name="LanguageNameInEnglish">Italian</string>
+diff --git a/TMessagesProj/src/main/res/values-ko/strings.xml b/TMessagesProj/src/main/res/values-ko/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-ko/strings.xml
++++ b/TMessagesProj/src/main/res/values-ko/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">텔레그램</string>
+-    <string name="AppNameBeta">텔레그램</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">한국어</string>
+     <string name="English">영어</string>
+     <string name="LanguageNameInEnglish">한국어</string>
+diff --git a/TMessagesProj/src/main/res/values-nl/strings.xml b/TMessagesProj/src/main/res/values-nl/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-nl/strings.xml
++++ b/TMessagesProj/src/main/res/values-nl/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">entinyGram</string>
+-    <string name="AppNameBeta">Telegram-bèta</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">Nederlands</string>
+     <string name="English">Engels</string>
+     <string name="LanguageNameInEnglish">Dutch</string>
+diff --git a/TMessagesProj/src/main/res/values-pt-rBR/strings.xml b/TMessagesProj/src/main/res/values-pt-rBR/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-pt-rBR/strings.xml
++++ b/TMessagesProj/src/main/res/values-pt-rBR/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">entinyGram</string>
+-    <string name="AppNameBeta">entinyGram Beta</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">Português (Brasil)</string>
+     <string name="English">Inglês</string>
+     <string name="LanguageNameInEnglish">Portuguese (Brazil)</string>
+@@ -1192,7 +1192,7 @@
+     <string name="PermissionDrawAboveOtherAppsTitle">Picture-in-Picture</string>
+     <string name="PermissionDrawAboveOtherAppsGroupCallTitle">Chat de vídeo flutuante</string>
+     <!--Intro view-->
+-    <string name="Page1Title">entinyGram</string>
++    <string name="Page1Title">Telegram</string>
+     <string name="Page2Title">Rápido</string>
+     <string name="Page3Title">Gratuito</string>
+     <string name="Page4Title">Seguro</string>
+diff --git a/TMessagesProj/src/main/res/values-ru/strings.xml b/TMessagesProj/src/main/res/values-ru/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-ru/strings.xml
++++ b/TMessagesProj/src/main/res/values-ru/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">entinyGram</string>
+-    <string name="AppNameBeta">entinyGram Beta</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">Русский</string>
+     <string name="English">Английский</string>
+     <string name="LanguageNameInEnglish">Russian</string>
+@@ -209,7 +209,7 @@
+     <string name="CheckYourNewEmailSubtitle">Введите код, который пришёл на указанный Вами адрес %1$s.</string>
+     <string name="LoginOrSingInWithGoogle">или</string>
+     <!--Intro view-->
+-    <string name="Page1Title">entinyGram</string>
++    <string name="Page1Title">Telegram</string>
+     <string name="Page2Title">Быстрый</string>
+     <string name="Page3Title">Бесплатный</string>
+     <string name="Page4Title">Безопасный</string>
+diff --git a/TMessagesProj/src/main/res/values-uk/strings.xml b/TMessagesProj/src/main/res/values-uk/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values-uk/strings.xml
++++ b/TMessagesProj/src/main/res/values-uk/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">entinyGram</string>
+-    <string name="AppNameBeta">entinyGram Beta</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">Українська</string>
+     <string name="English">Англійська</string>
+     <string name="LanguageNameInEnglish">Ukrainian</string>
+@@ -222,7 +222,7 @@
+     <string name="CheckYourNewEmailSubtitle">Введіть код, який ми щойно надіслали на вашу нову е-пошту %1$s.</string>
+     <string name="LoginOrSingInWithGoogle">або</string>
+     <!--Intro view-->
+-    <string name="Page1Title">entinyGram</string>
++    <string name="Page1Title">Telegram</string>
+     <string name="Page2Title">Швидкий</string>
+     <string name="Page3Title">Безплатний</string>
+     <string name="Page4Title">Захищений</string>
+diff --git a/TMessagesProj/src/main/res/values/strings.xml b/TMessagesProj/src/main/res/values/strings.xml
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/res/values/strings.xml
++++ b/TMessagesProj/src/main/res/values/strings.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <string name="AppName">entinyGram</string>
+-    <string name="AppNameBeta">entinyGram Beta</string>
++    <string name="AppName">Telegram</string>
++    <string name="AppNameBeta">Telegram</string>
+     <string name="LanguageName">English</string>
+     <string name="English">English</string>
+     <string name="LanguageNameInEnglish">English</string>
+@@ -2765,8 +2765,8 @@
+     <string name="AuthAnotherClientUrl">This code can be used to allow someone to log in to your Telegram account.\n\nTo confirm Telegram login, please go to Settings &gt; Devices &gt; Scan QR and scan the code.</string>
+     <string name="QRCodePermissionNoCameraWithHint">**Telegram** needs camera access so that you can scan QR codes. Tap Settings -> Permissions, and turn **Camera** on.</string>
+     <string name="SetProfilePhoto">Set Profile Photo</string>
+-    <string name="AppUpdate">Update entinyGram</string>
+-    <string name="AppUpdateBeta">Update entinyGram Beta</string>
++    <string name="AppUpdate">Update Telegram</string>
++    <string name="AppUpdateBeta">Update Telegram Beta</string>
+     <string name="AppUpdateVersionAndSize">Version %1$s • %2$s</string>
+     <string name="AppBetaUpdateVersion">Version %1$s (%2$s)</string>
+     <string name="AppUpdateDownloading">Downloading %1$d%%...</string>
+@@ -4202,7 +4202,7 @@
+     <string name="ViewMessageStatistic">Message Statistic</string>
+     <string name="ViewMessage">Open Message</string>
+     <!--Intro view-->
+-    <string name="Page1Title">entinyGram</string>
++    <string name="Page1Title">Telegram</string>
+     <string name="Page2Title">Fast</string>
+     <string name="Page3Title">Free</string>
+     <string name="Page4Title">Secure</string>
+diff --git a/TMessagesProj_App/build.gradle b/TMessagesProj_App/build.gradle
+index 0000000..0000000 100644
+--- a/TMessagesProj_App/build.gradle
++++ b/TMessagesProj_App/build.gradle
+@@ -15,18 +15,13 @@ configurations.all {
+     exclude group: 'androidx.recyclerview', module: 'recyclerview'
+ }
+ 
+-configurations {
+-    shadowhookAar { transitive = false }
+-}
++
+ 
+ dependencies {
+     implementation project(':TMessagesProj')
+     implementation files('../TMessagesProj/libs/libgsaverification-client.aar')
+     implementation 'androidx.core:core:1.16.0'
+-    if (!rootProject.ext.inuPluginless) {
+-        implementation 'androidx.profileinstaller:profileinstaller:1.4.1'
+-        shadowhookAar 'com.bytedance.android:shadowhook:2.0.1'
+-    }
++
+ }
+ 
+ android {
+@@ -69,9 +64,7 @@ android {
+ 
+     androidResources {
+         noCompress += "pack"
+-        localeFilters += ["zz"] + file('../TMessagesProj/src/main/res').listFiles()
+-            .findAll { it.name.startsWith('values-') && new File(it, 'strings_inu.xml').exists() }
+-            .collect { it.name - 'values-' }
++        localeFilters += ["en", "fa"]
+     }
+ 
+     signingConfigs {
+@@ -127,11 +120,9 @@ android {
+     defaultConfig.versionCode = rootProject.ext.verCode
+ 
+     defaultConfig {
+-        buildConfigField "boolean", "INU_PLUGINLESS", rootProject.ext.inuPluginless.toString()
+         minSdk 26
+         targetSdk 37
+         versionName rootProject.ext.verName
+-        ndkVersion "29.0.14206865"
+ 
+         ndk {
+             def filters = System.getenv('ABI_FILTERS')
+@@ -142,24 +133,11 @@ android {
+             }
+         }
+ 
+-        if (!rootProject.ext.inuPluginless) externalNativeBuild {
+-            cmake {
+-                arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-26' // , '-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON'
+-                targets 'lsplant'
+-                if (rootProject.ext.ccachePath) {
+-                    arguments += ["-DCMAKE_C_COMPILER_LAUNCHER=${rootProject.ext.ccachePath}", "-DCMAKE_CXX_COMPILER_LAUNCHER=${rootProject.ext.ccachePath}"]
+-                }
+-            }
+-        }
+-    }
+ 
+-    if (!rootProject.ext.inuPluginless) externalNativeBuild {
+-        cmake {
+-            path 'jni/CMakeLists.txt'
+-            version '3.31.6'
+-        }
+     }
+ 
++
++
+     buildFeatures {
+         buildConfig = true
+     }
+@@ -177,103 +155,14 @@ androidComponents {
+     }
+ }
+ 
+-apply plugin: 'com.google.gms.google-services'
+-
+-if (rootProject.ext.inuPluginless) return
+-
+-def shadowhookJniLibsDir = file("$buildDir/shadowhookJniLibs")
+-
+-tasks.register('unpackShadowhook', Copy) {
+-    from({ zipTree(configurations.shadowhookAar.singleFile) }) {
+-        include 'jni/**/libshadowhook.so'
+-        include 'jni/**/libshadowhook_nothing.so'
+-        eachFile { it.path = it.path.replaceFirst('^jni/', '') }
+-        includeEmptyDirs = false
+-    }
+-    into shadowhookJniLibsDir
+-}
+-
+-android.sourceSets.main.jniLibs.directories.add(shadowhookJniLibsDir.absolutePath)
+-tasks.matching { it.name ==~ /merge.*JniLibFolders/ }.configureEach {
+-    dependsOn 'unpackShadowhook'
+-}
+-
+-def rustModuleDir = file("$projectDir/native")
+-def rustJniLibsDir = file("$buildDir/rustJniLibs")
+-def userHome = System.getProperty('user.home')
+-def cargoHome = System.getenv('CARGO_HOME') ?: "$userHome/.cargo"
+-def cargoCandidates = [
+-    System.getenv('CARGO'),
+-    project.findProperty('cargo.bin'),
+-    "$cargoHome/bin/cargo",
+-    "$userHome/.cargo/bin/cargo",
+-    "/etc/profiles/per-user/${System.getProperty('user.name')}/bin/cargo",
+-    "$userHome/.nix-profile/bin/cargo",
+-    "/run/current-system/sw/bin/cargo",
+-    "/opt/homebrew/bin/cargo",
+-    "/usr/local/bin/cargo",
+-]
+-def cargoFile = cargoCandidates.findAll { it }.collect { file(it) }.find { it.isFile() }
+-def cargoExe = cargoFile?.absolutePath ?: 'cargo'
+-def cargoPathDirs = [cargoFile?.parentFile?.absolutePath, "$cargoHome/bin", "$userHome/.cargo/bin"].findAll { it }
+-
+-def inuNativeProfiles = [debug: 'profiling', release: 'release']
+-inuNativeProfiles.each { buildType, cargoProfile ->
+-    def taskName = "buildInuNative${buildType.capitalize()}"
+-    def outputDir = new File(rustJniLibsDir, buildType)
+-    tasks.register(taskName, Exec) {
+-        workingDir rustModuleDir
+-        environment 'ANDROID_NDK_HOME', androidComponents.sdkComponents.ndkDirectory.get().asFile.absolutePath
+-        environment 'PATH', (cargoPathDirs + [System.getenv('PATH') ?: '']).join(File.pathSeparator)
+-        def prebuilt = file("${androidComponents.sdkComponents.ndkDirectory.get().asFile}/toolchains/llvm/prebuilt")
+-        def ndkHost = prebuilt.listFiles()?.find { it.isDirectory() }
+-        def libclangCandidates = [
+-            project.findProperty('libclang.path'),
+-            ndkHost ? new File(ndkHost, 'lib').absolutePath : null,
+-            ndkHost ? new File(ndkHost, 'lib64').absolutePath : null,
+-            '/Library/Developer/CommandLineTools/usr/lib',
+-            '/opt/homebrew/opt/llvm/lib', '/usr/local/opt/llvm/lib',
+-            '/run/current-system/sw/lib', "${System.getProperty('user.home')}/.nix-profile/lib",
+-            '/usr/lib/llvm/lib', '/usr/lib',
+-            'C:/Program Files/LLVM/bin',
+-        ]
+-        def libclangDir = libclangCandidates.findAll { it }.find { dir ->
+-            def d = file(dir)
+-            d.isDirectory() && d.listFiles()?.any { it.name ==~ /libclang\.(dylib|so|dll)(\..*)?/ }
++// entiny: personal forks can build without a Firebase project registered for their package.
++def googleServicesFile = file('google-services.json')
++def hasFirebaseClient = googleServicesFile.exists() &&
++        new groovy.json.JsonSlurper().parse(googleServicesFile).client?.any {
++            it.client_info?.android_client_info?.package_name == android.defaultConfig.applicationId
+         }
+-        if (libclangDir != null) environment 'LIBCLANG_PATH', libclangDir
+-        if (ndkHost != null && System.getProperty('os.name').toLowerCase().contains('windows')) {
+-            // the NDK ships no libclang headers search path bindgen can find on Windows, so hand it the sysroot
+-            def clangVersion = new File(ndkHost, 'lib/clang').listFiles()?.find { it.isDirectory() }?.name
+-            def fwd = { File f -> f.absolutePath.replace('\\', '/') }
+-            def triple = (System.getenv('ABI_FILTERS') == 'x86_64') ? 'x86_64-linux-android' : 'aarch64-linux-android'
+-            def bindgenArgs = "--target=${triple}24 --sysroot=${fwd(new File(ndkHost, 'sysroot'))} -isystem ${fwd(new File(ndkHost, "lib/clang/${clangVersion}/include"))}"
+-            environment 'BINDGEN_EXTRA_CLANG_ARGS', bindgenArgs
+-            // cargo-ndk sets the per-target variable itself and bindgen prefers it, so override that one too
+-            environment "BINDGEN_EXTRA_CLANG_ARGS_${triple}", bindgenArgs
+-        }
+-        commandLine cargoExe, 'ndk', '-t', (System.getenv('ABI_FILTERS') ?: 'arm64-v8a'), '-o', outputDir.absolutePath, 'build', '--profile', cargoProfile
+-    }
+-
+-    android.sourceSets[buildType].jniLibs.directories.add(outputDir.absolutePath)
+-    tasks.matching { it.name ==~ /merge${buildType.capitalize()}.*JniLibFolders/ }.configureEach {
+-        dependsOn taskName
+-    }
+-}
+-
+-androidComponents {
+-    onVariants(selector().withBuildType('debug')) { variant ->
+-        variant.packaging.jniLibs.keepDebugSymbols.add('**/libinu_native.so')
+-    }
+-}
+-
+-def inuTestJniLibsDir = file("$buildDir/inuTestJniLibs")
+-tasks.register('prepareInuTestJniLibs', Sync) {
+-    dependsOn 'buildInuNativeDebug', 'unpackShadowhook', 'mergeDebugNativeLibs'
+-    from new File(rustJniLibsDir, 'debug')
+-    from shadowhookJniLibsDir
+-    from("$buildDir/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib") {
+-        include '**/liblsplant.so'
+-    }
+-    into inuTestJniLibsDir
++if (hasFirebaseClient) {
++    apply plugin: 'com.google.gms.google-services'
++} else {
++    logger.lifecycle('Firebase push disabled: no google-services.json client matches this application ID.')
+ }
+diff --git a/TMessagesProj_App/jni/CMakeLists.txt b/TMessagesProj_App/jni/CMakeLists.txt
+deleted file mode 100644
+index 0000000..0000000
+--- a/TMessagesProj_App/jni/CMakeLists.txt
++++ /dev/null
+@@ -1,10 +0,0 @@
+-cmake_minimum_required(VERSION 3.22.1)
+-project(inu_jni CXX C)
+-
+-# There are no sources here on purpose. liblsplant.so is lsplant's own target; the C entry points
+-# the rust engine dlopens come from patches-native/lsplant-c-abi.patch, applied to the submodule.
+-
+-set(DEBUG_SYMBOLS_PATH ${CMAKE_BINARY_DIR}/symbols)
+-
+-set(LSPLANT_BUILD_SHARED ON CACHE BOOL "" FORCE)
+-add_subdirectory(lsplant/lsplant/src/main/jni)
+diff --git a/TMessagesProj_App/jni/lsplant b/TMessagesProj_App/jni/lsplant
+deleted file mode 160000
+index 0000000..0000000
+--- a/TMessagesProj_App/jni/lsplant
++++ /dev/null
+@@ -1 +0,0 @@
+-Subproject commit 61e10e51eb99dca00dd873f48c28a674dd2b4c4c
+diff --git a/build.gradle b/build.gradle
+index 0000000..0000000 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -60,9 +60,6 @@ subprojects {
+     }
+ }
+ 
+-def inuBuildProperties = new Properties()
+-def inuBuildFile = file('inu-build.properties')
+-if (inuBuildFile.exists()) inuBuildFile.withInputStream { inuBuildProperties.load(it) }
+ 
+ def getGitCommitSha = {
+     try {
+@@ -92,7 +89,6 @@ def commitId = System.getenv('COMMIT_ID') ?: getGitCommitSha()
+ def currentVerCode = System.getenv('INU_BUILD') ? Integer.parseInt(System.getenv('INU_BUILD')) : getNextLocalBuildNumber()
+ 
+ ext {
+-  inuPluginless = (findProperty('inu.pluginless') ?: inuBuildProperties.getProperty('inu.pluginless', 'false')).toBoolean()
+   verName = "${APP_VERSION_NAME}${commitId != null ? "-${commitId.take(7)}" : ''}"
+   verCode = currentVerCode
+   stockVerCode = Integer.parseInt(APP_VERSION_CODE)

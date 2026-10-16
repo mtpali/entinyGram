@@ -6,8 +6,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.text.Html
 import androidx.core.graphics.createBitmap
 import org.osmdroid.tileprovider.tilesource.ITileSource
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.tileprovider.tilesource.XYTileSource
 import org.osmdroid.util.MapTileIndex
@@ -34,6 +36,8 @@ internal object EsriSatelliteTileSource : XYTileSource(
 }
 
 internal val normalTileSource: ITileSource get() = TileSourceFactory.MAPNIK
+
+internal fun normalAttribution(): String = ATTRIBUTION_OSM
 
 private fun fillPaint(color: Int) = Paint(Paint.ANTI_ALIAS_FLAG).apply { this.color = color }
 private fun strokePaint(color: Int, widthPx: Float) = Paint(Paint.ANTI_ALIAS_FLAG).apply {

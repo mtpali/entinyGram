@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Oleksii Kulinich <entaytion@gmail.com>
-Date: Tue, 1 Sep 2026 11:09:47 +0300
+From: alina sireneva <alina@tei.pet>
+Date: Wed, 12 Aug 2026 22:55:15 +0400
 Subject: local overrides for forum topics view
 
 ---
@@ -27,7 +27,7 @@ diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesStorage.
 index 0000000..0000000 100644
 --- a/TMessagesProj/src/main/java/org/telegram/messenger/MessagesStorage.java
 +++ b/TMessagesProj/src/main/java/org/telegram/messenger/MessagesStorage.java
-@@ -19090,7 +19090,7 @@ public class MessagesStorage extends BaseController {
+@@ -19087,7 +19087,7 @@ public class MessagesStorage extends BaseController {
                  TLRPC.Chat chat = getChat(-dialogId);
                  if (chat != null && chat.forum) {
                      value |= FORUM_TYPE_CHAT;

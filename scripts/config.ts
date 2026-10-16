@@ -13,6 +13,19 @@ export const upstreamCommitFile = join(rootDir, 'upstream-commit')
 export const assetsDir = join(rootDir, 'src/res/assets')
 
 export const debugAppId = 'ua.entaytion.entinygram'
+// commit authorship that counts as entinyGram's own; anything else came in through inugram
+export const forkAuthorEmails = ['entaytion@gmail.com']
+export const skippedSubmodules: string[] = []
+
+export interface SubmodulePatch {
+  submodule: string
+  patch: string
+}
+
+// changes carried against a submodule's pinned commit, applied to its working tree after
+// `git submodule update --init`. the pin stays upstream's, so nothing here needs a fork.
+export const submodulePatches: SubmodulePatch[] = []
+
 
 export interface ForkSyncFile {
   source: string
@@ -22,14 +35,19 @@ export interface ForkSyncFile {
 }
 
 export const forkSyncFiles: ForkSyncFile[] = [
+  {
+    source: 'src/res/xml/provider_paths.xml',
+    target: 'TMessagesProj/src/main/res/xml',
+    replace: true,
+  },
   // code
   {
-    source: 'src/kotlin',
-    target: 'TMessagesProj/src/main/kotlin/desu/inugram',
+    source: 'src/fork',
+    target: 'TMessagesProj/src/inu/kotlin/desu/inugram',
     directory: true,
   },
   {
-    source: 'src/kotlin-app',
+    source: 'src/fork-app',
     target: 'TMessagesProj_App/src/main/kotlin/desu/inugram',
     directory: true,
   },
@@ -44,7 +62,7 @@ export const forkSyncFiles: ForkSyncFile[] = [
     directory: true,
   },
   {
-    source: 'src/java/google_material',
+    source: 'src/vendor/google_material',
     target: 'TMessagesProj/src/main/java/google_material',
     directory: true,
   },
@@ -55,6 +73,10 @@ export const forkSyncFiles: ForkSyncFile[] = [
   },
   {
     source: 'src/res/values/ids_inu.xml',
+    target: 'TMessagesProj/src/main/res/values',
+  },
+  {
+    source: 'src/res/values/styles_inu.xml',
     target: 'TMessagesProj/src/main/res/values',
   },
   {
@@ -101,6 +123,7 @@ export const forkSyncFiles: ForkSyncFile[] = [
     target: 'TMessagesProj/src/main/res/mipmap-anydpi-v26',
     replace: true,
   },
+
   {
     source: 'src/res/launcher/generated/mipmap-debug/*',
     target: 'TMessagesProj_App/src/debug/res/mipmap-anydpi-v26',
@@ -236,6 +259,7 @@ export const ICON_SELECTION: { pack: IconifyJSON, icons: string[], options?: Svg
       'currency-bitcoin',
       'currency-solana',
       'diamond',
+      'alert-triangle-filled',
     ],
   },
 ]
