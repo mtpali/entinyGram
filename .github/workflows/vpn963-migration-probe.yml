@@ -36,6 +36,13 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Materialize current VPN963 stack
         run: bun run setup
+      - name: Inspect and clean generated worktree drift before StGit rebase
+        run: |
+          git -C worktree status --short | head -100 || true
+          git -C worktree diff --stat | head -100 || true
+          git -C worktree diff -- TMessagesProj/src/main/res/values-night/styles.xml | head -100 || true
+          git -C worktree reset --hard HEAD
+          test -z "$(git -C worktree status --porcelain --untracked-files=no)"
       - name: Test native Telegram rebase (no remote writes)
         id: rebase
         continue-on-error: true
