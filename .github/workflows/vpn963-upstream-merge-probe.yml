@@ -35,13 +35,15 @@ jobs:
             echo '=== Upstream and fork commits since ancestor ==='
             git rev-list --left-right --count HEAD...FETCH_HEAD || true
             echo '=== Merge attempt ==='
-            git merge --no-commit --no-ff FETCH_HEAD
-            result=$?
+            result=0
+            git merge --no-commit --no-ff FETCH_HEAD || result=$?
             echo "Merge exit code: $result"
             echo '=== Conflicting files ==='
-            git diff --name-only --diff-filter=U || true
+            git diff --name-only --diff-filter=U | head -200 || true
+            echo 'Total unresolved paths:'
+            git diff --name-only --diff-filter=U | wc -l || true
             echo '=== Conflict statuses ==='
-            git status --short | grep -E '^(AA|AU|UA|DD|DU|UD|UU)' || true
+            git status --short | grep -E '^(AA|AU|UA|DD|DU|UD|UU)' | head -200 || true
             echo '=== File status summary ==='
             git status --short | awk '{print $1}' | sort | uniq -c | sort -nr | head -30
             echo '=== Critical migration paths ==='
