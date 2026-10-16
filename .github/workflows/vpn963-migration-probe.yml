@@ -1,0 +1,71 @@
+name: VPN963 v13.0.2 migration probe
+
+on:
+  push:
+    branches: [vpn963-v13.0.2]
+    paths:
+      - '.github/workflows/vpn963-migration-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-rebase:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.13
+      - name: Install StGit
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y stgit
+          stg --version
+      - name: Configure Git
+        run: |
+          git config --global user.name 'mtpali migration probe'
+          git config --global user.email '316823762+mtpali@users.noreply.github.com'
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Materialize current VPN963 stack
+        run: bun run setup
+      - name: Test native Telegram rebase (no remote writes)
+        id: rebase
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          bun run rebase f32ffeec763f0bdbf4bec25b52d654f77bff733d 2>&1 | tee migration-rebase.log
+      - name: Capture StGit state and conflicts
+        if: always()
+        run: |
+          {
+            echo '=== Rebase outcome ==='
+            echo '${{ steps.rebase.outcome }}'
+            echo '=== Worktree status ==='
+            git -C worktree status --short || true
+            echo '=== StGit top ==='
+            stg -C worktree top || true
+            echo '=== StGit series ==='
+            stg -C worktree series || true
+            echo '=== Unmerged files ==='
+            git -C worktree diff --name-only --diff-filter=U || true
+          } > migration-state.log 2>&1
+      - name: Upload migration diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vpn963-v13-migration-diagnostics
+          path: |
+            migration-rebase.log
+            migration-state.log
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Mark unresolved migration as failed
+        if: steps.rebase.outcome != 'success'
+        run: exit 1
