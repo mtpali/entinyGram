@@ -72,6 +72,13 @@ jobs:
             echo '=== Unmerged files ==='
             git -C worktree diff --name-only --diff-filter=U || true
           } > migration-state.log 2>&1
+          echo '=== Rebase conflict summary ==='
+          head -60 migration-state.log
+          echo '=== First conflicting file context ==='
+          while IFS= read -r path; do
+            echo "FILE: $path"
+            grep -n -A 12 -B 12 -E '^(<<<<<<<|=======|>>>>>>>)' "worktree/$path" | head -180 || true
+          done < <(git -C worktree diff --name-only --diff-filter=U | head -3)
       - name: Upload migration diagnostics
         if: always()
         uses: actions/upload-artifact@v4
