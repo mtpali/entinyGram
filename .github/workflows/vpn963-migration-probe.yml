@@ -41,6 +41,14 @@ jobs:
           git -C worktree status --short | head -100 || true
           git -C worktree diff --stat | head -100 || true
           git -C worktree diff -- TMessagesProj/src/main/res/values-night/styles.xml | head -100 || true
+          python3 - <<'PY'
+          import subprocess
+          entries = subprocess.check_output(['git', '-C', 'worktree', 'ls-files', '-v', '-z']).split(b'\\0')
+          skipped = [entry[2:].decode() for entry in entries if entry.startswith(b'S ')]
+          print(f'Restoring {len(skipped)} skip-worktree paths in ephemeral CI checkout')
+          for start in range(0, len(skipped), 200):
+              subprocess.run(['git', '-C', 'worktree', 'update-index', '--no-skip-worktree', '--', *skipped[start:start + 200]], check=True)
+          PY
           git -C worktree reset --hard HEAD
           test -z "$(git -C worktree status --porcelain --untracked-files=no)"
       - name: Test native Telegram rebase (no remote writes)
