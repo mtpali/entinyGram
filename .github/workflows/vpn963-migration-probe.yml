@@ -43,7 +43,7 @@ jobs:
           git -C worktree diff -- TMessagesProj/src/main/res/values-night/styles.xml | head -100 || true
           python3 - <<'PY'
           import subprocess
-          entries = subprocess.check_output(['git', '-C', 'worktree', 'ls-files', '-v', '-z']).split(b'\\0')
+          entries = subprocess.check_output(['git', '-C', 'worktree', 'ls-files', '-v', '-z']).split(b'\0')
           skipped = [entry[2:].decode() for entry in entries if entry.startswith(b'S ')]
           print(f'Restoring {len(skipped)} skip-worktree paths in ephemeral CI checkout')
           for start in range(0, len(skipped), 200):
