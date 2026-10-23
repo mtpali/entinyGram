@@ -513,3 +513,4 @@ entiny/media/original-file-names.patch
 entiny/chat/remember-composer-tab.patch
 entiny/media/saved-media-file-names.patch
 entiny/media/download-name-collisions.patch
+entiny/chat/composer-tab-reselection.patch

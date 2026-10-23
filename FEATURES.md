@@ -13,7 +13,7 @@ most things are toggleable in `Settings → Telegram Settings`, with sensible op
 - **VPN963 13.0.2**: updated Telegram base; plugin installation and execution are removed.
 
 - **Prepared texts**: an offline Text tab beside Emoji, GIFs and Stickers; add, edit and delete texts per account, then insert at the cursor for review before sending — *inspired by the NagramXF quick-reply workflow*.
-- **Composer tabs**: centered labels and the last selected tab restored after reopening the panel or restarting the app; Text is the initial default.
+- **Composer tabs**: centered labels and the last chosen tab restored after reopening or restarting, including explicit reselection after a restricted-chat fallback; Text is the initial default.
 - **Profile icons**: retain profile transitions and independent drawable click targets on Telegram 13.0.2.
 - **Forward Pro topics**: clear forum-topic selection and delivery to the selected topic, including edited messages and albums; sender attribution starts off.
 - **VPN963 settings**: English and Persian, Default icon pack, and a Telegram channel shortcut.
