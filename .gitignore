@@ -8,6 +8,7 @@ worktree/
 .gradle/
 .gradle-local/
 build/
+!patches/entiny/build/
 .cxx/
 *.apk
 *.aab
@@ -20,6 +21,13 @@ CLAUDE.local.md
 .local_build_number
 .freebuff/
 desktop.ini
-# not sure if this is needed, but it seems to be
 entinyBot/
 entinyTodo/
+worktree-pluginless/
+sdk/types/android.tl.d.ts
+sdk/types/tl-names.txt
+sdk/cli/dist
+src/core/src/main/resources/tl_tables.txt
+src/native/target
+out
+plugins/*/dist

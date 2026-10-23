@@ -57,6 +57,10 @@ cd worktree
 - **ABI:** defaults to `arm64-v8a` only (fast local builds). Set the `ABI_FILTERS` env
   var (comma-separated ABIs, or `all`) before running Gradle if you need other
   architectures, e.g. `ABI_FILTERS=all ./gradlew TMessagesProj_App:assembleDebug`.
+  For the x86 emulator, use `ABI_FILTERS=x86_64` on its own (unverified with a list).
+- **Pluginless vs plugins:** the default build is pluginless. Setup with
+  `bun run setup -- --pluginless` builds the pluginless variant; plugins are opt-in.
+  CI builds both.
 
 Only `:TMessagesProj_App` is a real, buildable app module — `TMessagesProj_AppHuawei`,
 `TMessagesProj_AppHockeyApp`, and `TMessagesProj_AppStandalone` still exist as

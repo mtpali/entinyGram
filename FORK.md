@@ -1,10 +1,16 @@
 # Telegram personal fork
 
-Based on [entaytion/entinyGram v12.10.6-202610040](https://github.com/entaytion/entinyGram/releases/tag/v12.10.6-202610040), commit `77b9c206998cc4bdaf8d24cc55ae312daf426c24`. Telegram Android is pinned by `upstream-commit`.
+Based on [entaytion/entinyGram v13.0.2-202610160](https://github.com/entaytion/entinyGram/releases/tag/v13.0.2-202610160), commit `ce6a86fac193cbec5d3122e1ef9e5006e53a9d4c`. Telegram Android is pinned by `upstream-commit`.
 
 The app is named **Telegram**. Its default black-and-white launcher icon comes from [mtpali/NagramXF](https://github.com/mtpali/NagramXF), commit `3c9bd86df5200008b00b998b51d262f7c6b8a64d`. The blue stock Telegram icon remains selectable. The old entinyGram launcher and notification icons are removed. Source attribution and the original icon project's license are in `src/res/launcher/nagramxf/`.
 
 **Force LTR:** Settings → Telegram Settings → Appearance → Force LTR. The setting defaults to off. Enable it and tap Restart now. It changes interface layout direction while preserving Persian/Arabic strings, locale selection and text shaping. Disable it and restart to restore the selected language's normal direction.
+
+## Version 13.0.2
+
+The migration starts from personal head `de416379be2da50e44189bf82e4e4d146ca934d9`. Fork source now lives in `src/fork` and `src/fork-app`. The native Telegram pin is `f32ffeec763f0bdbf4bec25b52d654f77bff733d`.
+
+The plugin engine, JavaScript SDK, installation UI, market, permissions, translation/map bridges and native runtime are excluded from this fork. Setup always produces the pluginless build. The prepared-text storage keys, per-account download migration, Forward Pro topics, proxy title shortcut, package ID, Firebase client and APK signing identity are retained. Material Design controls, Pill Stack and Paranoia Mode stay removed.
 
 ## Build and downloads
 
@@ -12,10 +18,10 @@ The **Build Telegram APKs** workflow builds two signed APKs:
 
 | File | ABI | Devices |
 | --- | --- | --- |
-| `Telegram-12.10.6-armv7.apk` | `armeabi-v7a` | 32-bit ARM |
-| `Telegram-12.10.6-armv8.apk` | `arm64-v8a` | 64-bit ARM |
+| `Telegram-13.0.2-armv7.apk` | `armeabi-v7a` | 32-bit ARM |
+| `Telegram-13.0.2-armv8.apk` | `arm64-v8a` | 64-bit ARM |
 
-Both require Android 8.0 or newer. Pushes to `main` and the development branch run the workflow; it can also be run manually. Successful builds are published as GitHub preview releases, with SHA-256 checksums and per-ABI build metadata. Version codes start at `2026100600` plus the workflow run number.
+Both require Android 8.0 or newer. Pushes to `main` and the development branch run the workflow; it can also be run manually. Successful builds are published as GitHub preview releases, with SHA-256 checksums and per-ABI build metadata. Version codes start at `2026101600` plus the workflow run number.
 
 The package ID remains `ua.entaytion.entinygram`, so account/data identity is retained. APKs are signed with the development keystore already provided in the Telegram source. For long-term public distribution, configure a private signing key and keep it consistent across builds. Android will accept an update only when its signing certificate matches the installed app.
 

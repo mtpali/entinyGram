@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="InuSavedTextsTab">متن</string>
-    <string name="InuSavedTextsAdd">افزودن متن آماده</string>
-    <string name="InuSavedTextsEdit">ویرایش متن آماده</string>
-    <string name="InuSavedTextsEmpty">هنوز متن آماده‌ای ندارید. از دکمهٔ بالا متن اضافه کنید، سپس برای درج در پیام روی آن بزنید.</string>
-    <string name="InuSavedTextsHint">متن آمادهٔ خود را بنویسید</string>
-    <string name="InuSavedTextsOptions">گزینه‌های متن آماده</string>
-    <string name="InuSavedTextsDeleteConfirm">این متن آماده حذف شود؟</string>
     <string name="InuOpenInDiscussion">باز کردن در گفتگو</string>
     <string name="InuBanUserConfirm">%1$s از این گروه مسدود شود؟</string>
     <string name="InuSendToDiscussWithoutJoin">نوشتن در گروه‌های گفتگو بدون عضویت</string>
+    <string name="InuChatSnowflakes">دانه‌های برف در گفتگوها</string>
     <string name="InuSendToDiscussWithoutJoinInfo">رد کردن بررسی عضویت سمت برنامه برای گروه‌های گفتگو</string>
+
     <string name="InuConfirmBeforeSending">تأیید پیش از ارسال</string>
     <string name="InuConfirmSendVoice">تأیید پیش از ارسال پیام صوتی</string>
     <string name="InuConfirmSendSticker">تأیید پیش از ارسال استیکر</string>
@@ -19,8 +14,10 @@
     <string name="InuNavigationDrawerInfo">منوی همبرگری کناریِ پیش از نسخه ۱۲٫۰ را برمی‌گرداند. نیاز به راه‌اندازی مجدد دارد.</string>
     <string name="InuDrawerBackGesture">باز کردن منو با ژست بازگشت</string>
     <string name="InuDrawerBackGestureInfo">کشیدن از لبه چپ فهرست گفتگوها به‌جای خروج از برنامه، منو را باز می‌کند.</string>
-    <string name="InuDrawerM3Sections">بخش‌های ماژولار در منوی کناری</string>
-    <string name="InuDrawerM3SectionsInfo">ردیف‌های منوی کناری را در کارت‌های گرد Material 3 گروه‌بندی می‌کند.</string>
+
+
+    <string name="InuDrawerKeepOptionsMenu">حفظ منوی سه‌نقطه</string>
+    <string name="InuDrawerKeepOptionsMenuInfo">نمایش دکمهٔ منوی فهرست گفتگوها در کنار منوی کناری</string>
     <string name="InuShowDrawerAccounts">نمایش حساب‌ها در منو</string>
     <string name="InuShowDrawerAccountsInfo">نمایش تعویض‌گر حساب قابل‌گسترش زیر نمایه شما.</string>
     <string name="InuSettings">تنظیمات Telegram</string>
@@ -31,6 +28,7 @@
     <string name="InuWideChannelPostsPreviewText">اخبار، عکس‌ها و ویدیوها</string>
     <string name="InuWideChannelPostsPreviewReply">پست کانالِ بازارسال‌شده</string>
     <string name="InuWideChannelPostsPreviewReplyLabel">پست‌های کانال</string>
+
     <string name="InuPushHeader">اعلان‌های فوری</string>
     <string name="InuUnifiedPush">UnifiedPush</string>
     <string name="InuUnifiedPushInfo">دریافت اعلان‌ها از طریق توزیع‌کننده UnifiedPush مانند ntfy به‌جای سرویس‌های گوگل. بدون Google Play کار می‌کند.</string>
@@ -70,6 +68,7 @@
     <string name="InuUnifiedPushGatewayInfo">پروکسی بازنویسی برای توزیع‌کننده‌هایی که WebPush POST و VAPID می‌خواهند (مانند gCompat-UP، Sunup و Prism).</string>
     <string name="InuUnifiedPushGatewayDirect">مستقیم (بدون دروازه)</string>
     <string name="InuUnifiedPushGatewayDefault">پیش‌فرض</string>
+
     <string name="InuVersionBetaSuffix">(آزمایشی)</string>
     <string name="InuPerformanceClass">رده عملکرد</string>
     <string name="InuPerformanceClassInfo">تغییر این تنظیم توصیه نمی‌شود، زیرا ممکن است عملکرد دستگاه‌های اقتصادی ضعیف را بسیار پایین بیاورد</string>
@@ -80,9 +79,11 @@
     <string name="InuAnnoyances">مزاحمت‌ها</string>
     <string name="InuAnnoyancesStories">استوری‌ها</string>
     <string name="InuAnnoyancesProfile">نمایه</string>
-    <string name="InuAnnoyancesGifts">هدیه‌ها و پریمیوم</string>
+    <string name="InuAnnoyancesGifts">هدیه‌ها</string>
+    <string name="InuAnnoyancesPremium">Telegram Premium</string>
     <string name="InuAnnoyancesInterface">گفتگوها و رابط کاربری</string>
     <string name="InuAnnoyancesChannels">کانال‌ها و پیشنهادها</string>
+
     <string name="InuAnnoyancesHints">راهنماها و پیشنهادها</string>
     <string name="InuMessages">پیام‌ها</string>
     <string name="InuChats">گفتگوها</string>
@@ -116,6 +117,7 @@
     <string name="InuShowSeconds">نمایش ثانیه</string>
     <string name="InuDisableRounding">غیرفعال کردن رند کردن اعداد</string>
     <string name="InuDisableRoundingInfo">1.2K -> 1,234</string>
+
     <string name="InuAvatarCorners">گوشه‌های آواتار</string>
     <string name="InuAvatarCornersLeft">تیز</string>
     <string name="InuAvatarCornersRight">گرد</string>
@@ -154,12 +156,17 @@
     <string name="InuShowAllRecentStickers">نمایش همه استیکرهای اخیر</string>
     <string name="InuNoStickerExtraPadding">حذف فاصله اضافی پایین</string>
     <string name="InuHideKeyboardOnScroll">پنهان کردن صفحه‌کلید هنگام اسکرول</string>
+    <string name="InuKeepKeyboardWhileTyping">حفظ صفحه‌کلید هنگام تایپ</string>
+    <string name="InuKeepKeyboardWhileTypingInfo">در صورت وجود متن در کادر، هنگام اسکرول پنهان نشود</string>
     <string name="InuDisablePullToNext">غیرفعال کردن کشیدن برای کانال بعدی</string>
     <string name="InuDisableSensitive">غیرفعال کردن فیلتر محتوای حساس</string>
+    <string name="InuMemoryTrim">آزادسازی حافظه در پس‌زمینه</string>
+    <string name="InuMemoryTrimInfo">مدت کوتاهی پس از رفتن برنامه به پس‌زمینه، حافظهٔ پنهان تصاویر را پاک می‌کند و حافظه را فشرده می‌کند</string>
     <string name="InuDisableQuickShare">غیرفعال کردن اشتراک‌گذاری سریع</string>
     <string name="InuDisableQuickShareInfo">با نگه داشتن دکمه اشتراک‌گذاری (کنار پیام‌های کانال)، مخاطبان پرتکرار نمایش داده نشوند؛ چون بدون تأیید ارسال می‌کند</string>
     <string name="InuSaveSelectedFiles">ذخیره فایل‌های انتخاب‌شده</string>
     <string name="InuSaveSelectedFilesInfo">هنگام انتخاب فایل‌ها در رسانه‌های پروفایل و جستجو دکمه دانلود اضافه می‌کند؛ فایل‌های دانلودنشده خودکار دریافت می‌شوند</string>
+
     <string name="InuHideChannelShareButton">پنهان کردن دکمه اشتراک‌گذاری کانال</string>
     <string name="InuHideChannelShareButtonInfo">نماد اشتراک‌گذاری کنار پست‌های کانال را پنهان کن؛ بازارسال از منو همچنان کار می‌کند.</string>
     <string name="InuDisableProfileMusicAutoplay">غیرفعال کردن پخش خودکار موسیقی نمایه</string>
@@ -201,6 +208,13 @@
     <string name="InuHideGiftCardsInChatInfo">پیام‌های سرویس هدیه (ستاره، TON، پریمیوم) را از گفتگوها پنهان کن. برای اعمال، گفتگو را دوباره باز کنید.</string>
     <string name="InuHideGiveaways">پنهان کردن قرعه‌کشی‌ها</string>
     <string name="InuHideGroupStickerPack">پنهان کردن راهنمای بسته ایموجی گروه</string>
+    <string name="InuCustomizeMessages">پیام‌ها</string>
+    <string name="InuHideReplyBackground">پنهان کردن پس‌زمینه پاسخ‌ها</string>
+    <string name="InuHideReplyBackgroundInfo">نمایش پاسخ‌ها و نقل‌قول‌ها با پس‌زمینه شفاف</string>
+    <string name="InuDisableReplyCustomColors">غیرفعال کردن رنگ‌های سفارشی در پاسخ‌ها</string>
+    <string name="InuDisableReplyCustomColorsInfo">استفاده از رنگ‌های پیش‌فرض پاسخ به جای رنگ سفارشی فرستنده</string>
+    <string name="InuHideReplyBackgroundEmoji">پنهان کردن ایموجی در پاسخ‌ها</string>
+    <string name="InuHideReplyBackgroundEmojiInfo">پنهان کردن الگوی ایموجی پس‌زمینه در پاسخ‌ها و نقل‌قول‌ها</string>
     <string name="InuDisableChatBackgrounds">غیرفعال کردن پس‌زمینه‌های سفارشی گفتگو</string>
     <string name="InuDisableChatThemes">غیرفعال کردن تم‌های سفارشی گفتگو</string>
     <string name="InuDisableBgParallax">غیرفعال کردن پارالاکس پس‌زمینه</string>
@@ -210,6 +224,8 @@
     <string name="InuShowCustomTheme">نمایش تم سفارشی</string>
     <string name="InuDisableSwipeToUnarchive">غیرفعال کردن کشیدن برای خروج از آرشیو</string>
     <string name="InuDisableSwipeToHideGeneralTopic">غیرفعال کردن کشیدن برای پنهان کردن موضوع عمومی</string>
+
+
     <string name="InuResetStorage">بازنشانی حافظه</string>
     <string name="InuResetStorageConfirm">این کار کلیدهای احراز هویت محلی و حافظه نهان را پاک می‌کند تا احراز هویتِ در انتظار بازنشانی شود. مطمئن هستید؟</string>
     <string name="InuHideBottomBar">پنهان کردن نوار پایین</string>
@@ -238,6 +254,7 @@
     <string name="InuCompactModeInfo">عنوان‌ها را پنهان و زبانه‌ها را کوچک‌تر می‌کند</string>
     <string name="InuShowTabTitles">نمایش عنوان زبانه‌ها</string>
     <string name="InuMainTabsCustomizeReset">بازنشانی به پیش‌فرض</string>
+
     <string name="InuDialogsFab">دکمه کنش شناور</string>
     <string name="InuDialogsFabMainAction">کنش اصلی</string>
     <string name="InuDialogsFabSecondaryAction">کنش ثانویه</string>
@@ -249,12 +266,11 @@
     <string name="InuDialogsFabActionNewStory">استوری جدید</string>
     <string name="InuDialogsFabActionOpenSearch">باز کردن جستجو</string>
     <string name="InuDialogsFabActionSavedMessages">پیام‌های ذخیره‌شده</string>
+
     <string name="InuPredictiveBack">بازگشت پیش‌بینانه</string>
     <string name="InuPredictiveBackOff">خاموش</string>
     <string name="InuPredictiveBackStock">پیش‌فرض</string>
     <string name="InuPredictiveBackMaterial3">Material 3</string>
-    <string name="InuCalendarSystem">سیستم تقویم</string>
-    <string name="InuCalendarSystemPersian">هجری شمسی (جلالی)</string>
     <string name="InuClockFormat">قالب ساعت</string>
     <string name="InuClockFormatSystem">استفاده از تنظیم سیستم</string>
     <string name="InuClockFormat12Hour">۱۲ ساعته</string>
@@ -283,6 +299,7 @@
     <string name="InuHideMessages">پنهان کردن پیام‌ها</string>
     <string name="InuShowHiddenMessages">نمایش پیام‌ها</string>
     <string name="InuSpoilers">اسپویلرها</string>
+
     <string name="InuClearHints">بستن همه راهنماها</string>
     <string name="InuClearHintsDone">همه راهنماها بسته شدند</string>
     <string name="InuRestartRequired">برای اعمال تغییرات، راه‌اندازی مجدد لازم است</string>
@@ -294,7 +311,7 @@
     <string name="InuStickerTimeModeHideTime">فقط پنهان کردن ساعت</string>
     <string name="InuStickerTimeModeHideIncoming">پنهان فقط برای دریافتی</string>
     <string name="InuStickerTimeModeHideCompletely">پنهان کامل</string>
-    <string name="InuStickerSizeDialogMessage">من آنتن دوست دارم</string>
+    <string name="InuStickerSizeDialogMessage">من عاشق آنتن‌ها هستم!</string>
     <string name="InuBubbleTails">دنباله حباب‌ها</string>
     <string name="InuSendAsRoundVideo">ارسال به‌صورت ویدیوی گرد</string>
     <string name="InuMiscPreviewForwardedFrom">inu</string>
@@ -356,6 +373,8 @@
     <string name="InuFoldersUnreadCounterExcludeMutedNonDms">بدون بی‌صداشده‌های غیرخصوصی</string>
     <string name="InuHideAllChatsTab">پنهان کردن زبانه «همه گفتگوها»</string>
     <string name="InuHideAllChatsTabInfo">برای نمایش همه گفتگوها، عنوان را در فهرست گفتگوها نگه دارید.</string>
+
+
     <string name="InuFoldersAtBottom">انتقال پوشه‌ها به پایین</string>
     <string name="InuHideArchive">حذف «گفتگوهای بایگانی‌شده» از فهرست گفتگوها</string>
     <string name="InuCommunityDisplayMode">انجمن‌ها</string>
@@ -391,9 +410,13 @@
     <string name="InuConfirmReactionText">واکنش %1$s در **%2$s** ارسال شود؟</string>
     <string name="InuNotificationIcon">نماد اعلان</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconNagramXF">NagramXF</string>
+
+
     <string name="InuNotificationIconInfo">در Xiaomi (MIUI/HyperOS) ممکن است سیستم این آیکون را با آیکون برنامه جایگزین کند، پس انتخاب شما آنجا دیده نشود</string>
+
     <string name="InuDisableChatBubbles">غیرفعال کردن حباب‌های اعلان Android</string>
+    <string name="InuKeepChatsInStack">باز نگه داشتن گفتگوهای قبلی</string>
+    <string name="InuKeepChatsInStackInfo">باز کردن گفتگوی دیگر، گفتگوهای پشت آن را نمی‌بندد</string>
     <string name="InuInPlaceTranslation">ترجمه درجا</string>
     <string name="InuTranslateWebPreviews">ترجمه پیش‌نمایش‌های وب</string>
     <string name="InuKeepOriginalAfterTranslation">نمایش متن اصلی</string>
@@ -439,12 +462,10 @@
     <string name="InuTranslateProviderGoogle">Google Translate</string>
     <string name="InuTranslateProviderDeepL">DeepL</string>
     <string name="InuTranslateProviderLlm">LLM (سازگار با OpenAI)</string>
-    <string name="InuTranslateProviderYandex">Yandex Translate</string>
     <string name="InuTranslateProviderMicrosoft">Bing Translate (رایگان، بدون کلید)</string>
     <string name="InuTranslateProviderMicrosoftAzure">Microsoft Azure (کلید API)</string>
     <string name="InuTranslateProviderMyMemory">MyMemory (رایگان، بدون کلید)</string>
     <string name="InuTranslateDeepLApiKey">کلید API دیپل (DeepL)</string>
-    <string name="InuTranslateYandexApiKey">کلید API یاندکس</string>
     <string name="InuTranslateMicrosoftApiKey">کلید API مترجم Azure</string>
     <string name="InuTranslateMicrosoftRegion">منطقه Azure (اختیاری)</string>
     <string name="InuTranslateLlmEndpointUrl">نشانی نقطه پایانی API</string>
@@ -470,6 +491,8 @@
     <string name="InuDisableChatPreviewExpandInfo">ضربه برای بزرگ‌کردن غیرفعال شود و در عوض حباب‌ها تعاملی شوند</string>
     <string name="InuDialogAvatarOpensProfile">ضربه روی آواتار نمایه را باز می‌کند</string>
     <string name="InuDialogAvatarOpensProfileInfo">ضربه روی آواتار یک گفتگو در فهرست، به‌جای گفتگو مستقیماً نمایه او را باز می‌کند.</string>
+    <string name="InuAlwaysShowDownloads">دکمه دانلودها</string>
+    <string name="InuAlwaysShowDownloadsInfo">همیشه دکمه دانلودها را در سربرگ چت‌ها نشان بده</string>
     <string name="InuHideMyPhoneNumber">پنهان کردن شماره تلفن من</string>
     <string name="InuFonts">فونت‌ها</string>
     <string name="InuAppFont">فونت برنامه</string>
@@ -532,7 +555,6 @@
     <string name="InuProfileRegDateCopied">تاریخ ثبت‌نام و مرکز داده کپی شد</string>
     <string name="InuMessageInput">ورودی پیام</string>
     <string name="InuAttachmentSheet">برگه پیوست</string>
-    <string name="InuVoiceRecorder">ضبط صدا / ویدیوی گرد</string>
     <string name="InuIconReplacement">بسته نمادها</string>
     <string name="InuIconReplacementOff">پیش‌فرض</string>
 
@@ -543,12 +565,12 @@
     <string name="InuMapPreviewProvider">ارائه‌دهنده پیش‌نمایش نقشه</string>
     <string name="InuMapPreviewProviderTelegram">Telegram</string>
     <string name="InuMapPreviewProviderGoogle">Google</string>
-    <string name="InuMapPreviewProviderYandex">Yandex</string>
 
     <string name="InuReplyIn">پاسخ در…</string>
     <string name="InuDeletedMessage">پیام حذف‌شده</string>
     <string name="InuDeletedMessageIdFormat">شناسه %1$d</string>
     <string name="InuClosestToDeletedReply">پیام اصلی حذف شده است؛ نزدیک‌ترین پیام نمایش داده می‌شود</string>
+
     <string name="InuMessageDetails">جزئیات</string>
     <string name="InuMsgDetailDate">تاریخ</string>
     <string name="InuMsgDetailDeleteDate">تاریخ حذف</string>
@@ -628,6 +650,8 @@
 
     <string name="InuChatVoiceInAttach">ضبط‌کننده در پیوست‌ها</string>
     <string name="InuChatVoiceInAttachInfo">دکمه ضبط صدا/تصویر را از نوار ورودی به برگه پیوست می‌برد</string>
+    <string name="InuKeepScreenOnRecording">روشن ماندن صفحه هنگام ضبط</string>
+    <string name="InuKeepScreenOnRecordingInfo">از خاموش شدن صفحه هنگام ضبط پیام صوتی یا تصویری جلوگیری می‌کند</string>
 
     <string name="InuDisableIntroSticker">ارسال نکردن استیکر معرفی</string>
     <string name="InuDisableIntroStickerInfo">…و پنهان کردن پیشنهادهای استیکر خوش‌آمدگویی</string>
@@ -640,7 +664,18 @@
     <string name="InuDisableScrimBlur">غیرفعال کردن تاری پس‌زمینه</string>
     <string name="InuDisableScrimBlurInfo">به‌جای پس‌زمینه تار، پشت منوها و پیش‌نمایش‌ها تیرگی ساده. ممکن است کندی را کم کند.</string>
 
+
     <string name="InuDisableProfileAvatarBlur">غیرفعال کردن تاری آواتار نمایه</string>
+    <string name="InuClownAvatarsSection">آواتار مسدودشده‌ها</string>
+    <string name="InuClownAvatarBlocked">آواتار دلقک برای کاربران مسدودشده</string>
+    <string name="InuClownAvatarBlockedInfo">به‌جای عکس، برای کاربرانی که مسدود کرده‌اید دلقک نشان بده.</string>
+    <string name="InuClownAvatarBlockedMe">آواتار دلقک برای کسانی که من را مسدود کرده‌اند</string>
+    <string name="InuClownAvatarBlockedMeInfo">از نبود عکس و آخرین بازدید حدس زده می‌شود، پس ممکن است اشتباه باشد.</string>
+    <string name="InuClownAvatarEmoji">ایموجی</string>
+    <string name="InuClownAvatarEmojiClown">دلقک</string>
+    <string name="InuClownAvatarEmojiPoop">کاکا</string>
+    <string name="InuClownAvatarEmojiSkull">جمجمه</string>
+
     <string name="InuNicheSettings">تنظیمات ویژه</string>
     <string name="InuNicheSettingsInfo">قابلیت‌های درخواستی که شاید برای همه مفید نباشند. اگر کار نکنند حذف می‌شوند.</string>
     <string name="InuNicheUnlockedToast">رفیق، entiny tv رو فعال نکن خواهشاً💀💀</string>
@@ -655,6 +690,7 @@
     <string name="InuMotion">حرکت</string>
     <string name="InuFormatting">قالب‌بندی</string>
     <string name="InuChatActions">کنش‌های گفتگو</string>
+
     <string name="InuLinksAndBrowser">پیوندها و مرورگر</string>
     <string name="InuStickers">استیکرها</string>
     <string name="InuReactions">واکنش‌ها</string>
@@ -785,6 +821,7 @@
     <string name="InuHidePinnedUntilNew">تا سنجاق شدن پیام جدید</string>
     <string name="InuHidePinnedForever">همیشه در این گفتگو</string>
     <string name="InuAppIconStock">پایه</string>
+
     <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">نماد از **Telegram**. همه حقوق محفوظ است.</string>
     <string name="InuJumpToBeginning">پرش به ابتدا</string>
@@ -803,6 +840,7 @@
     <string name="InuRecentChatsEmpty">هنوز چیزی اینجا نیست</string>
 
     <string name="InuAdditional">اضافی</string>
+
     <string name="InuRefetchWebPreview">دریافت مجدد پیش‌نمایش وب</string>
     <string name="InuSendStickers">ارسال استیکر</string>
     <string name="InuSendGifs">ارسال گیف</string>
@@ -815,7 +853,9 @@
     <string name="InuBackupImportBadFormat">این فایل پشتیبان معتبر تنظیمات نیست</string>
     <string name="InuBackupImportSheetTitle">مطمئن هستید که می‌خواهید این تنظیمات اعمال شوند؟</string>
     <string name="InuBackupImportNoChanges">این فایل با تنظیمات فعلی شما یکی است</string>
+    <string name="InuBackupImportSheetChanges_one">**%1$d** تغییر روی تنظیمات فعلی اعمال می‌شود.</string>
     <string name="InuBackupImportSheetChanges_other">**%1$d** تغییر روی تنظیمات فعلی اعمال خواهد شد.</string>
+    <string name="InuFontStyles_one">%1$d سبک</string>
     <string name="InuFontStyles_other">%1$d سبک</string>
     <string name="InuBackupImportSheetApply">بله، اعمال کن</string>
     <string name="InuBackupImportSheetCancel">نه، همین‌طور بماند</string>
@@ -849,7 +889,6 @@
     <string name="InuReorderAccountsInfo">برای تغییر ترتیب حساب‌ها در فهرست تنظیمات و انتخابگر حساب بکشید.</string>
     <string name="InuCreateAsSupergroup">ساخت به‌عنوان ابرگروه</string>
     <string name="InuFeed">فید</string>
-    <string name="InuFeedToggleInfo">فید را به منوها و زبانه‌های پایین اضافه می‌کند. به‌طور پیش‌فرض خاموش است؛ زبانه پایین نیاز به راه‌اندازی مجدد برنامه دارد</string>
     <string name="InuFeedEmpty">همه چیز را دیده‌اید</string>
     <string name="InuFeedManageChannels">مدیریت کانال‌ها</string>
     <string name="InuFeedMarkAllRead">علامت‌گذاری همه به‌عنوان خوانده‌شده</string>
@@ -863,6 +902,7 @@
     <string name="InuFeedNewestOnTop">جدیدترین پست‌ها بالا</string>
     <string name="InuFeedNewestOnTopInfo">روشن: جدیدترین پست‌ها بالا (سبک توییتر). خاموش: پایین (سبک تلگرام).</string>
     <string name="InuFeedAllChannels">همه کانال‌ها</string>
+    <string name="InuFeedFolder">پوشهٔ فید</string>
     <string name="InuFeedAllExcluded">همه کانال‌ها از فید پنهان شده‌اند.</string>
     <string name="InuFeedChannelHidden">**%1$s** از فید پنهان شد</string>
     <string name="InuFeedMarkAllReadConfirm">همه پست‌های کانال‌های فید خوانده‌شده علامت زده شوند؟ در کانال‌های اصلی هم خوانده‌شده علامت می‌خورند.</string>
@@ -878,6 +918,10 @@
     <string name="InuCopyCallbackData">کپی داده callback</string>
     <string name="InuCallbackDataCopied">داده callback کپی شد</string>
     <string name="InuAutoDisableProxyOnVpn">غیرفعال کردن پروکسی هنگام فعال بودن VPN</string>
+    <string name="InuProxyImportFromClipboard">درون‌ریزی از کلیپ‌بورد</string>
+    <string name="InuProxyImportNothing">پیوند پروکسی جدیدی در کلیپ‌بورد پیدا نشد</string>
+    <string name="InuProxyImported_one">%1$d پروکسی درون‌ریزی شد</string>
+    <string name="InuProxyImported_other">%1$d پروکسی درون‌ریزی شد</string>
     <string name="InuFasterDownloads">دانلود سریع‌تر</string>
     <string name="InuFasterUploads">بارگذاری سریع‌تر</string>
     <string name="InuFasterTransfersInfo">تکه‌های بزرگ‌تر و درخواست‌های موازی بیشتر. ممکن است توان عملیاتی را بهتر یا بدتر کند.</string>
@@ -947,7 +991,6 @@
     <string name="InuProfileSettingsRowsItems">ردیف‌ها</string>
     <string name="InuProfileSettingsRowsOrderInfo">ردیف‌های صفحه تنظیمات را مرتب یا پنهان کنید. برای جابه‌جایی بکشید، برای پنهان کردن کلید را تغییر دهید.</string>
     <string name="InuProfileSettingsRowsReset">بازنشانی به پیش‌فرض</string>
-    <string name="InuSettingsRowWallet">کیف پول</string>
     <string name="InuProfileInfoRowsOrder">ترتیب اطلاعات نمایه من</string>
     <string name="InuProfileInfoRowsItems">ردیف‌ها</string>
     <string name="InuProfileInfoRowsOrderInfo">ردیف‌های تلفن، بیوگرافی و نام کاربری نمایه خود را مرتب یا پنهان کنید. برای جابه‌جایی بکشید، برای پنهان کردن کلید را تغییر دهید.</string>
@@ -975,6 +1018,8 @@
 
     <string name="InuLogs">اشکال‌زدایی</string>
     <string name="InuLogsEnabled">حالت اشکال‌زدایی</string>
+    <string name="InuForceNoVibration">غیرفعال کردن همه لرزش‌ها</string>
+    <string name="InuForceNoVibrationInfo">لرزش لمسی، لرزش درون‌برنامه و اعلان‌ها را حتی اگر در تنظیمات تلگرام روشن باشد خاموش می‌کند.</string>
     <string name="InuLogsSize">حجم گزارش‌ها: %1$s</string>
     <string name="InuLogsShare">اشتراک‌گذاری گزارش‌ها</string>
     <string name="InuLogsShareZip">همه گزارش‌ها (.zip)</string>
@@ -989,15 +1034,6 @@
     <string name="InuLogsMakingHeapDump">در حال ساخت تخلیه حافظه…</string>
     <string name="InuLogsHeapDumpWarning">فایل .hprof را **هرگز** به اشتراک نگذارید — این یک عکس فوری از حافظه است که **حاوی داده‌های حساس** (پیام‌ها، توکن‌ها و غیره) است و فقط خودتان باید آن را بررسی کنید. هنگام ساخت، برنامه کوتاه‌مدت یخ می‌زند.</string>
 
-    <string name="InuDeleteOwnMessages">حذف پیام‌های من</string>
-    <string name="InuDeleteOwnMessagesSearching">در حال جستجوی پیام‌های شما…</string>
-    <string name="InuDeleteOwnMessagesFoundProgress">%1$d / %2$d پیدا شد</string>
-    <string name="InuDeleteOwnMessagesNone">هیچ پیامی از شما در این گفتگو نیست</string>
-    <string name="InuDeleteOwnMessagesConfirm_other">%d پیام از خودتان حذف شود؟ این کار قابل بازگشت نیست.</string>
-    <string name="InuDeleteOwnMessagesDeleting">%1$d / %2$d حذف شد</string>
-    <string name="InuDeleteOwnMessagesDone_other">%d پیام حذف شد</string>
-    <string name="InuDeleteOwnMessagesError">خطا: %1$s</string>
-    <string name="InuDeleteOwnMessagesFloodWait">محدودیت نرخ، انتظار برای %d ثانیه…</string>
     <string name="InuBiometricConfirm">تأیید بیومتریک</string>
     <string name="InuBiometricConfirmTitle">هویت خود را تأیید کنید</string>
     <string name="InuBiometricConfirmDeleteChat">تأیید حذف گفتگوها</string>
@@ -1009,7 +1045,7 @@
 
     <string name="InuTOS">قابلیت‌های محدودشده</string>
     <string name="InuSelfDestructMedia">رسانه خودمخرب</string>
-    <string name="InuAntiDeletion">ضدحذف</string>
+    <string name="InuAntiDeletion">نگهداری پیام‌ها</string>
     <string name="InuSaveSelfDestructMedia">نگه داشتن رسانه مخفی</string>
     <string name="InuSaveSelfDestructText">نگه داشتن متن خودمخرب</string>
     <string name="InuSaveViewOnceMedia">نگه داشتن رسانه یک‌بار مشاهده</string>
@@ -1023,12 +1059,13 @@
     <string name="InuSaveAnyStoryInfo">دانلود هر استوری در گالری را بدون نیاز به پریمیوم یا محدودیت نویسنده ممکن می‌کند.</string>
     <string name="InuAutoSaveStories">ذخیره خودکار استوری‌های دیده‌شده</string>
     <string name="InuAutoSaveStoriesInfo">هر استوری‌ای را که باز می‌کنید یک‌بار در گالری ذخیره می‌کند. استوری‌های خودتان رد می‌شوند.</string>
+
     <string name="InuSaveDeletedMessages">ذخیره پیام‌های حذف‌شده</string>
     <string name="InuSaveDeletedMessagesInfo">پیام‌های حذف‌شده را با نشان 🗑️ در گفتگوها نگه می‌دارد</string>
     <string name="InuSaveEditedMessages">ذخیره تاریخچه ویرایش</string>
     <string name="InuSaveEditedMessagesInfo">نسخه‌های قبلی پیام‌ها را ذخیره می‌کند و مشاهده تاریخچه ویرایش را ممکن می‌سازد ✏️</string>
     <string name="InuSaveUserInfo">ذخیره اطلاعات کاربر</string>
-    <string name="InuSaveUserInfoInfo">کشور تلفن، ماه ثبت‌نام و تاریخ تغییر نام/عکس را پس از اینکه سرور دیگر آن‌ها را برنگرداند نگه می‌دارد (آزمایشی)</string>
+    <string name="InuSaveUserInfoInfo">کشور تلفن، ماه ثبت‌نام و تاریخ تغییر نام/عکس را پس از اینکه سرور دیگر آن‌ها را برنگرداند نگه می‌دارد</string>
     <string name="InuCacheTtl">پاک کردن خودکار حافظه نهان پیام</string>
     <string name="InuCacheTtlInfo">پیام‌های حذف‌شده/ویرایش‌شده ذخیره‌شده‌ای را که از بازه انتخابی قدیمی‌ترند خودکار حذف می‌کند</string>
     <string name="InuCacheTtlNever">هرگز (برای همیشه نگه دار)</string>
@@ -1094,7 +1131,7 @@
     <string name="InuRefreshStickerSet">تازه‌سازی</string>
     <string name="InuStickerSetRefreshed">بسته به‌روز شد</string>
     <string name="InuStickerSetRefreshFailed">تازه‌سازی بسته ممکن نشد</string>
-    <string name="InuBurnOneTime">سوزاندن</string>
+
     <string name="InuEditHistoryDiff">برجسته کردن تغییرات متن (تفاوت)</string>
     <string name="InuEditHistoryDiffInfo">در تاریخچه ویرایش، متن حذف‌شده با خط قرمز و متن افزوده‌شده با سبز نشان داده شود</string>
     <string name="InuNoEditHistory">تاریخچه ویرایشی برای این پیام ثبت نشده است</string>
@@ -1119,6 +1156,7 @@
     <string name="InuGhostHideAppBarIcon">پنهان کردن نشانگر در سرصفحه</string>
     <string name="InuGhostHideAppBarIconInfo">هنگام فعال بودن حالت روح، نماد روح را در عنوان اصلی یا سرصفحه گفتگوها نشان نده.</string>
     <string name="InuContentProtectionBypass">محافظت از محتوا</string>
+
     <string name="InuGhostHideVoiceRead">پیام‌های صوتی و تصویری را پخش‌شده علامت نزن</string>
     <string name="InuGhostHideStoryRead">ارسال نکردن بازدید استوری</string>
     <string name="InuGhostHideTyping">پنهان کردن تایپ و پیشرفت بارگذاری</string>
@@ -1252,6 +1290,7 @@
     <string name="InuCacheMediaCategory">فایل‌های رسانه ذخیره‌شده</string>
     <string name="InuCacheRecentCategory">گفتگوهای اخیر</string>
     <string name="InuCacheTempCategory">فایل‌های موقت اشتراک‌گذاری</string>
+
     <string name="InuCacheLogsCategory">گزارش‌ها و گزارش‌های خرابی</string>
     <string name="InuPresenceLogsTtl">پاک کردن خودکار گزارش‌های حضور</string>
     <string name="InuPresenceLogsTtlInfo">گزارش‌های حضوری را که از بازه انتخابی قدیمی‌ترند خودکار حذف کن.</string>
@@ -1292,12 +1331,15 @@
     <string name="InuSmallGifs">نمایش گیف‌های کوچک</string>
 
     <string name="InuForwardPro">بازارسال حرفه‌ای</string>
-    <string name="InuForwardProInfo">کلیدهای فرستنده، توضیح و ارسال بی‌صدا به‌علاوه ویرایش پیش از بازارسال. آزمایشی.</string>
+    <string name="InuForwardProInfo">کلیدهای فرستنده، توضیح و ارسال بی‌صدا به‌علاوه ویرایش پیش از بازارسال.</string>
     <string name="InuForwardProHideCaption">پنهان کردن توضیح‌ها</string>
     <string name="InuForwardProEditedNotice">به‌صورت کپی از طرف شما و بدون برچسب بازارسال ارسال می‌شود</string>
     <string name="InuForwardProUseStock">Telegram پایه</string>
     <string name="InuForwardProPlaceholder">متن پیام</string>
     <string name="InuForwardProEmptyNotice">متن پیام نمی‌تواند خالی باشد</string>
+    <string name="InuForwardDownloading">ابتدا %1$s دانلود می‌شود، سپس فوروارد می‌شود</string>
+    <string name="InuForwardDownloadFailed">دانلود فایل ناموفق بود، فوروارد نشد</string>
+    <string name="InuForwardTooLarge">فایل از حد آپلود (%1$s) بیشتر است، فوروارد نمی‌شود</string>
 
     <string name="InuAntiCensorship">دور زدن سانسور</string>
     <string name="InuAntiCensorshipTransport">اتصال</string>
@@ -1335,7 +1377,12 @@
     <string name="InuDonateWebsite">همه روش‌ها در وب‌سایت</string>
     <string name="InuDonateCopied">کپی شد</string>
     <string name="InuShowMediaSize">نمایش اندازه رسانه</string>
+
     <string name="InuAccountsSection">حساب‌ها</string>
+    <string name="InuManyAccountsTitle">حساب‌های زیاد</string>
+    <string name="InuManyAccountsMessage">بیش از ۸ حساب می‌تواند برنامه را کند کند و باتری را مصرف کند. باز هم یک حساب دیگر اضافه شود؟</string>
+    <string name="InuManyAccountsContinue">ادامه</string>
+    <string name="InuBetaPill">بتا</string>
     <string name="InuAnnoyancesChats">گفتگوها</string>
     <string name="InuBlockedMessagesSection">کاربران مسدودشده</string>
     <string name="InuBubbles">حباب‌ها</string>
@@ -1347,14 +1394,14 @@
     <string name="InuDeviceSection">دستگاه</string>
     <string name="InuDownloadsAndNetwork">دانلودها و شبکه</string>
     <string name="InuDrawerBots">برنامه‌های کوچک</string>
-    <string name="InuDrawerMenuAddDivider">افزودن جداکننده</string>
-    <string name="InuDrawerMenuHidden">موارد پنهان</string>
     <string name="InuDrawerMenuItems">موارد</string>
     <string name="InuDrawerMenuOrder">موارد منو</string>
     <string name="InuDrawerMenuOrderInfo">برای پنهان یا نمایان کردن موارد ضربه بزنید و برای تغییر ترتیب نگه دارید. جداکننده‌ها منو را به گروه‌ها تقسیم می‌کنند.</string>
     <string name="InuDrawerMenuReset">بازنشانی منو</string>
     <string name="InuHideTitle">پنهان کردن عنوان</string>
     <string name="InuInterfaceElements">عناصر رابط</string>
+
+
     <string name="InuLinkedChannel">کانال پیوندشده</string>
     <string name="InuLinkedChat">گروه / کانال پیوندشده</string>
     <string name="InuLinkedChatUnavailable">گفتگوی پیوندشده هنوز در دسترس نیست</string>
@@ -1378,8 +1425,144 @@
     <string name="InuRootPrivacy">قابلیت‌ها و حریم خصوصی</string>
     <string name="InuRootSystem">سیستم</string>
     <string name="InuSetReminder">تنظیم یادآور</string>
+    <string name="InuHideMessage">پنهان کردن</string>
     <string name="InuSideMenu">منوی کناری</string>
     <string name="InuSideMenuInfo">منوی کشویی، بخش‌ها، حساب‌ها و موارد منو.</string>
-    <string name="InuForceLtr">اجبار چیدمان چپ‌به‌راست (Force LTR)</string>
-    <string name="InuForceLtrInfo">چیدمان رابط را بدون تغییر زبان انتخاب‌شده یا متن فارسی، چپ‌به‌راست نگه می‌دارد. برای اعمال تغییر، برنامه را دوباره راه‌اندازی کنید.</string>
+    <string name="InuUnreadBadgeOnBackButton">نمایش شمارنده چت‌های خوانده‌نشده</string>
+    <string name="InuUnreadBadgeOnBackButtonInfo">تعداد چت‌های خوانده‌نشده را روی دکمه بازگشت در چت نمایش می‌دهد</string>
+
+    <string name="InuMainScreen">صفحه اصلی</string>
+    <string name="InuMessagesSummary">اقدامات دوبار ضربه، واکنش‌ها و تاییدیه‌ها</string>
+
+    <string name="InuRecentChatsSummary">جابجایی سریع بین گفتگوها</string>
+    <string name="InuFeedSummary">پست‌های تجمیع‌شده از کانال‌های شما</string>
+    <string name="InuEditedArchive">بایگانی پیام‌های ویرایش‌شده</string>
+    <string name="InuGroupChatArchives">گروه‌بندی بایگانی‌ها در پوشه entinyGram</string>
+    <string name="InuAllowForwardRestrictedWarning">ممکن است Telegram حتی با فعال بودن این گزینه برخی ارسال‌ها را مسدود کند. اگر پیام «Plain forwarding is not allowed.» را دیدید، به‌جای آن متن را کپی کنید یا رسانه را ذخیره کنید.</string>
+
+
+    <string name="InuAppIconBy">توسط %1$s</string>
+
+    <string name="InuAppIconDescDefault">بشقاب کلاسیک entinyGram</string>
+
+    <string name="InuAppIconsKeep">حفظ آیکون فعلی</string>
+    <string name="InuAppIconsSelect">اعمال آیکون</string>
+    <string name="InuBackupImportSheetReplace">جایگزینی همه تنظیمات</string>
+    <string name="InuBiometricExplicitConfirmation">تأیید اضافی</string>
+    <string name="InuBiometricExplicitConfirmationInfo">پس از اسکن موفق چهره/عنبیه یک ضربه اضافی بخواهید</string>
+    <string name="InuBiometricRequireConfirmationActions">هنگام حذف گفتگوها یا خروج از حساب</string>
+    <string name="InuBiometricRequireConfirmationBots">در مینی‌اپ‌ها</string>
+    <string name="InuBiometricRequireConfirmationPasscode">هنگام باز کردن قفل برنامه</string>
+    <string name="InuCameraSound">دوربین و صدا</string>
+    <string name="InuCameraSoundSummary">ویدیوهای گرد، دوربین و ضبط صدا</string>
+    <string name="InuContactChangeLine">%1$s: %2$s → %3$s</string>
+    <string name="InuContactChangePhoto">عکس پروفایل تغییر کرد</string>
+    <string name="InuContactChanges">تغییرات مخاطب</string>
+    <string name="InuContactChangesEmpty">هنوز تغییری برای این مخاطب ذخیره نشده است</string>
+    <string name="InuContactFieldBio">بیو</string>
+    <string name="InuContactFieldFirstName">نام</string>
+    <string name="InuContactFieldLastName">نام خانوادگی</string>
+    <string name="InuContactFieldUsername">نام کاربری</string>
+    <string name="InuCopyAllProxies">کپی همه</string>
+    <string name="InuDrawerMenuAddDivider">افزودن جداکننده</string>
+    <string name="InuEditedMessageDateMode">زمان پیام ویرایش‌شده</string>
+    <string name="InuEditedMessageDateModeEdit">تاریخ ویرایش</string>
+    <string name="InuEditedMessageDateModeSend">تاریخ ارسال</string>
+    <string name="InuEditedMessageDateModeTelegram">پیش‌فرض</string>
+    <string name="InuLocalEditMessage">ویرایش محلی</string>
+    <string name="InuLocalEditReset">بازنشانی ویرایش محلی</string>
+    <string name="InuLocalEditSaved">روی این دستگاه ذخیره شد</string>
+    <string name="InuLocalEditTitle">ویرایش متن (محلی)</string>
+
+    <string name="InuNotifChannelSync">کانال سیستم گفتگوها را بی‌صدا می‌کند</string>
+    <string name="InuNotifChannelSyncInfo">خاموش کردن اعلان‌های یک کانال در تنظیمات سیستم، آن گفتگوها را داخل برنامه و روی سرور هم بی‌صدا می‌کند. در حالت خاموش، بی‌صدا شدن فقط در تنظیمات سیستم می‌ماند.</string>
+    <string name="InuOptimizedAttachmentMenu">منوی پیوست بهینه‌شده</string>
+    <string name="InuOptimizedAttachmentMenuInfo">روانی انیمیشن را هنگام باز کردن عکس‌ها و ویدیوها بهبود می‌دهد</string>
+    <string name="InuPerChatNotifChannels">کانال جداگانه برای هر گفتگو</string>
+    <string name="InuPerChatNotifChannelsInfo">به‌جای یک کانال مشترک برای هر نوع، برای هر گفتگو یک کانال اعلان سیستمی جداگانه می‌سازد تا بی‌صدا کردن یک کانال یا موضوع بقیه را ساکت نکند. کانال‌های موجود دوباره ساخته می‌شوند.</string>
+
+    <string name="InuReadAt">خوانده شد %1$s</string>
+    <string name="InuRoundAudioBitrate">بیت‌ریت صدای گرد</string>
+    <string name="InuRoundAudioSource">منبع صدای گرد</string>
+    <string name="InuRoundAudioSourceCamcorder">دوربین فیلم‌برداری</string>
+    <string name="InuRoundAudioSourceMic">میکروفون</string>
+    <string name="InuRoundAudioSourceStandard">استاندارد</string>
+    <string name="InuRoundAudioSourceUnprocessed">پردازش‌نشده</string>
+    <string name="InuRoundBitrateDefault">پیش‌فرض</string>
+    <string name="InuRoundVideos">ویدیوهای گرد</string>
+    <string name="InuSaveLastSeen">ذخیره آخرین بازدید</string>
+    <string name="InuSaveLastSeenInfo">زمان آخرین بازدید را به خاطر می‌سپارد تا پس از پنهان کردن وضعیت توسط مخاطب هم دیده شود</string>
+    <string name="InuSaveReadTime">ذخیره زمان خواندن</string>
+    <string name="InuSaveReadTimeInfo">نشان می‌دهد طرف مقابل چه زمانی پیام‌های شما را در گفتگوهای خصوصی خوانده است</string>
+    <string name="InuShareAllProxies">اشتراک‌گذاری همه</string>
+    <string name="InuSystemFolderAdministrator">مدیر</string>
+    <string name="InuSystemFolderBots">ربات‌ها</string>
+    <string name="InuSystemFolderChannels">کانال‌ها</string>
+    <string name="InuSystemFolderGroups">گروه‌ها</string>
+    <string name="InuSystemFolderUnread">خوانده‌نشده</string>
+    <string name="InuSystemFolders">پوشه‌های سیستمی</string>
+    <string name="InuSystemFoldersAddRecommended">افزودن پیشنهادی‌ها</string>
+    <string name="InuSystemFoldersInfo">روی پوشه بزنید تا در نوار پوشه‌ها نمایش داده یا پنهان شود. برای حذف، نگه دارید. این پوشه‌ها روی همین دستگاه می‌مانند.</string>
+    <string name="InuVoiceMessages">پیام‌های صوتی</string>
+    <string name="InuLogsRedact">پنهان کردن داده‌های حساس</string>
+    <string name="InuLogsRedactInfo">شماره‌ها، شناسه‌ها، توکن‌ها، IP و نام‌های کاربری در گزارش‌ها هنگام نوشتن با جایگزین‌های ثابت عوض می‌شوند</string>
+    <string name="InuProfileJoinDate">تاریخ عضویت</string>
+    <string name="InuTranslateAutoFallback">تغییر ارائه‌دهنده هنگام مسدود شدن</string>
+    <string name="InuTranslateAutoFallbackInfo">اگر Google ترجمه را از شبکه شما مسدود کند، با Bing و سپس MyMemory دوباره تلاش می‌شود. متن شما برای آن‌ها ارسال می‌شود</string>
+<string name="InuSavedTextsTab">متن</string>
+<string name="InuSavedTextsAdd">افزودن متن آماده</string>
+<string name="InuSavedTextsEdit">ویرایش متن آماده</string>
+<string name="InuSavedTextsEmpty">هنوز متن آماده‌ای ندارید. از دکمهٔ بالا متن اضافه کنید، سپس برای درج در پیام روی آن بزنید.</string>
+<string name="InuSavedTextsHint">متن آمادهٔ خود را بنویسید</string>
+<string name="InuSavedTextsOptions">گزینه‌های متن آماده</string>
+<string name="InuSavedTextsDeleteConfirm">این متن آماده حذف شود؟</string>
+<string name="InuCalendarSystem">سیستم تقویم</string>
+<string name="InuCalendarSystemPersian">هجری شمسی (جلالی)</string>
+<string name="InuNotificationIconNagramXF">NagramXF</string>
+
+<string name="InuForceLtr">اجبار چیدمان چپ‌به‌راست (Force LTR)</string>
+<string name="InuForceLtrInfo">چیدمان رابط را بدون تغییر زبان انتخاب‌شده یا متن فارسی، چپ‌به‌راست نگه می‌دارد. برای اعمال تغییر، برنامه را دوباره راه‌اندازی کنید.</string>
+    <string name="InuActionBarSnowflakes">دانه‌های برف در سربرگ</string>
+    <string name="InuBurnTimedMedia">محو کردن رسانه‌های زمان‌دار</string>
+
+    <string name="InuChatOnlineDots">نشانگر آنلاین در گفتگوها</string>
+    <string name="InuChatOnlineDotsInfo">نمایش نشانگر آنلاین روی تصویر فرستندگان در گروه‌ها.</string>
+    <string name="InuDeletedAtTime">حذف‌شده در %1$s</string>
+    <string name="InuDownloadStickerPackZip">دانلود مجموعه به‌صورت ZIP</string>
+    <string name="InuEditFieldCaption">زیرنویس</string>
+    <string name="InuEditFieldEmoji">ایموجی سفارشی</string>
+    <string name="InuEditFieldFormatting">قالب‌بندی</string>
+    <string name="InuEditFieldLinkPreview">پیش‌نمایش پیوند</string>
+    <string name="InuEditFieldMedia">رسانه</string>
+    <string name="InuEditFieldPoll">نظرسنجی</string>
+    <string name="InuEditFieldSpoiler">اسپویلر</string>
+    <string name="InuEditFieldText">متن</string>
+    <string name="InuEditFieldTimer">زمان‌سنج</string>
+    <string name="InuEditHistoryAfter">بعد</string>
+    <string name="InuEditHistoryBefore">قبل</string>
+    <string name="InuEditHistoryChanged">تغییرکرده: %1$s</string>
+    <string name="InuEditHistoryCompact">نمای فشردهٔ بایگانی</string>
+    <string name="InuEditHistoryCompactInfo">نمایش پیام‌های حذف‌شده و تاریخچهٔ ویرایش به‌صورت حباب‌های سادهٔ گفتگو به‌جای کارت</string>
+    <string name="InuEditHistoryCopyAfter">کپی نسخهٔ جدید</string>
+    <string name="InuEditHistoryCopyBefore">کپی نسخهٔ قبلی</string>
+    <string name="InuEditHistoryCurrentUnknown">نسخهٔ فعلی در حافظهٔ نهان موجود نیست</string>
+    <string name="InuEditedAtTime">ویرایش‌شده در %1$s</string>
+    <string name="InuHideDialogPreview">پنهان کردن پیش‌نمایش آخرین پیام</string>
+    <string name="InuHideDialogPreviewInfo">نمایش آخرین پیام در فهرست گفتگوها زیر پوشش اسپویلر</string>
+    <string name="InuHideReactionsBadges">پنهان کردن نشان واکنش‌ها</string>
+    <string name="InuHideReactionsBadgesInfo">نشان اعلان واکنش در فهرست گفتگوها نمایش داده نمی‌شود</string>
+    <string name="InuHideReactionsDisplay">پنهان کردن واکنش‌های پیام‌ها</string>
+    <string name="InuHideReactionsDisplayInfo">واکنش‌های زیر حباب پیام‌ها نمایش داده نمی‌شوند</string>
+    <string name="InuHideReactionsSection">پنهان کردن واکنش‌ها</string>
+    <string name="InuHideReactionsSet">غیرفعال کردن ثبت واکنش</string>
+    <string name="InuHideReactionsSetInfo">نوار واکنش در منوی پیام و ثبت واکنش با دو بار لمس غیرفعال می‌شوند</string>
+    <string name="InuOpenTimedMedia">باز کردن</string>
+    <string name="InuSendAsSticker">ارسال به‌عنوان استیکر</string>
+    <string name="InuSentAtTime">ارسال‌شده در %1$s</string>
+    <string name="InuStickerPackZipFailed">دانلود مجموعه ناموفق بود</string>
+    <string name="InuTimedMediaAfterView">پس از مشاهده</string>
+    <string name="InuTimedMediaAfterViewBurn">محو شود</string>
+    <string name="InuTimedMediaAfterViewKeep">یک کپی نگه داشته شود</string>
+    <string name="InuRememberSelectedFolder">به‌خاطر سپردن پوشه انتخاب‌شده</string>
+    <string name="InuRememberSelectedFolderInfo">باز کردن مجدد آخرین پوشه فعال هنگام بازگشت به فهرست گفتگوها.</string>
 </resources>

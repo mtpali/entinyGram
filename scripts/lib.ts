@@ -5,10 +5,13 @@ import { tmpdir } from 'node:os'
 import { basename, dirname, isAbsolute, join, relative, resolve } from 'node:path'
 import { glob } from 'tinyglobby'
 import { $, chalk, quote } from 'zx'
+import { topicOf } from './patch-topics.js'
 import {
   forkSyncFiles,
   rootDir,
   seriesFile,
+  skippedSubmodules,
+  submodulePatches,
   upstreamCommitFile,
   upstreamUrl,
 } from './config.js'
@@ -17,7 +20,11 @@ $.verbose = false
 if (process.platform === 'win32') {
   $.shell = 'cmd.exe'
   $.prefix = 'chcp 65001 >nul & '
-  $.quote = quote
+  // bash-style $'...' (backslash paths, pathspec magic) means nothing to cmd.exe; double-quote those instead
+  $.quote = (arg: string) => {
+    const q = quote(arg)
+    return q.startsWith("$'") ? `"${arg.replaceAll('"', '""')}"` : q
+  }
 }
 
 export function step(message: string) {
@@ -76,10 +83,21 @@ export async function configureGitLineEndings(repoDir: string) {
   const git = cd(repoDir)
   await git`git config core.autocrlf false`
   await git`git config core.eol lf`
+  await git`git config core.longpaths true`
 }
 
-export async function cloneUpstream(targetDir: string, commit: string) {
+export async function cloneUpstream(targetDir: string, commit: string, shallow = false) {
   await ensureEmptyCloneTarget(targetDir)
+  if (shallow) {
+    step(`Fetching upstream ${commit} into ${targetDir}`)
+    await ensureDir(targetDir)
+    const git = cd(targetDir)
+    await git`git init -q`
+    await git`git remote add upstream ${upstreamUrl}`
+    await git`git fetch --depth 1 upstream ${commit}`
+    await git`git checkout FETCH_HEAD`
+    return
+  }
   if (!existsSync(join(targetDir, '.git'))) {
     step(`Cloning upstream into ${targetDir}`)
     execSync(`git clone -c core.autocrlf=false -c core.eol=lf "${upstreamUrl}" "${targetDir}"`, { cwd: rootDir, stdio: 'inherit' })
@@ -115,14 +133,22 @@ export async function ensureUpstreamRemote(repoDir: string) {
   await git`git remote add upstream ${upstreamUrl}`
 }
 
-export async function syncSubmodules(repoDir: string) {
+export async function syncSubmodules(repoDir: string, excludedSubmodules: string[] = [], shallow = false) {
   if (!existsSync(join(repoDir, '.gitmodules'))) {
     return false
   }
 
   const git = cd(repoDir)
+  // explicit paths instead of :(exclude) pathspecs: zx quotes those as $'...', which Windows shells reject
+  const paths = (await git`git config -f .gitmodules --get-regexp path`).stdout
+    .split(/\r?\n/)
+    .map(line => line.split(' ')[1])
+    .filter(path => path && !excludedSubmodules.includes(path))
+  if (paths.length === 0) {
+    return false
+  }
   // status prefixes: ' ' in sync, '-' uninitialized, '+' sha mismatch, 'U' conflicted
-  const stale = (await git`git submodule status`)
+  const stale = (await git`git submodule status -- ${paths}`)
     .stdout
     .split(/\r?\n/)
     .filter(line => line.length > 0 && line[0] !== ' ')
@@ -132,8 +158,30 @@ export async function syncSubmodules(repoDir: string) {
   }
 
   step(`Syncing ${stale.length} submodule(s), this will take a while`)
-  await git`git submodule update --init --recursive --filter=blob:none`
+  const skips = ['-c', 'core.longpaths=true', ...skippedSubmodules.flatMap(name => ['-c', `submodule.${name}.update=none`])]
+  const depth = shallow ? ['--depth', '1'] : ['--filter=blob:none']
+  await git`git ${skips} submodule update --init --recursive ${depth} -- ${paths}`
   return true
+}
+
+export async function applySubmodulePatches(repoDir: string, excludedSubmodules: string[] = []) {
+  let appliedAny = false
+
+  for (const { submodule, patch } of submodulePatches) {
+    if (excludedSubmodules.includes(submodule)) continue
+    const dir = join(repoDir, submodule)
+    if (!existsSync(dir)) continue
+
+    const git = cd(dir)
+    const alreadyApplied = await git`git apply --reverse --check ${patch}`.nothrow().quiet()
+    if (alreadyApplied.exitCode === 0) continue
+
+    step(`Patching ${submodule}`)
+    await git`git apply ${patch}`
+    appliedAny = true
+  }
+
+  return appliedAny
 }
 
 export function hasGitRepo(repoDir: string) {
@@ -205,8 +253,14 @@ interface ResolvedLink {
   replace?: boolean
 }
 
-async function linkForkEntry(repoDir: string, entry: ResolvedLink) {
+async function linkForkEntry(repoDir: string, entry: ResolvedLink, skip = false) {
   const targetPath = join(repoDir, entry.repoRelativeTarget)
+  if (skip) {
+    const stat = await fs.lstat(targetPath).catch(() => null)
+    if (!stat?.isSymbolicLink() || resolve(dirname(targetPath), await fs.readlink(targetPath)) !== entry.sourcePath) return false
+    await fs.unlink(targetPath)
+    return true
+  }
   const created = await ensureSymlink(targetPath, entry.sourcePath, entry.type)
   if (created) {
     step(`Symlinking ${targetPath}`)
@@ -222,6 +276,13 @@ async function linkForkEntry(repoDir: string, entry: ResolvedLink) {
 
 export async function linkForkSource(repoDir: string) {
   let dirty = false
+  const oldSourceRoot = join(repoDir, 'TMessagesProj/src/main/kotlin/desu/inugram')
+  const oldSourceStat = await fs.lstat(oldSourceRoot).catch(() => null)
+  if (oldSourceStat?.isSymbolicLink()
+    && resolve(dirname(oldSourceRoot), await fs.readlink(oldSourceRoot)) === join(rootDir, 'src/fork')) {
+    await fs.unlink(oldSourceRoot)
+    dirty = true
+  }
 
   for (const entry of forkSyncFiles) {
     if (entry.directory) {
@@ -323,7 +384,7 @@ export async function getAllPatchNames(repoDir: string) {
 
 export function patchNameFromSeriesEntry(entry: string) {
   const normalized = entry.trim().replaceAll('\\', '/')
-  const match = normalized.match(/^([^/]+)\/(.+)\.patch$/)
+  const match = normalized.match(/^([^/]+)\/(?:[^/]+\/)?([^/]+)\.patch$/)
   if (!match) {
     throw new Error(`Invalid series entry: ${entry}`)
   }
@@ -354,7 +415,7 @@ export async function generateStablePatchFromCommit(repoDir: string, commitId: s
   const outDir = await fs.mkdtemp(join(tmpdir(), 'entinygram-patch-'))
   let stdout: string
   try {
-    execSync(`git format-patch --zero-commit --no-signature --subject-prefix= -1 ${commitId} -o "${outDir}"`, {
+    execSync(`git format-patch --ignore-submodules=none --zero-commit --no-signature --subject-prefix= -1 ${commitId} -o "${outDir}"`, {
       cwd: repoDir,
       encoding: 'utf8',
       maxBuffer: 50 * 1024 * 1024,
@@ -442,10 +503,12 @@ export function parsePatchName(patchName: string) {
     throw new Error(`Patch name must use "group__name": ${patchName}`)
   }
   const [group, name] = parts
+  const dir = group === 'entiny' ? `${group}/${topicOf(patchName)}` : group
   return {
     group,
     name,
-    seriesEntry: `${group}/${name}.patch`,
+    dir,
+    seriesEntry: `${dir}/${name}.patch`,
   }
 }
 

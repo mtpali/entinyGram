@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="InuSavedTextsTab">Text</string>
-    <string name="InuSavedTextsAdd">Add prepared text</string>
-    <string name="InuSavedTextsEdit">Edit prepared text</string>
-    <string name="InuSavedTextsEmpty">No prepared texts yet. Add one above, then tap it to insert it into your message.</string>
-    <string name="InuSavedTextsHint">Write your prepared text</string>
-    <string name="InuSavedTextsOptions">Prepared text options</string>
-    <string name="InuSavedTextsDeleteConfirm">Delete this prepared text?</string>
     <string name="InuOpenInDiscussion">Open in discussion</string>
     <string name="InuLinkedGroup">Linked group</string>
     <string name="InuLinkedChannel">Linked channel</string>
@@ -16,9 +9,13 @@
     <string name="InuClearDeletedHere">Clear deleted messages</string>
     <string name="InuClearDeletedHereAlert">Delete the locally saved deleted messages of this chat and their media? This cannot be undone.</string>
     <string name="InuSetReminder">Set reminder</string>
+    <string name="InuHideMessage">Hide</string>
     <string name="InuBanUserConfirm">Ban %1$s from this group?</string>
     <string name="InuSendToDiscussWithoutJoin">Write to discuss groups without joining</string>
     <string name="InuSendToDiscussWithoutJoinInfo">Skip the client-only membership check for discussion groups</string>
+    <string name="InuChatSnowflakes">Snowflakes in chats</string>
+    <string name="InuActionBarSnowflakes">Snowflakes in header</string>
+
     <string name="InuMessageDesign">Message appearance</string>
     <string name="InuMessageDesignInfo">Bubbles, stickers, reactions, channel posts and input text size.</string>
     <string name="InuBubbles">Bubbles</string>
@@ -29,6 +26,10 @@
     <string name="InuChatBackgroundSection">Chat background</string>
     <string name="InuMediaSection">Media</string>
     <string name="InuAccountsSection">Accounts</string>
+    <string name="InuManyAccountsTitle">Many accounts</string>
+    <string name="InuManyAccountsMessage">More than 8 accounts can slow the app down and drain the battery. Add another one anyway?</string>
+    <string name="InuManyAccountsContinue">Continue</string>
+    <string name="InuBetaPill">beta</string>
     <string name="InuCallsSection">Calls</string>
     <string name="InuDeviceSection">Device</string>
     <string name="InuDownloadsAndNetwork">Downloads and network</string>
@@ -46,8 +47,7 @@
     <string name="InuMenuProfileInfoDesc">Phone, bio, username and other rows in profiles.</string>
     <string name="InuDrawerMenuOrder">Menu items</string>
     <string name="InuDrawerMenuItems">Items</string>
-    <string name="InuDrawerMenuOrderInfo">Tap to hide or show items, hold to reorder. Dividers split the menu into groups.</string>
-    <string name="InuDrawerMenuHidden">Hidden items</string>
+    <string name="InuDrawerMenuOrderInfo">Reorder or hide side menu items. Drag to move, toggle to hide. Dividers split the menu into groups.</string>
     <string name="InuDrawerMenuAddDivider">Add divider</string>
     <string name="InuDrawerMenuReset">Reset menu</string>
     <string name="InuDrawerBots">Mini apps</string>
@@ -60,8 +60,10 @@
     <string name="InuNavigationDrawerInfo">Brings back the pre-12.0 hamburger side drawer. Requires restart.</string>
     <string name="InuDrawerBackGesture">Open drawer with back gesture</string>
     <string name="InuDrawerBackGestureInfo">Swiping back from the left edge of the chat list opens the drawer instead of leaving the app.</string>
-    <string name="InuDrawerM3Sections">Modular sections in navigation drawer</string>
-    <string name="InuDrawerM3SectionsInfo">Groups the navigation drawer menu rows into rounded Material 3 cards.</string>
+
+
+    <string name="InuDrawerKeepOptionsMenu">Keep three-dot menu</string>
+    <string name="InuDrawerKeepOptionsMenuInfo">Show the chats list menu button next to the side menu</string>
     <string name="InuShowDrawerAccounts">Show accounts in drawer</string>
     <string name="InuShowDrawerAccountsInfo">Show the expandable account switcher below your profile.</string>
     <string name="InuSettings">Telegram Settings</string>
@@ -72,6 +74,7 @@
     <string name="InuWideChannelPostsPreviewText">News, photos and videos</string>
     <string name="InuWideChannelPostsPreviewReply">Forwarded channel post</string>
     <string name="InuWideChannelPostsPreviewReplyLabel">Channel posts</string>
+
     <string name="InuPushHeader">Push notifications</string>
     <string name="InuUnifiedPush">UnifiedPush</string>
     <string name="InuUnifiedPushInfo">Get notifications through a UnifiedPush distributor like ntfy instead of Google services. Works without Google Play.</string>
@@ -111,6 +114,11 @@
     <string name="InuUnifiedPushGatewayInfo">Rewrite proxy for distributors that require WebPush POST and VAPID (e.g. gCompat-UP, Sunup, Prism).</string>
     <string name="InuUnifiedPushGatewayDirect">Direct (no gateway)</string>
     <string name="InuUnifiedPushGatewayDefault">Default</string>
+    <string name="InuNotifChannelSync">System channel mutes chats</string>
+    <string name="InuNotifChannelSyncInfo">Turning notifications off for a channel in the system settings also mutes those chats inside the app and on the server. When off, the mute stays in the system settings only.</string>
+    <string name="InuPerChatNotifChannels">Separate channel for every chat</string>
+    <string name="InuPerChatNotifChannelsInfo">Creates an individual system notification channel per chat instead of one shared channel per type, so muting one channel or topic cannot silence the others. Existing channels are recreated.</string>
+
     <string name="InuVersionBetaSuffix">(Beta)</string>
     <string name="InuPerformanceClass">Performance class</string>
     <string name="InuPerformanceClassInfo">It is not recommended to change this settings, as this might tank performance on low-performance budget devices</string>
@@ -122,9 +130,11 @@
     <string name="InuAnnoyancesChats">Chats</string>
     <string name="InuAnnoyancesStories">Stories</string>
     <string name="InuAnnoyancesProfile">Profile</string>
-    <string name="InuAnnoyancesGifts">Gifts &amp; Premium</string>
+    <string name="InuAnnoyancesGifts">Gifts</string>
+    <string name="InuAnnoyancesPremium">Telegram Premium</string>
     <string name="InuAnnoyancesInterface">Chats &amp; Interface</string>
     <string name="InuAnnoyancesChannels">Channels &amp; Recommendations</string>
+
     <string name="InuAnnoyancesHints">Hints &amp; Prompts</string>
     <string name="InuMessages">Messages</string>
     <string name="InuChats">Chats</string>
@@ -158,6 +168,7 @@
     <string name="InuShowSeconds">Show seconds</string>
     <string name="InuDisableRounding">Disable number rounding</string>
     <string name="InuDisableRoundingInfo">1.2K -> 1,234</string>
+
     <string name="InuAvatarCorners">Avatar corners</string>
     <string name="InuAvatarCornersLeft">Sharp</string>
     <string name="InuAvatarCornersRight">Round</string>
@@ -196,12 +207,22 @@
     <string name="InuShowAllRecentStickers">Show all recent stickers</string>
     <string name="InuNoStickerExtraPadding">Remove extra bottom padding</string>
     <string name="InuHideKeyboardOnScroll">Hide keyboard on scroll</string>
+    <string name="InuKeepKeyboardWhileTyping">Keep keyboard while typing</string>
+    <string name="InuKeepKeyboardWhileTypingInfo">Don\'t hide it on scroll when there is a draft</string>
     <string name="InuDisablePullToNext">Disable pull to next channel</string>
     <string name="InuDisableSensitive">Disable sensitive filter</string>
+    <string name="InuMemoryTrim">Free memory in background</string>
+    <string name="InuMemoryTrimInfo">Clears image caches and compacts memory shortly after the app goes to background</string>
     <string name="InuDisableQuickShare">Disable quick share</string>
     <string name="InuDisableQuickShareInfo">Don\'t show frequent contacts on long-tapping the share button (next to channel messages); it sends without confirmation</string>
     <string name="InuSaveSelectedFiles">Save selected files</string>
     <string name="InuSaveSelectedFilesInfo">Adds a download button when selecting files in profile media and search; undownloaded files are fetched automatically</string>
+
+    <string name="InuLocalEditMessage">Edit locally</string>
+    <string name="InuLocalEditReset">Reset local edit</string>
+    <string name="InuLocalEditTitle">Edit text (local)</string>
+    <string name="InuLocalEditSaved">Saved on this device</string>
+
     <string name="InuHideChannelShareButton">Hide channel share button</string>
     <string name="InuHideChannelShareButtonInfo">Hide the share icon next to channel posts; forwarding from the menu still works.</string>
     <string name="InuDisableProfileMusicAutoplay">Disable profile music auto-play</string>
@@ -243,6 +264,13 @@
     <string name="InuHideGiftCardsInChatInfo">Hide gift service messages (Stars, TON, Premium) from chats. Reopen the chat to apply.</string>
     <string name="InuHideGiveaways">Hide giveaways</string>
     <string name="InuHideGroupStickerPack">Hide group emoji pack hint</string>
+    <string name="InuCustomizeMessages">Messages</string>
+    <string name="InuHideReplyBackground">Hide reply background</string>
+    <string name="InuHideReplyBackgroundInfo">Draws replies and quotes with a transparent background</string>
+    <string name="InuDisableReplyCustomColors">Disable custom reply colors</string>
+    <string name="InuDisableReplyCustomColorsInfo">Uses standard reply colors instead of the sender\'s custom color</string>
+    <string name="InuHideReplyBackgroundEmoji">Hide emoji in replies</string>
+    <string name="InuHideReplyBackgroundEmojiInfo">Hides custom background emoji pattern in replies and quotes</string>
     <string name="InuDisableChatBackgrounds">Disable custom chat backgrounds</string>
     <string name="InuDisableChatThemes">Disable custom chat themes</string>
     <string name="InuDisableBgParallax">Disable background parallax</string>
@@ -252,6 +280,8 @@
     <string name="InuShowCustomTheme">Show custom theme</string>
     <string name="InuDisableSwipeToUnarchive">Disable swipe to unarchive</string>
     <string name="InuDisableSwipeToHideGeneralTopic">Disable swipe to hide General topic</string>
+
+
     <string name="InuResetStorage">Reset storage</string>
     <string name="InuResetStorageConfirm">This will wipe local auth keys and caches to reset the pending authentication. Are you sure?</string>
     <string name="InuHideBottomBar">Hide bottom bar</string>
@@ -280,6 +310,7 @@
     <string name="InuCompactModeInfo">Hides titles and make the tabs smaller</string>
     <string name="InuShowTabTitles">Show tab titles</string>
     <string name="InuMainTabsCustomizeReset">Reset to default</string>
+
     <string name="InuDialogsFab">FAB</string>
     <string name="InuDialogsFabMainAction">Primary action</string>
     <string name="InuDialogsFabSecondaryAction">Secondary action</string>
@@ -287,16 +318,17 @@
     <string name="InuDialogsFabOffsetForBottomBar">Offset for bottom bar</string>
     <string name="InuDialogsFabOffsetForBottomBarInfo">Disabling this might not work well for all screen sizes</string>
     <string name="InuDialogsFabLeftSide">Move to the left</string>
+    <string name="InuHideDialogPreview">Hide last message preview</string>
+    <string name="InuHideDialogPreviewInfo">Show the last message in the chat list under a spoiler</string>
     <string name="InuDialogsFabActionNewMessage">New message</string>
     <string name="InuDialogsFabActionNewStory">New story</string>
     <string name="InuDialogsFabActionOpenSearch">Open search</string>
     <string name="InuDialogsFabActionSavedMessages">Saved messages</string>
+
     <string name="InuPredictiveBack">Predictive back</string>
     <string name="InuPredictiveBackOff">Off</string>
     <string name="InuPredictiveBackStock">Stock</string>
     <string name="InuPredictiveBackMaterial3">Material 3</string>
-    <string name="InuCalendarSystem">Calendar system</string>
-    <string name="InuCalendarSystemPersian">Hijri Shamsi (Jalali)</string>
     <string name="InuClockFormat">Clock format</string>
     <string name="InuClockFormatSystem">Use system setting</string>
     <string name="InuClockFormat12Hour">12-hour</string>
@@ -325,6 +357,7 @@
     <string name="InuHideMessages">Hide messages</string>
     <string name="InuShowHiddenMessages">Show messages</string>
     <string name="InuSpoilers">Spoilers</string>
+
     <string name="InuClearHints">Dismiss all hints</string>
     <string name="InuClearHintsDone">All hints dismissed</string>
     <string name="InuRestartRequired">Restart required to apply changes</string>
@@ -336,7 +369,7 @@
     <string name="InuStickerTimeModeHideTime">Hide only time</string>
     <string name="InuStickerTimeModeHideIncoming">Hide only for incoming</string>
     <string name="InuStickerTimeModeHideCompletely">Hide completely</string>
-    <string name="InuStickerSizeDialogMessage">i like antennas</string>
+    <string name="InuStickerSizeDialogMessage">i love antennas!</string>
     <string name="InuBubbleTails">Bubble tails</string>
     <string name="InuSendAsRoundVideo">Send as round video</string>
     <string name="InuMiscPreviewForwardedFrom">inu</string>
@@ -398,7 +431,17 @@
     <string name="InuFoldersUnreadCounterExcludeMutedNonDms">Exclude muted non-DMs</string>
     <string name="InuHideAllChatsTab">Hide \"All Chats\" Tab</string>
     <string name="InuHideAllChatsTabInfo">Long press the title in the chat list to show All Chats.</string>
+
+
     <string name="InuFoldersAtBottom">Move Folders to Bottom</string>
+    <string name="InuSystemFolders">System Folders</string>
+    <string name="InuSystemFolderAdministrator">Administrator</string>
+    <string name="InuSystemFolderBots">Bots</string>
+    <string name="InuSystemFolderUnread">Unread</string>
+    <string name="InuSystemFolderGroups">Groups</string>
+    <string name="InuSystemFolderChannels">Channels</string>
+    <string name="InuSystemFoldersAddRecommended">Add recommended</string>
+    <string name="InuSystemFoldersInfo">Tap a folder to show or hide it in the folder bar. Long-press to delete it. These folders stay on this device.</string>
     <string name="InuHideArchive">Remove \"Archived Chats\" from Chat List</string>
     <string name="InuCommunityDisplayMode">Communities</string>
     <string name="InuCommunityDisplayModeRegular">Regular</string>
@@ -433,9 +476,13 @@
     <string name="InuConfirmReactionText">Send %1$s reaction in **%2$s**?</string>
     <string name="InuNotificationIcon">Notification icon</string>
     <string name="InuNotificationIconTelegram">Telegram</string>
-    <string name="InuNotificationIconNagramXF">NagramXF</string>
+
+
     <string name="InuNotificationIconInfo">On Xiaomi (MIUI/HyperOS) the system may replace this icon with the app icon, so the choice might not be visible there</string>
+
     <string name="InuDisableChatBubbles">Disable Android notification bubbles</string>
+    <string name="InuKeepChatsInStack">Keep previous chats open</string>
+    <string name="InuKeepChatsInStackInfo">Opening another chat won\'t close the chats behind it</string>
     <string name="InuInPlaceTranslation">In-place translation</string>
     <string name="InuTranslateWebPreviews">Translate web previews</string>
     <string name="InuKeepOriginalAfterTranslation">Show original text</string>
@@ -481,12 +528,10 @@
     <string name="InuTranslateProviderGoogle">Google Translate</string>
     <string name="InuTranslateProviderDeepL">DeepL</string>
     <string name="InuTranslateProviderLlm">LLM (OpenAI-compatible)</string>
-    <string name="InuTranslateProviderYandex">Yandex Translate</string>
     <string name="InuTranslateProviderMicrosoft">Bing Translate (free, no key)</string>
     <string name="InuTranslateProviderMicrosoftAzure">Microsoft Azure (API key)</string>
     <string name="InuTranslateProviderMyMemory">MyMemory (free, no key)</string>
     <string name="InuTranslateDeepLApiKey">DeepL API key</string>
-    <string name="InuTranslateYandexApiKey">Yandex API key</string>
     <string name="InuTranslateMicrosoftApiKey">Azure Translator API key</string>
     <string name="InuTranslateMicrosoftRegion">Azure region (optional)</string>
     <string name="InuTranslateLlmEndpointUrl">API endpoint URL</string>
@@ -499,6 +544,9 @@
     <string name="InuTranslateLlmTemperatureInfo">Lower values keep translations literal and repeatable; higher values allow looser, more idiomatic wording.</string>
     <string name="InuTranslateProviderNotConfigured">Translation provider is not configured. Falling back to Telegram translation.</string>
     <string name="InuTranslateProviderFailed">Translation failed: %1$s. Try again in a moment.</string>
+    <string name="InuForwardDownloading">Downloading %1$s first, then forwarding</string>
+    <string name="InuForwardDownloadFailed">Couldn\'t download the file, so it wasn\'t forwarded.</string>
+    <string name="InuForwardTooLarge">File is over your upload limit (%1$s), can\'t forward it.</string>
     <string name="InuTranslateGoogleBlocked">Google is blocking translation from this network (HTTP 429). Change connection or pick another provider.</string>
     <string name="InuPoweredByProvider">Translations are powered by %1$s.</string>
     <string name="InuHideReactionEntry">Hide reaction appear animation</string>
@@ -512,6 +560,8 @@
     <string name="InuDisableChatPreviewExpandInfo">Disable tap-to-expand, and make the bubbles interactive instead</string>
     <string name="InuDialogAvatarOpensProfile">Tap avatar to open profile</string>
     <string name="InuDialogAvatarOpensProfileInfo">Tapping a chat\'s avatar in the chat list opens their profile directly instead of the chat.</string>
+    <string name="InuAlwaysShowDownloads">Downloads button</string>
+    <string name="InuAlwaysShowDownloadsInfo">Always show the downloads button in the chats header</string>
     <string name="InuHideMyPhoneNumber">Hide my phone number</string>
     <string name="InuFonts">Fonts</string>
     <string name="InuAppFont">App font</string>
@@ -574,7 +624,6 @@
     <string name="InuProfileRegDateCopied">Registration date &amp; DC copied</string>
     <string name="InuMessageInput">Message input</string>
     <string name="InuAttachmentSheet">Attachment sheet</string>
-    <string name="InuVoiceRecorder">Voice / round recorder</string>
     <string name="InuIconReplacement">Icon pack</string>
     <string name="InuIconReplacementOff">Default</string>
 
@@ -585,12 +634,12 @@
     <string name="InuMapPreviewProvider">Map preview provider</string>
     <string name="InuMapPreviewProviderTelegram">Telegram</string>
     <string name="InuMapPreviewProviderGoogle">Google</string>
-    <string name="InuMapPreviewProviderYandex">Yandex</string>
 
     <string name="InuReplyIn">Reply in…</string>
     <string name="InuDeletedMessage">Deleted message</string>
     <string name="InuDeletedMessageIdFormat">ID %1$d</string>
     <string name="InuClosestToDeletedReply">Original message was deleted, showing the closest one</string>
+
     <string name="InuMessageDetails">Details</string>
     <string name="InuMsgDetailDate">Date</string>
     <string name="InuMsgDetailDeleteDate">Delete date</string>
@@ -670,6 +719,11 @@
 
     <string name="InuChatVoiceInAttach">Recorder in attachments</string>
     <string name="InuChatVoiceInAttachInfo">Moves the voice/video record button from the input bar into the attachment sheet</string>
+    <string name="InuKeepScreenOnRecording">Keep screen on while recording</string>
+    <string name="InuKeepScreenOnRecordingInfo">Prevents the screen from turning off during a voice or video message</string>
+
+    <string name="InuOptimizedAttachmentMenu">Optimized attachment menu</string>
+    <string name="InuOptimizedAttachmentMenuInfo">Improves animation smoothness when opening photos and videos</string>
 
     <string name="InuDisableIntroSticker">Don\'t send intro sticker</string>
     <string name="InuDisableIntroStickerInfo">…and hide greeting sticker suggestions</string>
@@ -678,11 +732,33 @@
     <string name="InuRoundCameraFront">Front</string>
     <string name="InuRoundCameraRear">Rear</string>
     <string name="InuRoundCameraAsk">Ask every time</string>
+    <string name="InuRoundBitrateDefault">Default</string>
+    <string name="InuRoundAudioBitrate">Round audio bitrate</string>
+    <string name="InuRoundAudioSource">Round audio source</string>
+    <string name="InuRoundAudioSourceStandard">Standard</string>
+    <string name="InuRoundAudioSourceMic">Microphone</string>
+    <string name="InuRoundAudioSourceCamcorder">Camcorder</string>
+    <string name="InuRoundAudioSourceUnprocessed">Unprocessed</string>
+    <string name="InuCameraSound">Camera and sound</string>
+    <string name="InuCameraSoundSummary">Round videos, camera and voice recording</string>
+    <string name="InuRoundVideos">Round videos</string>
+    <string name="InuVoiceMessages">Voice messages</string>
 
     <string name="InuDisableScrimBlur">Disable scrim blur</string>
     <string name="InuDisableScrimBlurInfo">Flat dim instead of blurred backdrop behind menus and previews. May reduce lag.</string>
 
+
     <string name="InuDisableProfileAvatarBlur">Disable profile avatar blur</string>
+    <string name="InuClownAvatarsSection">Blocked avatars</string>
+    <string name="InuClownAvatarBlocked">Clown avatar for blocked users</string>
+    <string name="InuClownAvatarBlockedInfo">Show a clown instead of the photo for users you blocked.</string>
+    <string name="InuClownAvatarBlockedMe">Clown avatar for users who blocked me</string>
+    <string name="InuClownAvatarBlockedMeInfo">Guessed from a missing photo and last seen, so it can be wrong.</string>
+    <string name="InuClownAvatarEmoji">Emoji</string>
+    <string name="InuClownAvatarEmojiClown">Clown</string>
+    <string name="InuClownAvatarEmojiPoop">Poop</string>
+    <string name="InuClownAvatarEmojiSkull">Skull</string>
+
     <string name="InuNicheSettings">Niche settings</string>
     <string name="InuNicheSettingsInfo">Requested features that may not be useful to everyone. If they do not work, they will be removed.</string>
     <string name="InuNicheUnlockedToast">bro dont enable entiny tv pls💀💀</string>
@@ -697,9 +773,20 @@
     <string name="InuMotion">Motion</string>
     <string name="InuFormatting">Formatting</string>
     <string name="InuChatActions">Chat actions</string>
+
     <string name="InuLinksAndBrowser">Links &amp; browser</string>
     <string name="InuStickers">Stickers</string>
     <string name="InuReactions">Reactions</string>
+    <string name="InuSendAsSticker">Send as sticker</string>
+    <string name="InuDownloadStickerPackZip">Download pack as ZIP</string>
+    <string name="InuStickerPackZipFailed">Failed to download the pack</string>
+    <string name="InuHideReactionsSection">Hide reactions</string>
+    <string name="InuHideReactionsDisplay">Hide reactions on messages</string>
+    <string name="InuHideReactionsDisplayInfo">Reaction chips under bubbles are not shown</string>
+    <string name="InuHideReactionsSet">Disable setting reactions</string>
+    <string name="InuHideReactionsSetInfo">No reaction bar in the message menu, no double-tap reaction</string>
+    <string name="InuHideReactionsBadges">Hide reaction badges</string>
+    <string name="InuHideReactionsBadgesInfo">No reaction mention badge in the chat list</string>
     <string name="InuDelay">Delay</string>
     <string name="InuAnimationSpeed">Animation speed</string>
     <string name="InuAnimationSpeedInstant">Instant</string>
@@ -758,6 +845,10 @@
     <string name="InuForwardHeaderModeCompact">Compact</string>
     <string name="InuShowForwardsCount">Show forward count</string>
     <string name="InuCompactEdited">Compact edit indicator</string>
+    <string name="InuEditedMessageDateMode">Edited message timestamp</string>
+    <string name="InuEditedMessageDateModeTelegram">Default</string>
+    <string name="InuEditedMessageDateModeEdit">Edit date</string>
+    <string name="InuEditedMessageDateModeSend">Send date</string>
 
     <string name="InuAddToStickersGifs">Add to Stickers/GIFs</string>
     <string name="InuLongTapAction">Long-tap action</string>
@@ -827,6 +918,7 @@
     <string name="InuHidePinnedUntilNew">Until a new message is pinned</string>
     <string name="InuHidePinnedForever">Always in this chat</string>
     <string name="InuAppIconStock">Stock</string>
+
     <string name="InuAppIconLicenseInugram">Icon from **mtpali/NagramXF**. Based on Telegram.</string>
     <string name="InuAppIconLicenseTelegram">Icon by **Telegram**. All rights reserved.</string>
     <string name="InuJumpToBeginning">Jump to the beginning</string>
@@ -845,6 +937,7 @@
     <string name="InuRecentChatsEmpty">Nothing here yet</string>
 
     <string name="InuAdditional">Additional</string>
+
     <string name="InuRefetchWebPreview">Refetch web preview</string>
     <string name="InuSendStickers">Send stickers</string>
     <string name="InuSendGifs">Send GIFs</string>
@@ -866,6 +959,7 @@
     <string name="InuFontStyles_many">%1$d styles</string>
     <string name="InuFontStyles_other">%1$d styles</string>
     <string name="InuBackupImportSheetApply">Yes, apply</string>
+    <string name="InuBackupImportSheetReplace">Replace all settings</string>
     <string name="InuBackupImportSheetCancel">No, leave as is</string>
     <string name="InuBackupSettings">Backup &amp; reset</string>
     <string name="InuBackupReset">Reset settings</string>
@@ -897,7 +991,6 @@
     <string name="InuReorderAccountsInfo">Drag to reorder accounts in the settings list and the account picker.</string>
     <string name="InuCreateAsSupergroup">Create as supergroup</string>
     <string name="InuFeed">Feed</string>
-    <string name="InuFeedToggleInfo">Adds the feed to menus and bottom tabs. Off by default; the bottom tab needs an app restart</string>
     <string name="InuFeedEmpty">You\'re all caught up</string>
     <string name="InuFeedManageChannels">Manage channels</string>
     <string name="InuFeedMarkAllRead">Mark all read</string>
@@ -911,6 +1004,7 @@
     <string name="InuFeedNewestOnTop">Newest posts on top</string>
     <string name="InuFeedNewestOnTopInfo">On: newest posts at the top (Twitter style). Off: at the bottom (Telegram style).</string>
     <string name="InuFeedAllChannels">All channels</string>
+    <string name="InuFeedFolder">Feed folder</string>
     <string name="InuFeedAllExcluded">All channels are hidden from the feed.</string>
     <string name="InuFeedChannelHidden">**%1$s** hidden from feed</string>
     <string name="InuFeedMarkAllReadConfirm">Mark all posts in your feed channels as read? This also marks them as read in the original channels.</string>
@@ -926,6 +1020,10 @@
     <string name="InuCopyCallbackData">Copy callback data</string>
     <string name="InuCallbackDataCopied">Callback data copied</string>
     <string name="InuAutoDisableProxyOnVpn">Disable proxy when VPN is active</string>
+    <string name="InuProxyImportFromClipboard">Import from clipboard</string>
+    <string name="InuProxyImportNothing">No new proxy links found in clipboard</string>
+    <string name="InuProxyImported_one">%1$d proxy imported</string>
+    <string name="InuProxyImported_other">%1$d proxies imported</string>
     <string name="InuFasterDownloads">Faster downloads</string>
     <string name="InuFasterUploads">Faster uploads</string>
     <string name="InuFasterTransfersInfo">Larger chunks and more parallel requests. May help — or hurt — throughput.</string>
@@ -995,7 +1093,6 @@
     <string name="InuProfileSettingsRowsItems">Rows</string>
     <string name="InuProfileSettingsRowsOrderInfo">Reorder or hide rows on the Settings screen. Drag to move, toggle to hide.</string>
     <string name="InuProfileSettingsRowsReset">Reset to default</string>
-    <string name="InuSettingsRowWallet">Wallet</string>
     <string name="InuProfileInfoRowsOrder">My Profile info order</string>
     <string name="InuProfileInfoRowsItems">Rows</string>
     <string name="InuProfileInfoRowsOrderInfo">Reorder or hide phone, bio and username rows on your profile. Drag to move, toggle to hide.</string>
@@ -1023,6 +1120,8 @@
 
     <string name="InuLogs">Debug</string>
     <string name="InuLogsEnabled">Debug mode</string>
+    <string name="InuForceNoVibration">Disable all vibration</string>
+    <string name="InuForceNoVibrationInfo">Turn off haptics, in-app and notification vibration, even if enabled in Telegram settings.</string>
     <string name="InuLogsPrivacyTitle">Enable debug mode?</string>
     <string name="InuLogsPrivacyText">The app will write technical logs to the device. They may contain account and chat identifiers, so share them only with people you trust. Logs are kept up to 25 MB and can be cleared at any time.</string>
     <string name="InuLogsEnableAction">Enable</string>
@@ -1040,23 +1139,13 @@
     <string name="InuLogsMakingHeapDump">Making a heap dump…</string>
     <string name="InuLogsHeapDumpWarning">**NEVER** share the .hprof file — it\'s a memory snapshot **containing sensitive data** (messages, tokens, etc.) and should only be inspected by yourself. The app will freeze briefly while it\'s created.</string>
 
-    <string name="InuDeleteOwnMessages">Delete my messages</string>
-    <string name="InuDeleteOwnMessagesSearching">Looking for your messages…</string>
-    <string name="InuDeleteOwnMessagesFoundProgress">Found %1$d / %2$d</string>
-    <string name="InuDeleteOwnMessagesNone">No messages from you in this chat</string>
-    <string name="InuDeleteOwnMessagesConfirm_one">Delete %d message from yourself? This cannot be undone.</string>
-    <string name="InuDeleteOwnMessagesConfirm_few">Delete %d messages from yourself? This cannot be undone.</string>
-    <string name="InuDeleteOwnMessagesConfirm_many">Delete %d messages from yourself? This cannot be undone.</string>
-    <string name="InuDeleteOwnMessagesConfirm_other">Delete %d messages from yourself? This cannot be undone.</string>
-    <string name="InuDeleteOwnMessagesDeleting">Deleted %1$d / %2$d</string>
-    <string name="InuDeleteOwnMessagesDone_one">%d message deleted</string>
-    <string name="InuDeleteOwnMessagesDone_few">%d messages deleted</string>
-    <string name="InuDeleteOwnMessagesDone_many">%d messages deleted</string>
-    <string name="InuDeleteOwnMessagesDone_other">%d messages deleted</string>
-    <string name="InuDeleteOwnMessagesError">Error: %1$s</string>
-    <string name="InuDeleteOwnMessagesFloodWait">Rate limited, waiting for %ds…</string>
     <string name="InuBiometricConfirm">Biometric confirmation</string>
     <string name="InuBiometricConfirmTitle">Confirm your identity</string>
+    <string name="InuBiometricExplicitConfirmation">Extra confirmation</string>
+    <string name="InuBiometricExplicitConfirmationInfo">Ask for an extra tap after successful face/iris scans</string>
+    <string name="InuBiometricRequireConfirmationPasscode">When unlocking the app</string>
+    <string name="InuBiometricRequireConfirmationBots">In mini apps</string>
+    <string name="InuBiometricRequireConfirmationActions">When deleting chats or logging out</string>
     <string name="InuBiometricConfirmDeleteChat">Confirm deleting chats</string>
     <string name="InuBiometricConfirmDeleteChatInfo">Ask for biometric confirmation before deleting or clearing a chat.</string>
     <string name="InuBiometricConfirmLogout">Confirm logging out</string>
@@ -1066,7 +1155,7 @@
 
     <string name="InuTOS">Restricted features</string>
     <string name="InuSelfDestructMedia">Self-destructing media</string>
-    <string name="InuAntiDeletion">Anti-deletion</string>
+    <string name="InuAntiDeletion">Message preservation</string>
     <string name="InuSaveSelfDestructMedia">Keep secret media</string>
     <string name="InuSaveSelfDestructText">Keep self-destructing text</string>
     <string name="InuSaveViewOnceMedia">Keep view-once media</string>
@@ -1075,17 +1164,32 @@
     <string name="InuSaveTimedMessages">Keep timed messages</string>
     <string name="InuAllowForwardRestricted">Allow forwarding from protected chats</string>
     <string name="InuAllowForwardRestrictedInfo">Bypass content protection to forward, copy and save media from chats with forwarding disabled.</string>
+    <string name="InuAllowForwardRestrictedWarning">Telegram can still block some forwards even with this on. If you see "Plain forwarding is not allowed.", copy the text or save the media instead.</string>
     <string name="InuDownloadingStory">Downloading story…</string>
     <string name="InuSaveAnyStory">Save any story</string>
     <string name="InuSaveAnyStoryInfo">Allows downloading any story to gallery without Premium requirements or author restrictions.</string>
     <string name="InuAutoSaveStories">Auto-save viewed stories</string>
     <string name="InuAutoSaveStoriesInfo">Saves every story you open to the gallery, once. Your own stories are skipped.</string>
+
     <string name="InuSaveDeletedMessages">Save deleted messages</string>
     <string name="InuSaveDeletedMessagesInfo">Keeps deleted messages in chats marked with 🗑️</string>
     <string name="InuSaveEditedMessages">Save edit history</string>
     <string name="InuSaveEditedMessagesInfo">Saves previous message versions and allows viewing edit history ✏️</string>
     <string name="InuSaveUserInfo">Save user info</string>
-    <string name="InuSaveUserInfoInfo">Keeps phone country, registration month and name/photo change dates after the server stops returning them (beta)</string>
+    <string name="InuSaveUserInfoInfo">Keeps phone country, registration month, and a log of name, username, bio and photo changes after the server stops returning them</string>
+    <string name="InuContactChanges">Contact changes</string>
+    <string name="InuContactChangesEmpty">No changes saved for this contact yet</string>
+    <string name="InuContactChangeLine">%1$s: %2$s → %3$s</string>
+    <string name="InuContactChangePhoto">Profile photo changed</string>
+    <string name="InuContactFieldFirstName">First name</string>
+    <string name="InuContactFieldLastName">Last name</string>
+    <string name="InuContactFieldUsername">Username</string>
+    <string name="InuContactFieldBio">Bio</string>
+    <string name="InuSaveReadTime">Save read time</string>
+    <string name="InuSaveReadTimeInfo">Shows when the other side read your messages in private chats</string>
+    <string name="InuReadAt">read %1$s</string>
+    <string name="InuSaveLastSeen">Save last seen</string>
+    <string name="InuSaveLastSeenInfo">Remembers the last seen time so it stays visible after the contact hides their status</string>
     <string name="InuCacheTtl">Auto-clear message cache</string>
     <string name="InuCacheTtlInfo">Automatically deletes saved deleted/edited messages older than the chosen period</string>
     <string name="InuCacheTtlNever">Never (keep forever)</string>
@@ -1151,10 +1255,37 @@
     <string name="InuRefreshStickerSet">Refresh</string>
     <string name="InuStickerSetRefreshed">Pack updated</string>
     <string name="InuStickerSetRefreshFailed">Couldn\'t refresh the pack</string>
-    <string name="InuBurnOneTime">Burn</string>
+
+    <string name="InuBurnTimedMedia">Burn timed media</string>
+
+    <string name="InuOpenTimedMedia">Open</string>
+    <string name="InuTimedMediaAfterView">After viewing</string>
+    <string name="InuTimedMediaAfterViewBurn">Burn</string>
+    <string name="InuTimedMediaAfterViewKeep">Keep a copy</string>
+
     <string name="InuEditHistoryDiff">Highlight Text Changes (Diff)</string>
     <string name="InuEditHistoryDiffInfo">Show red strikethrough for deleted text and green for added text in edit history</string>
     <string name="InuNoEditHistory">No edit history recorded for this message</string>
+    <string name="InuEditHistoryCompact">Compact archive view</string>
+    <string name="InuEditHistoryCompactInfo">Show deleted messages and edit history as plain chat bubbles instead of cards</string>
+    <string name="InuEditedAtTime">Edited at %1$s</string>
+    <string name="InuDeletedAtTime">Deleted at %1$s</string>
+    <string name="InuSentAtTime">Sent %1$s</string>
+    <string name="InuEditHistoryChanged">Changed: %1$s</string>
+    <string name="InuEditFieldText">text</string>
+    <string name="InuEditFieldCaption">caption</string>
+    <string name="InuEditFieldFormatting">formatting</string>
+    <string name="InuEditFieldEmoji">custom emoji</string>
+    <string name="InuEditFieldMedia">media</string>
+    <string name="InuEditFieldLinkPreview">link preview</string>
+    <string name="InuEditFieldPoll">poll</string>
+    <string name="InuEditFieldTimer">timer</string>
+    <string name="InuEditFieldSpoiler">spoiler</string>
+    <string name="InuEditHistoryBefore">Before</string>
+    <string name="InuEditHistoryAfter">After</string>
+    <string name="InuEditHistoryCurrentUnknown">Current version is not cached</string>
+    <string name="InuEditHistoryCopyBefore">Copy old version</string>
+    <string name="InuEditHistoryCopyAfter">Copy new version</string>
     <string name="InuShowMutualContactIcon">Mutual Contact Icon</string>
     <string name="InuShowMutualContactIconInfo">Show a mutual contact indicator icon in contacts list</string>
     <string name="InuShowMutualContactInChats">Show Mutual Contact Icon in Group &amp; Channel Member Lists</string>
@@ -1176,6 +1307,7 @@
     <string name="InuGhostHideAppBarIcon">Hide indicator in header</string>
     <string name="InuGhostHideAppBarIconInfo">Do not show the ghost icon in the main title or chat headers when Ghost Mode is active.</string>
     <string name="InuContentProtectionBypass">Content Protection</string>
+
     <string name="InuGhostHideVoiceRead">Do not mark voice and video messages as played</string>
     <string name="InuGhostHideStoryRead">Do not send story views</string>
     <string name="InuGhostHideTyping">Hide typing and upload progress</string>
@@ -1254,6 +1386,7 @@
     <string name="InuProfilePhotosSelected">Selected: %1$d</string>
 
     <!-- AI Voice-to-Text Transcription -->
+
     <string name="InuUnlimitedLimits">Unlimited Limits</string>
     <string name="InuUnlimitedPinnedChats">Unlimited Pinned Chats</string>
     <string name="InuUnlimitedPinnedChatsInfo">Pin more chats than Telegram allows. Extra pins stay on this device.</string>
@@ -1310,6 +1443,7 @@
     <string name="InuCacheMediaCategory">Saved media files</string>
     <string name="InuCacheRecentCategory">Recent chats</string>
     <string name="InuCacheTempCategory">Temporary share files</string>
+
     <string name="InuCacheLogsCategory">Logs and crash reports</string>
     <string name="InuPresenceLogsTtl">Auto-clear presence logs</string>
     <string name="InuPresenceLogsTtlInfo">Automatically delete presence logs older than the selected period.</string>
@@ -1350,7 +1484,7 @@
     <string name="InuSmallGifs">Show small GIFs</string>
 
     <string name="InuForwardPro">Forward Pro</string>
-    <string name="InuForwardProInfo">Author, caption and silent-send toggles plus editing before forwarding. Experimental.</string>
+    <string name="InuForwardProInfo">Author, caption and silent-send toggles plus editing before forwarding.</string>
     <string name="InuForwardProHideCaption">Hide captions</string>
     <string name="InuForwardProEditedNotice">Will be sent as a copy from you, without a forward label</string>
     <string name="InuForwardProUseStock">Stock Telegram</string>
@@ -1371,6 +1505,8 @@
     <string name="InuDatacenterYourDc">Your DC</string>
     <string name="InuDatacenterLeakGuardBlocked">Blocked by leak protection</string>
     <string name="InuOnlineDots">Color-coded presence dots</string>
+    <string name="InuChatOnlineDots">Online dots in chats</string>
+    <string name="InuChatOnlineDotsInfo">Show the online dot on sender avatars inside groups.</string>
     <string name="InuOnlineDotsInfo">Blue online dot; yellow within 20 min and red within an hour after going offline.</string>
     <string name="InuGhostModeLauncherShortcut">Toggle shortcut on app icon</string>
     <string name="InuGhostModeLauncherShortcutInfo">Add a long-press shortcut on the app icon to switch Ghost Mode on or off.</string>
@@ -1393,6 +1529,45 @@
     <string name="InuDonateWebsite">All methods on the website</string>
     <string name="InuDonateCopied">Copied</string>
     <string name="InuShowMediaSize">Show media size</string>
-    <string name="InuForceLtr">Force LTR</string>
-    <string name="InuForceLtrInfo">Keep the interface left-to-right without changing the selected language or Persian text. Restart the app to apply.</string>
+
+    <string name="InuCopyAllProxies">Copy all</string>
+    <string name="InuShareAllProxies">Share all</string>
+
+    <string name="InuAppIconsSelect">Apply icon</string>
+    <string name="InuAppIconsKeep">Keep current icon</string>
+
+    <string name="InuAppIconBy">by %1$s</string>
+    <string name="InuAppIconDescDefault">The classic entinyGram dish</string>
+
+    <string name="InuUnreadBadgeOnBackButton">Show unread chats counter</string>
+    <string name="InuUnreadBadgeOnBackButtonInfo">Show the number of unread chats on the back button in a chat.</string>
+
+    <string name="InuMainScreen">Main screen</string>
+    <string name="InuMessagesSummary">Double-tap actions, reactions and confirmations</string>
+
+    <string name="InuRecentChatsSummary">Quick chat switcher bar</string>
+    <string name="InuFeedSummary">Aggregated posts from your channels</string>
+    <string name="InuEditedArchive">Edited archive</string>
+    <string name="InuGroupChatArchives">Group archives in entinyGram folder</string>
+    <string name="InuLogsRedact">Redact sensitive data</string>
+    <string name="InuLogsRedactInfo">Replace phone numbers, IDs, tokens, IPs and usernames in logs with stable placeholders as they are written</string>
+    <string name="InuProfileJoinDate">Join Date</string>
+    <string name="InuTranslateAutoFallback">Switch provider when blocked</string>
+    <string name="InuTranslateAutoFallbackInfo">If Google blocks translation from your network, retry with Bing, then MyMemory. Your text is sent to them instead</string>
+<string name="InuSavedTextsTab">Text</string>
+<string name="InuSavedTextsAdd">Add prepared text</string>
+<string name="InuSavedTextsEdit">Edit prepared text</string>
+<string name="InuSavedTextsEmpty">No prepared texts yet. Add one above, then tap it to insert it into your message.</string>
+<string name="InuSavedTextsHint">Write your prepared text</string>
+<string name="InuSavedTextsOptions">Prepared text options</string>
+<string name="InuSavedTextsDeleteConfirm">Delete this prepared text?</string>
+
+<string name="InuCalendarSystem">Calendar system</string>
+<string name="InuCalendarSystemPersian">Hijri Shamsi (Jalali)</string>
+<string name="InuNotificationIconNagramXF">NagramXF</string>
+
+<string name="InuForceLtr">Force LTR</string>
+<string name="InuForceLtrInfo">Keep the interface left-to-right without changing the selected language or Persian text. Restart the app to apply.</string>
+    <string name="InuRememberSelectedFolder">Remember Selected Folder</string>
+    <string name="InuRememberSelectedFolderInfo">Reopen the last active folder when returning to the chat list.</string>
 </resources>

@@ -49,19 +49,30 @@ with zipfile.ZipFile(apk) as archive:
     abis = sorted({name.split("/")[1] for name in names if name.startswith("lib/") and name.endswith(".so")})
     if abis != [abi]:
         raise SystemExit(f"Unexpected native ABIs: {abis}; expected {[abi]}")
+    if any(re.search(r"/(?:libinu_native|liblsplant|libshadowhook[^/]*)\.so$", name) for name in names):
+        raise SystemExit("Plugin native engine is still packaged")
     dex = [name for name in names if name.endswith(".dex")]
     dex_data = b"".join(archive.read(name) for name in dex)
     if b"force_ltr" not in dex_data:
         raise SystemExit("Force LTR preference is missing from the compiled APK")
     if b"inu_saved_texts" not in dex_data:
         raise SystemExit("Prepared-text storage is missing from the compiled APK")
+    if b"inu_composer_tab" not in dex_data:
+        raise SystemExit("Composer tab selection is missing from the compiled APK")
     for preference in (
         b"material3_switches", b"material3_fabs", b"m3_sections_style", b"material3_avatars",
         b"material_profile_actions", b"m3_navigation_animation", b"m3_bottom_tabs", b"pill_stack_enabled",
+        b"material3_sliders", b"m3_accent_icons", b"md3_player", b"drawer_m3_sections",
+        b"plugins_enabled", b"plugins_state", b"plugins_dev_mode", b"market_index_url",
+        b"message_plugin_actions", b"chat_plugin_actions",
     ):
         if preference in dex_data:
             raise SystemExit(f"Removed preference is still compiled: {preference.decode()}")
     removed = [
+        b"Ldesu/inugram/helpers/plugins/", b"Ldesu/inugram/core/plugins/",
+        b"Ldesu/inugram/ui/settings/PluginsActivity;",
+        b"Ldesu/inugram/helpers/theme/M3SliderHelper;",
+        b"Ldesu/inugram/helpers/player/Md3PlayerHelper;",
         b"Ldesu/inugram/helpers/ai/", b"Ldesu/inugram/helpers/update/",
         b"Ldesu/inugram/helpers/LocalPremiumHelper;",
         b"Ldesu/inugram/helpers/security/ArchiveLockHelper;",
@@ -95,6 +106,11 @@ if re.search(r":drawable/(?:phosphor_|vkui_|pillstack_)", resources):
     raise SystemExit("Removed icon-pack or Pill Stack artwork is still packaged")
 if re.search(r":(?:string/Inu(?:Paranoia|DisguiseName)|drawable/inu_shortcut_paranoia)", resources):
     raise SystemExit("Removed Paranoia Mode resources are still packaged")
+if re.search(r":string/InuPlugins", resources):
+    raise SystemExit("Plugin interface resources are still packaged")
+for component in ("org.telegram.messenger.GcmPushListenerService", "com.google.firebase.MESSAGING_EVENT", "FirebaseInitProvider"):
+    if component not in manifest:
+        raise SystemExit(f"Firebase component missing: {component}")
 resource_sections = re.split(r"(?m)^\s*resource ", resources)
 for name, expected in firebase_expected.items():
     section = next((s for s in resource_sections if s.strip() and
@@ -106,6 +122,13 @@ if not package:
     raise SystemExit("Could not read package metadata")
 if package.group(1) != "ua.entaytion.entinygram":
     raise SystemExit("APK package does not match the Firebase Android client")
+if int(package.group(2)) <= 2026100714:
+    raise SystemExit("Version code must increase beyond the previous VPN963 builds")
+certificate = subprocess.check_output([str(Path(aapt).with_name("apksigner")), "verify", "--print-certs", str(apk)], text=True)
+match = re.search(r"Signer #1 certificate SHA-256 digest: ([0-9a-fA-F]+)", certificate)
+expected_certificate = "a08d7dc323ddf71ef3201944397e0d3cce7d40847263e11f328b68bbe19229ab"
+if not match or match.group(1).lower() != expected_certificate:
+    raise SystemExit("APK signing certificate changed")
 print(json.dumps({
     "file": apk.name,
     "label": label.group(1),
@@ -125,5 +148,8 @@ print(json.dumps({
     "pillStackRemoved": True,
     "paranoiaModeRemoved": True,
     "firebaseConfigured": True,
+    "pluginsRemoved": True,
+    "certificateSha256": expected_certificate,
+    "upstreamTag": "v13.0.2-202610160",
     "sha256": hashlib.sha256(apk.read_bytes()).hexdigest(),
 }, indent=2))

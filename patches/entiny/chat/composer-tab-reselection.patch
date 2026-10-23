@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Fri, 23 Oct 2026 09:18:13 +0330
+Subject: [*] Remember explicit composer tab reselection
+
+---
+ .../src/main/java/org/telegram/ui/Components/EmojiView.java      | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
+@@ -2613,6 +2613,7 @@ public class EmojiView extends FrameLayout implements
+                 int type = inu_tabType(item);
+                 startStopVisibleGifs(type == TAB_GIFS);
+                 if (item == getCurrentItem()) {
++                    if (inu_savedTexts != null) saveNewPage();
+                     if (type == TAB_EMOJI) {
+                         tabsMinusDy[Type.EMOJIS] = 0;
+                         ObjectAnimator animator = ObjectAnimator.ofFloat(emojiTabs, TRANSLATION_Y, 0);

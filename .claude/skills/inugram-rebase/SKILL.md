@@ -46,7 +46,7 @@ Per conflicting patch:
 
 1. **Identify** — `scripts/status.sh` (or `stg top` + `stg show 2>/dev/null | head -6`). The subject states the fork's *intent* here — anchor your resolution to it.
 2. **Read both sides** with enough surrounding context to see the enclosing structure (loop/method/braces), not just the marked lines.
-3. **Cross-reference the patch file** — `cat patches/<group>/<name>.patch`. Do this for anything non-trivial. It shows the **exact** `+`/`-` lines the fork changed, which is the only reliable way to separate the real fork delta from stock context that merely surrounds it. Skipping this is how you misread a one-token change as a full rewrite.
+3. **Cross-reference the patch file** — `cat patches/<group>/<name>.patch` (for `entiny`: `patches/entiny/<topic>/<name>.patch`, topic from `scripts/patch-topics.ts`). Do this for anything non-trivial. It shows the **exact** `+`/`-` lines the fork changed, which is the only reliable way to separate the real fork delta from stock context that merely surrounds it. Skipping this is how you misread a one-token change as a full rewrite.
 4. **Resolve** (see shapes below).
 5. **Verify + continue** — `scripts/continue.sh` (or, inline: confirm `rg -n -a '^(<<<<<<<|>>>>>>>)' <file>` is empty, then `git add -f <file> && stg refresh && stg push -a`).
 
@@ -134,7 +134,7 @@ The shapes below are just the common instances of this question.
 
 ## Don't over-verify
 
-Fork helpers in `src/kotlin` are **not touched by the rebase**. If a patch called
+Fork helpers in `src/fork` are **not touched by the rebase**. If a patch called
 `SomeHelper.foo()` / `InuConfig.BAR.getValue()` before, it still resolves now —
 don't read the helper to "confirm the API exists". It only burns time.
 
@@ -153,7 +153,7 @@ unused-import vs still-used after re-targeting a call.
 - **`stg refresh` → "resolve outstanding conflicts first".** You forgot to
   `git add -f` the resolved file.
 - **cwd matters**: `stg`/`rg`-on-stock run inside `worktree/`; `patches/…` and
-  `src/kotlin/…` are at repo root (helper sources are **not** under `worktree/`).
+  `src/fork/…` are at repo root (helper sources are **not** under `worktree/`).
   The bundled scripts sidestep this by resolving paths themselves.
 - One `stg push -a` advances through all cleanly-applying patches and stops at
   the next conflict — expect to clear several patches per push.
@@ -225,7 +225,7 @@ investigate rather than hand-editing `patches/`.
 
 Compile errors are the main thing a marker-free resolution still gets wrong:
 upstream renames a class, moves a package, or changes a signature, and both the
-stock patch *and* the fork Kotlin in `src/kotlin` need updating. **`src/kotlin`
+stock patch *and* the fork Kotlin in `src/fork` need updating. **`src/fork`
 is not touched by the rebase, but it can still break against the new stock API**
 — fix it there, not in the worktree (the symlink makes them the same file).
 
