@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Fri, 23 Oct 2026 09:00:37 +0330
+Subject: [*] Avoid collisions before starting named downloads
+
+---
+ .../src/main/java/org/telegram/messenger/FileLoadOperation.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/messenger/FileLoadOperation.java b/TMessagesProj/src/main/java/org/telegram/messenger/FileLoadOperation.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/messenger/FileLoadOperation.java
++++ b/TMessagesProj/src/main/java/org/telegram/messenger/FileLoadOperation.java
+@@ -1037,7 +1037,7 @@ public class FileLoadOperation {
+                 cacheFileFinal = new File(storePath, fileNameFinal);
+             }
+         }
+-        boolean finalFileExist = cacheFileFinalReady = cacheFileFinal.exists();
++        boolean finalFileExist = cacheFileFinalReady = pathSaveData == null && cacheFileFinal.exists();
+         if (finalFileExist && (parentObject instanceof TLRPC.TL_theme || (totalBytesCount != 0 && !ungzip && totalBytesCount != cacheFileFinal.length())) && !delegate.isLocallyCreatedFile(cacheFileFinal.toString())) {
+             if (BuildVars.LOGS_ENABLED) {
+                 FileLog.d("debug_loading: delete existing file cause file size mismatch " + cacheFileFinal.getName() + " totalSize=" + totalBytesCount + " existingFileSize=" + cacheFileFinal.length());
