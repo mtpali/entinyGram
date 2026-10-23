@@ -20,6 +20,7 @@ import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.Emoji
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.LocaleController
+import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.Utilities
@@ -213,6 +214,17 @@ class SavedTextsView(
     }
 
     companion object {
+        private const val SELECTED_TAB_KEY = "inu_composer_tab"
+
+        @JvmStatic
+        fun selectedTab(): Int = MessagesController.getGlobalEmojiSettings()
+            .getInt(SELECTED_TAB_KEY, 3).takeIf { it in 0..3 } ?: 3
+
+        @JvmStatic
+        fun rememberTab(type: Int) {
+            if (type in 0..3) MessagesController.getGlobalEmojiSettings().edit().putInt(SELECTED_TAB_KEY, type).apply()
+        }
+
         @JvmStatic
         fun configureTabs(tabs: PagerSlidingTabStrip) {
             tabs.setPadding(0, 0, 0, 0)

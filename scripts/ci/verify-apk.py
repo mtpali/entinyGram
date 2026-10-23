@@ -57,6 +57,8 @@ with zipfile.ZipFile(apk) as archive:
         raise SystemExit("Force LTR preference is missing from the compiled APK")
     if b"inu_saved_texts" not in dex_data:
         raise SystemExit("Prepared-text storage is missing from the compiled APK")
+    if b"inu_composer_tab" not in dex_data:
+        raise SystemExit("Composer tab selection is missing from the compiled APK")
     for preference in (
         b"material3_switches", b"material3_fabs", b"m3_sections_style", b"material3_avatars",
         b"material_profile_actions", b"m3_navigation_animation", b"m3_bottom_tabs", b"pill_stack_enabled",

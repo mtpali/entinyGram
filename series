@@ -510,3 +510,4 @@ entiny/chat/attach-preview-caption-reorder.patch
 entiny/ui/light-status-bar-insets.patch
 entiny/build/vpn963-upgrade.patch
 entiny/media/original-file-names.patch
+entiny/chat/remember-composer-tab.patch

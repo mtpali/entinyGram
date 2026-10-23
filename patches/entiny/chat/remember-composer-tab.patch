@@ -1,0 +1,98 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Fri, 23 Oct 2026 08:56:00 +0330
+Subject: [*] Remember the last composer tab across restarts
+
+---
+ .../org/telegram/ui/Components/EmojiView.java | 36 ++++++++++++++++---
+ 1 file changed, 32 insertions(+), 4 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java
+@@ -194,6 +194,7 @@ public class EmojiView extends FrameLayout implements
+     private final static int TAB_STICKERS = 2;
+     public static final int INU_TAB_TEXT = 3;
+     private desu.inugram.helpers.chat.SavedTextsView inu_savedTexts;
++    private boolean inu_restoringTab;
+ 
+     public int emojiCacheType = AnimatedEmojiDrawable.CACHE_TYPE_KEYBOARD;
+ 
+@@ -289,6 +290,8 @@ public class EmojiView extends FrameLayout implements
+     }
+ 
+     public void setAllow(boolean allowEmoji, boolean allowStickers, boolean allowGifs, boolean animated) {
++        boolean wasRestoringTab = inu_restoringTab;
++        inu_restoringTab = true;
+         currentTabs.clear();
+         for (int i = 0; i < allTabs.size(); i++) {
+             if (allTabs.get(i).type == TAB_EMOJI && allowEmoji) {
+@@ -312,6 +315,8 @@ public class EmojiView extends FrameLayout implements
+                 if (inu_savedTexts != null) desu.inugram.helpers.chat.SavedTextsView.configureTabs(typeTabs);
+             }
+         }
++        inu_restoringTab = wasRestoringTab;
++        if (inu_savedTexts != null && showing) onOpen(false, false);
+     }
+ 
+     private boolean allowEmojisForNonPremium;
+@@ -5529,6 +5534,7 @@ public class EmojiView extends FrameLayout implements
+         }
+         int newPage;
+         int type = inu_tabType(pager.getCurrentItem());
++        if (inu_savedTexts != null && showing && !inu_restoringTab) desu.inugram.helpers.chat.SavedTextsView.rememberTab(type);
+         if (type == INU_TAB_TEXT) return; // Keep stock selected_page valid for emoji panels without Text.
+         if (type == TAB_STICKERS) {
+             newPage = 1;
+@@ -6087,6 +6093,16 @@ public class EmojiView extends FrameLayout implements
+         return 0;
+     }
+ 
++    private void inu_selectTab(int position) {
++        boolean wasRestoringTab = inu_restoringTab;
++        inu_restoringTab = true;
++        try {
++            if (pager.getCurrentItem() != position) pager.setCurrentItem(position, false);
++        } finally {
++            inu_restoringTab = wasRestoringTab;
++        }
++    }
++
+     public void inu_enableSavedTexts(Utilities.Callback<String> onSelect) {
+         if (inu_savedTexts != null) return;
+         inu_savedTexts = new desu.inugram.helpers.chat.SavedTextsView(getContext(), fragment, currentAccount, resourcesProvider, onSelect);
+@@ -6125,9 +6141,21 @@ public class EmojiView extends FrameLayout implements
+ 
+     public void onOpen(boolean forceEmoji, boolean groupEmojiHintWasVisible) {
+         if (inu_savedTexts != null) {
+-            pager.setCurrentItem(inu_tabPosition(INU_TAB_TEXT), false);
+-            showBackspaceButton(false, false);
+-            showStickerSettingsButton(false, false);
++            int position = inu_tabPosition(desu.inugram.helpers.chat.SavedTextsView.selectedTab());
++            int type = inu_tabType(position);
++            if (type == TAB_EMOJI || type == INU_TAB_TEXT ? emojiBanned : stickersBanned) {
++                for (int i = 0; i < currentTabs.size(); i++) {
++                    int candidate = inu_tabType(i);
++                    if (!(candidate == TAB_EMOJI || candidate == INU_TAB_TEXT ? emojiBanned : stickersBanned)) {
++                        position = i;
++                        break;
++                    }
++                }
++            }
++            inu_selectTab(position);
++            type = inu_tabType(position);
++            showBackspaceButton(type == TAB_EMOJI, false);
++            showStickerSettingsButton(type == TAB_STICKERS && (shouldDrawBackground || shouldDrawStickerSettings), false);
+             showBottomTab(true, false);
+             return;
+         }
+@@ -6357,7 +6385,7 @@ public class EmojiView extends FrameLayout implements
+             for (int i = 0; i < currentTabs.size(); i++) {
+                 int candidate = inu_tabType(i);
+                 if (!(candidate == TAB_EMOJI || candidate == INU_TAB_TEXT ? emojiBanned : stickersBanned)) {
+-                    pager.setCurrentItem(i, false);
++                    inu_selectTab(i);
+                     break;
+                 }
+             }

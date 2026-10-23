@@ -163,7 +163,8 @@ jobs:
           - Hide All Chats defaults on when other folders exist; the primary floating action defaults to None.
           - Tap the main chat-list title to open proxy settings, including while connecting.
           - Downloads and saved media keep their original filenames when available; duplicate saves get a numbered suffix.
-          - Prepared texts open by default; Forward Pro topic delivery fixes are preserved.
+          - The composer remembers the last selected Emoji, GIFs, Stickers or Text tab across app restarts; Text is the initial default.
+          - Forward Pro topic delivery fixes are preserved.
           - Signed armv7 (armeabi-v7a) and armv8 (arm64-v8a) APKs.
           - Recovered entinyGram Firebase client; matching FCM resources retained and verified in both APKs.
 
