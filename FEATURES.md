@@ -19,6 +19,7 @@ most things are toggleable in `Settings → Telegram Settings`, with sensible op
 - **VPN963 settings**: English and Persian, Default icon pack, and a Telegram channel shortcut.
 - **Media defaults**: automatic downloads, pinned-message alerts, raise-to-listen and recording interruptions start off; power-saving options start off.
 - **Download folder**: Telegram; full numbers display without rounding by default.
+- **Original filenames**: downloads and saved media retain their filenames; duplicate saves get a numbered suffix without replacing existing files.
 - **Slim source**: removed custom AI, iOS controls, local Premium unlocks, archive locking, internal updates, Aqua and Vintage icons; Pill Stack and its telemetry, weather and rate pages.
 - **Privacy settings**: removed Paranoia Mode, its hidden-chat filters, disguise and launcher shortcut; retired shortcuts are cleared after updates.
 - **Standard interface**: removed Material Design controls, components and effects from Design settings.
