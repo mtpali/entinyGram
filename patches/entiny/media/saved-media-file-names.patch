@@ -1,0 +1,72 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Oleksii Kulinich <entaytion@gmail.com>
+Date: Fri, 23 Oct 2026 08:58:22 +0330
+Subject: [*] Use message filenames when saving cached media
+
+---
+ .../src/main/java/org/telegram/ui/ChatActivity.java       | 4 ++--
+ .../src/main/java/org/telegram/ui/PhotoViewer.java        | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/ChatActivity.java
+@@ -33972,7 +33972,7 @@ public class ChatActivity extends BaseFragment implements
+                 return;
+             }
+         }
+-        MediaController.saveFile(path, parentActivity, messageObject.isVideo() ? 1 : 0, null, null);
++        MediaController.saveFile(path, parentActivity, messageObject.isVideo() ? 1 : 0, desu.inugram.helpers.media.OriginalFileNameHelper.forMessage(messageObject), null);
+     }
+ 
+     public void processSelectedOption(int option) {
+@@ -34275,7 +34275,7 @@ public class ChatActivity extends BaseFragment implements
+                         break;
+                     }
+                 }
+-                MediaController.saveFile(path, getParentActivity(), 0, null, null);
++                MediaController.saveFile(path, getParentActivity(), 0, desu.inugram.helpers.media.OriginalFileNameHelper.forMessage(selectedObject), null);
+                 BulletinFactory.createSaveToGalleryBulletin(this, selectedObject.isVideo() && !selectedObject.isLivePhoto(), selectedObject.isLivePhoto(), themeDelegate).show();
+                 break;
+             }
+diff --git a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java b/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
+index 0000000..0000000 100644
+--- a/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
++++ b/TMessagesProj/src/main/java/org/telegram/ui/PhotoViewer.java
+@@ -4993,7 +4993,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+                                 showDownloadAlert();
+                             }
+                         } else if (f != null && f.exists()) {
+-                            MediaController.saveFile(f.toString(), parentActivity, isVideo ? 1 : 0, null, null, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, isVideo, 0xf9222222, 0xffffffff).show());
++                            MediaController.saveFile(f.toString(), parentActivity, isVideo ? 1 : 0, desu.inugram.helpers.media.OriginalFileNameHelper.forMessage(currentMessageObject), null, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, isVideo, 0xf9222222, 0xffffffff).show());
+                         } else {
+                             showDownloadAlert();
+                         }
+@@ -5051,7 +5051,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+                                             showDownloadAlert();
+                                         }
+                                     } else if (f != null && f.exists()) {
+-                                        MediaController.saveFile(f.toString(), parentActivity, isThisVideo ? 1 : 0, null, null, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, isThisVideo, 0xf9222222, 0xffffffff).show());
++                                        MediaController.saveFile(f.toString(), parentActivity, isThisVideo ? 1 : 0, desu.inugram.helpers.media.OriginalFileNameHelper.forMessage(currentMessageObject), null, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, isThisVideo, 0xf9222222, 0xffffffff).show());
+                                     } else {
+                                         showDownloadAlert();
+                                     }
+@@ -5101,7 +5101,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+                                             }
+                                         } else if (!isThisLivePhoto && f != null && f.exists()) {
+                                             count[0]++;
+-                                            MediaController.saveFile(f.toString(), parentActivity, isThisVideo ? 1 : 0, null, null, uri -> AndroidUtilities.runOnUIThread(bulletin));
++                                            MediaController.saveFile(f.toString(), parentActivity, isThisVideo ? 1 : 0, desu.inugram.helpers.media.OriginalFileNameHelper.forMessage(msg), null, uri -> AndroidUtilities.runOnUIThread(bulletin));
+                                         }
+                                     }
+                                 })
+@@ -5888,7 +5888,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
+                 f = FileLoader.getInstance(currentAccount).getPathToAttach(document, null, true, true);
+             }
+             if (f != null && f.exists()) {
+-                MediaController.saveFile(f.toString(), parentActivity, 1, null, null, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, true, 0xf9222222, 0xffffffff).show());
++                MediaController.saveFile(f.toString(), parentActivity, 1, FileLoader.getDocumentFileName(document), null, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, true, 0xf9222222, 0xffffffff).show());
+             } else {
+                 ArrayList<MessageObject> messageObjects = new ArrayList<>();
+                 messageObject.qualityToSave = document;
